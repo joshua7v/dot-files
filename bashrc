@@ -1,21 +1,10 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
-# tmux
-tmux_init() {
-    tmux new-session -s "seraph"
-    tmux new-window -n "WY"
-    tmux split-window -h
-    tmux split-window -v "top"
-    tmux -2 attach-session -d # force 256
-}
+export EDITOR=vim
 
-if which tmux 2>&1 >/dev/null; then
-    test -z "$TMUX" && (tmux attach || tmux_init)
-fi
-
-LANGUAGE=en_US.UTF-8
-LANG=en_US.UTF-8
-LC_ALL=en_US.UTF-8
+export LANGUAGE=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
 alias .="cd ~"
 alias ..="cd .."
