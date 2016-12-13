@@ -57,4 +57,5 @@ lnif $DOT_PATH/bash_profile $HOME/.bash_profile
 lnif $DOT_PATH/bashrc $HOME/.bashrc
 lnif $DOT_PATH/tmux.conf $HOME/.tmux.conf
 lnif $DOT_PATH/npmrc $HOME/.npmrc
+lnif $DOT_PATH/vifm $HOME/.vifm
 success "successfully created symbol links"
