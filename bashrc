@@ -14,7 +14,7 @@ alias .....="cd ../../../.."
 alias rmao="find . -iname a.out -exec rm {} \;"
 
 export CDPATH=.:~:/etc
-export GREP_OPTIONS='--color=auto' GREP_COLORS="ms=01;31:mc=01;31:sl=01;33:cx=:fn=35:ln=32:bn=3 2:se=36"
+export GREP_OPTIONS='--color=auto'
 export PATH="$PATH:~/.bin"
 
 function mkdircd() { mkdir -p "$@" && eval cd "\"\$$#\""; }
