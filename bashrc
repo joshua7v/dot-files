@@ -1,6 +1,6 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
 
-export EDITOR=vim
+export EDITOR='vim --noplugin'
 
 export LANGUAGE=en_US.UTF-8
 export LANG=en_US.UTF-8
