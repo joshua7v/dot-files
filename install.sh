@@ -48,6 +48,7 @@ info "backing up current configrations"
 today=`date +%Y%m%d`
 mv $HOME/.bash_profile $HOME/.bash_profile.$today
 mv $HOME/.bashrc $HOME/.bashrc.$today
+mv $HOME/.zshrc $HOME/.zshrc.$today
 mv $HOME/.tmux.conf $HOME/.tmux.conf.$today
 mv $HOME/.npmrc $HOME/.npmrc.$today
 success "successfully backed up your configurations"
@@ -55,6 +56,7 @@ success "successfully backed up your configurations"
 info "setting up symlinks"
 lnif $DOT_PATH/bash_profile $HOME/.bash_profile
 lnif $DOT_PATH/bashrc $HOME/.bashrc
+lnif $DOT_PATH/zshrc $HOME/.zshrc
 lnif $DOT_PATH/tmux.conf $HOME/.tmux.conf
 lnif $DOT_PATH/npmrc $HOME/.npmrc
 cd "$DOT_PATH"/vifm && git clone https://github.com/vifm/vifm-colors colors 
