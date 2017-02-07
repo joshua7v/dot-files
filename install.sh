@@ -51,6 +51,7 @@ mv $HOME/.bashrc $HOME/.bashrc.$today
 mv $HOME/.zshrc $HOME/.zshrc.$today
 mv $HOME/.tmux.conf $HOME/.tmux.conf.$today
 mv $HOME/.npmrc $HOME/.npmrc.$today
+mv $HOME/Library/Application\ Support/Code/User/settings.json $HOME/Library/Application\ Support/Code/User/settings.json.$today
 success "successfully backed up your configurations"
 
 info "setting up symlinks"
@@ -61,4 +62,5 @@ lnif $DOT_PATH/tmux.conf $HOME/.tmux.conf
 lnif $DOT_PATH/npmrc $HOME/.npmrc
 cd "$DOT_PATH"/vifm && git clone https://github.com/vifm/vifm-colors colors 
 lnif $DOT_PATH/vifm $HOME/.vifm
+lnif $Dot_PATH/vscode.json $HOME/Library/Application\ Support/Code/User/settings.json
 success "successfully created symbol links"
