@@ -1,13 +1,13 @@
 export LANG=en_US.utf-8
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/Joshua/.oh-my-zsh
+export ZSH=~/.oh-my-zsh
 alias vi='vim --noplugin'
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="bullet-train"
+ZSH_THEME="spaceship"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
