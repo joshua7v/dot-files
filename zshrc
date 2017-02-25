@@ -1,4 +1,6 @@
 export LANG=en_US.utf-8
+export LC_ALL=en_US.utf-8
+export TZ=Asia/Shanghai
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
 alias vi='vim --noplugin'
@@ -51,13 +53,13 @@ ZSH_THEME="spaceship"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z d wd web-search catimg encode64 urltools)
+plugins=(git z d wd web-search catimg encode64 urltools zsh-autosuggestions)
 
 # User configuration
 
 # export PATH="/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
-export PATH="/usr/local/Cellar/python/2.7.12/bin:$PATH"
+export PATH="~/.bin:/usr/local/Cellar/python/2.7.12/bin:$PATH"
 export GOPATH="$HOME/.go"
 
 source $ZSH/oh-my-zsh.sh
