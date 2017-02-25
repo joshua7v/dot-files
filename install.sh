@@ -54,6 +54,10 @@ mv $HOME/.npmrc $HOME/.npmrc.$today
 mv $HOME/Library/Application\ Support/Code/User/settings.json $HOME/Library/Application\ Support/Code/User/settings.json.$today
 success "successfully backed up your configurations"
 
+info "installing tpm"
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+success "sucessfully installed tpm"
+
 info "setting up symlinks"
 lnif $DOT_PATH/bash_profile $HOME/.bash_profile
 lnif $DOT_PATH/bashrc $HOME/.bashrc
