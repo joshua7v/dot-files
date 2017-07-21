@@ -3,27 +3,27 @@
 // Beautify
 // EditorConfig
 // ESLint
-// HTMLHint
-// Sass Lint
-// Seti-theme
-// Surround
+// Material Icon Theme
+// Sublime Material Theme
 // TSLint
 // Vim
-// Place your settings in this file to overwrite the default settings
+
 {
   "editor.lineHeight": 22,
   "editor.tabSize": 2,
   "editor.cursorBlinking": "solid",
   "editor.renderIndentGuides": true,
   "editor.fontFamily": "Fira Code",
-  "workbench.welcome.enabled": false,
-  "workbench.colorTheme": "Seti",
-  "workbench.iconTheme": "vs-seti",
+  "workbench.iconTheme": "material-icon-theme",
   "editor.fontLigatures": true,
   "editor.fontSize": 14,
+  "vim.statusBarColorControl": true,
+  "vim.statusBarColors" : {
+    "normal": "#333333"
+  },
   "vim.easymotion": true,
+  "vim.surround": true,
   "vim.incsearch": true,
-  "vim.useSolidBlockCursor": true,
   "vim.useSystemClipboard": true,
   "vim.useCtrlKeys": true,
   "vim.hlsearch": true,
@@ -53,5 +53,22 @@
   "newFile.relativeTo": "file", // "root" or "project"
   "newFile.defaultFileExtension": ".js",
   "newFile.rootDirectory": "~",
-  "newFile.showFullPath": true
+  "newFile.showFullPath": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/*.js": true,
+    "**/*.js.map": true
+  },
+  "tslint.configFile": "tslint.json",
+  "vim.disableAnnoyingNeovimMessage": true,
+  "workbench.colorTheme": "Sublime Material Theme - Dark",
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#333333",
+    "statusBar.noFolderBackground": "#333333",
+    "statusBar.debuggingBackground": "#333333"
+  }
 }
