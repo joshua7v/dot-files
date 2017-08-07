@@ -7,14 +7,18 @@
 // Sublime Material Theme
 // TSLint
 // Vim
+// Document This
+// Change Case
 
 {
+  "cSpell.allowCompoundWords": true,
+  "cSpell.showStatus": true,
+  "editor.minimap.enabled": false,
   "editor.lineHeight": 22,
   "editor.tabSize": 2,
   "editor.cursorBlinking": "solid",
   "editor.renderIndentGuides": true,
   "editor.fontFamily": "Fira Code",
-  "workbench.iconTheme": "material-icon-theme",
   "editor.fontLigatures": true,
   "editor.fontSize": 14,
   "vim.statusBarColorControl": true,
@@ -46,29 +50,49 @@
     {
       "before": ["k"],
       "after": ["g", "k"]
+    },
+    {
+      "before": ["<leader>", "p"],
+      "after": [],
+      "commands": [
+        {
+          "command": "editor.action.previewDeclaration"
+        }
+      ]
+    },
+    {
+      "before": ["<leader>", "r", "a"],
+      "after": [],
+      "commands": [
+        {
+          "command": "editor.action.changeAll"
+        }
+      ]
     }
   ],
   "vim.leader": ",",
+  "vim.disableAnnoyingNeovimMessage": true,
   "newFile.defaultBaseFileName": "newFile",
   "newFile.relativeTo": "file", // "root" or "project"
   "newFile.defaultFileExtension": ".js",
   "newFile.rootDirectory": "~",
-  "newFile.showFullPath": true,
+  "newFile.showPathRelativeTo": "root",
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
     "**/.hg": true,
     "**/CVS": true,
-    "**/.DS_Store": true,
-    "**/*.js": true,
-    "**/*.js.map": true
+    "**/.DS_Store": true
   },
   "tslint.configFile": "tslint.json",
-  "vim.disableAnnoyingNeovimMessage": true,
+  "workbench.iconTheme": "material-icon-theme",
   "workbench.colorTheme": "Sublime Material Theme - Dark",
   "workbench.colorCustomizations": {
     "statusBar.background": "#333333",
     "statusBar.noFolderBackground": "#333333",
-    "statusBar.debuggingBackground": "#333333"
-  }
+    "statusBar.debuggingBackground": "#333333",
+    "editorCursor.foreground": "#ff9999",
+    "editor.lineHighlightBackground": "#000000"
+  },
+  "workbench.activityBar.visible": false
 }
