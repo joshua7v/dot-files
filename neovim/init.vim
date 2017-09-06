@@ -45,6 +45,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('alvan/vim-closetag')
   call dein#add('mattn/emmet-vim')
   call dein#add('gorodinskiy/vim-coloresque')
+  call dein#add('chrisbra/Colorizer')
 
   " For javascript
   call dein#add('carlitux/deoplete-ternjs', { 'build': 'npm i -g tern' })
