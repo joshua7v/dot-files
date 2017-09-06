@@ -11,7 +11,9 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   call dein#add('~/.config/nvim/repos/github.com/Shougo/dein.vim')
 
+  call dein#add('equalsraf/neovim-gui-shim')
   call dein#add('Shougo/deoplete.nvim')
+  call dein#add('kassio/neoterm')
   call dein#add('w0rp/ale')
   call dein#add('Shougo/denite.nvim')
   call dein#add('Raimondi/delimitMate')
@@ -58,13 +60,19 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('mhartington/nvim-typescript', { 'build': 'npm i -g typescript' })
   call dein#add('leafgarland/typescript-vim')
   call dein#add('HerringtonDarkholme/yats.vim')
+  call dein#add('ianks/vim-tsx')
 
   " For elixir
   call dein#add('elixir-editors/vim-elixir')
   call dein#add('slashmili/alchemist.vim')
 
   " For python
-  call dein#add('davidhalter/jedi-vim', {'on_ft': 'python'})
+  call dein#add('davidhalter/jedi-vim', { 'on_ft': 'python' })
+
+  " For go
+  call dein#add('fatih/vim-go')
+  call dein#add('nsf/gocode', { 'rtp': 'nvim' })
+  call dein#add('zchee/deoplete-go', { 'build': 'make' })
 
   " For docker
   call dein#add('ekalinin/Dockerfile.vim')
@@ -213,6 +221,12 @@ set completeopt+=noselect
 autocmd CompleteDone * pclose
 inoremap <expr><c-l> deoplete#complete_common_string()
 
+" For deoplete-go
+let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+let g:deoplete#sources#go#use_cache = 1
+" let g:deoplete#sources#go#json_directory = '/path/to/data_dir'
+
 " For tern
 let g:tern_request_timeout = 1
 let g:tern_show_signature_in_pum = '0'  " This do disable full signature type on autocomplete
@@ -257,6 +271,28 @@ let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
 let g:ale_open_list = 1
 let g:ale_keep_list_window_open = 0
+
+" For neoterm
+let g:neoterm_automap_keys = ',tt'
+let g:neoterm_position = 'horizontal'
+let g:neoterm_autoscroll = 1
+
+let g:terminal_color_0  = '#2e3436'
+let g:terminal_color_1  = '#cc0000'
+let g:terminal_color_2  = '#4e9a06'
+let g:terminal_color_3  = '#c4a000'
+let g:terminal_color_4  = '#3465a4'
+let g:terminal_color_5  = '#75507b'
+let g:terminal_color_6  = '#0b939b'
+let g:terminal_color_7  = '#d3d7cf'
+let g:terminal_color_8  = '#555753'
+let g:terminal_color_9  = '#ef2929'
+let g:terminal_color_10 = '#8ae234'
+let g:terminal_color_11 = '#fce94f'
+let g:terminal_color_12 = '#729fcf'
+let g:terminal_color_13 = '#ad7fa8'
+let g:terminal_color_14 = '#00f5e9'
+let g:terminal_color_15 = '#eeeeec'
 
 " For undotree
 if has('persistent_undo')
@@ -320,73 +356,73 @@ let g:closetag_filenames = "*.html,*.xhtml,*.js,*.jsx,*.ts"
 
 " For denite
 call denite#custom#option('default', {
-      \ 'prompt': '❯'
-      \ })
+    \ 'prompt': '❯'
+    \ })
 
 " Change file_rec command.
 call denite#custom#var('file_rec', 'command',
-      \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+    \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
 
 " Change mappings.
 call denite#custom#map(
-      \ 'insert',
-      \ '<down>',
-      \ '<denite:move_to_next_line>',
-      \ 'noremap'
-      \)
+    \ 'insert',
+    \ '<down>',
+    \ '<denite:move_to_next_line>',
+    \ 'noremap'
+    \)
 call denite#custom#map(
-      \ 'insert',
-      \ '<up>',
-      \ '<denite:move_to_previous_line>',
-      \ 'noremap'
-      \)
+    \ 'insert',
+    \ '<up>',
+    \ '<denite:move_to_previous_line>',
+    \ 'noremap'
+    \)
 call denite#custom#map(
-      \ 'insert',
-      \ '<esc>',
-      \ '<denite:enter_mode:normal>',
-      \ 'noremap'
-      \)
+    \ 'insert',
+    \ '<esc>',
+    \ '<denite:enter_mode:normal>',
+    \ 'noremap'
+    \)
 call denite#custom#map(
-      \ 'normal',
-      \ '<esc>',
-      \ '<NOP>',
-      \ 'noremap'
-      \)
+    \ 'normal',
+    \ '<esc>',
+    \ '<NOP>',
+    \ 'noremap'
+    \)
 call denite#custom#map(
-      \ 'insert',
-      \ '<c-v>',
-      \ '<denite:do_action:vsplit>',
-      \ 'noremap'
-      \)
+    \ 'insert',
+    \ '<c-v>',
+    \ '<denite:do_action:vsplit>',
+    \ 'noremap'
+    \)
 call denite#custom#map(
-      \ 'normal',
-      \ '<c-v>',
-      \ '<denite:do_action:vsplit>',
-      \ 'noremap'
-      \)
+    \ 'normal',
+    \ '<c-v>',
+    \ '<denite:do_action:vsplit>',
+    \ 'noremap'
+    \)
 call denite#custom#map(
-      \ 'insert',
-      \ '<c-h>',
-      \ '<denite:do_action:split>',
-      \ 'noremap'
-      \)
+    \ 'insert',
+    \ '<c-h>',
+    \ '<denite:do_action:split>',
+    \ 'noremap'
+    \)
 call denite#custom#map(
-      \ 'normal',
-      \ '<c-h>',
-      \ '<denite:do_action:split>',
-      \ 'noremap'
-      \)
+    \ 'normal',
+    \ '<c-h>',
+    \ '<denite:do_action:split>',
+    \ 'noremap'
+    \)
 call denite#custom#map(
-      \ 'normal',
-      \ 'dw',
-      \ '<denite:delete_word_after_caret>',
-      \ 'noremap'
-      \)
+    \ 'normal',
+    \ 'dw',
+    \ '<denite:delete_word_after_caret>',
+    \ 'noremap'
+    \)
 
 " Ag command on grep source
 call denite#custom#var('grep', 'command', ['ag'])
 call denite#custom#var('grep', 'default_opts',
-    \ ['-i', '--vimgrep'])
+  \ ['-i', '--vimgrep'])
 call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#var('grep', 'pattern_opt', [])
 call denite#custom#var('grep', 'separator', ['--'])
@@ -395,22 +431,22 @@ call denite#custom#var('grep', 'final_opts', [])
 " Define alias
 call denite#custom#alias('source', 'file_rec/git', 'file_rec')
 call denite#custom#var('file_rec/git', 'command',
-      \ ['git', 'ls-files', '-co', '--exclude-standard'])
+    \ ['git', 'ls-files', '-co', '--exclude-standard'])
 
 " Change default prompt
 call denite#custom#option('default', 'prompt', '>')
 
 " Change ignore_globs
 call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
-      \ [ '.git/', '.ropeproject/', '__pycache__/',
-      \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/', 'node_modules/' ])
+    \ [ '.git/', '.ropeproject/', '__pycache__/',
+    \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/', 'node_modules/' ])
 
 " Custom action
 call denite#custom#action('file', 'test',
-      \ {context -> execute('let g:foo = 1')})
+    \ {context -> execute('let g:foo = 1')})
 call denite#custom#action('file', 'test2',
-      \ {context -> denite#do_action(
-      \  context, 'open', context['targets'])})
+    \ {context -> denite#do_action(
+    \  context, 'open', context['targets'])})
 
 " For vim-bookmarks
 let g:bookmark_sign = '♥'
@@ -445,6 +481,7 @@ let g:far#window_width = 70
 " Key Mappings: Customized keys
 " ----------------------------------------------------------------------------
 
+tnoremap <Esc> <C-\><C-n>
 inoremap jj <ESC>
 
 " For airline
@@ -458,6 +495,22 @@ nnoremap <Leader>j :BookmarkNext<cr>
 nnoremap <Leader>k :BookmarkPrev<cr>
 nnoremap <Leader>c :BookmarkClear<cr>
 nnoremap <Leader>x :BookmarkClearAll<cr>
+
+" For neoterm
+nnoremap <silent><leader>T :Ttoggle<cr>
+nnoremap <silent><leader>Tt :Ttoggle<cr>
+nnoremap <silent><leader>Tta :Ttoggle<cr>
+nnoremap <silent><leader>Tc :Tclose<cr>
+nnoremap <silent><leader>Tca :TcloseAll<cr>
+nnoremap <silent><leader>Tv :Tpos vertical<cr>
+nnoremap <silent><leader>Th :Tpos horizontal<cr>
+nnoremap <silent><leader>Tsf :TREPLSendFile<cr>
+nnoremap <silent><leader>Tsl :TREPLSendLine<cr>
+vnoremap <silent><leader>Ts :TREPLSendSelection<cr>
+
+nnoremap <silent><leader>Tl :call neoterm#clear()<cr>
+nnoremap <silent><leader>Tk :call neoterm#kill()<cr>
+command! -nargs=+ Tg :T git <args>
 
 " For denite
 nnoremap <c-p> :Denite file_rec<cr>
@@ -497,11 +550,12 @@ nnoremap <leader>l :ALELint<cr>
 " For buffers
 " BufOnly.vim
 nnoremap <silent> qo :BufOnly<cr>
+nnoremap <silent> qoo :BufOnly!<cr>
 
 " Use 'm/M' to move among buffers
 nnoremap <Leader>m :bn<cr>
 nnoremap <Leader>M :bp<cr>
-nnoremap <Leader>tt <C-^>
+nnoremap <Leader>t <C-^>
 nnoremap qq :bd<cr>
 
 " For indentLine
@@ -511,7 +565,7 @@ nnoremap <leader>i :IndentLinesToggle<cr>
 nnoremap <leader>ud :UndotreeToggle<cr>
 
 " For NERDTree
-nnoremap <leader>t :NERDTreeToggle<cr>
+nnoremap <leader>f :NERDTreeToggle<cr>
 
 " For vim-better-whitespace
 nnoremap <leader><space> :StripWhitespace<cr>
@@ -523,7 +577,8 @@ nnoremap <Leader>; A;<ESC>
 nnoremap <Leader>c A,<ESC>
 nnoremap <Leader>. A.<ESC>
 nnoremap <Leader>\ A \<ESC>
-nnoremap <Leader>e :tabnew
+nnoremap <Leader>e :tabnew 
+nnoremap <Leader>ee :tabnew ~/.config/nvim/init.vim
 nnoremap <Leader>p :tabprev<cr>
 nnoremap <Leader>n :tabnext<cr>
 
