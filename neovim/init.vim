@@ -39,6 +39,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('mhartington/oceanic-next')
   call dein#add('vim-airline/vim-airline')
   call dein#add('powerman/vim-plugin-AnsiEsc')
+  call dein#add('sbdchd/neoformat')
 
   " For html / css
   call dein#add('hail2u/vim-css3-syntax')
@@ -192,6 +193,13 @@ let g:airline_theme = 'oceanicnext'
 if has('termguicolors')
     set termguicolors
 endif
+
+" For neoformat
+let g:neoformat_javascript_prettier = {
+    \ 'exe': 'prettier',
+    \ 'args': ['--stdin', '--single-quote'],
+    \ 'stdin': 1,
+    \ }
 
 " For airline
 if has('statusline')
