@@ -11,38 +11,63 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   call dein#add('~/.config/nvim/repos/github.com/Shougo/dein.vim')
 
-  " call dein#add('equalsraf/neovim-gui-shim')
-  call dein#add('Shougo/deoplete.nvim')
-  call dein#add('kassio/neoterm')
-  call dein#add('w0rp/ale')
-  call dein#add('Shougo/denite.nvim')
-  call dein#add('chemzqm/denite-extra')
-  call dein#add('neoclide/denite-git')
-  call dein#add('neoclide/todoapp.vim')
-  call dein#add('Raimondi/delimitMate')
-  call dein#add('airblade/vim-gitgutter')
-  call dein#add('tpope/vim-surround')
+  " Color Schemes
+  call dein#add('kamwitsta/nordisk')
+  call dein#add('mhartington/oceanic-next')
+  call dein#add('jdkanani/vim-material-theme')
+
+  " Edit
+  " call dein#add('gilsondev/searchtasks.vim')
+  " call dein#add('chrisbra/NrrwRgn')
+  call dein#add('vim-scripts/TaskList.vim')
   call dein#add('easymotion/vim-easymotion')
+  call dein#add('tpope/vim-surround')
+  call dein#add('tpope/vim-obsession')
+  call dein#add('tpope/tpope-vim-abolish')
+  call dein#add('tpope/vim-repeat')
+  call dein#add('terryma/vim-expand-region')
   call dein#add('editorconfig/editorconfig-vim')
+  call dein#add('Raimondi/delimitMate')
   call dein#add('ntpeters/vim-better-whitespace')
   call dein#add('terryma/vim-multiple-cursors')
-  call dein#add('Yggdroot/indentLine')
-  call dein#add('mbbill/undotree')
-  call dein#add('scrooloose/nerdtree')
-  call dein#add('scrooloose/nerdcommenter')
   call dein#add('MattesGroeger/vim-bookmarks')
-  call dein#add('kshenoy/vim-signature')
   call dein#add('michaeljsmith/vim-indent-object')
-  call dein#add('inside/vim-search-pulse')
-  call dein#add('tpope/vim-repeat')
   call dein#add('godlygeek/tabular')
   call dein#add('ggVGc/vim-fuzzysearch')
   call dein#add('vim-scripts/BufOnly.vim')
   call dein#add('brooth/far.vim')
-  call dein#add('mhartington/oceanic-next')
+  call dein#add('sbdchd/neoformat')
+
+  " UI
+  " call dein#add('equalsraf/neovim-gui-shim')
+  " call dein#add('mhinz/vim-startify')
+  call dein#add('google/vim-searchindex')
+  call dein#add('Yggdroot/indentLine')
+  call dein#add('kshenoy/vim-signature')
+  call dein#add('inside/vim-search-pulse')
   call dein#add('vim-airline/vim-airline')
   call dein#add('powerman/vim-plugin-AnsiEsc')
-  call dein#add('sbdchd/neoformat')
+  call dein#add('junegunn/goyo.vim')
+  call dein#add('junegunn/limelight.vim')
+
+  " General
+  " call dein#add('hecal3/vim-leader-guide')
+  " call dein#add('c0r73x/neotags.nvim')
+  " call dein#add('ludovicchabant/vim-gutentags')
+  " call dein#add('majutsushi/tagbar')
+  call dein#add('kassio/neoterm')
+  call dein#add('Shougo/deoplete.nvim')
+  call dein#add('Shougo/denite.nvim')
+  call dein#add('chemzqm/denite-extra')
+  call dein#add('neoclide/denite-git')
+  call dein#add('neoclide/todoapp.vim')
+  call dein#add('w0rp/ale')
+  call dein#add('mbbill/undotree')
+  call dein#add('scrooloose/nerdtree')
+  call dein#add('scrooloose/nerdcommenter')
+
+  " Git
+  call dein#add('airblade/vim-gitgutter')
 
   " For html / css
   call dein#add('hail2u/vim-css3-syntax')
@@ -204,6 +229,9 @@ let g:neoformat_javascript_prettier = {
     \ 'args': ['--stdin', '--single-quote'],
     \ 'stdin': 1,
     \ }
+
+" For TaskList
+let g:tlTokenList = ['FIXME', 'TODO', 'FEATURE', 'BUG']
 
 " For airline
 if has('statusline')
@@ -648,7 +676,7 @@ nnoremap <silent> qoo :BufOnly!<cr>
 " Use 'm/M' to move among buffers
 nnoremap <Leader>m :bn<cr>
 nnoremap <Leader>M :bp<cr>
-nnoremap <Leader>t <C-^>
+nnoremap <Leader>b <C-^>
 nnoremap qq :bd<cr>
 
 " For indentLine
