@@ -11,11 +11,14 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   call dein#add('~/.config/nvim/repos/github.com/Shougo/dein.vim')
 
-  call dein#add('equalsraf/neovim-gui-shim')
+  " call dein#add('equalsraf/neovim-gui-shim')
   call dein#add('Shougo/deoplete.nvim')
   call dein#add('kassio/neoterm')
   call dein#add('w0rp/ale')
   call dein#add('Shougo/denite.nvim')
+  call dein#add('chemzqm/denite-extra')
+  call dein#add('neoclide/denite-git')
+  call dein#add('neoclide/todoapp.vim')
   call dein#add('Raimondi/delimitMate')
   call dein#add('airblade/vim-gitgutter')
   call dein#add('tpope/vim-surround')
@@ -51,6 +54,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   " For javascript
   call dein#add('carlitux/deoplete-ternjs', { 'build': 'npm i -g tern' })
   call dein#add('chemzqm/vim-jsx-improve')
+  call dein#add('heavenshell/vim-jsdoc')
   " call dein#add('pangloss/vim-javascript')
   " call dein#add('maxmellon/vim-jsx-pretty')
   " call dein#add('mxw/vim-jsx')
@@ -364,15 +368,36 @@ let g:NERDCustomDelimiters = { 'javascript.jsx': { 'left': '//', 'leftAlt': '{/*
 let g:closetag_filenames = "*.html,*.xhtml,*.js,*.jsx,*.ts"
 
 " For denite
-call denite#custom#option('default', {
-    \ 'prompt': '❯'
-    \ })
+" call denite#custom#option('default', 'direction', 'bottom')
+call denite#custom#option('default', 'prompt', '❯')
+call denite#custom#option('default', 'empty', 0)
+call denite#custom#option('default', 'auto_resize', 1)
+call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+  \ [ '.git/', '.ropeproject/', '__pycache__/',
+  \   'images/', '*.min.*', 'bundle.js', 'img/', 'fonts/'])
 
 " Change file_rec command.
 call denite#custom#var('file_rec', 'command',
     \ ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+" Buffer
+call denite#custom#var('buffer', 'date_format', '')
+
+" Change grep options.
+call denite#custom#var('grep', 'command', ['ag'])
+call denite#custom#var('grep', 'default_opts',
+    \ ['-i', '--vimgrep'])
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', [])
+call denite#custom#var('grep', 'separator', ['--'])
+call denite#custom#var('grep', 'final_opts', [])
 
 " Change mappings.
+call denite#custom#map(
+    \ 'insert',
+    \ '<C-a>',
+    \ '<denite:move_caret_to_head>',
+    \ 'noremap'
+    \)
 call denite#custom#map(
     \ 'insert',
     \ '<down>',
@@ -387,26 +412,98 @@ call denite#custom#map(
     \)
 call denite#custom#map(
     \ 'insert',
-    \ '<esc>',
-    \ '<denite:enter_mode:normal>',
-    \ 'noremap'
-    \)
-call denite#custom#map(
-    \ 'normal',
-    \ '<esc>',
-    \ '<NOP>',
+    \ '<C-v>',
+    \ '<denite:do_action:vsplit>',
     \ 'noremap'
     \)
 call denite#custom#map(
     \ 'insert',
-    \ '<c-v>',
+    \ '<C-t>',
+    \ '<denite:do_action:tabopen>',
+    \ 'noremap'
+    \)
+call denite#custom#map(
+    \ 'insert',
+    \ '<C-d>',
+    \ '<denite:do_action:delete>',
+    \ 'noremap'
+    \)
+call denite#custom#map(
+    \ 'insert',
+    \ '<C-b>',
+    \ '<denite:scroll_page_backwards>',
+    \ 'noremap'
+    \)
+call denite#custom#map(
+    \ 'insert',
+    \ '<C-f>',
+    \ '<denite:scroll_page_forwards>',
+    \ 'noremap'
+    \)
+call denite#custom#map(
+    \ 'insert',
+    \ '<C-p>',
+    \ '<denite:print_messages>',
+    \ 'noremap'
+    \)
+call denite#custom#map(
+    \ 'normal',
+    \ '<esc>',
+    \ '<denite:quit>',
+    \ 'noremap'
+    \)
+call denite#custom#map(
+    \ 'normal',
+    \ 'a',
+    \ '<denite:do_action:add>',
+    \ 'noremap'
+    \)
+call denite#custom#map(
+    \ 'normal',
+    \ 'd',
+    \ '<denite:do_action:delete>',
+    \ 'noremap'
+    \)
+call denite#custom#map(
+    \ 'normal',
+    \ 'r',
+    \ '<denite:do_action:reset>',
+    \ 'noremap'
+    \)
+call denite#custom#map(
+    \ 'normal',
+    \ '<C-v>',
     \ '<denite:do_action:vsplit>',
     \ 'noremap'
     \)
 call denite#custom#map(
     \ 'normal',
-    \ '<c-v>',
-    \ '<denite:do_action:vsplit>',
+    \ 'e',
+    \ '<denite:do_action:edit>',
+    \ 'noremap'
+    \)
+call denite#custom#map(
+    \ 'normal',
+    \ 'h',
+    \ '<denite:do_action:help>',
+    \ 'noremap'
+    \)
+call denite#custom#map(
+    \ 'normal',
+    \ 'u',
+    \ '<denite:do_action:update>',
+    \ 'noremap'
+    \)
+call denite#custom#map(
+    \ 'normal',
+    \ 'f',
+    \ '<denite:do_action:find>',
+    \ 'noremap'
+    \)
+call denite#custom#map(
+    \ 'insert',
+    \ '<esc>',
+    \ '<denite:enter_mode:normal>',
     \ 'noremap'
     \)
 call denite#custom#map(
@@ -427,35 +524,6 @@ call denite#custom#map(
     \ '<denite:delete_word_after_caret>',
     \ 'noremap'
     \)
-
-" Ag command on grep source
-call denite#custom#var('grep', 'command', ['ag'])
-call denite#custom#var('grep', 'default_opts',
-  \ ['-i', '--vimgrep'])
-call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#var('grep', 'pattern_opt', [])
-call denite#custom#var('grep', 'separator', ['--'])
-call denite#custom#var('grep', 'final_opts', [])
-
-" Define alias
-call denite#custom#alias('source', 'file_rec/git', 'file_rec')
-call denite#custom#var('file_rec/git', 'command',
-    \ ['git', 'ls-files', '-co', '--exclude-standard'])
-
-" Change default prompt
-call denite#custom#option('default', 'prompt', '>')
-
-" Change ignore_globs
-call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
-    \ [ '.git/', '.ropeproject/', '__pycache__/',
-    \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/', 'node_modules/' ])
-
-" Custom action
-call denite#custom#action('file', 'test',
-    \ {context -> execute('let g:foo = 1')})
-call denite#custom#action('file', 'test2',
-    \ {context -> denite#do_action(
-    \  context, 'open', context['targets'])})
 
 " For vim-bookmarks
 let g:bookmark_sign = '♥'
@@ -522,13 +590,29 @@ nnoremap <silent><leader>Tk :call neoterm#kill()<cr>
 command! -nargs=+ Tg :T git <args>
 
 " For denite
+nnoremap <silent> <space>p  :<C-u>Denite -resume<CR>
+nnoremap <silent> <space>j  :call execute('Denite -resume -select=+'.v:count1.' -immediately')<CR>
+nnoremap <silent> <space>k  :call execute('Denite -resume -select=-'.v:count1.' -immediately')<CR>
+
 nnoremap <c-p> :Denite file_rec<cr>
-nnoremap <leader>s :Denite buffer<cr>
-nnoremap <leader><space>s :DeniteBufferDir buffer<cr>
-nnoremap <leader>8 :DeniteCursorWord grep:. -mode=normal<cr>
-nnoremap <leader>/ :Denite grep:. -mode=normal<cr>
-nnoremap <leader><space>/ :DeniteBufferDir grep:. -mode=normal<cr>
-nnoremap <leader>d :DeniteBufferDir file_rec<cr>
+nnoremap <silent> <space>w  :<C-u>DeniteCursorWord  -auto-resize line<CR>
+nnoremap <silent> <space>c  :<C-u>Denite -mode=normal gitchanged<CR>
+nnoremap <silent> <space>l  :<C-u>Denite -mode=normal location_list<CR>
+nnoremap <silent> <space>g  :<C-u>Denite -mode=normal gitstatus<CR>
+nnoremap <silent> <space>d  :<C-u>Denite -mode=normal todo<cr>
+nnoremap <silent> <space>s  :<C-u>Denite session<cr>
+" nnoremap <silent> <space>u  :<C-u>Denite ultisnips:all<cr>
+nnoremap <silent> <space>t  :<C-u>Denite project<cr>
+nnoremap <silent> <space>a  :<C-u>Denite node<CR>
+nnoremap <silent> <space>e  :<C-u>Denite buffer<cr>
+" nnoremap <silent> <space>n  :<C-u>Denite note<cr>
+nnoremap <silent> <space>h  :<C-u>Denite history:all<cr>
+nnoremap <silent> <space>q  :<C-u>Denite commands<cr>
+nnoremap <silent> <space>f  :<C-u>Denite file_rec<cr>
+nnoremap <silent> <space>o  :<C-u>Denite outline<cr>
+nnoremap <silent> <space>/  :Denite grep:. -mode=normal<cr>
+" nnoremap <silent> <space>r  :<C-u>Denite redis_mru<cr>
+" nnoremap <silent> \r        :<C-u>Denite redis_mru:.<cr>
 
 hi link deniteMatchedChar Special
 
