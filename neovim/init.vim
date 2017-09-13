@@ -12,58 +12,189 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('~/.config/nvim/repos/github.com/Shougo/dein.vim')
 
   " Color Schemes
-  call dein#add('kamwitsta/nordisk')
+  " call dein#add('kamwitsta/nordisk')
+  " call dein#add('jdkanani/vim-material-theme')
   call dein#add('mhartington/oceanic-next')
-  call dein#add('jdkanani/vim-material-theme')
 
   " Edit
   " call dein#add('gilsondev/searchtasks.vim')
   " call dein#add('chrisbra/NrrwRgn')
   " call dein#add('SirVer/ultisnips')
   " call dein#add('honza/vim-snippets')
-  call dein#add('easymotion/vim-easymotion')
-  call dein#add('tpope/vim-surround')
-  call dein#add('tpope/tpope-vim-abolish')
-  call dein#add('tpope/vim-repeat')
-  call dein#add('terryma/vim-expand-region')
-  call dein#add('editorconfig/editorconfig-vim')
-  call dein#add('Raimondi/delimitMate')
-  call dein#add('ntpeters/vim-better-whitespace')
-  call dein#add('terryma/vim-multiple-cursors')
-  call dein#add('MattesGroeger/vim-bookmarks')
-  call dein#add('michaeljsmith/vim-indent-object')
-  call dein#add('godlygeek/tabular')
+
+  call dein#add('editorconfig/editorconfig-vim', {
+        \'on_event': 'VimEnter'
+        \})
+  call dein#add('mileszs/ack.vim', {
+        \'on_event': 'VimEnter',
+        \'hook_add': join([
+        \"if executable('ag')",
+        \"let g:ackprg = 'ag --vimgrep'",
+        \"endif"
+        \], "\n")
+        \})
+  call dein#add('kopischke/vim-stay', {
+        \'on_event': 'VimEnter',
+        \'hook_add': "set viewoptions=cursor,folds,slash,unix"
+        \})
+  call dein#add('Konfekt/FastFold', {
+        \'on_event': 'VimEnter',
+        \'hook_post_source': join([
+        \"nmap zuz <Plug>(FastFoldUpdate)",
+        \"let g:fastfold_savehook = 1",
+        \"let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']",
+        \"let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']",
+        \"let g:javascript_folding = 1"
+        \], "\n")
+        \})
+  call dein#add('easymotion/vim-easymotion', {
+        \'on_event': 'VimEnter',
+        \'hook_add': "let g:EasyMotion_smartcase = 1"
+        \})
+  call dein#add('tpope/vim-surround', {
+        \'on_event': 'VimEnter'
+        \})
+  call dein#add('tpope/tpope-vim-abolish', {
+        \'on_event': 'VimEnter'
+        \})
+  call dein#add('tpope/vim-repeat', {
+        \'on_event': 'VimEnter'
+        \})
+  call dein#add('terryma/vim-expand-region', {
+        \'on_event': 'VimEnter'
+        \})
+  call dein#add('Raimondi/delimitMate', {
+        \'on_event': 'InsertEnter',
+        \'hook_add': join([
+        \"let delimitMate_matchpairs = '(:),[:],{:}'",
+        \"let delimitMate_expand_cr = 1"
+        \], "\n")
+        \})
+  call dein#add('ntpeters/vim-better-whitespace', {
+        \'on_event': 'InsertEnter',
+        \'hook_add': join([
+        \"let g:better_whitespace_filetypes_blacklist=['diff', 'gitcommit', 'unite', 'qf', 'help', 'far_vim']",
+        \"let g:better_whitespace_filetypes_verbosity=1",
+        \"nnoremap <leader><space> :StripWhitespace<cr>"
+        \], "\n")
+        \})
+  call dein#add('terryma/vim-multiple-cursors', {
+        \'on_event': 'VimEnter'
+        \})
+  call dein#add('MattesGroeger/vim-bookmarks', {
+        \'on_event': 'InsertEnter',
+        \'hook_post_source': join([
+        \"let g:bookmark_sign = '♥'",
+        \"let g:bookmark_highlight_lines = 1",
+        \"let g:bookmark_no_default_key_mappings = 1",
+        \"hi BookMarkLine ctermbg=black ctermfg=none",
+        \"hi BookMarkSign ctermbg=none ctermfg=none",
+        \"nnoremap <Leader>mm :BookmarkToggle<cr>",
+        \"nnoremap <Leader>i :BookmarkAnnotate<cr>",
+        \"nnoremap <Leader>a :BookmarkShowAll<cr>",
+        \"nnoremap <Leader>j :BookmarkNext<cr>",
+        \"nnoremap <Leader>k :BookmarkPrev<cr>",
+        \"nnoremap <Leader>c :BookmarkClear<cr>",
+        \"nnoremap <Leader>x :BookmarkClearAll<cr>"
+        \], "\n")
+        \})
+  call dein#add('michaeljsmith/vim-indent-object', {
+        \'on_event': 'InsertEnter'
+        \})
+  call dein#add('godlygeek/tabular', {
+        \'on_event': 'InsertEnter',
+        \'hook_post_source': join([
+        \"nmap <Leader>a= :Tabularize /=<CR>",
+        \"vmap <Leader>a= :Tabularize /=<CR>",
+        \"nmap <Leader>a: :Tabularize /:<CR>",
+        \"vmap <Leader>a: :Tabularize /:<CR>",
+        \"nmap <Leader>a\" :Tabularize /\"<CR>",
+        \"vmap <Leader>a\" :Tabularize /\"<CR>",
+        \"nmap <Leader>aa :Tabularize /",
+        \"vmap <Leader>aa :Tabularize /"
+        \], "\n")
+        \})
   call dein#add('ggVGc/vim-fuzzysearch')
   call dein#add('vim-scripts/BufOnly.vim')
-  call dein#add('brooth/far.vim')
-  call dein#add('sbdchd/neoformat')
+  call dein#add('brooth/far.vim', {
+        \'on_cmd': [ 'Far', 'Farp', 'F' ],
+        \'hook_add': "let g:far#window_width = 70"
+        \})
+  call dein#add('sbdchd/neoformat', {
+        \'on_event': 'VimEnter',
+        \'hook_add': join([
+        \"let g:neoformat_javascript_prettier = {",
+        \"\\ 'exe': 'prettier',",
+        \"\\ 'args': ['--stdin', '--single-quote'],",
+        \"\\ 'stdin': 1",
+        \"\\ }"
+        \], "\n")
+        \})
   call dein#add('vim-scripts/TaskList.vim', {
-        \'on_cmd': 'TaskList'
+        \'on_event': 'VimEnter',
+        \'hook_add': "let g:tlTokenList = ['FIXME', 'TODO', 'FEATURE', 'CHANGED', 'BUG', 'HACK']",
+        \'hook_post_source': "autocmd Syntax * call matchadd('Todo',  '\\W\\zs\\(TODO\\|FIXME\\|CHANGED\\|BUG\\|HACK\\|FEATURE\\)')"
         \})
   call dein#add('tpope/vim-obsession', {
         \'on_cmd': 'Obsession'
         \})
+  call dein#add('Shougo/neosnippet-snippets')
   call dein#add('Shougo/neosnippet', {
         \'depends': 'neosnippet-snippets',
         \'on_event': 'InsertCharPre',
         \'on_ft': 'snippet',
-        \'hook_add': "
+        \'hook_add': "let g:neosnippet#snippets_directory = '~/.config/nvim/snippets/**/*.snip'",
+        \'hook_source': "
         \let g:neosnippet#enable_snipmate_compatibility = 1\n
         \let g:neosnippet#enable_completed_snippet = 1\n
-        \let g:neosnippet#expand_word_boundary = 1
-        \"})
-  call dein#add('Shougo/neosnippet-snippets', {
-        \'on_event': 'InsertEnter'
+        \let g:neosnippet#expand_word_boundary = 1\n
+        \let g:neosnippet#snippets_directory='~/.config/nvim/snippets'
+        \",
+        \'hook_post_source': join([
+        \"imap <C-k>     <Plug>(neosnippet_expand_or_jump)",
+        \"smap <C-k>     <Plug>(neosnippet_expand_or_jump)",
+        \"xmap <C-k>     <Plug>(neosnippet_expand_target)",
+        \"imap <C-k>     <Plug>(neosnippet_expand_or_jump)",
+        \"smap <expr><TAB> neosnippet#expandable_or_jumpable() ? \"\\<Plug>(neosnippet_expand_or_jump)\" : \"\\<TAB>\""
+        \], "\n")
         \})
 
   " UI
   " call dein#add('equalsraf/neovim-gui-shim')
   " call dein#add('mhinz/vim-startify')
-  call dein#add('google/vim-searchindex')
-  call dein#add('kshenoy/vim-signature')
-  call dein#add('inside/vim-search-pulse')
-  call dein#add('vim-airline/vim-airline')
-  call dein#add('powerman/vim-plugin-AnsiEsc')
+  call dein#add('powerman/vim-plugin-AnsiEsc', {
+        \'on_event': 'VimEnter'
+        \})
+  call dein#add('google/vim-searchindex', {
+        \'on_event': 'VimEnter'
+        \})
+  call dein#add('kshenoy/vim-signature', {
+        \'on_event': 'VimEnter'
+        \})
+  call dein#add('inside/vim-search-pulse', {
+        \'on_event': 'VimEnter'
+        \})
+  call dein#add('vim-airline/vim-airline', {
+        \'on_event': 'VimEnter',
+        \'hook_add': join([
+        \"if has('statusline')",
+        \"    set laststatus=2",
+        \"    set statusline=%<%f\\",
+        \"    set statusline+=%w%h%m%r",
+        \"    if has('fugitive')",
+        \"        set statusline+=%{fugitive#statusline()}",
+        \"    endif",
+        \"    set statusline+=\\ [%{&ff}/%Y]",
+        \"    set statusline+=\\ [%{getcwd()}]",
+        \"    set statusline+=%=%-14.(%l,%c%V%)\\ %p%%",
+        \"endif",
+        \"let g:airline_powerline_fonts = 1",
+        \"let g:airline#extensions#tabline#enabled = 1",
+        \"let g:airline#extensions#tabline#formatter = 'unique_tail'",
+        \"let g:airline#extensions#tabline#buffer_nr_show = 1"
+        \], "\n"),
+        \'hook_post_source': "nnoremap <leader>al :AirlineToggle<cr>"
+        \})
   call dein#add('Yggdroot/indentLine', {
         \'on_cmd': 'IndentLinesToggle'
         \})
@@ -89,7 +220,12 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('scrooloose/nerdtree')
   call dein#add('scrooloose/nerdcommenter')
   call dein#add('majutsushi/tagbar', {
-        \'on_cmd': 'TagbarToggle'
+        \'on_cmd': 'TagbarToggle',
+        \'hook_source': join([
+        \"if executable('jsctags')",
+        \"  let g:tagbar_type_javascript = { 'ctagsbin': 'jsctags' }",
+        \"endif"
+        \], "\n")
         \})
   call dein#add('Shougo/deoplete.nvim', {
         \'on_event': 'InsertEnter'
@@ -124,7 +260,22 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   " For javascript
   " call dein#add('pangloss/vim-javascript')
-  " call dein#add('maxmellon/vim-jsx-pretty')
+  " call dein#add('maxmellon/vim-jsx-pretty', {
+  "       \'on_ft': [ 'javascript', 'jsx', 'javascript.jsx' ],
+  "       \'hook_post_source':join([
+  "       \"let g:vim_jsx_pretty_enable_jsx_highlight = 0",
+  "       \"let g:vim_jsx_pretty_colorful_config = 1",
+  "       \"hi def link jsxTag Function",
+  "       \"hi def link jsxTagName Function",
+  "       \"hi def link jsxCloseTag Function",
+  "       \"hi def link jsxCloseString Function",
+  "       \"hi def link jsxString String",
+  "       \"hi def link jsxNameSpace Function",
+  "       \"hi def link jsxComment Error",
+  "       \"hi def link jsxAttrib Type",
+  "       \"hi def link jsxEscapeJs jsxEscapeJs"
+  "       \], "\n")
+  "       \})
   " call dein#add('mxw/vim-jsx')
   call dein#add('carlitux/deoplete-ternjs', {
         \'on_event': 'InsertEnter',
@@ -283,6 +434,8 @@ set backspace=eol,start,indent               " Configure backspace so it acts as
 set whichwrap+=<,>,h,l
 set pastetoggle=<F5>                         " when in insert mode, toggle between 'paste' and 'nopaste'
 
+set foldmethod=manual
+
 " let &colorcolumn="80,".join(range(120,999),",")
 let &colorcolumn="120"
 
@@ -298,40 +451,10 @@ colorscheme OceanicNext
 set t_Co=256
 let g:oceanic_next_terminal_bold = 1
 let g:oceanic_next_terminal_italic = 1
-let g:airline_theme = 'oceanicnext'
 
 if has('termguicolors')
     set termguicolors
 endif
-
-" For neoformat
-let g:neoformat_javascript_prettier = {
-    \ 'exe': 'prettier',
-    \ 'args': ['--stdin', '--single-quote'],
-    \ 'stdin': 1,
-    \ }
-
-" For TaskList
-let g:tlTokenList = ['FIXME', 'TODO', 'FEATURE', 'BUG']
-
-" For airline
-if has('statusline')
-    set laststatus=2
-    set statusline=%<%f\                     " Filename
-    set statusline+=%w%h%m%r                 " Options
-    if has('fugitive')
-        set statusline+=%{fugitive#statusline()} " Git Hotness
-    endif
-    set statusline+=\ [%{&ff}/%Y]            " Filetype
-    set statusline+=\ [%{getcwd()}]          " Current dir
-    set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
-    " autocmd VimEnter * AirlineToggle
-endif
-
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline#extensions#tabline#buffer_nr_show = 1
 
 " For deoplete.
 let g:deoplete#enable_at_startup = 1
@@ -343,8 +466,7 @@ set completeopt+=noselect
 autocmd CompleteDone * pclose
 inoremap <expr><c-l> deoplete#complete_common_string()
 
-" For deoplete-go
-let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
+" For deoplete-go let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
 let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
 let g:deoplete#sources#go#use_cache = 1
 " let g:deoplete#sources#go#json_directory = '/path/to/data_dir'
@@ -427,9 +549,6 @@ endif
 " For indentLine
 let g:indentLine_enabled = 0
 
-" For vim-easymotion
-let g:EasyMotion_smartcase = 1
-
 " For vim-jsx
 " let g:jsx_ext_required = 0 " Allow JSX in normal JS files"
 
@@ -440,19 +559,6 @@ let g:elm_detailed_complete = 1
 let g:elm_format_autosave = 1
 let g:elm_format_fail_silently = 1
 " let g:elm_format_two_spaces = 1
-
-" For vim-jsx-pretty
-let g:vim_jsx_pretty_enable_jsx_highlight = 0
-let g:vim_jsx_pretty_colorful_config = 1
-hi def link jsxTag Function
-hi def link jsxTagName Function
-hi def link jsxCloseTag Function
-hi def link jsxCloseString Function
-hi def link jsxString String
-hi def link jsxNameSpace Function
-hi def link jsxComment Error
-hi def link jsxAttrib Type
-hi def link jsxEscapeJs jsxEscapeJs
 
 " For NERDTree
 let NERDTreeWinSize=32
@@ -631,30 +737,9 @@ call denite#custom#map(
     \ 'noremap'
     \)
 
-" For vim-bookmarks
-let g:bookmark_sign = '♥'
-let g:bookmark_highlight_lines = 1
-let g:bookmark_no_default_key_mappings = 1
-
-hi BookMarkLine ctermbg=black ctermfg=none
-hi BookMarkSign ctermbg=none ctermfg=none
-
 " For vim-search-pulse
 let g:vim_search_pulse_mode = 'pattern'
 let g:vim_search_pulse_duration = 400
-
-" For delimitMate
-let delimitMate_matchpairs = "(:),[:],{:}"
-let delimitMate_expand_cr = 1
-
-" For vim-better-whitespace
-" highlight ExtraWhitespace ctermbg=red
-let g:better_whitespace_filetypes_blacklist=['diff', 'gitcommit', 'unite', 'qf', 'help', 'far_vim']
-let g:better_whitespace_filetypes_verbosity=1
-
-" For far
-let g:far#window_width = 70
-" let g:far#preview_window_width = 70
 
 " ----------------------------------------------------------------------------
 " Key Mappings: Customized keys
@@ -662,18 +747,6 @@ let g:far#window_width = 70
 
 tnoremap <Esc> <C-\><C-n>
 inoremap jj <ESC>
-
-" For airline
-nnoremap <leader>al :AirlineToggle<cr>
-
-" For vim-bookmarks
-nnoremap <Leader>mm :BookmarkToggle<cr>
-nnoremap <Leader>i :BookmarkAnnotate<cr>
-nnoremap <Leader>a :BookmarkShowAll<cr>
-nnoremap <Leader>j :BookmarkNext<cr>
-nnoremap <Leader>k :BookmarkPrev<cr>
-nnoremap <Leader>c :BookmarkClear<cr>
-nnoremap <Leader>x :BookmarkClearAll<cr>
 
 " For neoterm
 nnoremap <silent><leader>T :Ttoggle<cr>
@@ -729,37 +802,10 @@ nnoremap tt :TSType<cr>
 nnoremap ttd :TSTypeDef<cr>
 nnoremap tr :TSRename<cr>
 
-" For neosnippet
-" Plugin key-mappings.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-" SuperTab like snippets behavior.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-"imap <expr><TAB>
-" \ pumvisible() ? "\<C-n>" :
-" \ neosnippet#expandable_or_jumpable() ?
-" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
 " For conceal markers.
 if has('conceal')
   set conceallevel=2 concealcursor=niv
 endif
-
-" For tabular
-nmap <Leader>a= :Tabularize /=<CR>
-vmap <Leader>a= :Tabularize /=<CR>
-nmap <Leader>a: :Tabularize /:<CR>
-vmap <Leader>a: :Tabularize /:<CR>
-nmap <Leader>a" :Tabularize /"<CR>
-vmap <Leader>a" :Tabularize /"<CR>
-nmap <Leader>aa :Tabularize /
-vmap <Leader>aa :Tabularize /
 
 " For ale
 nnoremap <leader>l :ALELint<cr>
@@ -783,9 +829,6 @@ nnoremap <leader>ud :UndotreeToggle<cr>
 
 " For NERDTree
 nnoremap <leader>f :NERDTreeToggle<cr>
-
-" For vim-better-whitespace
-nnoremap <leader><space> :StripWhitespace<cr>
 
 " For FuzzySearch
 nnoremap <leader>fs :FuzzySearch<cr>
