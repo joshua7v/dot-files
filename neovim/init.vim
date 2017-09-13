@@ -21,10 +21,8 @@ if dein#load_state('~/.config/nvim/plugged/')
   " call dein#add('chrisbra/NrrwRgn')
   " call dein#add('SirVer/ultisnips')
   " call dein#add('honza/vim-snippets')
-  call dein#add('vim-scripts/TaskList.vim', { 'on_cmd': 'TaskList' })
   call dein#add('easymotion/vim-easymotion')
   call dein#add('tpope/vim-surround')
-  call dein#add('tpope/vim-obsession', { 'on_cmd': 'Obsession' })
   call dein#add('tpope/tpope-vim-abolish')
   call dein#add('tpope/vim-repeat')
   call dein#add('terryma/vim-expand-region')
@@ -39,79 +37,157 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('vim-scripts/BufOnly.vim')
   call dein#add('brooth/far.vim')
   call dein#add('sbdchd/neoformat')
-  call dein#add('Shougo/neosnippet')
-  call dein#add('Shougo/neosnippet-snippets')
+  call dein#add('vim-scripts/TaskList.vim', {
+        \'on_cmd': 'TaskList'
+        \})
+  call dein#add('tpope/vim-obsession', {
+        \'on_cmd': 'Obsession'
+        \})
+  call dein#add('Shougo/neosnippet', {
+        \'depends': 'neosnippet-snippets',
+        \'on_event': 'InsertCharPre',
+        \'on_ft': 'snippet',
+        \'hook_add': "
+        \let g:neosnippet#enable_snipmate_compatibility = 1\n
+        \let g:neosnippet#enable_completed_snippet = 1\n
+        \let g:neosnippet#expand_word_boundary = 1
+        \"})
+  call dein#add('Shougo/neosnippet-snippets', {
+        \'on_event': 'InsertEnter'
+        \})
 
   " UI
   " call dein#add('equalsraf/neovim-gui-shim')
   " call dein#add('mhinz/vim-startify')
   call dein#add('google/vim-searchindex')
-  call dein#add('Yggdroot/indentLine', { 'on_cmd': 'IndentLinesToggle' })
   call dein#add('kshenoy/vim-signature')
   call dein#add('inside/vim-search-pulse')
   call dein#add('vim-airline/vim-airline')
   call dein#add('powerman/vim-plugin-AnsiEsc')
-  call dein#add('junegunn/goyo.vim', { 'on_cmd': 'Goyo' })
-  call dein#add('junegunn/limelight.vim', { 'on_cmd': 'Limelight' })
-  call dein#add('itchyny/calendar.vim', { 'on_cmd': 'Calendar' })
+  call dein#add('Yggdroot/indentLine', {
+        \'on_cmd': 'IndentLinesToggle'
+        \})
+  call dein#add('junegunn/goyo.vim', {
+        \'on_cmd': 'Goyo'
+        \})
+  call dein#add('junegunn/limelight.vim', {
+        \'on_cmd': 'Limelight'
+        \})
+  call dein#add('itchyny/calendar.vim', {
+        \'on_cmd': 'Calendar'
+        \})
 
   " General
   " call dein#add('hecal3/vim-leader-guide')
   " call dein#add('c0r73x/neotags.nvim')
   " call dein#add('neoclide/denite-git')
   " call dein#add('ludovicchabant/vim-gutentags')
-  call dein#add('majutsushi/tagbar', { 'on_cmd': 'TagbarToggle' })
   call dein#add('kassio/neoterm')
-  call dein#add('Shougo/deoplete.nvim', { 'on_event': 'InsertEnter' })
   call dein#add('Shougo/denite.nvim')
-  call dein#add('chemzqm/denite-extra', { 'on_cmd': 'Denite' })
   call dein#add('neoclide/todoapp.vim')
   call dein#add('w0rp/ale')
-  call dein#add('mbbill/undotree', { 'on_cmd': 'UndotreeToggle' })
   call dein#add('scrooloose/nerdtree')
   call dein#add('scrooloose/nerdcommenter')
+  call dein#add('majutsushi/tagbar', {
+        \'on_cmd': 'TagbarToggle'
+        \})
+  call dein#add('Shougo/deoplete.nvim', {
+        \'on_event': 'InsertEnter'
+        \})
+  call dein#add('chemzqm/denite-extra', {
+        \'on_cmd': 'Denite'
+        \})
+  call dein#add('mbbill/undotree', {
+        \'on_cmd': 'UndotreeToggle'
+        \})
 
   " Git
   call dein#add('airblade/vim-gitgutter')
 
   " For html / css
-  call dein#add('hail2u/vim-css3-syntax')
-  call dein#add('alvan/vim-closetag')
-  call dein#add('mattn/emmet-vim')
-  call dein#add('gorodinskiy/vim-coloresque')
-  call dein#add('chrisbra/Colorizer')
+  " call dein#add('gorodinskiy/vim-coloresque')
+  call dein#add('hail2u/vim-css3-syntax', {
+        \'on_ft': 'css'
+        \})
+  call dein#add('alvan/vim-closetag', {
+        \'on_ft': [ 'html', 'jsx', 'javascript', 'javascript.jsx' ],
+        \'hook_add': "
+        \let g:closetag_filenames = '*.html,*.xhtml,*.js,*.jsx,*.ts,*.tsx'
+        \"})
+  call dein#add('mattn/emmet-vim', {
+        \'on_ft': [ 'html', 'css', 'jsx', 'javascript', 'javascript.jsx' ],
+        \'hook_add': "
+        \let g:user_emmet_leader_key='<C-e>'\n
+        \let g:user_emmet_mode='a'
+        \"})
+  call dein#add('chrisbra/Colorizer', { 'on_cmd': 'ColorToggle' })
 
   " For javascript
-  call dein#add('carlitux/deoplete-ternjs', { 'on_event': 'InsertEnter', 'on_ft': [ 'javascript', 'jsx', 'javascript.jsx' ]})
-  call dein#add('chemzqm/vim-jsx-improve', { 'on_ft': [ 'javascript', 'jsx', 'javascript.jsx' ]})
-  call dein#add('heavenshell/vim-jsdoc', { 'on_ft': [ 'javascript', 'jsx', 'javascript.jsx', 'typescript', 'tsx', 'typescript.tsx' ]})
   " call dein#add('pangloss/vim-javascript')
   " call dein#add('maxmellon/vim-jsx-pretty')
   " call dein#add('mxw/vim-jsx')
+  call dein#add('carlitux/deoplete-ternjs', {
+        \'on_event': 'InsertEnter',
+        \'on_ft': [ 'javascript', 'jsx', 'javascript.jsx' ]
+        \})
+  call dein#add('chemzqm/vim-jsx-improve', {
+        \'on_ft': [ 'javascript', 'jsx', 'javascript.jsx' ]
+        \})
+  call dein#add('heavenshell/vim-jsdoc', {
+        \'on_ft': [ 'javascript', 'jsx', 'javascript.jsx', 'typescript', 'tsx', 'typescript.tsx' ]
+        \})
 
   " For elm
-  call dein#add('ElmCast/elm-vim', { 'on_ft': [ 'elm' ]})
+  call dein#add('ElmCast/elm-vim', {
+        \'on_ft': 'elm'
+        \})
 
   " For typescript
-  call dein#add('mhartington/nvim-typescript', { 'on_event': 'InsertEnter', 'on_ft': [ 'typescript', 'tsx', 'typescript.tsx' ]})
-  call dein#add('leafgarland/typescript-vim', { 'on_ft': [ 'typescript', 'tsx', 'typescript.tsx' ]})
-  call dein#add('HerringtonDarkholme/yats.vim', { 'on_ft': [ 'typescript', 'tsx', 'typescript.tsx' ]})
-  call dein#add('ianks/vim-tsx', { 'on_ft': [ 'typescript', 'tsx', 'typescript.tsx' ]})
+  call dein#add('mhartington/nvim-typescript', {
+        \'on_event': 'InsertEnter',
+        \'on_ft': [ 'typescript', 'tsx', 'typescript.tsx' ]
+        \})
+  call dein#add('leafgarland/typescript-vim', {
+        \'on_ft': [ 'typescript', 'tsx', 'typescript.tsx' ]
+        \})
+  call dein#add('HerringtonDarkholme/yats.vim', {
+        \'on_ft': [ 'typescript', 'tsx', 'typescript.tsx' ]
+        \})
+  call dein#add('ianks/vim-tsx', {
+        \'on_ft': [ 'typescript', 'tsx', 'typescript.tsx' ]
+        \})
 
   " For elixir
-  call dein#add('elixir-editors/vim-elixir', { 'on_ft': [ 'elixir' ]})
-  call dein#add('slashmili/alchemist.vim', { 'on_ft': [ 'elixir']})
+  call dein#add('elixir-editors/vim-elixir', {
+        \'on_ft': 'elixir'
+        \})
+  call dein#add('slashmili/alchemist.vim', {
+        \'on_ft': 'elixir'
+        \})
 
   " For python
-  call dein#add('davidhalter/jedi-vim', { 'on_ft': 'python' })
+  call dein#add('davidhalter/jedi-vim', {
+        \'on_ft': 'python'
+        \})
 
   " For go
-  call dein#add('fatih/vim-go', { 'on_event': 'InsertEnter', 'on_ft': [ 'go' ]})
-  call dein#add('nsf/gocode', { 'rtp': 'nvim', 'on_ft': [ 'go' ] })
-  call dein#add('zchee/deoplete-go', { 'build': 'make', 'on_ft': [ 'go' ] })
+  call dein#add('fatih/vim-go', {
+        \'on_event': 'InsertEnter',
+        \'on_ft': 'go'
+        \})
+  call dein#add('nsf/gocode', {
+        \'rtp': 'nvim',
+        \'on_ft': 'go'
+        \})
+  call dein#add('zchee/deoplete-go', {
+        \'build': 'make',
+        \'on_ft': 'go'
+        \})
 
   " For docker
-  call dein#add('ekalinin/Dockerfile.vim', { 'on_ft': [ 'Dockerfile' ]})
+  call dein#add('ekalinin/Dockerfile.vim', {
+        \'on_ft': 'Dockerfile'
+        \})
 
   call dein#end()
   call dein#save_state()
@@ -397,9 +473,6 @@ let g:NERDTrimTrailingWhitespace = 1
 let g:NERDCompactSexyComs = 1
 let g:NERDCustomDelimiters = { 'javascript.jsx': { 'left': '//', 'leftAlt': '{/*', 'rightAlt': '*/}' } }
 
-" For vim-closetag
-let g:closetag_filenames = "*.html,*.xhtml,*.js,*.jsx,*.ts"
-
 " For denite
 " call denite#custom#option('default', 'direction', 'bottom')
 call denite#custom#option('default', 'prompt', '❯')
@@ -565,10 +638,6 @@ let g:bookmark_no_default_key_mappings = 1
 
 hi BookMarkLine ctermbg=black ctermfg=none
 hi BookMarkSign ctermbg=none ctermfg=none
-
-" For emmet-vim
-let g:user_emmet_leader_key='<C-e>'
-let g:user_emmet_mode='a'
 
 " For vim-search-pulse
 let g:vim_search_pulse_mode = 'pattern'
