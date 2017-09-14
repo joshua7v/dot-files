@@ -15,6 +15,8 @@ if dein#load_state('~/.config/nvim/plugged/')
   " call dein#add('kamwitsta/nordisk')
   " call dein#add('jdkanani/vim-material-theme')
   call dein#add('mhartington/oceanic-next')
+  call dein#add('morhetz/gruvbox')
+  call dein#add('joshdick/onedark.vim')
 
   " Edit
   " call dein#add('gilsondev/searchtasks.vim')
@@ -38,6 +40,9 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \"let g:NERDCustomDelimiters = { 'javascript.jsx': { 'left': '//', 'leftAlt': '{/*', 'rightAlt': '*/}' } }"
   "        \], "\n")
   "        \})
+  call dein#add('terryma/vim-multiple-cursors', {
+        \'on_event': 'VimEnter'
+        \})
   call dein#add('editorconfig/editorconfig-vim', {
         \'on_event': 'VimEnter'
         \})
@@ -61,7 +66,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"endif"
         \], "\n"),
         \'hook_post_source': join([
-        \"autocmd Syntax * call matchadd('Todo',  '\\W\\zs\\(TODO\\|FIXME\\|CHANGED\\|BUG\\|HACK\\|FEATURE\\)')"
+        \"autocmd Syntax * call matchadd('Todo',  '\\W\\zs\\(TODO\\|FIXME\\|CHANGED\\|BUG\\|HACK\\|FEATURE\\)')",
         \], "\n")
         \})
   call dein#add('kopischke/vim-stay', {
@@ -105,9 +110,6 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"let g:better_whitespace_filetypes_blacklist=['diff', 'gitcommit', 'unite', 'qf', 'help', 'far_vim']",
         \"let g:better_whitespace_filetypes_verbosity=1"
         \], "\n")
-        \})
-  call dein#add('terryma/vim-multiple-cursors', {
-        \'on_event': 'VimEnter'
         \})
   call dein#add('MattesGroeger/vim-bookmarks', {
         \'on_cmd': 'BookmarkToggle',
@@ -162,6 +164,8 @@ if dein#load_state('~/.config/nvim/plugged/')
   " UI
   " call dein#add('equalsraf/neovim-gui-shim')
   " call dein#add('mhinz/vim-startify')
+  " call dein#add('liuchengxu/eleline.vim'),
+  call dein#add('guns/xterm-color-table.vim')
   call dein#add('kshenoy/vim-signature')
   call dein#add('powerman/vim-plugin-AnsiEsc', {
         \'on_event': 'VimEnter'
@@ -218,12 +222,26 @@ if dein#load_state('~/.config/nvim/plugged/')
   " call dein#add('neoclide/denite-git')
   " call dein#add('ludovicchabant/vim-gutentags')
   " call dein#add('neoclide/todoapp.vim')
-  call dein#add('kassio/neoterm', {
-        \'hook_post_source': join([
-        \"let g:neoterm_automap_keys = ',tt'",
-        \"let g:neoterm_position = 'horizontal'",
-        \"let g:neoterm_autoscroll = 1"
-        \], "\n")
+  " call dein#add('zenbro/mirror.vim')
+  " call dein#add('kassio/neoterm', {
+  "       \'on_event': 'VimEnter',
+  "       \'hook_add': join([
+  "       \"let g:neoterm_automap_keys = ',tt'",
+  "       \"let g:neoterm_position = 'horizontal'",
+  "       \"let g:neoterm_autoscroll = 1",
+  "       \], "\n")
+  "       \})
+  call dein#add('Shougo/echodoc.vim', {
+        \'on_event': 'InsertEnter'
+        \})
+  call dein#add('Shougo/deol.nvim', {
+        \'on_event': 'VimEnter'
+        \})
+  call dein#add('zefei/vim-wintabs', {
+        \'on_event': 'VimEnter'
+        \})
+  call dein#add('lambdalisue/gina.vim', {
+        \'on_event': 'VimEnter'
         \})
   call dein#add('Shougo/denite.nvim', {
         \'on_cmd': 'Denite',
@@ -324,7 +342,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'on_event': 'VimEnter',
         \'hook_add': join([
         \"let g:ale_linters = { 'javascript': ['eslint'], 'typescript': ['tsserver'] }",
-        \"let g:ale_lint_on_save = 1",
+        \"let g:ale_lint_on_save = 0",
         \"let g:ale_sign_error = '✖'",
         \"let g:ale_sign_warning = '⚠'",
         \"let g:ale_lint_on_text_changed = 'never'",
@@ -614,23 +632,6 @@ let &colorcolumn="120"
 autocmd InsertEnter * :set norelativenumber " no relativenumber in insert mode
 autocmd InsertLeave * :set relativenumber   " show relativenumber when leave insert mode
 
-let g:terminal_color_0  = '#2e3436'
-let g:terminal_color_1  = '#cc0000'
-let g:terminal_color_2  = '#4e9a06'
-let g:terminal_color_3  = '#c4a000'
-let g:terminal_color_4  = '#3465a4'
-let g:terminal_color_5  = '#75507b'
-let g:terminal_color_6  = '#0b939b'
-let g:terminal_color_7  = '#d3d7cf'
-let g:terminal_color_8  = '#555753'
-let g:terminal_color_9  = '#ef2929'
-let g:terminal_color_10 = '#8ae234'
-let g:terminal_color_11 = '#fce94f'
-let g:terminal_color_12 = '#729fcf'
-let g:terminal_color_13 = '#ad7fa8'
-let g:terminal_color_14 = '#00f5e9'
-let g:terminal_color_15 = '#eeeeec'
-
 " ----------------------------------------------------------------------------
 " Settings: plugin
 " ----------------------------------------------------------------------------
@@ -691,9 +692,6 @@ vmap <Leader>aa :Tabularize /
 
 nnoremap <leader>fs :FuzzySearch<cr>
 
-nnoremap <silent> qo :BufOnly<cr>
-nnoremap <silent> qoo :BufOnly!<cr>
-
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
 smap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
@@ -702,18 +700,19 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expan
 
 nnoremap <leader>i :IndentLinesToggle<cr>
 
-nnoremap <silent><leader>T :Ttoggle<cr>
-nnoremap <silent><leader>Tt :Ttoggle<cr>
-nnoremap <silent><leader>Tta :Ttoggle<cr>
-nnoremap <silent><leader>Tc :Tclose<cr>
-nnoremap <silent><leader>Tca :TcloseAll<cr>
-nnoremap <silent><leader>Tv :Tpos vertical<cr>
-nnoremap <silent><leader>Th :Tpos horizontal<cr>
-nnoremap <silent><leader>Tsf :TREPLSendFile<cr>
-nnoremap <silent><leader>Tsl :TREPLSendLine<cr>
-vnoremap <silent><leader>Ts :TREPLSendSelection<cr>
-nnoremap <silent><leader>Tl :call neoterm#clear()<cr>
-nnoremap <silent><leader>Tk :call neoterm#kill()<cr>",command! -nargs=+ Tg :T git <args>
+nnoremap <leader>T :Deol 
+" nnoremap <silent><leader>T :Ttoggle<cr>
+" nnoremap <silent><leader>Tt :Ttoggle<cr>
+" nnoremap <silent><leader>Tta :Ttoggle<cr>
+" nnoremap <silent><leader>Tc :Tclose<cr>
+" nnoremap <silent><leader>Tca :TcloseAll<cr>
+" nnoremap <silent><leader>Tv :Tpos vertical<cr>
+" nnoremap <silent><leader>Th :Tpos horizontal<cr>
+" nnoremap <silent><leader>Tsf :TREPLSendFile<cr>
+" nnoremap <silent><leader>Tsl :TREPLSendLine<cr>
+" vnoremap <silent><leader>Ts :TREPLSendSelection<cr>
+" nnoremap <silent><leader>Tl :call neoterm#clear()<cr>
+" nnoremap <silent><leader>Tk :call neoterm#kill()<cr>",command! -nargs=+ Tg :T git <args>
 
 nnoremap <silent> <space>p  :<C-u>Denite -resume<CR>
 nnoremap <silent> <space>j  :call execute('Denite -resume -select=+'.v:count1.' -immediately')<CR>
@@ -748,18 +747,30 @@ nnoremap <leader>ct :ColorToggle<cr>
 
 nnoremap <leader>jdd :JsDoc<cr>
 
-nnoremap td :TSDoc<cr>"
-nnoremap tdd :TSDef<cr>"
-nnoremap th :TSDefPreview<cr>"
-nnoremap ti :TSImport<cr>"
-nnoremap tec :TSEditConfig<cr>"
-nnoremap tre :TSRefs<cr>"
-nnoremap tt :TSType<cr>"
-nnoremap ttd :TSTypeDef<cr>"
-nnoremap tr :TSRename<cr>"
+nnoremap td :TSDoc<cr>
+nnoremap tdd :TSDef<cr>
+nnoremap th :TSDefPreview<cr>
+nnoremap ti :TSImport<cr>
+nnoremap tec :TSEditConfig<cr>
+nnoremap tre :TSRefs<cr>
+nnoremap tt :TSType<cr>
+nnoremap ttd :TSTypeDef<cr>
+nnoremap tr :TSRename<cr>
+
+" if dein#tap('oceanic-next')
+"   hi TabLineFill ctermfg=237 ctermbg=145 guifg=#343d46 guibg=#a7adba
+" endif
 
 if dein#tap('goyo.vim')
 	nnoremap <Leader>G :Goyo<CR>
+endif
+
+if dein#tap('vim-wintabs')
+  let g:wintabs_display = 'statusline'
+  let g:wintabs_ui_sep_leftmost = ''
+  let g:wintabs_ui_sep_rightmost = ''
+  let g:wintabs_ui_active_left = '['
+  let g:wintabs_ui_active_right = ']'
 endif
 
 if dein#tap('undotree')
@@ -808,11 +819,6 @@ if dein#tap('vim-gitgutter')
 	nmap <Leader>hp <Plug>GitGutterPreviewHunk
 endif
 
-if dein#tap('vim-expand-region')
-	xmap v <Plug>(expand_region_expand)
-	xmap V <Plug>(expand_region_shrink)
-endif
-
 if dein#tap('CamelCaseMotion')
 	nmap <silent> e <Plug>CamelCaseMotion_e
 	xmap <silent> e <Plug>CamelCaseMotion_e
@@ -825,16 +831,31 @@ if dein#tap('CamelCaseMotion')
 	omap <silent> b <Plug>CamelCaseMotion_b
 endif
 
+if dein#tap('vim-wintabs')
+  map <leader>n <Plug>(wintabs_previous)
+  map <leader>m <Plug>(wintabs_next)
+  map qq <Plug>(wintabs_close)
+  map qo <Plug>(wintabs_only)
+  map <leader>c <Plug>(wintabs_close_window)
+  map <leader>qo <Plug>(wintabs_only_window)
+  nnoremap <Leader>b <C-^>
+  command! Tabc WintabsCloseVimtab
+  command! Tabo WintabsOnlyVimtab
+else
+  " Use 'm/M' to move among buffers
+  nnoremap <Leader>n :bn<cr>
+  nnoremap <Leader>m :bp<cr>
+  nnoremap <Leader>b <C-^>
+  nnoremap qq :bd<cr>
+
+  nnoremap <silent> qo :BufOnly<cr>
+  nnoremap <silent> qoo :BufOnly!<cr>
+endif
+
 " For conceal markers.
 if has('conceal')
   set conceallevel=2 concealcursor=niv
 endif
-
-" Use 'm/M' to move among buffers
-nnoremap <Leader>m :bn<cr>
-nnoremap <Leader>M :bp<cr>
-nnoremap <Leader>b <C-^>
-nnoremap qq :bd<cr>
 
 nnoremap <Leader>; A;<ESC>
 nnoremap <Leader>c A,<ESC>
@@ -922,6 +943,23 @@ if has('macunix')
   " vnoremap <C-x> :!pbcopy<cr>
   " vnoremap <C-c> :w !pbcopy<cr><cr>
 endif
+
+let g:terminal_color_0  = '#2e3436'
+let g:terminal_color_1  = '#cc0000'
+let g:terminal_color_2  = '#4e9a06'
+let g:terminal_color_3  = '#c4a000'
+let g:terminal_color_4  = '#3465a4'
+let g:terminal_color_5  = '#75507b'
+let g:terminal_color_6  = '#0b939b'
+let g:terminal_color_7  = '#d3d7cf'
+let g:terminal_color_8  = '#555753'
+let g:terminal_color_9  = '#ef2929'
+let g:terminal_color_10 = '#8ae234'
+let g:terminal_color_11 = '#fce94f'
+let g:terminal_color_12 = '#729fcf'
+let g:terminal_color_13 = '#ad7fa8'
+let g:terminal_color_14 = '#00f5e9'
+let g:terminal_color_15 = '#eeeeec'
 
 hi! link SignColumn   LineNr
 hi! link ShowMarksHLl DiffAdd
