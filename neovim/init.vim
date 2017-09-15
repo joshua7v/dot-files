@@ -97,6 +97,9 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('terryma/vim-expand-region', {
         \'on_event': 'VimEnter'
         \})
+  " call dein#add('jiangmiao/auto-pairs', {
+  "       \'on_event': 'InsertEnter'
+  "       \})
   call dein#add('Raimondi/delimitMate', {
         \'on_event': 'InsertEnter',
         \'hook_add': join([
@@ -444,6 +447,9 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \})
   " call dein#add('mxw/vim-jsx')
   " let g:jsx_ext_required = 0 " Allow JSX in normal JS files"
+  call dein#add('moll/vim-node', {
+        \'on_ft': [ 'javascript', 'jsx', 'javascript.jsx', 'tsx', 'typescript', 'typescript.tsx' ]
+        \})
   call dein#add('carlitux/deoplete-ternjs', {
         \'on_event': 'InsertEnter',
         \'on_ft': [ 'javascript', 'jsx', 'javascript.jsx' ],
@@ -458,6 +464,12 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
   call dein#add('heavenshell/vim-jsdoc', {
         \'on_ft': [ 'javascript', 'jsx', 'javascript.jsx', 'typescript', 'tsx', 'typescript.tsx' ]
+        \})
+
+  " For json
+  call dein#add('elzr/vim-json', {
+        \'on_ft': 'json',
+        \'hook_add': "let g:vim_json_syntax_conceal = 0"
         \})
 
   " For elm
