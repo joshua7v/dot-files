@@ -380,7 +380,33 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"let g:deoplete#enable_at_startup = 1",
         \"let g:echodoc_enable_at_startup=1",
         \"set splitbelow",
-        \"set completeopt+=noselect"
+        \"set completeopt+=noselect",
+        \], "\n"),
+        \'hook_post_source': join([
+        \"call deoplete#custom#set('omni',          'mark', '⌾')",
+        \"call deoplete#custom#set('ternjs',        'mark', '⌁')",
+        \"call deoplete#custom#set('jedi',          'mark', '⌁')",
+        \"call deoplete#custom#set('vim',           'mark', '⌁')",
+        \"call deoplete#custom#set('neosnippet',    'mark', '⌘')",
+        \"call deoplete#custom#set('tag',           'mark', '⌦')",
+        \"call deoplete#custom#set('around',        'mark', '↻')",
+        \"call deoplete#custom#set('buffer',        'mark', 'ℬ')",
+        \"call deoplete#custom#set('tmux-complete', 'mark', '⊶')",
+        \"call deoplete#custom#set('syntax',        'mark', '♯')",
+        \"call deoplete#custom#set('vim',           'rank', 630)",
+        \"call deoplete#custom#set('ternjs',        'rank', 620)",
+        \"call deoplete#custom#set('jedi',          'rank', 610)",
+        \"call deoplete#custom#set('omni',          'rank', 600)",
+        \"call deoplete#custom#set('neosnippet',    'rank', 510)",
+        \"call deoplete#custom#set('member',        'rank', 500)",
+        \"call deoplete#custom#set('file_include',  'rank', 420)",
+        \"call deoplete#custom#set('file',          'rank', 410)",
+        \"call deoplete#custom#set('tag',           'rank', 400)",
+        \"call deoplete#custom#set('around',        'rank', 330)",
+        \"call deoplete#custom#set('buffer',        'rank', 320)",
+        \"call deoplete#custom#set('dictionary',    'rank', 310)",
+        \"call deoplete#custom#set('tmux-complete', 'rank', 300)",
+        \"call deoplete#custom#set('syntax',        'rank', 200)"
         \], "\n")
         \})
   call dein#add('chemzqm/denite-extra', {
@@ -637,6 +663,7 @@ set whichwrap+=<,>,h,l
 set pastetoggle=<F5>                         " when in insert mode, toggle between 'paste' and 'nopaste'
 
 set foldmethod=manual
+set shortmess+=c
 
 " let &colorcolumn="80,".join(range(120,999),",")
 let &colorcolumn="120"
@@ -843,26 +870,25 @@ if dein#tap('CamelCaseMotion')
 	omap <silent> b <Plug>CamelCaseMotion_b
 endif
 
-if dein#tap('vim-wintabs')
-  map <leader>n <Plug>(wintabs_previous)
-  map <leader>m <Plug>(wintabs_next)
-  map qq <Plug>(wintabs_close)
-  map qo <Plug>(wintabs_only)
-  map <leader>c <Plug>(wintabs_close_window)
-  map <leader>qo <Plug>(wintabs_only_window)
-  nnoremap <Leader>b <C-^>
-  command! Tabc WintabsCloseVimtab
-  command! Tabo WintabsOnlyVimtab
-else
-  " Use 'm/M' to move among buffers
-  nnoremap <Leader>n :bn<cr>
-  nnoremap <Leader>m :bp<cr>
-  nnoremap <Leader>b <C-^>
-  nnoremap qq :bd<cr>
+" if dein#tap('vim-wintabs')
+"   map <leader>M <Plug>(wintabs_previous)
+"   map <leader>m <Plug>(wintabs_next)
+"   map qq <Plug>(wintabs_close)
+"   map qo <Plug>(wintabs_only)
+"   map <leader>c <Plug>(wintabs_close_window)
+"   map <leader>qo <Plug>(wintabs_only_window)
+"   nnoremap <Leader>b <C-^>
+"   command! Tabc WintabsCloseVimtab
+"   command! Tabo WintabsOnlyVimtab
+" else
+nnoremap <Leader>M :bn<cr>
+nnoremap <Leader>m :bp<cr>
+nnoremap <Leader>b <C-^>
+nnoremap qq :bd<cr>
 
-  nnoremap <silent> qo :BufOnly<cr>
-  nnoremap <silent> qoo :BufOnly!<cr>
-endif
+nnoremap <silent> qo :BufOnly<cr>
+nnoremap <silent> qoo :BufOnly!<cr>
+" endif
 
 " For conceal markers.
 if has('conceal')
