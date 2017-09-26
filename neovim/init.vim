@@ -17,6 +17,8 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('mhartington/oceanic-next')
   call dein#add('morhetz/gruvbox')
   call dein#add('joshdick/onedark.vim')
+  call dein#add('MaxSt/FlatColor')
+  call dein#add('freeo/vim-kalisi')
 
   " Edit
   " call dein#add('gilsondev/searchtasks.vim')
@@ -676,13 +678,26 @@ autocmd InsertLeave * :set relativenumber   " show relativenumber when leave ins
 " ----------------------------------------------------------------------------
 
 " Theme
-colorscheme OceanicNext
+if dein#tap('oceanic-next')
+  colorscheme OceanicNext
+else
+  colorscheme desert
+endif
+
 set t_Co=256
 let g:oceanic_next_terminal_bold = 1
 let g:oceanic_next_terminal_italic = 1
 
 if has('termguicolors')
     set termguicolors
+endif
+
+if has('patch-7.4.1778')
+  set guicolors
+endif
+
+if has('nvim')
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
 
 " Close popup menu when leave insert mode
