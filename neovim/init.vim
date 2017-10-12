@@ -42,6 +42,18 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \"let g:NERDCustomDelimiters = { 'javascript.jsx': { 'left': '//', 'leftAlt': '{/*', 'rightAlt': '*/}' } }"
   "        \], "\n")
   "        \})
+  call dein#add('eugen0329/vim-esearch', {
+        \'on_event': 'VimEnter',
+        \'hook_add': join([
+        \"let g:esearch = {",
+        \"  \\ 'adapter':    'ag',",
+        \"  \\ 'backend':    'nvim',",
+        \"  \\ 'out':        'win',",
+        \"  \\ 'batch_size': 1000,",
+        \"  \\ 'use':        ['visual', 'hlsearch', 'last'],",
+        \"  \\}"
+        \], "\n")
+        \})
   call dein#add('terryma/vim-multiple-cursors', {
         \'on_event': 'VimEnter'
         \})
@@ -584,6 +596,8 @@ syntax enable
 let g:mapleader = ','
 set nocompatible
 
+set clipboard+=unnamedplus
+
 set background=dark
 set t_ut=
 set history=200           " history: number of command-lines remembered
@@ -811,9 +825,9 @@ nnoremap tt :TSType<cr>
 nnoremap ttd :TSTypeDef<cr>
 nnoremap tr :TSRename<cr>
 
-" if dein#tap('oceanic-next')
-"   hi TabLineFill ctermfg=237 ctermbg=145 guifg=#343d46 guibg=#a7adba
-" endif
+if dein#tap('oceanic-next')
+  hi TabLineFill ctermfg=237 ctermbg=145 guifg=#343d46 guibg=#a7adba
+endif
 
 if dein#tap('goyo.vim')
 	nnoremap <Leader>G :Goyo<CR>
