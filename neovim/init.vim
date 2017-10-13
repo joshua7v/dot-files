@@ -42,6 +42,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \"let g:NERDCustomDelimiters = { 'javascript.jsx': { 'left': '//', 'leftAlt': '{/*', 'rightAlt': '*/}' } }"
   "        \], "\n")
   "        \})
+  call dein#add('qpkorr/vim-bufkill')
   call dein#add('eugen0329/vim-esearch', {
         \'on_event': 'VimEnter',
         \'hook_add': join([
