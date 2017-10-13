@@ -544,7 +544,7 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   " For elixir
   call dein#add('elixir-editors/vim-elixir', {
-        \'on_ft': 'elixir'
+        \'on_ft': [ 'elixir', 'eelixir' ]
         \})
   call dein#add('slashmili/alchemist.vim', {
         \'on_ft': 'elixir'
