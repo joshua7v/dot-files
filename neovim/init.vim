@@ -461,7 +461,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \let g:closetag_filenames = '*.html,*.xhtml,*.js,*.jsx,*.ts,*.tsx'
         \"})
   call dein#add('mattn/emmet-vim', {
-        \'on_ft': [ 'html', 'css', 'jsx', 'javascript', 'javascript.jsx' ],
+        \'on_ft': [ 'html', 'css', 'jsx', 'javascript', 'javascript.jsx', 'eelixir' ],
         \'hook_add': "
         \let g:user_emmet_leader_key='<C-e>'\n
         \let g:user_emmet_mode='a'
