@@ -19,22 +19,43 @@ export CDPATH=.:~:/etc
 export GOPATH=~/.go
 export PATH=$GOPATH/bin:/usr/local/go/bin:$PATH
 
-function preexec() {
-  timer=${timer:-$SECONDS}
+export TIMER_FORMAT='%d'
+export TIMER_PRECISION=2
+
+__timer_current_time() {
+  perl -MTime::HiRes=time -e'print time'
 }
 
-function precmd() {
-  if [ $timer ]; then
-    timer_show=$(($SECONDS - $timer))
-    export RPROMPT="%F{cyan}${timer_show}s %{$reset_color%}"
-    unset timer
+__timer_format_duration() {
+  local mins=$(printf '%.0f' $(($1 / 60)))
+  local secs=$(printf "%.${TIMER_PRECISION:-1}f" $(($1 - 60 * mins)))
+  local duration_str=$(echo "${mins}m${secs}s")
+  local format="${TIMER_FORMAT:-/%d}"
+  echo "${format//\%d/${duration_str#0m}}"
+}
+
+__timer_save_time_preexec() {
+  __timer_cmd_start_time=$(__timer_current_time)
+}
+
+__timer_display_timer_precmd() {
+  if [ -n "${__timer_cmd_start_time}" ]; then
+    local cmd_end_time=$(__timer_current_time)
+    local tdiff=$((cmd_end_time - __timer_cmd_start_time))
+    unset __timer_cmd_start_time
+    local tdiffstr=$(__timer_format_duration ${tdiff})
+    local cols=$((COLUMNS - ${#tdiffstr} - 1))
+    echo -e "\033[1A\033[${cols}C ${tdiffstr}"
   fi
 }
+
+preexec_functions+=(__timer_save_time_preexec)
+precmd_functions+=(__timer_display_timer_precmd)
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="spaceship"
+ZSH_THEME="norm"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -110,6 +131,3 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-
-source "/root/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
