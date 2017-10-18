@@ -1012,6 +1012,14 @@ if has('macunix')
   " vnoremap <C-c> :w !pbcopy<cr><cr>
 endif
 
+function! Multiple_cursors_before()
+    let g:deoplete#disable_auto_complete = 1
+endfunction
+
+function! Multiple_cursors_after()
+    let g:deoplete#disable_auto_complete = 0
+endfunction
+
 let g:terminal_color_0  = '#2e3436'
 let g:terminal_color_1  = '#cc0000'
 let g:terminal_color_2  = '#4e9a06'
