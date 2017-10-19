@@ -168,11 +168,19 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('Shougo/neosnippet-snippets', {
         \'on_event': 'VimEnter'
         \})
+  call dein#add('honza/vim-snippets', {
+        \'on_event': 'VimEnter'
+        \})
   call dein#add('Shougo/neosnippet', {
         \'depends': 'neosnippet-snippets',
         \'on_event': 'InsertCharPre',
         \'on_ft': 'snippet',
-        \'hook_add': "let g:neosnippet#snippets_directory = '~/.config/nvim/snippets/**/*.snip'",
+        \'hook_add': join([
+        \"let g:neosnippet#snippets_directory = [",
+        \"\\ '~/.config/nvim/plugged/repos/github.com/honza/vim-snippets/snippets/',",
+        \"\\ '~/.config/nvim/snippets/'",
+        \"\\ ]"
+        \], "\n"),
         \'hook_source': "
         \let g:neosnippet#enable_snipmate_compatibility = 1\n
         \let g:neosnippet#enable_completed_snippet = 1\n
@@ -975,37 +983,6 @@ vnoremap > >gv
 vnoremap J :m '>+1<cr>gv=gv
 vnoremap K :m '<-2<cr>gv=gv
 
-" Replacement
-" no confirm not whole word
-nnoremap <Leader>R :call Replace(0, 0, input('Replace '.expand('<cword>').' with: '))<cr>
-" no confirm whole word
-nnoremap <Leader>rw :call Replace(0, 1, input('Replace '.expand('<cword>').' with: '))<cr>
-" confirm not whole word
-nnoremap <Leader>rc :call Replace(1, 0, input('Replace '.expand('<cword>').' with: '))<cr>
-" confirm whole word
-nnoremap <Leader>rcw :call Replace(1, 1, input('Replace '.expand('<cword>').' with: '))<cr>
-nnoremap <Leader>rwc :call Replace(1, 1, input('Replace '.expand('<cword>').' with: '))<cr>
-" confirm: need confrim
-" wholeword: whether whole word
-" replace: need to be replaced string
-function! Replace(confirm, wholeword, replace)
-   wa
-   let flag = ''
-   if a:confirm
-       let flag .= 'gec'
-   else
-       let flag .= 'ge'
-   endif
-   let search = ''
-   if a:wholeword
-       let search .= '\<' . escape(expand('<cword>'), '/\.*$^~[') . '\>'
-   else
-       let search .= expand('<cword>')
-   endif
-   let replace = escape(a:replace, '/\&~')
-   execute 'argdo %s/' . search . '/' . replace . '/' . flag . '| update'
-endfunction
-
 if has('macunix')
   " pbcopy for OSX copy/paste
   " vnoremap <C-x> :!pbcopy<cr>
@@ -1013,11 +990,11 @@ if has('macunix')
 endif
 
 function! Multiple_cursors_before()
-    let g:deoplete#disable_auto_complete = 1
+  let g:deoplete#disable_auto_complete = 1
 endfunction
 
 function! Multiple_cursors_after()
-    let g:deoplete#disable_auto_complete = 0
+  let g:deoplete#disable_auto_complete = 0
 endfunction
 
 let g:terminal_color_0  = '#2e3436'
