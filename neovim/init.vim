@@ -400,10 +400,16 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('Shougo/deoplete.nvim', {
         \'on_event': 'InsertEnter',
         \'hook_add': join([
-        \"let g:deoplete#enable_at_startup = 1",
+        \"let g:deoplete#enable_refresh_always=0",
+        \"let g:deoplete#enable_camel_case=1",
+        \"let g:deoplete#enable_at_startup=1",
+        \"let g:deoplete#tag#cache_limit_size=800000",
+        \"let g:deoplete#file#enable_buffer_path=1",
         \"let g:echodoc_enable_at_startup=1",
+        \"let g:deoplete#auto_complete_delay=10",
+        \"let g:deoplete#auto_refresh_delay=500",
         \"set splitbelow",
-        \"set completeopt+=noselect",
+        \"set completeopt+=noselect"
         \], "\n"),
         \'hook_post_source': join([
         \"call deoplete#custom#set('omni',          'mark', '⌾')",
@@ -429,7 +435,9 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"call deoplete#custom#set('buffer',        'rank', 320)",
         \"call deoplete#custom#set('dictionary',    'rank', 310)",
         \"call deoplete#custom#set('tmux-complete', 'rank', 300)",
-        \"call deoplete#custom#set('syntax',        'rank', 200)"
+        \"call deoplete#custom#set('syntax',        'rank', 200)",
+        \"imap <expr><C-u>   pumvisible() ? '<Down>' : '<C-u>'",
+        \"imap <expr><C-i>   pumvisible() ? '<Up>' : '<C-i>'"
         \], "\n")
         \})
   call dein#add('chemzqm/denite-extra', {
@@ -605,8 +613,6 @@ syntax enable
 let g:mapleader = ','
 set nocompatible
 
-set clipboard+=unnamedplus
-
 set background=dark
 set t_ut=
 set history=200           " history: number of command-lines remembered
@@ -710,6 +716,10 @@ endif
 set t_Co=256
 let g:oceanic_next_terminal_bold = 1
 let g:oceanic_next_terminal_italic = 1
+
+if has('clipboard')
+  set clipboard& clipboard+=unnamedplus
+endif
 
 if has('termguicolors')
     set termguicolors
