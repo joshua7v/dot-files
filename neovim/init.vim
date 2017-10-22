@@ -367,7 +367,10 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('w0rp/ale', {
         \'on_event': 'VimEnter',
         \'hook_add': join([
-        \"let g:ale_linters = { 'javascript': ['eslint'], 'typescript': ['tsserver'] }",
+        \"let g:ale_fixers = {",
+        \"\\'javascript': ['eslint'],",
+        \"\\'typescript': ['tslint']",
+        \"\\}",
         \"let g:ale_lint_on_save = 0",
         \"let g:ale_sign_error = '✖'",
         \"let g:ale_sign_warning = '⚠'",
