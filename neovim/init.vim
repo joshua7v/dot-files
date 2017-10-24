@@ -410,7 +410,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"let g:deoplete#file#enable_buffer_path=1",
         \"let g:echodoc_enable_at_startup=1",
         \"let g:deoplete#auto_complete_delay=10",
-        \"let g:deoplete#auto_refresh_delay=500",
+        \"let g:deoplete#auto_refresh_delay=100",
         \"set splitbelow",
         \"set completeopt+=noselect"
         \], "\n"),
@@ -573,10 +573,23 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('davidhalter/jedi-vim', {
         \'on_ft': 'python',
         \'hook_add': join([
-        \"\"let g:python_host_prog = '/usr/local/bin/python'",
-        \"\"let g:python2_host_prog = '/usr/local/bin/python2'",
-        \"\"let g:python3_host_prog = '/usr/local/bin/python3'"
+        \"let g:jedi#completions_enabled = 0",
+        \"let g:jedi#auto_vim_configuration = 0",
+        \"let g:jedi#smart_auto_mappings = 0",
+        \"let g:jedi#show_call_signatures = 1",
+        \"let g:jedi#force_py_version = 3"
+        \], "\n"),
+        \'hook_source': join([
+        \"let g:jedi#use_tag_stack = 0",
+        \"let g:jedi#popup_select_first = 0",
+        \"let g:jedi#popup_on_dot = 0",
+        \"let g:jedi#max_doc_height = 100",
+        \"let g:jedi#quickfix_window_height = 10",
+        \"let g:jedi#use_splits_not_buffers = 'right'"
         \], "\n")
+        \})
+  call dein#add('zchee/deoplete-jedi', {
+        \'on_ft': 'python'
         \})
 
   " For go
