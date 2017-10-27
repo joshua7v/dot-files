@@ -42,7 +42,15 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \"let g:NERDCustomDelimiters = { 'javascript.jsx': { 'left': '//', 'leftAlt': '{/*', 'rightAlt': '*/}' } }"
   "        \], "\n")
   "        \})
-  call dein#add('qpkorr/vim-bufkill')
+  " call dein#add('qpkorr/vim-bufkill', {
+  "       \'on_event': 'InsertEnter'
+  "       \})
+  call dein#add('moll/vim-bbye', {
+        \'on_event': 'VimEnter',
+        \'hook_add': join([
+        \"command! -bang -complete=buffer -nargs=? BD Bdelete<bang> <args>"
+        \], "\n")
+        \})
   call dein#add('eugen0329/vim-esearch', {
         \'on_event': 'VimEnter',
         \'hook_add': join([
@@ -870,10 +878,10 @@ endif
 
 if dein#tap('vim-wintabs')
   let g:wintabs_display = 'statusline'
-  let g:wintabs_ui_sep_leftmost = ''
-  let g:wintabs_ui_sep_rightmost = ''
-  let g:wintabs_ui_active_left = '['
-  let g:wintabs_ui_active_right = ']'
+  let g:wintabs_ui_sep_leftmost = '|'
+  let g:wintabs_ui_sep_rightmost = '|'
+  let g:wintabs_ui_active_left = '|'
+  let g:wintabs_ui_active_right = '|'
 endif
 
 if dein#tap('undotree')
