@@ -618,6 +618,11 @@ if dein#load_state('~/.config/nvim/plugged/')
         \], "\n")
         \})
 
+  " For api
+  call dein#add('kylef/apiblueprint.vim', {
+        \'on_ft': 'apiblueprint'
+        \})
+
   " For docker
   call dein#add('ekalinin/Dockerfile.vim', {
         \'on_ft': 'Dockerfile'
@@ -733,6 +738,7 @@ autocmd InsertLeave * :set relativenumber   " show relativenumber when leave ins
 " Theme
 if dein#tap('oceanic-next')
   colorscheme OceanicNext
+  hi TabLineFill ctermfg=237 ctermbg=145 guifg=#343d46 guibg=#a7adba
 else
   colorscheme desert
 endif
@@ -867,10 +873,6 @@ nnoremap tre :TSRefs<cr>
 nnoremap tt :TSType<cr>
 nnoremap ttd :TSTypeDef<cr>
 nnoremap tr :TSRename<cr>
-
-if dein#tap('oceanic-next')
-  hi TabLineFill ctermfg=237 ctermbg=145 guifg=#343d46 guibg=#a7adba
-endif
 
 if dein#tap('goyo.vim')
 	nnoremap <Leader>G :Goyo<CR>
