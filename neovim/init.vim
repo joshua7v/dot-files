@@ -477,6 +477,15 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'on_event': 'InsertEnter'
         \})
 
+  " For c family
+  call dein#add('zchee/deoplete-clang', {
+        \'on_ft': [ 'c', 'cpp' ],
+        \'hook_add': join([
+        \"let g:deoplete#sources#clang#libclang_path='/usr/lib/llvm-3.8/lib/libclang.so.1'",
+        \"let g:deoplete#sources#clang#clang_header='/usr/lib/llvm-3.8/include/llvm'"
+        \], "\n")
+        \})
+
   " For html / css
   " call dein#add('gorodinskiy/vim-coloresque')
   call dein#add('hail2u/vim-css3-syntax', {
