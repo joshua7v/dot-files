@@ -221,13 +221,13 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"    set laststatus=2",
         \"    set statusline=%{getcwd()}",
         \"    set statusline+=\\ %<%f",
-        \"    set statusline+=\\ %m%r%w",
         \"    set statusline+=%{''.(&fenc!=''?&fenc:&enc).''}",
         \"    set statusline+=%{(&bomb?\\\",BOM\\\":\\\"\\\")}",
         \"    if has('fugitive')",
         \"        set statusline+=%{fugitive#statusline()}",
         \"    endif",
         \"    set statusline+=\\ %{&ff}\\ %y",
+        \"    set statusline+=\\ %m%r%w",
         \"    set statusline+=%=%-14.(%l/%L,%c%V%)\\ %p%%",
         \"endif",
         \"let g:airline_powerline_fonts = 1",
@@ -271,9 +271,9 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('Shougo/deol.nvim', {
         \'on_event': 'VimEnter'
         \})
-  call dein#add('zefei/vim-wintabs', {
-        \'on_event': 'VimEnter'
-        \})
+  " call dein#add('zefei/vim-wintabs', {
+  "       \'on_event': 'VimEnter'
+  "       \})
   call dein#add('lambdalisue/gina.vim', {
         \'on_event': 'VimEnter'
         \})
