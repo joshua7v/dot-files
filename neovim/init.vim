@@ -117,6 +117,8 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('tpope/vim-repeat', {
         \'on_event': 'VimEnter'
         \})
+  call dein#add('danro/rename.vim')
+  call dein#add('pbrisbin/vim-mkdir')
   call dein#add('terryma/vim-expand-region', {
         \'on_event': 'VimEnter'
         \})
@@ -199,19 +201,42 @@ if dein#load_state('~/.config/nvim/plugged/')
   " call dein#add('equalsraf/neovim-gui-shim')
   " call dein#add('mhinz/vim-startify')
   " call dein#add('liuchengxu/eleline.vim'),
+  " call dein#add('google/vim-searchindex', {
+  "       \'on_event': 'VimEnter'
+  "       \})
+  " call dein#add('ap/vim-buftabline')
   call dein#add('guns/xterm-color-table.vim')
   call dein#add('kshenoy/vim-signature')
   call dein#add('powerman/vim-plugin-AnsiEsc', {
         \'on_event': 'VimEnter'
         \})
-  call dein#add('google/vim-searchindex', {
-        \'on_event': 'VimEnter'
-        \})
+  " call dein#add('bling/vim-bufferline', {
+  "       \'on_event': 'VimEnter',
+  "       \'hook_add': join([
+  "       \"let g:bufferline_echo=0",
+  "       \"let g:bufferline_show_bufnr=0",
+  "       \"let g:bufferline_active_buffer_left=''",
+  "       \"let g:bufferline_active_buffer_right=''",
+  "       \"autocmd VimEnter * let &statusline='%{bufferline#refresh_status()}' .bufferline#get_status_string()"
+  "       \], "\n")
+  "       \})
   call dein#add('inside/vim-search-pulse', {
         \'on_event': 'VimEnter',
         \'hook_post_source': join([
         \"let g:vim_search_pulse_mode = 'pattern'",
         \"let g:vim_search_pulse_duration = 400"
+        \], "\n")
+        \})
+  call dein#add('vim-scripts/buftabs', {
+        \'on_event': 'VimEnter',
+        \'hook_add': join([
+        \"let g:buftabs_in_statusline=1",
+        \"let g:buftabs_only_basename=1",
+        \"let g:buftabs_marker_modified='+'",
+        \"let g:buftabs_active_highlight_group='Visual'",
+        \"let g:buftabs_marker_start='['",
+        \"let g:buftabs_marker_end=']'",
+        \"let g:buftabs_separator='|'"
         \], "\n")
         \})
   call dein#add('vim-airline/vim-airline', {
@@ -221,7 +246,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"    set laststatus=2",
         \"    set statusline=%{getcwd()}",
         \"    set statusline+=\\ %<%f",
-        \"    set statusline+=%{''.(&fenc!=''?&fenc:&enc).''}",
+        \"    set statusline+=\\ %{''.(&fenc!=''?&fenc:&enc).''}",
         \"    set statusline+=%{(&bomb?\\\",BOM\\\":\\\"\\\")}",
         \"    if has('fugitive')",
         \"        set statusline+=%{fugitive#statusline()}",
@@ -477,6 +502,9 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'on_event': 'InsertEnter'
         \})
 
+  " For binary
+  call dein#add('Shougo/vinarise.vim')
+
   " For c family
   call dein#add('zchee/deoplete-clang', {
         \'on_ft': [ 'c', 'cpp' ],
@@ -484,6 +512,9 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"let g:deoplete#sources#clang#libclang_path='/usr/lib/llvm-3.8/lib/libclang.so.1'",
         \"let g:deoplete#sources#clang#clang_header='/usr/lib/llvm-3.8/include/llvm'"
         \], "\n")
+        \})
+  call dein#add('mbbill/echofunc', {
+        \'on_ft': [ 'c', 'cpp' ]
         \})
 
   " For html / css
@@ -747,7 +778,7 @@ autocmd InsertLeave * :set relativenumber   " show relativenumber when leave ins
 " Theme
 if dein#tap('oceanic-next')
   colorscheme OceanicNext
-  hi TabLineFill ctermfg=237 ctermbg=145 guifg=#343d46 guibg=#a7adba
+  " hi TabLineFill ctermfg=237 ctermbg=145 guifg=#343d46 guibg=#a7adba
 else
   colorscheme desert
 endif
