@@ -216,7 +216,11 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \"let g:bufferline_echo=0",
   "       \"let g:bufferline_show_bufnr=0",
   "       \"let g:bufferline_active_buffer_left=''",
+  "       \"let g:bufferline_show_bufnr=1",
   "       \"let g:bufferline_active_buffer_right=''",
+  "       \"let g:bufferline_solo_highlight=0",
+  "       \"let g:bufferline_inactive_highlight='normal'",
+  "       \"let g:bufferline_active_highlight='StatusLine'",
   "       \"autocmd VimEnter * let &statusline='%{bufferline#refresh_status()}' .bufferline#get_status_string()"
   "       \], "\n")
   "       \})
@@ -227,18 +231,18 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"let g:vim_search_pulse_duration = 400"
         \], "\n")
         \})
-  call dein#add('vim-scripts/buftabs', {
-        \'on_event': 'VimEnter',
-        \'hook_add': join([
-        \"let g:buftabs_in_statusline=1",
-        \"let g:buftabs_only_basename=1",
-        \"let g:buftabs_marker_modified='+'",
-        \"let g:buftabs_active_highlight_group='Visual'",
-        \"let g:buftabs_marker_start='['",
-        \"let g:buftabs_marker_end=']'",
-        \"let g:buftabs_separator='|'"
-        \], "\n")
-        \})
+  " call dein#add('vim-scripts/buftabs', {
+  "       \'on_event': 'VimEnter',
+  "       \'hook_add': join([
+  "       \"let g:buftabs_in_statusline=1",
+  "       \"let g:buftabs_only_basename=1",
+  "       \"let g:buftabs_marker_modified='+'",
+  "       \"let g:buftabs_active_highlight_group='Visual'",
+  "       \"let g:buftabs_marker_start='['",
+  "       \"let g:buftabs_marker_end=']'",
+  "       \"let g:buftabs_separator='|'"
+  "       \], "\n")
+  "       \})
   call dein#add('vim-airline/vim-airline', {
         \'on_cmd': 'AirlineToggle',
         \'hook_add': join([
@@ -296,9 +300,17 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('Shougo/deol.nvim', {
         \'on_event': 'VimEnter'
         \})
-  " call dein#add('zefei/vim-wintabs', {
-  "       \'on_event': 'VimEnter'
-  "       \})
+  call dein#add('zefei/vim-wintabs', {
+        \'on_cmd': 'WintabsRefresh',
+        \'hook_add': join([
+        \"let g:wintabs_display='statusline'",
+        \"let g:wintabs_ui_sep_leftmost='|'",
+        \"let g:wintabs_ui_sep_rightmost='|'",
+        \"let g:wintabs_ui_active_left='|'",
+        \"let g:wintabs_ui_active_right='|'",
+        \"let g:wintabs_ui_buffer_name_format='%n %t'",
+        \], "\n")
+        \})
   call dein#add('lambdalisue/gina.vim', {
         \'on_event': 'VimEnter'
         \})
@@ -916,14 +928,6 @@ nnoremap tr :TSRename<cr>
 
 if dein#tap('goyo.vim')
 	nnoremap <Leader>G :Goyo<CR>
-endif
-
-if dein#tap('vim-wintabs')
-  let g:wintabs_display = 'statusline'
-  let g:wintabs_ui_sep_leftmost = '|'
-  let g:wintabs_ui_sep_rightmost = '|'
-  let g:wintabs_ui_active_left = '|'
-  let g:wintabs_ui_active_right = '|'
 endif
 
 if dein#tap('undotree')
