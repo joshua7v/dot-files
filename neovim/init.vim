@@ -525,9 +525,9 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"let g:deoplete#sources#clang#clang_header='/usr/lib/llvm-3.8/include/llvm'"
         \], "\n")
         \})
-  call dein#add('mbbill/echofunc', {
-        \'on_ft': [ 'c', 'cpp' ]
-        \})
+  " call dein#add('mbbill/echofunc', {
+  "       \'on_ft': [ 'c', 'cpp' ]
+  "       \})
 
   " For html / css
   " call dein#add('gorodinskiy/vim-coloresque')
