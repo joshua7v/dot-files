@@ -46,8 +46,8 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \'on_event': 'InsertEnter'
   "       \})
   call dein#add('moll/vim-bbye', {
-        \'on_event': 'VimEnter',
-        \'hook_add': join([
+        \'on_cmd': 'BD',
+        \'hook_source': join([
         \"command! -bang -complete=buffer -nargs=? BD Bdelete<bang> <args>"
         \], "\n")
         \})
