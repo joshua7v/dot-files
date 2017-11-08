@@ -511,7 +511,14 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   " Git
   call dein#add('airblade/vim-gitgutter', {
-        \'on_event': 'InsertEnter'
+        \'on_cmd': 'GitGutterEnable',
+        \'hook_source': join([
+        \"nmap <Leader>hj <Plug>GitGutterNextHunk",
+        \"nmap <Leader>hk <Plug>GitGutterPrevHunk",
+        \"nmap <Leader>hs <Plug>GitGutterStageHunk",
+        \"nmap <Leader>hr <Plug>GitGutterUndoHunk",
+        \"nmap <Leader>hp <Plug>GitGutterPreviewHunk"
+        \], "\n")
         \})
 
   " For binary
@@ -966,14 +973,6 @@ if dein#tap('jedi-vim')
 	let g:jedi#goto_assignments_command = '<leader>g'
 	let g:jedi#rename_command = '<Leader>r'
 	let g:jedi#usages_command = '<Leader>n'
-endif
-
-if dein#tap('vim-gitgutter')
-	nmap <Leader>hj <Plug>GitGutterNextHunk
-	nmap <Leader>hk <Plug>GitGutterPrevHunk
-	nmap <Leader>hs <Plug>GitGutterStageHunk
-	nmap <Leader>hr <Plug>GitGutterUndoHunk
-	nmap <Leader>hp <Plug>GitGutterPreviewHunk
 endif
 
 if dein#tap('CamelCaseMotion')
