@@ -577,6 +577,9 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('moll/vim-node', {
         \'on_ft': [ 'javascript', 'jsx', 'javascript.jsx', 'tsx', 'typescript', 'typescript.tsx' ]
         \})
+  call dein#add('styled-components/vim-styled-components', {
+        \'on_ft': [ 'javascript', 'jsx', 'javascript.jsx', 'tsx', 'typescript', 'typescript.tsx' ]
+        \})
   call dein#add('carlitux/deoplete-ternjs', {
         \'on_event': 'InsertEnter',
         \'on_ft': [ 'javascript', 'jsx', 'javascript.jsx' ],
