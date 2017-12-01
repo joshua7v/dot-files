@@ -2,17 +2,30 @@
   <template>
     <style>
       /* CSS configurations here */
+      .horizontal {
+        display: flex;
+        width: 100%;
+        height: 100%;
+      }
+      neovim-editor {
+        width: 100%;
+        height: 100%;
+      }
     </style>
 
     <!-- Component tags here -->
-    <neovim-editor
-      id="nyaovim-editor"
-      argv="[[argv]]"
-      font-size=14
-      line-height=1.3
-      font="'fira code'"
-      no-blink-cursor=true
-    >
+    <div class="horizontal">
+      <mini-browser editor="[[editor]]" width=900></mini-browser>
+      <neovim-editor
+        id="nyaovim-editor"
+        argv="[[argv]]"
+        font-size=14
+        line-height=1.3
+        font="'fira code'"
+        no-blink-cursor=true
+        disable-meta-key=true
+      >
+    </div>
 
     </neovim-editor>
   </template>
