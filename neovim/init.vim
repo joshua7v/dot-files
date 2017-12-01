@@ -11,6 +11,9 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   call dein#add('~/.config/nvim/repos/github.com/Shougo/dein.vim')
 
+  " For Nyaovim
+  call dein#add('rhysd/nyaovim-mini-browser')
+
   " Color Schemes
   " call dein#add('kamwitsta/nordisk')
   " call dein#add('jdkanani/vim-material-theme')
@@ -1078,6 +1081,22 @@ endfunction
 function! Multiple_cursors_after()
   let g:deoplete#disable_auto_complete = 0
 endfunction
+
+nnoremap <leader>u :<C-u>MiniBrowser <C-r><C-p><CR>
+function! s:devdocs(query) abort
+    if a:query ==# ''
+        let cword = expand('<cword>')
+        if cword ==# ''
+            MiniBrowser http://devdocs.io/
+        else
+            execute 'MiniBrowser' 'http://devdocs.io/#q='.escape(cword, ' \')
+        endif
+        return
+    endif
+
+    execute 'MiniBrowser' 'http://devdocs.io/#q='.escape(a:query, ' \')
+endfunction
+command! -nargs=* DevDocs call <SID>devdocs(<q-args>)
 
 let g:terminal_color_0  = '#2e3436'
 let g:terminal_color_1  = '#cc0000'
