@@ -170,9 +170,16 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'hook_add': join([
         \"let g:neoformat_javascript_prettier = {",
         \"\\ 'exe': 'prettier',",
-        \"\\ 'args': ['--stdin', '--single-quote'],",
+        \"\\ 'args': ['--single-quote'],",
         \"\\ 'stdin': 1",
         \"\\ }",
+        \"let g:neoformat_html_beautify = {",
+        \"\\ 'exe': 'html-beautify',",
+        \"\\ 'args': ['--indent-size 2'],",
+        \"\\ 'stdin': 1",
+        \"\\ }",
+        \"let g:neoformat_enabled_javascript = ['prettier']",
+        \"let g:neoformat_enabled_html= ['beautify']",
         \"nnoremap <silent> <space><space>  :Neoformat<cr>",
         \"vnoremap <silent> <space><space>  :Neoformat<cr>"
         \], "\n")
