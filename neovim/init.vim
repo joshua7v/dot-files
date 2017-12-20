@@ -75,7 +75,10 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('editorconfig/editorconfig-vim', {
         \'on_event': 'VimEnter'
         \})
-  call dein#add('tpope/vim-commentary', {
+  " call dein#add('tpope/vim-commentary', {
+  "       \'on_event': 'VimEnter'
+  "       \})
+  call dein#add('tomtom/tcomment_vim', {
         \'on_event': 'VimEnter'
         \})
   call dein#add('metakirby5/codi.vim', {
@@ -724,7 +727,7 @@ set background=dark
 set t_ut=
 set history=200           " history: number of command-lines remembered
 set autoread              " auto reload file after being modified
-set shortmess=atI         " do not show initial page
+set shortmess=atIcF         " do not show initial page
 set nobackup
 set noswapfile
 " set cursorcolumn          " highlight current column
