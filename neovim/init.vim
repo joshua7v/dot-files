@@ -54,6 +54,9 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"command! -bang -complete=buffer -nargs=? BD Bdelete<bang> <args>"
         \], "\n")
         \})
+  call dein#add('tpope/vim-unimpaired', {
+        \'on_event': 'VimEnter'
+        \})
   call dein#add('eugen0329/vim-esearch', {
         \'on_event': 'VimEnter',
         \'hook_add': join([
@@ -170,7 +173,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'hook_add': join([
         \"let g:neoformat_javascript_prettier = {",
         \"\\ 'exe': 'prettier',",
-        \"\\ 'args': ['--single-quote'],",
+        \"\\ 'args': ['--single-quote', '--print-width 120'],",
         \"\\ 'stdin': 1",
         \"\\ }",
         \"let g:neoformat_html_beautify = {",
@@ -426,14 +429,14 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'hook_add': join([
         \"let g:ale_fixers = {",
         \"\\'javascript': ['eslint'],",
-        \"\\'typescript': ['tslint']",
+        \"\\'typescript': ['eslint']",
         \"\\}",
         \"let g:ale_lint_on_save = 0",
         \"let g:ale_sign_error = '✖'",
         \"let g:ale_sign_warning = '⚠'",
         \"let g:ale_lint_on_text_changed = 'never'",
         \"let g:ale_lint_on_enter = 0",
-        \"let g:ale_open_list = 1",
+        \"let g:ale_open_list = 0",
         \"let g:ale_keep_list_window_open = 0",
         \], "\n")
         \})
@@ -716,6 +719,7 @@ syntax enable
 let g:mapleader = ','
 set nocompatible
 
+set confirm
 set background=dark
 set t_ut=
 set history=200           " history: number of command-lines remembered
