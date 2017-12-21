@@ -135,14 +135,14 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \'on_event': 'InsertEnter'
   "       \})
   call dein#add('Raimondi/delimitMate', {
-        \'on_event': 'InsertEnter',
+        \'on_event': 'VimEnter',
         \'hook_add': join([
         \"let delimitMate_matchpairs = '(:),[:],{:}'",
         \"let delimitMate_expand_cr = 1"
         \], "\n")
         \})
   call dein#add('ntpeters/vim-better-whitespace', {
-        \'on_event': 'InsertEnter',
+        \'on_event': 'InsertCharPre',
         \'hook_add': join([
         \"let g:better_whitespace_filetypes_blacklist=['diff', 'gitcommit', 'unite', 'qf', 'help', 'far_vim']",
         \"let g:better_whitespace_filetypes_verbosity=1"
@@ -159,7 +159,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \], "\n")
         \})
   call dein#add('godlygeek/tabular', {
-        \'on_event': 'InsertEnter'
+        \'on_cmd': 'Tabularize'
         \})
   call dein#add('ggVGc/vim-fuzzysearch', {
         \'on_cmd': 'FuzzySearch'
@@ -313,7 +313,8 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \], "\n")
   "       \})
   call dein#add('Shougo/echodoc.vim', {
-        \'on_event': 'InsertEnter'
+        \'on_event': 'CompleteDone',
+        \'hook_post_source': 'call echodoc#enable()'
         \})
   call dein#add('Shougo/deol.nvim', {
         \'on_event': 'VimEnter'
@@ -540,7 +541,9 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
 
   " For binary
-  call dein#add('Shougo/vinarise.vim')
+  call dein#add('Shougo/vinarise.vim', {
+        \'on_cmd': 'Vinarise'
+        \})
 
   " For c family
   call dein#add('zchee/deoplete-clang', {
