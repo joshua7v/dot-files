@@ -32,197 +32,49 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \'on_event': 'VimEnter',
   "       \'hook_add': "let g:tlTokenList = ['FIXME', 'TODO', 'FEATURE', 'CHANGED', 'BUG', 'HACK']"
   "       \})
-  " call dein#add('AndrewRadev/linediff.vim', {
-  "        \'on_event': 'VimEnter'
-  "        \})
-  " call dein#add('scrooloose/nerdcommenter', {
-  "        \'on_cmd': 'VimEnter',
-  "        \'hook_post_source': join([
-  "       \"let g:NERDSpaceDelims = 1",
-  "       \"let g:NERDDefaultAlign = 'left'",
-  "       \"let g:NERDTrimTrailingWhitespace = 1",
-  "       \"let g:NERDCompactSexyComs = 1",
-  "       \"let g:NERDCustomDelimiters = { 'javascript.jsx': { 'left': '//', 'leftAlt': '{/*', 'rightAlt': '*/}' } }"
-  "        \], "\n")
-  "        \})
-  " call dein#add('qpkorr/vim-bufkill', {
-  "       \'on_event': 'InsertEnter'
-  "       \})
-  call dein#add('kana/vim-operator-user', { 'lazy': 1 })
-  call dein#add('haya14busa/vim-operator-flashy', {
-        \'depends': 'vim-operator-user',
-        \'on_map': { 'nx': '<Plug>' },
-        \'hook_source': join([
-        \"let g:operator#flashy#flash_time=300",
-        \"hi Flashy term=bold ctermbg=1 guibg=red"
-        \], "\n")
-        \})
-  call dein#add('moll/vim-bbye', {
-        \'on_cmd': 'BD',
-        \'hook_source': join([
-        \"command! -bang -complete=buffer -nargs=? BD Bdelete<bang> <args>"
-        \], "\n")
-        \})
-  call dein#add('tpope/vim-unimpaired', {
-        \'on_event': 'VimEnter'
-        \})
-  call dein#add('eugen0329/vim-esearch', {
-        \'on_event': 'VimEnter',
-        \'hook_add': join([
-        \"let g:esearch = {",
-        \"  \\ 'adapter':    'ag',",
-        \"  \\ 'backend':    'nvim',",
-        \"  \\ 'out':        'win',",
-        \"  \\ 'batch_size': 1000,",
-        \"  \\ 'use':        ['visual', 'hlsearch', 'last'],",
-        \"  \\}"
-        \], "\n")
-        \})
-  call dein#add('terryma/vim-multiple-cursors', {
-        \'on_event': 'VimEnter'
-        \})
-  call dein#add('editorconfig/editorconfig-vim', {
-        \'on_event': 'VimEnter'
-        \})
-  " call dein#add('tpope/vim-commentary', {
-  "       \'on_event': 'VimEnter'
-  "       \})
-  call dein#add('tomtom/tcomment_vim', {
-        \'on_event': 'VimEnter'
-        \})
-  call dein#add('metakirby5/codi.vim', {
-        \'on_cmd': 'Codi'
-        \})
-  call dein#add('bkad/CamelCaseMotion', {
-        \'on_event': 'VimEnter'
-        \})
-  call dein#add('AndrewRadev/splitjoin.vim', {
-        \'on_event': 'VimEnter'
-        \})
-  call dein#add('mileszs/ack.vim', {
-        \'on_cmd': 'Ack',
-        \'hook_add': join([
-        \"if executable('ag')",
-        \"  let g:ackprg = 'ag --vimgrep'",
-        \"endif"
-        \], "\n"),
-        \'hook_post_source': join([
-        \"autocmd Syntax * call matchadd('Todo',  '\\W\\zs\\(TODO\\|FIXME\\|CHANGED\\|BUG\\|HACK\\|FEATURE\\)')",
-        \], "\n")
-        \})
-  call dein#add('kopischke/vim-stay', {
-        \'hook_add': "set viewoptions=cursor,folds,slash,unix"
-        \})
-  call dein#add('Konfekt/FastFold', {
-        \'on_event': 'VimEnter',
-        \'hook_add': join([
-        \"let g:fastfold_savehook = 1",
-        \"let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']",
-        \"let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']",
-        \"let g:javascript_folding = 1"
-        \], "\n")
-        \})
-  call dein#add('easymotion/vim-easymotion', {
-        \'on_event': 'VimEnter',
-        \'hook_add': "let g:EasyMotion_smartcase = 1"
-        \})
-  call dein#add('tpope/vim-surround', {
-        \'on_event': 'VimEnter'
-        \})
-  call dein#add('tpope/tpope-vim-abolish', {
-        \'on_event': 'VimEnter'
-        \})
-  call dein#add('tpope/vim-repeat', {
-        \'on_event': 'VimEnter'
-        \})
+  " call dein#add('AndrewRadev/linediff.vim', { 'on_event': 'VimEnter' })
+  " call dein#add('qpkorr/vim-bufkill', { 'on_event': 'InsertEnter' })
+  " call dein#add('Shougo/context_filetype.vim')
   call dein#add('danro/rename.vim')
   call dein#add('pbrisbin/vim-mkdir')
-  call dein#add('terryma/vim-expand-region', {
-        \'on_event': 'VimEnter'
-        \})
-  " call dein#add('jiangmiao/auto-pairs', {
-  "       \'on_event': 'InsertEnter'
-  "       \})
-  call dein#add('Raimondi/delimitMate', {
-        \'on_event': 'VimEnter',
-        \'hook_add': join([
-        \"let delimitMate_matchpairs = '(:),[:],{:}'",
-        \"let delimitMate_expand_cr = 1"
-        \], "\n")
-        \})
-  call dein#add('ntpeters/vim-better-whitespace', {
-        \'on_event': 'InsertCharPre',
-        \'hook_add': join([
-        \"let g:better_whitespace_filetypes_blacklist=['diff', 'gitcommit', 'unite', 'qf', 'help', 'far_vim']",
-        \"let g:better_whitespace_filetypes_verbosity=1"
-        \], "\n")
-        \})
-  call dein#add('MattesGroeger/vim-bookmarks', {
-        \'on_cmd': 'BookmarkToggle',
-        \'hook_add': join([
-        \"let g:bookmark_sign = '♥'",
-        \"let g:bookmark_highlight_lines = 1",
-        \"let g:bookmark_no_default_key_mappings = 1",
-        \"hi BookMarkLine ctermbg=black ctermfg=none",
-        \"hi BookMarkSign ctermbg=none ctermfg=none"
-        \], "\n")
-        \})
-  call dein#add('godlygeek/tabular', {
-        \'on_cmd': 'Tabularize'
-        \})
-  call dein#add('ggVGc/vim-fuzzysearch', {
-        \'on_cmd': 'FuzzySearch'
-        \})
-  call dein#add('vim-scripts/BufOnly.vim', {
-        \'on_cmd': 'BufOnly'
-        \})
-  call dein#add('brooth/far.vim', {
-        \'on_cmd': [ 'Far', 'Farp', 'F' ],
-        \'hook_add': "let g:far#window_width = 70"
-        \})
-  call dein#add('sbdchd/neoformat', {
-        \'on_cmd': 'Neoformat',
-        \'hook_add': join([
-        \"let g:neoformat_javascript_prettier = {",
-        \"\\ 'exe': 'prettier',",
-        \"\\ 'args': ['--single-quote', '--print-width 120'],",
-        \"\\ 'stdin': 1",
-        \"\\ }",
-        \"let g:neoformat_html_beautify = {",
-        \"\\ 'exe': 'html-beautify',",
-        \"\\ 'args': ['--indent-size 2'],",
-        \"\\ 'stdin': 1",
-        \"\\ }",
-        \"let g:neoformat_enabled_javascript = ['prettier']",
-        \"let g:neoformat_enabled_html= ['beautify']",
-        \"nnoremap <silent> <space><space>  :Neoformat<cr>",
-        \"vnoremap <silent> <space><space>  :Neoformat<cr>"
-        \], "\n")
-        \})
-  call dein#add('tpope/vim-obsession', {
-        \'on_cmd': 'Obsession'
-        \})
-  call dein#add('Shougo/neosnippet-snippets', {
-        \'on_event': 'VimEnter'
-        \})
-  call dein#add('honza/vim-snippets', {
-        \'on_event': 'VimEnter'
+  call dein#add('kana/vim-operator-user'         , { 'lazy'     : 1 })
+  call dein#add('moll/vim-bbye'                  , { 'on_cmd'   : 'BD', })
+  call dein#add('tpope/vim-unimpaired'           , { 'on_event' : 'VimEnter' })
+  call dein#add('eugen0329/vim-esearch'          , { 'on_event' : 'VimEnter' })
+  call dein#add('terryma/vim-multiple-cursors'   , { 'on_event' : 'VimEnter' })
+  call dein#add('editorconfig/editorconfig-vim'  , { 'on_event' : 'VimEnter' })
+  call dein#add('tomtom/tcomment_vim'            , { 'on_event' : 'VimEnter' })
+  call dein#add('metakirby5/codi.vim'            , { 'on_cmd'   : 'Codi' })
+  call dein#add('bkad/CamelCaseMotion'           , { 'on_event' : 'VimEnter' })
+  call dein#add('AndrewRadev/splitjoin.vim'      , { 'on_event' : 'VimEnter' })
+  call dein#add('mileszs/ack.vim'                , { 'on_cmd'   : 'Ack' })
+  call dein#add('kopischke/vim-stay')
+  call dein#add('Konfekt/FastFold'               , { 'on_event' : 'VimEnter' })
+  call dein#add('easymotion/vim-easymotion'      , { 'on_event' : 'VimEnter' })
+  call dein#add('tpope/vim-surround'             , { 'on_event' : 'VimEnter' })
+  call dein#add('tpope/tpope-vim-abolish'        , { 'on_event' : 'VimEnter' })
+  call dein#add('tpope/vim-repeat'               , { 'on_event' : 'VimEnter' })
+  call dein#add('terryma/vim-expand-region'      , { 'on_event' : 'VimEnter' })
+  call dein#add('Raimondi/delimitMate'           , { 'on_event' : 'VimEnter' })
+  call dein#add('ntpeters/vim-better-whitespace' , { 'on_event' : 'InsertCharPre' })
+  call dein#add('MattesGroeger/vim-bookmarks'    , { 'on_cmd'   : 'BookmarkToggle' })
+  call dein#add('godlygeek/tabular'              , { 'on_cmd'   : 'Tabularize' })
+  call dein#add('ggVGc/vim-fuzzysearch'          , { 'on_cmd'   : 'FuzzySearch' })
+  call dein#add('vim-scripts/BufOnly.vim'        , { 'on_cmd'   : 'BufOnly' })
+  call dein#add('brooth/far.vim'                 , { 'on_cmd'   : [ 'Far', 'Farp', 'F' ] })
+  call dein#add('sbdchd/neoformat'               , { 'on_cmd'   : 'Neoformat' })
+  call dein#add('tpope/vim-obsession'            , { 'on_cmd'   : 'Obsession' })
+  call dein#add('Shougo/neosnippet-snippets'     , { 'on_event' : 'VimEnter' })
+  call dein#add('honza/vim-snippets'             , { 'on_event' : 'VimEnter' })
+  call dein#add('haya14busa/vim-operator-flashy', {
+        \'depends': 'vim-operator-user',
+        \'on_map': { 'nx': '<Plug>' }
         \})
   call dein#add('Shougo/neosnippet', {
         \'depends': 'neosnippet-snippets',
         \'on_event': 'InsertCharPre',
-        \'on_ft': 'snippet',
-        \'hook_add': join([
-        \"let g:neosnippet#snippets_directory = [",
-        \"\\ '~/.config/nvim/plugged/repos/github.com/honza/vim-snippets/snippets/',",
-        \"\\ '~/.config/nvim/snippets/'",
-        \"\\ ]"
-        \], "\n"),
-        \'hook_source': "
-        \let g:neosnippet#enable_snipmate_compatibility = 1\n
-        \let g:neosnippet#enable_completed_snippet = 1\n
-        \let g:neosnippet#expand_word_boundary = 1
-        \"})
+        \'on_ft': 'snippet'
+        \})
 
   " UI
   " call dein#add('equalsraf/neovim-gui-shim')
@@ -574,16 +426,11 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'on_ft': 'css'
         \})
   call dein#add('alvan/vim-closetag', {
-        \'on_ft': [ 'html', 'jsx', 'javascript', 'javascript.jsx' ],
-        \'hook_add': "
-        \let g:closetag_filenames = '*.html,*.xhtml,*.js,*.jsx,*.ts,*.tsx'
-        \"})
+        \'on_ft': [ 'html', 'jsx', 'javascript', 'javascript.jsx' ]
+        \})
   call dein#add('mattn/emmet-vim', {
         \'on_ft': [ 'html', 'css', 'jsx', 'javascript', 'javascript.jsx', 'eelixir' ],
-        \'hook_add': "
-        \let g:user_emmet_leader_key='<C-e>'\n
-        \let g:user_emmet_mode='a'
-        \"})
+        \})
   call dein#add('chrisbra/Colorizer', { 'on_cmd': 'ColorToggle' })
 
   " For javascript
@@ -1029,6 +876,114 @@ endif
 if dein#tap('vim-operator-flashy')
 	map y <Plug>(operator-flashy)
 	nmap Y <Plug>(operator-flashy)$
+endif
+
+if dein#tap('emmet-vim')
+  let g:user_emmet_leader_key = '<C-e>'
+  let g:user_emmet_settings = {
+  \ 'javascript.jsx' : {
+  \   'extends' : 'jsx'
+  \  },
+  \ 'javascript': {
+  \   'extends': 'jsx'
+  \ }
+  \}
+endif
+
+if dein#tap('vim-closetag')
+  let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.erb,*.jsx"
+  let g:closetag_shortcut = '>'
+  let g:closetag_close_shortcut = '<leader>>'
+endif
+
+if dein#tap('vim-operator-flashy')
+  let g:operator#flashy#flash_time = 300
+  hi Flashy term=bold ctermbg=1 guibg=red
+endif
+
+if dein#tap('vim-bbye')
+  command! -bang -complete=buffer -nargs=? BD Bdelete<bang> <args>
+endif
+
+if dein#tap('vim-esearch')
+  let g:esearch = {
+    \ 'adapter'    : 'ag',
+    \ 'backend'    : 'nvim',
+    \ 'out'        : 'win',
+    \ 'batch_size' : 1000,
+    \ 'use'        : ['visual', 'hlsearch', 'last'],
+    \}
+endif
+
+if dein#tap('ack.vim')
+  if executable('ag')
+    let g:ackprg = 'ag --vimgrep'
+  endif
+  autocmd Syntax * call matchadd('Todo',  '\\W\\zs\\(TODO\\|FIXME\\|CHANGED\\|BUG\\|HACK\\|FEATURE\\)')
+endif
+
+if dein#tap('vim-stay')
+  set viewoptions=cursor,folds,slash,unix
+endif
+
+if dein#tap('FastFold')
+  let g:fastfold_savehook = 1
+  let g:fastfold_fold_command_suffixes =  ['x','X','a','A','o','O','c','C']
+  let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
+  let g:javascript_folding = 1
+endif
+
+if dein#tap('vim-easymotion')
+  let g:EasyMotion_smartcase = 1
+endif
+
+if dein#tap('delimitMate')
+  let delimitMate_matchpairs = '(:),[:],{:}'
+  let delimitMate_expand_cr = 1
+endif
+
+if dein#tap('vim-better-whitespace')
+  let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite', 'qf', 'help', 'far_vim']
+  let g:better_whitespace_filetypes_verbosity = 1
+endif
+
+if dein#tap('vim-bookmarks')
+  let g:bookmark_sign = '♥'
+  let g:bookmark_highlight_lines = 1
+  let g:bookmark_no_default_key_mappings = 1
+  hi BookMarkLine ctermbg=black ctermfg=none
+  hi BookMarkSign ctermbg=none ctermfg=none
+endif
+
+if dein#tap('far.vim')
+  let g:far#window_width = 70
+endif
+
+if dein#tap('neoformat')
+  let g:neoformat_javascript_prettier = {
+  \ 'exe'   : 'prettier',
+  \ 'args'  : ['--single-quote', '--print-width 120'],
+  \ 'stdin' : 1
+  \ }
+  let g:neoformat_html_beautify = {
+  \ 'exe'   : 'html-beautify',
+  \ 'args'  : ['--indent-size 2'],
+  \ 'stdin' : 1
+  \ }
+  let g:neoformat_enabled_javascript = ['prettier']
+  let g:neoformat_enabled_html= ['beautify']
+  nnoremap <silent> <space><space> :Neoformat<cr>
+  vnoremap <silent> <space><space> :Neoformat<cr>
+endif
+
+if dein#tap('neosnippet')
+  let g:neosnippet#snippets_directory = [
+  \ '~/.config/nvim/plugged/repos/github.com/honza/vim-snippets/snippets/',
+  \ '~/.config/nvim/snippets/'
+  \ ]
+  let g:neosnippet#enable_snipmate_compatibility = 1
+  let g:neosnippet#enable_completed_snippet = 1
+  let g:neosnippet#expand_word_boundary = 1
 endif
 
 " if dein#tap('vim-wintabs')
