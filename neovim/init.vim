@@ -48,6 +48,15 @@ if dein#load_state('~/.config/nvim/plugged/')
   " call dein#add('qpkorr/vim-bufkill', {
   "       \'on_event': 'InsertEnter'
   "       \})
+  call dein#add('kana/vim-operator-user', { 'lazy': 1 })
+  call dein#add('haya14busa/vim-operator-flashy', {
+        \'depends': 'vim-operator-user',
+        \'on_map': { 'nx': '<Plug>' },
+        \'hook_source': join([
+        \"let g:operator#flashy#flash_time=300",
+        \"hi Flashy term=bold ctermbg=1 guibg=red"
+        \], "\n")
+        \})
   call dein#add('moll/vim-bbye', {
         \'on_cmd': 'BD',
         \'hook_source': join([
@@ -312,6 +321,8 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \"let g:neoterm_autoscroll = 1",
   "       \], "\n")
   "       \})
+  call dein#add('junegunn/vim-peekaboo')
+  call dein#add('wellle/tmux-complete.vim')
   call dein#add('Shougo/echodoc.vim', {
         \'on_event': 'CompleteDone',
         \'hook_post_source': 'call echodoc#enable()'
@@ -595,6 +606,9 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \})
   " call dein#add('mxw/vim-jsx')
   " let g:jsx_ext_required = 0 " Allow JSX in normal JS files"
+  " call dein#add('othree/jspc.vim', {
+  "       \'on_ft': [ 'javascript', 'jsx', 'javascript.jsx', 'tsx', 'typescript', 'typescript.tsx' ]
+  "       \})
   call dein#add('moll/vim-node', {
         \'on_ft': [ 'javascript', 'jsx', 'javascript.jsx', 'tsx', 'typescript', 'typescript.tsx' ]
         \})
@@ -1010,6 +1024,11 @@ if dein#tap('CamelCaseMotion')
 	nmap <silent> b <Plug>CamelCaseMotion_b
 	xmap <silent> b <Plug>CamelCaseMotion_b
 	omap <silent> b <Plug>CamelCaseMotion_b
+endif
+
+if dein#tap('vim-operator-flashy')
+	map y <Plug>(operator-flashy)
+	nmap Y <Plug>(operator-flashy)$
 endif
 
 " if dein#tap('vim-wintabs')
