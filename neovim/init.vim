@@ -37,24 +37,21 @@ if dein#load_state('~/.config/nvim/plugged/')
   " call dein#add('Shougo/context_filetype.vim')
   call dein#add('danro/rename.vim')
   call dein#add('pbrisbin/vim-mkdir')
+  call dein#add('kopischke/vim-stay')
   call dein#add('kana/vim-operator-user'         , { 'lazy'     : 1 })
   call dein#add('moll/vim-bbye'                  , { 'on_cmd'   : 'BD', })
   call dein#add('tpope/vim-unimpaired'           , { 'on_event' : 'VimEnter' })
   call dein#add('eugen0329/vim-esearch'          , { 'on_event' : 'VimEnter' })
   call dein#add('terryma/vim-multiple-cursors'   , { 'on_event' : 'VimEnter' })
   call dein#add('editorconfig/editorconfig-vim'  , { 'on_event' : 'VimEnter' })
-  call dein#add('tomtom/tcomment_vim'            , { 'on_event' : 'VimEnter' })
+  call dein#add('tomtom/tcomment_vim'            , { 'on_cmd'   : ['TComment', 'TCommentAs'] })
   call dein#add('metakirby5/codi.vim'            , { 'on_cmd'   : 'Codi' })
-  call dein#add('bkad/CamelCaseMotion'           , { 'on_event' : 'VimEnter' })
-  call dein#add('AndrewRadev/splitjoin.vim'      , { 'on_event' : 'VimEnter' })
   call dein#add('mileszs/ack.vim'                , { 'on_cmd'   : 'Ack' })
-  call dein#add('kopischke/vim-stay')
   call dein#add('Konfekt/FastFold'               , { 'on_event' : 'VimEnter' })
-  call dein#add('easymotion/vim-easymotion'      , { 'on_event' : 'VimEnter' })
+  call dein#add('easymotion/vim-easymotion'      , { 'on_map'   : { 'n': '<Plug>' }})
   call dein#add('tpope/vim-surround'             , { 'on_event' : 'VimEnter' })
-  call dein#add('tpope/tpope-vim-abolish'        , { 'on_event' : 'VimEnter' })
+  " call dein#add('tpope/tpope-vim-abolish'        , { 'on_event' : 'VimEnter' })
   call dein#add('tpope/vim-repeat'               , { 'on_event' : 'VimEnter' })
-  call dein#add('terryma/vim-expand-region'      , { 'on_event' : 'VimEnter' })
   call dein#add('Raimondi/delimitMate'           , { 'on_event' : 'VimEnter' })
   call dein#add('ntpeters/vim-better-whitespace' , { 'on_event' : 'InsertCharPre' })
   call dein#add('MattesGroeger/vim-bookmarks'    , { 'on_cmd'   : 'BookmarkToggle' })
@@ -66,6 +63,13 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('tpope/vim-obsession'            , { 'on_cmd'   : 'Obsession' })
   call dein#add('Shougo/neosnippet-snippets'     , { 'on_event' : 'VimEnter' })
   call dein#add('honza/vim-snippets'             , { 'on_event' : 'VimEnter' })
+  call dein#add('kana/vim-textobj-user'          , { 'on_func'  : 'textobj#user#' })
+  call dein#add('AndrewRadev/sideways.vim'       , { 'on_map'   : { 'ox': '<Plug>Sideways' }})
+  call dein#add('AndrewRadev/splitjoin.vim'      , { 'on_map'   : { 'n': '<Plug>Splitjoin' }})
+  call dein#add('haya14busa/vim-edgemotion'      , { 'on_map'   : { 'nv': '<Plug>' }})
+  call dein#add('bkad/CamelCaseMotion'           , { 'on_map'   : { 'nox': '<Plug>CamelCaseMotion' }})
+  call dein#add('terryma/vim-expand-region'      , { 'on_map'   : { 'x': '<Plug>' }})
+  " call dein#add('kana/vim-textobj-function'      , { 'on_map'   : { 'ox': '<Plug>' }})
   call dein#add('haya14busa/vim-operator-flashy', {
         \'depends': 'vim-operator-user',
         \'on_map': { 'nx': '<Plug>' }
@@ -84,11 +88,9 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \'on_event': 'VimEnter'
   "       \})
   " call dein#add('ap/vim-buftabline')
-  call dein#add('guns/xterm-color-table.vim')
   call dein#add('kshenoy/vim-signature')
-  call dein#add('powerman/vim-plugin-AnsiEsc', {
-        \'on_event': 'VimEnter'
-        \})
+  call dein#add('guns/xterm-color-table.vim', { 'on_cmd': 'XtermColorTable' })
+  call dein#add('powerman/vim-plugin-AnsiEsc', { 'on_event': 'VimEnter' })
   " call dein#add('bling/vim-bufferline', {
   "       \'on_event': 'VimEnter',
   "       \'hook_add': join([
@@ -934,7 +936,23 @@ if dein#tap('FastFold')
 endif
 
 if dein#tap('vim-easymotion')
+  let g:EasyMotion_do_mapping = 1
+  let g:EasyMotion_prompt = 'Jump to → '
+  let g:EasyMotion_keys = 'fjdksweoavn'
   let g:EasyMotion_smartcase = 1
+  let g:EasyMotion_use_smartsign_us = 1
+  let g:EasyMotion_smartcase = 1
+	nmap ss <Plug>(easymotion-s)
+	nmap sf <Plug>(easymotion-f)
+  nmap sF <Plug>(easymotion-F)
+	map  sh <Plug>(easymotion-linebackward)
+	map  sl <Plug>(easymotion-lineforward)
+	" map  sj <Plug>(easymotion-j)
+	" map  sk <Plug>(easymotion-k)
+	map  s/ <Plug>(easymotion-sn)
+	omap s/ <Plug>(easymotion-tn)
+	map  sn <Plug>(easymotion-next)
+	map  sp <Plug>(easymotion-prev)
 endif
 
 if dein#tap('delimitMate')
@@ -986,6 +1004,50 @@ if dein#tap('neosnippet')
   let g:neosnippet#expand_word_boundary = 1
 endif
 
+if dein#tap('sideways.vim')
+  nnoremap <c-h> :SidewaysLeft<cr>
+  nnoremap <c-l> :SidewaysRight<cr>
+  omap aa <Plug>SidewaysArgumentTextobjA
+  xmap aa <Plug>SidewaysArgumentTextobjA
+  omap ia <Plug>SidewaysArgumentTextobjI
+  xmap ia <Plug>SidewaysArgumentTextobjI
+endif
+
+if dein#tap('splitjoin.vim')
+  let g:splitjoin_join_mapping = ''
+  let g:splitjoin_split_mapping = ''
+  nmap gJ :SplitjoinJoin<CR>
+  nmap gS :SplitjoinSplit<CR>
+endif
+
+if dein#tap('vim-edgemotion')
+  map <c-j> <Plug>(edgemotion-j)
+  map <c-k> <Plug>(edgemotion-k)
+  vmap <c-j> <Plug>(edgemotion-j)
+  vmap <c-k> <Plug>(edgemotion-k)
+endif
+
+if dein#tap('vim-expand-region')
+  xmap v <Plug>(expand_region_expand)
+  xmap V <Plug>(expand_region_shrink)
+endif
+
+if dein#tap('tcomment_vim')
+  nmap <c-_><c-_> :TComment<cr>
+  nmap gcc :TComment<cr>
+  vmap gc :TComment<cr>
+  nmap gca :TCommentAs 
+  vmap gca :TCommentAs 
+endif
+
+" if dein#tap('vim-textobj-function')
+"   let g:textobj_function_no_default_key_mappings = 1
+" 	omap af <Plug>(textobj-function-a)
+" 	omap if <Plug>(textobj-function-i)
+" 	xmap af <Plug>(textobj-function-a)
+" 	xmap if <Plug>(textobj-function-i)
+" endif
+
 " if dein#tap('vim-wintabs')
 "   map <leader>M <Plug>(wintabs_previous)
 "   map <leader>m <Plug>(wintabs_next)
@@ -1025,10 +1087,10 @@ noremap j gj
 noremap k gk
 
 " Smart way to move between windows
-noremap <C-j> <C-W>j
-noremap <C-k> <C-W>k
-noremap <C-h> <C-W>h
-noremap <C-l> <C-W>l
+" noremap <C-j> <C-W>j
+" noremap <C-k> <C-W>k
+" noremap <C-h> <C-W>h
+" noremap <C-l> <C-W>l
 
 " Speed up scrolling of the viewport slightly
 nnoremap <C-e> 2<C-e>
