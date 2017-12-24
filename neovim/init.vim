@@ -124,41 +124,11 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \"let g:buftabs_separator='|'"
   "       \], "\n")
   "       \})
-  call dein#add('vim-airline/vim-airline', {
-        \'on_cmd': 'AirlineToggle',
-        \'hook_add': join([
-        \"if has('statusline')",
-        \"    set laststatus=2",
-        \"    set statusline=%{getcwd()}",
-        \"    set statusline+=\\ %<%f",
-        \"    set statusline+=\\ %{''.(&fenc!=''?&fenc:&enc).''}",
-        \"    set statusline+=%{(&bomb?\\\",BOM\\\":\\\"\\\")}",
-        \"    if has('fugitive')",
-        \"        set statusline+=%{fugitive#statusline()}",
-        \"    endif",
-        \"    set statusline+=\\ %{&ff}\\ %y",
-        \"    set statusline+=\\ %m%r%w",
-        \"    set statusline+=%=%-14.(%l/%L,%c%V%)\\ %p%%",
-        \"endif",
-        \"let g:airline_powerline_fonts = 1",
-        \"let g:airline#extensions#tabline#enabled = 1",
-        \"let g:airline#extensions#tabline#formatter = 'unique_tail'",
-        \"let g:airline#extensions#tabline#buffer_nr_show = 1"
-        \], "\n")
-        \})
-  call dein#add('Yggdroot/indentLine', {
-        \'on_cmd': 'IndentLinesToggle',
-        \'hook_add': "let g:indentLine_enabled = 0"
-        \})
-  call dein#add('junegunn/goyo.vim', {
-        \'on_cmd': 'Goyo'
-        \})
-  call dein#add('junegunn/limelight.vim', {
-        \'on_cmd': 'Limelight'
-        \})
-  call dein#add('itchyny/calendar.vim', {
-        \'on_cmd': 'Calendar'
-        \})
+  call dein#add('vim-airline/vim-airline' , { 'on_cmd': 'AirlineToggle' })
+  call dein#add('Yggdroot/indentLine'     , { 'on_cmd': 'IndentLinesToggle' })
+  call dein#add('junegunn/goyo.vim'       , { 'on_cmd': 'Goyo' })
+  call dein#add('junegunn/limelight.vim'  , { 'on_cmd': 'Limelight' })
+  call dein#add('itchyny/calendar.vim'    , { 'on_cmd': 'Calendar' })
 
   " General
   " call dein#add('hecal3/vim-leader-guide')
@@ -181,9 +151,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'on_event': 'CompleteDone',
         \'hook_post_source': 'call echodoc#enable()'
         \})
-  call dein#add('Shougo/deol.nvim', {
-        \'on_event': 'VimEnter'
-        \})
+  call dein#add('Shougo/deol.nvim', { 'on_cmd': 'Deol' })
   call dein#add('zefei/vim-wintabs', {
         \'on_cmd': 'WintabsRefresh',
         \'hook_add': join([
@@ -195,9 +163,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"let g:wintabs_ui_buffer_name_format='%n %t'",
         \], "\n")
         \})
-  call dein#add('lambdalisue/gina.vim', {
-        \'on_event': 'VimEnter'
-        \})
+  call dein#add('lambdalisue/gina.vim', { 'on_cmd': 'Gina' })
   call dein#add('Shougo/denite.nvim', {
         \'on_cmd': 'Denite',
         \'hook_source': join([
@@ -255,7 +221,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"\\  ['───────────────────┴──────────────', '']",
         \"\\]",
         \"call denite#custom#var('menu', 'menus', s:menus)",
-        \"call denite#custom#option('default', 'prompt', '❯')",
+        \"call denite#custom#option('default', 'prompt', 'λ:')",
         \"call denite#custom#option('default', 'empty', 0)",
         \"call denite#custom#option('default', 'auto_resize', 1)",
         \"call denite#custom#filter('matcher_ignore_globs', 'ignore_globs', [ '.git/', '.ropeproject/', '__pycache__/', 'images/', '*.min.*', 'bundle.js', 'img/', 'fonts/'])",
@@ -1038,6 +1004,30 @@ if dein#tap('tcomment_vim')
   vmap gc :TComment<cr>
   nmap gca :TCommentAs 
   vmap gca :TCommentAs 
+endif
+
+if dein#tap('vim-airline')
+  if has('statusline')
+    set laststatus=2
+    set statusline=%{getcwd()}
+    set statusline+=\ %<%f
+    set statusline+=\ %{''.(&fenc!=''?&fenc:&enc).''}
+    set statusline+=%{(&bomb?\\",BOM\\":\\"\\")}
+    if has('fugitive')
+        set statusline+=%{fugitive#statusline()}
+    endif
+    set statusline+=\ %{&ff}\ %y
+    set statusline+=\ %m%r%w
+    set statusline+=%=%-14.(%l/%L,%c%V%)\ %p%%
+  endif
+  let g:airline_powerline_fonts = 1
+  let g:airline#extensions#tabline#enabled = 1
+  let g:airline#extensions#tabline#formatter = 'unique_tail'
+  let g:airline#extensions#tabline#buffer_nr_show = 1
+endif
+
+if dein#tap('indentLine')
+  let g:indentLine_enabled = 0
 endif
 
 " if dein#tap('vim-textobj-function')
