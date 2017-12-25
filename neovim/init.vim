@@ -18,10 +18,11 @@ if dein#load_state('~/.config/nvim/plugged/')
   " call dein#add('kamwitsta/nordisk')
   " call dein#add('jdkanani/vim-material-theme')
   call dein#add('mhartington/oceanic-next')
-  call dein#add('morhetz/gruvbox')
-  call dein#add('joshdick/onedark.vim')
-  call dein#add('MaxSt/FlatColor')
-  call dein#add('freeo/vim-kalisi')
+  " call dein#add('ayu-theme/ayu-vim')
+  " call dein#add('morhetz/gruvbox')
+  " call dein#add('joshdick/onedark.vim')
+  " call dein#add('MaxSt/FlatColor')
+  " call dein#add('freeo/vim-kalisi')
 
   " Edit
   " call dein#add('gilsondev/searchtasks.vim')
@@ -684,7 +685,13 @@ inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDow
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 autocmd FileType python,elm set tabstop=4 shiftwidth=4 expandtab ai
-autocmd FileType javascript,json,css,scss,html,typescript,typescript.tsx,javascript.jsx,md,ex,exs set tabstop=2 shiftwidth=2 expandtab ai
+autocmd FileType vim,javascript,json,css,scss,html,typescript,typescript.tsx,javascript.jsx,md,ex,exs set tabstop=2 shiftwidth=2 expandtab ai
+
+autocmd BufNewFile,BufRead .tern-project setfiletype json
+autocmd BufNewFile,BufRead .jsbeautifyrc setfiletype json
+autocmd BufNewFile,BufRead .eslintrc     setfiletype json
+autocmd BufNewFile,BufRead .babelrc      setfiletype json
+autocmd BufNewFile,BufRead .jscsrc       setfiletype json
 
 autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
 
