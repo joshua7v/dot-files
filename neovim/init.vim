@@ -401,6 +401,14 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'on_ft': [ 'html', 'css', 'jsx', 'javascript', 'javascript.jsx', 'eelixir' ],
         \})
   call dein#add('chrisbra/Colorizer', { 'on_cmd': 'ColorToggle' })
+  call dein#add('othree/html5.vim', {
+        \'on_ft': 'html', 'hook_add': join([
+        \"let g:html5_event_handler_attributes_complete = 0",
+        \"let g:html5_rdfa_attributes_complete = 0",
+        \"let g:html5_microdata_attributes_complete = 0",
+        \"let g:html5_aria_attributes_complete = 0"
+        \], "\n")
+        \})
 
   " For javascript
   " call dein#add('pangloss/vim-javascript')
@@ -538,7 +546,12 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   " For docker
   call dein#add('ekalinin/Dockerfile.vim', {
-        \'on_ft': 'Dockerfile'
+        \'on_ft': ['Dockerfile', 'docker-compose']
+        \})
+
+  " For yaml
+  call dein#add('stephpy/vim-yaml', {
+        \'on_ft': 'yaml'
         \})
 
   call dein#end()
@@ -685,7 +698,7 @@ inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDow
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 autocmd FileType python,elm set tabstop=4 shiftwidth=4 expandtab ai
-autocmd FileType vim,javascript,json,css,scss,html,typescript,typescript.tsx,javascript.jsx,md,ex,exs set tabstop=2 shiftwidth=2 expandtab ai
+autocmd FileType vim,javascript,json,css,scss,html,yaml,typescript,typescript.tsx,javascript.jsx,md,ex,exs set tabstop=2 shiftwidth=2 expandtab ai
 
 autocmd BufNewFile,BufRead .tern-project setfiletype json
 autocmd BufNewFile,BufRead .jsbeautifyrc setfiletype json
