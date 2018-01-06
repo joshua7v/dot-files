@@ -478,7 +478,10 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('mhartington/nvim-typescript', {
         \'on_event': 'InsertEnter',
         \'on_ft': [ 'typescript', 'tsx', 'typescript.tsx' ],
-        \'hook_add': "let g:nvim_typescript#type_info_on_hold = 1"
+        \'hook_add': join([
+        \"let g:nvim_typescript#type_info_on_hold = 0",
+        \"let g:nvim_typescript#vue_support = 1"
+        \], "\n")
         \})
   call dein#add('leafgarland/typescript-vim', {
         \'on_ft': [ 'typescript', 'tsx', 'typescript.tsx' ]
@@ -798,8 +801,8 @@ nnoremap <leader>ct :ColorToggle<cr>
 nnoremap <leader>jdd :JsDoc<cr>
 
 nnoremap td :TSDoc<cr>
-nnoremap tdd :TSDef<cr>
-nnoremap th :TSDefPreview<cr>
+nnoremap <c-]> :TSDef<cr>
+nnoremap tdp :TSDefPreview<cr>
 nnoremap ti :TSImport<cr>
 nnoremap tec :TSEditConfig<cr>
 nnoremap tre :TSRefs<cr>
@@ -975,7 +978,7 @@ if dein#tap('neoformat')
   \ 'stdin' : 1
   \ }
   let g:neoformat_enabled_javascript = ['prettier']
-  let g:neoformat_enabled_html= ['beautify']
+  let g:neoformat_enabled_html = ['beautify']
   nnoremap <silent> <space><space> :Neoformat<cr>
   vnoremap <silent> <space><space> :Neoformat<cr>
 endif
@@ -1120,7 +1123,8 @@ nnoremap <silent> # #zz
 nnoremap <silent> g* g*zz
 
 " Select all
-noremap <Leader>sa ggVG
+noremap <leader>sa ggVG
+noremap <leader><leader> :messages<cr>
 
 " Remap U to <C-r> for easier redo
 nnoremap U <C-r>
