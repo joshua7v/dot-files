@@ -409,6 +409,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"let g:html5_aria_attributes_complete = 0"
         \], "\n")
         \})
+  call dein#add('digitaltoad/vim-pug', { 'on_ft': 'pug' })
 
   " For javascript
   " call dein#add('pangloss/vim-javascript')
@@ -977,8 +978,14 @@ if dein#tap('neoformat')
   \ 'args'  : ['--indent-size 2'],
   \ 'stdin' : 1
   \ }
+  let g:neoformat_pug_beautifier = {
+  \ 'exe'   : 'pug-beautifier',
+  \ 'args'  : ['-s 2'],
+  \ 'stdin' : 1
+  \ }
   let g:neoformat_enabled_javascript = ['prettier']
   let g:neoformat_enabled_html = ['beautify']
+  let g:neoformat_enabled_pug = ['beautifier']
   nnoremap <silent> <space><space> :Neoformat<cr>
   vnoremap <silent> <space><space> :Neoformat<cr>
 endif
