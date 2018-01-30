@@ -487,9 +487,9 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('leafgarland/typescript-vim', {
         \'on_ft': [ 'typescript', 'tsx', 'typescript.tsx' ]
         \})
-  call dein#add('HerringtonDarkholme/yats.vim', {
-        \'on_ft': [ 'typescript', 'tsx', 'typescript.tsx' ]
-        \})
+  " call dein#add('HerringtonDarkholme/yats.vim', {
+  "       \'on_ft': [ 'typescript', 'tsx', 'typescript.tsx' ]
+  "       \})
   call dein#add('ianks/vim-tsx', {
         \'on_ft': [ 'typescript', 'tsx', 'typescript.tsx' ]
         \})
