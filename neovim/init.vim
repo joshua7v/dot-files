@@ -297,6 +297,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \], "\n")
         \})
   call dein#add('Shougo/deoplete.nvim', {
+        \'rev': '4.0-serial',
         \'on_event': 'InsertEnter',
         \'hook_add': join([
         \"let g:deoplete#enable_refresh_always=0",
@@ -306,7 +307,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"let g:deoplete#file#enable_buffer_path=1",
         \"let g:echodoc_enable_at_startup=1",
         \"let g:deoplete#auto_complete_delay=10",
-        \"let g:deoplete#auto_refresh_delay=100",
+        \"let g:deoplete#auto_refresh_delay=500",
         \"set splitbelow",
         \"set completeopt+=noselect"
         \], "\n"),
@@ -398,7 +399,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'on_ft': [ 'html', 'jsx', 'javascript', 'javascript.jsx' ]
         \})
   call dein#add('mattn/emmet-vim', {
-        \'on_ft': [ 'html', 'css', 'jsx', 'javascript', 'javascript.jsx', 'eelixir' ],
+        \'on_ft': [ 'html', 'css', 'jsx', 'javascript', 'javascript.jsx', 'tsx', 'typescript.tsx', 'eelixir' ],
         \})
   call dein#add('chrisbra/Colorizer', { 'on_cmd': 'ColorToggle' })
   call dein#add('othree/html5.vim', {
@@ -478,7 +479,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   " For typescript
   call dein#add('mhartington/nvim-typescript', {
         \'on_event': 'InsertEnter',
-        \'on_ft': [ 'typescript', 'tsx', 'typescript.tsx' ],
+        \'on_ft': [ 'typescript', 'ts', 'tsx', 'typescript.tsx' ],
         \'hook_add': join([
         \"let g:nvim_typescript#type_info_on_hold = 0",
         \"let g:nvim_typescript#vue_support = 1"
@@ -701,8 +702,8 @@ inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
 inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
-autocmd FileType python,elm set tabstop=4 shiftwidth=4 expandtab ai
-autocmd FileType vim,javascript,json,css,scss,html,yaml,typescript,typescript.tsx,javascript.jsx,md,ex,exs set tabstop=2 shiftwidth=2 expandtab ai
+" autocmd FileType python,elm set tabstop=4 shiftwidth=4 expandtab ai
+" autocmd FileType vim,javascript,json,css,scss,html,yaml,typescript,typescript.tsx,javascript.jsx,md,ex,exs set tabstop=2 shiftwidth=2 expandtab ai
 
 autocmd BufNewFile,BufRead .tern-project setfiletype json
 autocmd BufNewFile,BufRead .jsbeautifyrc setfiletype json
@@ -876,6 +877,9 @@ if dein#tap('emmet-vim')
   \ 'javascript.jsx' : {
   \   'extends' : 'jsx'
   \  },
+  \ 'typescript.tsx' : {
+  \   'extends' : 'jsx'
+  \  },
   \ 'javascript': {
   \   'extends': 'jsx'
   \ }
@@ -970,7 +974,12 @@ endif
 if dein#tap('neoformat')
   let g:neoformat_javascript_prettier = {
   \ 'exe'   : 'prettier',
-  \ 'args'  : ['--single-quote', '--print-width 120'],
+  \ 'args'  : ['--single-quote', '--print-width 120', '--tab-width 2'],
+  \ 'stdin' : 1
+  \ }
+  let g:neoformat_typescript_prettier = {
+  \ 'exe'   : 'prettier',
+  \ 'args'  : ['--single-quote', '--print-width 100', '--tab-width 4'],
   \ 'stdin' : 1
   \ }
   let g:neoformat_html_beautify = {
@@ -984,6 +993,7 @@ if dein#tap('neoformat')
   \ 'stdin' : 1
   \ }
   let g:neoformat_enabled_javascript = ['prettier']
+  let g:neoformat_enabled_typescript = ['prettier']
   let g:neoformat_enabled_html = ['beautify']
   let g:neoformat_enabled_pug = ['beautifier']
   nnoremap <silent> <space><space> :Neoformat<cr>
