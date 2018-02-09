@@ -399,7 +399,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'on_ft': [ 'html', 'jsx', 'javascript', 'javascript.jsx' ]
         \})
   call dein#add('mattn/emmet-vim', {
-        \'on_ft': [ 'html', 'css', 'jsx', 'javascript', 'javascript.jsx', 'tsx', 'typescript.tsx', 'eelixir' ],
+        \'on_ft': [ 'html', 'css', 'scss', 'jsx', 'javascript', 'javascript.jsx', 'tsx', 'typescript.tsx', 'eelixir' ],
         \})
   call dein#add('chrisbra/Colorizer', { 'on_cmd': 'ColorToggle' })
   call dein#add('othree/html5.vim', {
@@ -979,7 +979,12 @@ if dein#tap('neoformat')
   \ }
   let g:neoformat_typescript_prettier = {
   \ 'exe'   : 'prettier',
-  \ 'args'  : ['--single-quote', '--print-width 100', '--tab-width 4'],
+  \ 'args'  : ['--parser typescript', '--single-quote', '--print-width 120', '--tab-width 2'],
+  \ 'stdin' : 1
+  \ }
+  let g:neoformat_scss_prettier = {
+  \ 'exe'   : 'prettier',
+  \ 'args'  : ['--parser css', '--single-quote', '--print-width 120', '--tab-width 2'],
   \ 'stdin' : 1
   \ }
   let g:neoformat_html_beautify = {
@@ -994,6 +999,7 @@ if dein#tap('neoformat')
   \ }
   let g:neoformat_enabled_javascript = ['prettier']
   let g:neoformat_enabled_typescript = ['prettier']
+  let g:neoformat_enabled_scss = ['prettier']
   let g:neoformat_enabled_html = ['beautify']
   let g:neoformat_enabled_pug = ['beautifier']
   nnoremap <silent> <space><space> :Neoformat<cr>
@@ -1108,7 +1114,8 @@ nnoremap <Leader>c A,<ESC>
 nnoremap <Leader>. A.<ESC>
 nnoremap <Leader>\ A \<ESC>
 nnoremap <Leader>e :tabnew 
-nnoremap <Leader>ee :tabnew ~/.config/nvim/init.vim
+nnoremap <Leader>ec :tabnew ~/.config/nvim/init.vim
+nnoremap <Leader>ee :e %
 nnoremap <Leader>p :tabprev<cr>
 nnoremap <Leader>n :tabnext<cr>
 
