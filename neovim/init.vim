@@ -40,7 +40,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('pbrisbin/vim-mkdir')
   call dein#add('kopischke/vim-stay')
   call dein#add('kana/vim-operator-user'         , { 'lazy'     : 1 })
-  call dein#add('moll/vim-bbye'                  , { 'on_cmd'   : 'BD', })
+  call dein#add('moll/vim-bbye'                  , { 'on_cmd'   : 'Bdelete', })
   call dein#add('tpope/vim-unimpaired'           , { 'on_event' : 'VimEnter' })
   call dein#add('eugen0329/vim-esearch'          , { 'on_event' : 'VimEnter' })
   call dein#add('terryma/vim-multiple-cursors'   , { 'on_event' : 'VimEnter' })
@@ -559,6 +559,11 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'on_ft': 'yaml'
         \})
 
+  " For graphql
+  call dein#add('jparise/vim-graphql', {
+        \'on_ft': 'graphql'
+        \})
+
   call dein#end()
   call dein#save_state()
 endif
@@ -987,6 +992,21 @@ if dein#tap('neoformat')
   \ 'args'  : ['--parser css', '--single-quote', '--print-width 120', '--tab-width 2'],
   \ 'stdin' : 1
   \ }
+  let g:neoformat_graphql_prettier = {
+  \ 'exe'   : 'prettier',
+  \ 'args'  : ['--parser graphql', '--single-quote', '--print-width 120', '--tab-width 2'],
+  \ 'stdin' : 1
+  \ }
+  let g:neoformat_json_prettier = {
+  \ 'exe'   : 'prettier',
+  \ 'args'  : ['--parser json', '--print-width 120', '--tab-width 2'],
+  \ 'stdin' : 1
+  \ }
+  let g:neoformat_markdown_prettier = {
+  \ 'exe'   : 'prettier',
+  \ 'args'  : ['--parser markdown', '--print-width 120', '--tab-width 2'],
+  \ 'stdin' : 1
+  \ }
   let g:neoformat_html_beautify = {
   \ 'exe'   : 'html-beautify',
   \ 'args'  : ['--indent-size 2'],
@@ -1000,6 +1020,9 @@ if dein#tap('neoformat')
   let g:neoformat_enabled_javascript = ['prettier']
   let g:neoformat_enabled_typescript = ['prettier']
   let g:neoformat_enabled_scss = ['prettier']
+  let g:neoformat_enabled_graphql = ['prettier']
+  let g:neoformat_enabled_markdown = ['prettier']
+  let g:neoformat_enabled_json = ['prettier', 'jq']
   let g:neoformat_enabled_html = ['beautify']
   let g:neoformat_enabled_pug = ['beautifier']
   nnoremap <silent> <space><space> :Neoformat<cr>
