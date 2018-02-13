@@ -279,13 +279,14 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('scrooloose/nerdtree', {
         \'on_cmd': 'NERDTreeToggle',
         \'hook_add': join([
-        \"let NERDTreeWinSize=32",
-        \"let NERDTreeShowHidden=1",
-        \"let NERDTreeMinimalUI=1",
-        \"let NERDTreeAutoDeleteBuffer=1",
-        \"let NERDTreeHighlightCursorline=1",
-        \"let NERDTreeQuitOnOpen=1",
-        \"let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]"
+        \"let g:NERDTreeWinSize=32",
+        \"let g:NERDTreeShowHidden=1",
+        \"let g:NERDTreeMinimalUI=1",
+        \"let g:NERDTreeAutoDeleteBuffer=1",
+        \"let g:NERDTreeHighlightCursorline=1",
+        \"let g:NERDTreeQuitOnOpen=0",
+        \"let g:NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]",
+        \"let g:NERDTreeBookmarksFile = expand('$HOME/.NERDTreeBookmarks')"
         \], "\n")
         \})
   call dein#add('majutsushi/tagbar', {
@@ -796,7 +797,11 @@ nnoremap <silent> <space>/  :Denite grep:. -mode=normal<cr>
 nnoremap <leader>l :ALELint<cr>
 
 autocmd bufenter * if (winnr('$') == 1 && exists('b:NERDTreeType') && b:NERDTreeType == 'primary') | q | end
-nnoremap <leader>f :NERDTreeToggle<cr>
+nnoremap <leader>tt :NERDTreeToggle<cr>
+nnoremap <leader>tb :NERDTreeFromBookmark 
+nnoremap <leader>ta :Bookmark 
+nnoremap <leader>tc :ClearBookmarks 
+nnoremap <leader>tx :ClearAllBookmarks<cr>
 
 nnoremap <leader>o :TagbarToggle<cr>
 
