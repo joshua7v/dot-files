@@ -471,7 +471,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"let g:elm_setup_keybindings = 0",
         \"let g:elm_make_show_warnings = 0",
         \"let g:elm_detailed_complete = 1",
-        \"let g:elm_format_autosave = 1",
+        \"let g:elm_format_autosave = 0",
         \"let g:elm_format_fail_silently = 1",
         \"let g:elm_format_two_spaces = 1"
         \], "\n")
@@ -708,8 +708,8 @@ inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
 inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
-" autocmd FileType python,elm set tabstop=4 shiftwidth=4 expandtab ai
-" autocmd FileType vim,javascript,json,css,scss,html,yaml,typescript,typescript.tsx,javascript.jsx,md,ex,exs set tabstop=2 shiftwidth=2 expandtab ai
+autocmd FileType python,elm,go set tabstop=4 shiftwidth=4 expandtab ai
+autocmd FileType vim,javascript,json,css,scss,html,yaml,typescript,typescript.tsx,javascript.jsx,md,ex,exs set tabstop=2 shiftwidth=2 expandtab ai
 
 autocmd BufNewFile,BufRead .tern-project setfiletype json
 autocmd BufNewFile,BufRead .jsbeautifyrc setfiletype json
@@ -1022,6 +1022,21 @@ if dein#tap('neoformat')
   \ 'args'  : ['-s 2'],
   \ 'stdin' : 1
   \ }
+  let g:neoformat_elixir_mix = {
+  \ 'exe'   : 'mix',
+  \ 'args'  : ['format', '-'],
+  \ 'stdin' : 1
+  \ }
+  let g:neoformat_elm_format = {
+  \ 'exe'   : 'elm-format',
+  \ 'args'  : ['--stdin'],
+  \ 'stdin' : 1
+  \ }
+  let g:neoformat_go_fmt = {
+  \ 'exe'   : 'gofmt',
+  \ 'args'  : [],
+  \ 'stdin' : 1
+  \ }
   let g:neoformat_enabled_javascript = ['prettier']
   let g:neoformat_enabled_typescript = ['prettier']
   let g:neoformat_enabled_scss = ['prettier']
@@ -1030,6 +1045,9 @@ if dein#tap('neoformat')
   let g:neoformat_enabled_json = ['prettier', 'jq']
   let g:neoformat_enabled_html = ['beautify']
   let g:neoformat_enabled_pug = ['beautifier']
+  let g:neoformat_enabled_elixir = ['mix']
+  let g:neoformat_enabled_elm = ['format']
+  let g:neoformat_enabled_go = ['fmt']
   nnoremap <silent> <space><space> :Neoformat<cr>
   vnoremap <silent> <space><space> :Neoformat<cr>
 endif
