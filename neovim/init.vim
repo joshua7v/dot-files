@@ -15,9 +15,10 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('rhysd/nyaovim-mini-browser')
 
   " Color Schemes
+  call dein#add('mhartington/oceanic-next')
   " call dein#add('kamwitsta/nordisk')
   " call dein#add('jdkanani/vim-material-theme')
-  call dein#add('mhartington/oceanic-next')
+  " call dein#add('jnurmine/Zenburn')
   " call dein#add('ayu-theme/ayu-vim')
   " call dein#add('morhetz/gruvbox')
   " call dein#add('joshdick/onedark.vim')
@@ -36,10 +37,17 @@ if dein#load_state('~/.config/nvim/plugged/')
   " call dein#add('AndrewRadev/linediff.vim', { 'on_event': 'VimEnter' })
   " call dein#add('qpkorr/vim-bufkill', { 'on_event': 'InsertEnter' })
   " call dein#add('Shougo/context_filetype.vim')
+  " call dein#add('myusuf3/numbers.vim')
+  call dein#add('justinmk/vim-sneak')
+  call dein#add('tpope/vim-speeddating')
+  call dein#add('tmhedberg/matchit')
   call dein#add('danro/rename.vim')
   call dein#add('pbrisbin/vim-mkdir')
   call dein#add('kopischke/vim-stay')
   call dein#add('kana/vim-operator-user'         , { 'lazy'     : 1 })
+  call dein#add('reedes/vim-wordy'               , { 'on_cmd'   : 'Wordy' })
+  call dein#add('vim-scripts/DrawIt'             , { 'on_cmd'   : 'DrawIt' })
+  call dein#add('tyru/open-browser.vim'          , { 'on_map'   : { 'nv': '<Plug>(openbrowser-smart-search)' }})
   call dein#add('moll/vim-bbye'                  , { 'on_cmd'   : 'Bdelete', })
   call dein#add('tpope/vim-unimpaired'           , { 'on_event' : 'VimEnter' })
   call dein#add('eugen0329/vim-esearch'          , { 'on_event' : 'VimEnter' })
@@ -49,7 +57,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('metakirby5/codi.vim'            , { 'on_cmd'   : 'Codi' })
   call dein#add('mileszs/ack.vim'                , { 'on_cmd'   : 'Ack' })
   call dein#add('Konfekt/FastFold'               , { 'on_event' : 'VimEnter' })
-  call dein#add('easymotion/vim-easymotion'      , { 'on_map'   : { 'n': '<Plug>' }})
+  " call dein#add('easymotion/vim-easymotion'      , { 'on_map'   : { 'n': '<Plug>' }})
   call dein#add('tpope/vim-surround'             , { 'on_event' : 'VimEnter' })
   " call dein#add('tpope/tpope-vim-abolish'        , { 'on_event' : 'VimEnter' })
   call dein#add('tpope/vim-repeat'               , { 'on_event' : 'VimEnter' })
@@ -393,6 +401,9 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   " For html / css
   " call dein#add('gorodinskiy/vim-coloresque')
+  call dein#add('Valloric/MatchTagAlways', {
+        \'on_ft': [ 'html', 'xml', 'jsx', 'javascript', 'javascript.jsx', 'tsx', 'typescript.tsx', 'eelixir' ],
+        \})
   call dein#add('hail2u/vim-css3-syntax', {
         \'on_ft': 'css'
         \})
@@ -600,9 +611,6 @@ set t_vb=
 set tm=500
 set nostartofline         " keep cursor postion when switching between buffers
 
-set number " show line number
-set nowrap " disable wrap
-
 "set list
 "set listchars=tab:›\ ,trail:•,extends:❯,precedes:❮
 
@@ -633,8 +641,6 @@ set hidden            " A buffer becomes hidden when it is abandoned
 set wildmode=longest:full,full
 set ttyfast
 
-set relativenumber " show relative line number
-set numberwidth=3
 set ruler          " show the current line number and column number
 set showcmd        " show the current typing command
 set noshowmode     " Show current mode
@@ -666,6 +672,10 @@ set shortmess+=c
 " let &colorcolumn="80,".join(range(120,999),",")
 let &colorcolumn="120"
 
+set nowrap " disable wrap
+set number " show line number
+set relativenumber " show relative line number
+set numberwidth=3
 autocmd InsertEnter * :set norelativenumber " no relativenumber in insert mode
 autocmd InsertLeave * :set relativenumber   " show relativenumber when leave insert mode
 
@@ -826,6 +836,29 @@ if dein#tap('goyo.vim')
 	nnoremap <Leader>G :Goyo<CR>
 endif
 
+if dein#tap('vim-sneak')
+  let g:sneak#label = 1
+endif
+
+if dein#tap('MatchTagAlways')
+  let g:mta_filetypes = {
+    \ 'html' : 1,
+    \ 'xhtml' : 1,
+    \ 'xml' : 1,
+    \ 'jinja' : 1,
+    \ 'jsx': 1,
+    \ 'javascript': 1,
+    \ 'javascript.jsx': 1,
+    \ 'tsx': 1,
+    \ 'typescript.tsx': 1
+    \}
+endif
+
+if dein#tap('open-browser.vim')
+  nmap gx <Plug>(openbrowser-smart-search)
+	vmap gx <Plug>(openbrowser-smart-search)
+endif
+
 if dein#tap('undotree')
   nnoremap <leader>ud :UndotreeToggle<cr>
 endif
@@ -939,25 +972,25 @@ if dein#tap('FastFold')
   let g:javascript_folding = 1
 endif
 
-if dein#tap('vim-easymotion')
-  let g:EasyMotion_do_mapping = 1
-  let g:EasyMotion_prompt = 'Jump to → '
-  let g:EasyMotion_keys = 'fjdksweoavn'
-  let g:EasyMotion_smartcase = 1
-  let g:EasyMotion_use_smartsign_us = 1
-  let g:EasyMotion_smartcase = 1
-	nmap ss <Plug>(easymotion-s)
-	nmap sf <Plug>(easymotion-f)
-  nmap sF <Plug>(easymotion-F)
-	map  sh <Plug>(easymotion-linebackward)
-	map  sl <Plug>(easymotion-lineforward)
-	" map  sj <Plug>(easymotion-j)
-	" map  sk <Plug>(easymotion-k)
-	map  s/ <Plug>(easymotion-sn)
-	omap s/ <Plug>(easymotion-tn)
-	map  sn <Plug>(easymotion-next)
-	map  sp <Plug>(easymotion-prev)
-endif
+" if dein#tap('vim-easymotion')
+"   let g:EasyMotion_do_mapping = 1
+"   let g:EasyMotion_prompt = 'Jump to → '
+"   let g:EasyMotion_keys = 'fjdksweoavn'
+"   let g:EasyMotion_smartcase = 1
+"   let g:EasyMotion_use_smartsign_us = 1
+"   let g:EasyMotion_smartcase = 1
+" 	nmap ss <Plug>(easymotion-s)
+" 	nmap sf <Plug>(easymotion-f)
+"   nmap sF <Plug>(easymotion-F)
+" 	map  sh <Plug>(easymotion-linebackward)
+" 	map  sl <Plug>(easymotion-lineforward)
+" 	" map  sj <Plug>(easymotion-j)
+" 	" map  sk <Plug>(easymotion-k)
+" 	map  s/ <Plug>(easymotion-sn)
+" 	omap s/ <Plug>(easymotion-tn)
+" 	map  sn <Plug>(easymotion-next)
+" 	map  sp <Plug>(easymotion-prev)
+" endif
 
 if dein#tap('delimitMate')
   let delimitMate_matchpairs = '(:),[:],{:}'
@@ -1259,14 +1292,15 @@ hi! link ShowMarksHLl DiffAdd
 hi! link ShowMarksHLu DiffChange
 
 " For error highlight
+set spell
 hi clear SpellBad
-hi SpellBad term=standout ctermfg=1 term=underline cterm=underline
-hi clear SpellCap
-hi SpellCap term=underline cterm=underline
-hi clear SpellRare
-hi SpellRare term=underline cterm=underline
-hi clear SpellLocal
-hi SpellLocal term=underline cterm=underline
+hi SpellBad term=underline cterm=underline
+" hi clear SpellCap
+" hi clear SpellRare
+" hi clear SpellLocal
+" hi SpellCap term=underline cterm=underline
+" hi SpellRare term=underline cterm=underline
+" hi SpellLocal term=underline cterm=underline
 
 function s:SetCursorLine()
   set cursorline
