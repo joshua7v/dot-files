@@ -39,6 +39,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   " call dein#add('Shougo/context_filetype.vim')
   " call dein#add('myusuf3/numbers.vim')
   call dein#add('justinmk/vim-sneak')
+  call dein#add('bfredl/nvim-miniyank')
   call dein#add('tpope/vim-speeddating')
   call dein#add('tmhedberg/matchit')
   call dein#add('danro/rename.vim')
@@ -294,7 +295,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"let g:NERDTreeHighlightCursorline=1",
         \"let g:NERDTreeQuitOnOpen=0",
         \"let g:NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]",
-        \"let g:NERDTreeBookmarksFile = expand('$HOME/.NERDTreeBookmarks')"
+        \"let g:NERDTreeBookmarksFile = expand('$HOME/.config/nvim/.NERDTreeBookmarks')"
         \], "\n")
         \})
   call dein#add('majutsushi/tagbar', {
@@ -802,6 +803,7 @@ nnoremap <silent> <space>h  :<C-u>Denite history:all<cr>
 nnoremap <silent> <space>q  :<C-u>Denite commands<cr>
 nnoremap <silent> <space>f  :<C-u>Denite file_rec<cr>
 nnoremap <silent> <space>o  :<C-u>Denite outline<cr>
+nnoremap <silent> <space>y  :<C-u>Denite -mode=normal miniyank<cr>
 nnoremap <silent> <space>/  :Denite grep:. -mode=normal<cr>
 
 nnoremap <leader>l :ALELint<cr>
@@ -835,6 +837,11 @@ nnoremap tr :TSRename<cr>
 if dein#tap('goyo.vim')
 	nnoremap <Leader>G :Goyo<CR>
 endif
+
+if dein#tap('nvim-miniyank')
+  let g:miniyank_maxitems = 100
+  let g:miniyank_filename = $HOME."/.config/nvim/.miniyank.mpack"
+end
 
 if dein#tap('vim-sneak')
   let g:sneak#label = 1
@@ -1292,7 +1299,7 @@ hi! link ShowMarksHLl DiffAdd
 hi! link ShowMarksHLu DiffChange
 
 " For error highlight
-set spell
+" set spell
 hi clear SpellBad
 hi SpellBad term=underline cterm=underline
 " hi clear SpellCap
