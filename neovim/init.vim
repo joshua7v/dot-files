@@ -726,6 +726,7 @@ autocmd BufNewFile,BufRead .tern-project setfiletype json
 autocmd BufNewFile,BufRead .jsbeautifyrc setfiletype json
 autocmd BufNewFile,BufRead .eslintrc     setfiletype json
 autocmd BufNewFile,BufRead .babelrc      setfiletype json
+autocmd BufNewFile,BufRead .prettierrc   setfiletype json
 autocmd BufNewFile,BufRead .jscsrc       setfiletype json
 
 autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
@@ -1024,32 +1025,32 @@ endif
 if dein#tap('neoformat')
   let g:neoformat_javascript_prettier = {
   \ 'exe'   : 'prettier',
-  \ 'args'  : ['--single-quote', '--print-width 120', '--tab-width 2'],
+  \ 'args'  : ['--stdin'],
   \ 'stdin' : 1
   \ }
   let g:neoformat_typescript_prettier = {
   \ 'exe'   : 'prettier',
-  \ 'args'  : ['--parser typescript', '--single-quote', '--print-width 120', '--tab-width 2'],
+  \ 'args'  : ['--stdin', '--parser typescript'],
   \ 'stdin' : 1
   \ }
   let g:neoformat_scss_prettier = {
   \ 'exe'   : 'prettier',
-  \ 'args'  : ['--parser css', '--single-quote', '--print-width 120', '--tab-width 2'],
+  \ 'args'  : ['--stdin', '--parser css'],
   \ 'stdin' : 1
   \ }
   let g:neoformat_graphql_prettier = {
   \ 'exe'   : 'prettier',
-  \ 'args'  : ['--parser graphql', '--single-quote', '--print-width 120', '--tab-width 2'],
+  \ 'args'  : ['--stdin', '--parser graphql'],
   \ 'stdin' : 1
   \ }
   let g:neoformat_json_prettier = {
   \ 'exe'   : 'prettier',
-  \ 'args'  : ['--parser json', '--print-width 120', '--tab-width 2'],
+  \ 'args'  : ['--stdin', '--parser json'],
   \ 'stdin' : 1
   \ }
   let g:neoformat_markdown_prettier = {
   \ 'exe'   : 'prettier',
-  \ 'args'  : ['--parser markdown', '--print-width 120', '--tab-width 2'],
+  \ 'args'  : ['--stdin', '--parser markdown'],
   \ 'stdin' : 1
   \ }
   let g:neoformat_html_beautify = {
