@@ -306,8 +306,8 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"endif"
         \], "\n")
         \})
+  " \'rev': '4.0-serial',
   call dein#add('Shougo/deoplete.nvim', {
-        \'rev': '4.0-serial',
         \'on_event': 'InsertEnter',
         \'hook_add': join([
         \"let g:deoplete#enable_refresh_always=0",
@@ -402,6 +402,9 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   " For html / css
   " call dein#add('gorodinskiy/vim-coloresque')
+  call dein#add('cakebaker/scss-syntax.vim', {
+        \'on_ft': 'scss'
+        \})
   call dein#add('Valloric/MatchTagAlways', {
         \'on_ft': [ 'html', 'xml', 'jsx', 'javascript', 'javascript.jsx', 'tsx', 'typescript.tsx', 'eelixir' ],
         \})
@@ -493,10 +496,6 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('mhartington/nvim-typescript', {
         \'on_event': 'InsertEnter',
         \'on_ft': [ 'typescript', 'ts', 'tsx', 'typescript.tsx' ],
-        \'hook_add': join([
-        \"let g:nvim_typescript#type_info_on_hold = 0",
-        \"let g:nvim_typescript#vue_support = 1"
-        \], "\n")
         \})
   call dein#add('leafgarland/typescript-vim', {
         \'on_ft': [ 'typescript', 'tsx', 'typescript.tsx' ]
@@ -719,8 +718,8 @@ inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
 inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
-autocmd FileType python,elm,go set tabstop=4 shiftwidth=4 expandtab ai
-autocmd FileType vim,javascript,json,css,scss,html,yaml,typescript,typescript.tsx,javascript.jsx,md,ex,exs set tabstop=2 shiftwidth=2 expandtab ai
+" autocmd FileType python,elm,go set tabstop=4 shiftwidth=4 expandtab ai
+" autocmd FileType vim,javascript,json,css,scss,html,yaml,typescript,typescript.tsx,javascript.jsx,md,ex,exs set tabstop=2 shiftwidth=2 expandtab ai
 
 autocmd BufNewFile,BufRead .tern-project setfiletype json
 autocmd BufNewFile,BufRead .jsbeautifyrc setfiletype json
@@ -790,7 +789,7 @@ nnoremap <leader>T :Deol
 nnoremap <silent> <space>p  :<C-u>Denite -resume<CR>
 nnoremap <silent> <space>j  :call execute('Denite -resume -select=+'.v:count1.' -immediately')<CR>
 nnoremap <silent> <space>k  :call execute('Denite -resume -select=-'.v:count1.' -immediately')<CR>
-nnoremap <c-p> :Denite file_rec<cr>
+nnoremap <c-p> :Denite -highlight-matched-char=None file_rec<cr>
 nnoremap <silent> <space>w  :<C-u>DeniteCursorWord  -auto-resize line<CR>
 nnoremap <silent> <space>l  :<C-u>Denite -mode=normal location_list<CR>
 nnoremap <silent> <space>g  :<C-u>Denite grep<cr>
@@ -903,6 +902,12 @@ if dein#tap('jedi-vim')
 	let g:jedi#goto_assignments_command = '<leader>g'
 	let g:jedi#rename_command = '<Leader>r'
 	let g:jedi#usages_command = '<Leader>n'
+endif
+
+if dein#tap('nvim-typescript')
+  let g:nvim_typescript#type_info_on_hold = 0
+  let g:nvim_typescript#javascript_support = 1
+  let g:nvim_typescript#vue_support = 1
 endif
 
 if dein#tap('CamelCaseMotion')
