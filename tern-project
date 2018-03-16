@@ -1,0 +1,15 @@
+{
+  "libs": ["browser", "jquery", "chai", "ecmascript", "react", "underscore"],
+  "plugins": {
+    "angular": {},
+    "commonjs": {},
+    "complete_strings": {},
+    "doc_comment": {},
+    "es_modules": {},
+    "modules": {},
+    "node": {},
+    "node_resolve": {},
+    "requirejs": {},
+    "webpack": {}
+  }
+}
