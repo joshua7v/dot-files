@@ -16,28 +16,8 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   " Color Schemes
   call dein#add('mhartington/oceanic-next')
-  " call dein#add('kamwitsta/nordisk')
-  " call dein#add('jdkanani/vim-material-theme')
-  " call dein#add('jnurmine/Zenburn')
-  " call dein#add('ayu-theme/ayu-vim')
-  " call dein#add('morhetz/gruvbox')
-  " call dein#add('joshdick/onedark.vim')
-  " call dein#add('MaxSt/FlatColor')
-  " call dein#add('freeo/vim-kalisi')
 
   " Edit
-  " call dein#add('gilsondev/searchtasks.vim')
-  " call dein#add('chrisbra/NrrwRgn')
-  " call dein#add('SirVer/ultisnips')
-  " call dein#add('honza/vim-snippets')
-  " call dein#add('vim-scripts/TaskList.vim', {
-  "       \'on_event': 'VimEnter',
-  "       \'hook_add': "let g:tlTokenList = ['FIXME', 'TODO', 'FEATURE', 'CHANGED', 'BUG', 'HACK']"
-  "       \})
-  " call dein#add('AndrewRadev/linediff.vim', { 'on_event': 'VimEnter' })
-  " call dein#add('qpkorr/vim-bufkill', { 'on_event': 'InsertEnter' })
-  " call dein#add('Shougo/context_filetype.vim')
-  " call dein#add('myusuf3/numbers.vim')
   call dein#add('justinmk/vim-sneak')
   call dein#add('bfredl/nvim-miniyank')
   call dein#add('tpope/vim-speeddating')
@@ -91,30 +71,9 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
 
   " UI
-  " call dein#add('equalsraf/neovim-gui-shim')
-  " call dein#add('mhinz/vim-startify')
-  " call dein#add('liuchengxu/eleline.vim'),
-  " call dein#add('google/vim-searchindex', {
-  "       \'on_event': 'VimEnter'
-  "       \})
-  " call dein#add('ap/vim-buftabline')
   call dein#add('kshenoy/vim-signature')
   call dein#add('guns/xterm-color-table.vim', { 'on_cmd': 'XtermColorTable' })
   call dein#add('powerman/vim-plugin-AnsiEsc', { 'on_event': 'VimEnter' })
-  " call dein#add('bling/vim-bufferline', {
-  "       \'on_event': 'VimEnter',
-  "       \'hook_add': join([
-  "       \"let g:bufferline_echo=0",
-  "       \"let g:bufferline_show_bufnr=0",
-  "       \"let g:bufferline_active_buffer_left=''",
-  "       \"let g:bufferline_show_bufnr=1",
-  "       \"let g:bufferline_active_buffer_right=''",
-  "       \"let g:bufferline_solo_highlight=0",
-  "       \"let g:bufferline_inactive_highlight='normal'",
-  "       \"let g:bufferline_active_highlight='StatusLine'",
-  "       \"autocmd VimEnter * let &statusline='%{bufferline#refresh_status()}' .bufferline#get_status_string()"
-  "       \], "\n")
-  "       \})
   call dein#add('inside/vim-search-pulse', {
         \'on_event': 'VimEnter',
         \'hook_post_source': join([
@@ -122,18 +81,6 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"let g:vim_search_pulse_duration = 400"
         \], "\n")
         \})
-  " call dein#add('vim-scripts/buftabs', {
-  "       \'on_event': 'VimEnter',
-  "       \'hook_add': join([
-  "       \"let g:buftabs_in_statusline=1",
-  "       \"let g:buftabs_only_basename=1",
-  "       \"let g:buftabs_marker_modified='+'",
-  "       \"let g:buftabs_active_highlight_group='Visual'",
-  "       \"let g:buftabs_marker_start='['",
-  "       \"let g:buftabs_marker_end=']'",
-  "       \"let g:buftabs_separator='|'"
-  "       \], "\n")
-  "       \})
   call dein#add('vim-airline/vim-airline' , { 'on_cmd': 'AirlineToggle' })
   call dein#add('Yggdroot/indentLine'     , { 'on_cmd': 'IndentLinesToggle' })
   call dein#add('junegunn/goyo.vim'       , { 'on_cmd': 'Goyo' })
@@ -141,22 +88,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('itchyny/calendar.vim'    , { 'on_cmd': 'Calendar' })
 
   " General
-  " call dein#add('hecal3/vim-leader-guide')
-  " call dein#add('c0r73x/neotags.nvim')
-  " call dein#add('neoclide/denite-git')
-  " call dein#add('ludovicchabant/vim-gutentags')
-  " call dein#add('neoclide/todoapp.vim')
-  " call dein#add('zenbro/mirror.vim')
-  " call dein#add('kassio/neoterm', {
-  "       \'on_event': 'VimEnter',
-  "       \'hook_add': join([
-  "       \"let g:neoterm_automap_keys = ',tt'",
-  "       \"let g:neoterm_position = 'horizontal'",
-  "       \"let g:neoterm_autoscroll = 1",
-  "       \], "\n")
-  "       \})
   call dein#add('junegunn/vim-peekaboo')
-  call dein#add('wellle/tmux-complete.vim')
   call dein#add('Shougo/echodoc.vim', {
         \'on_event': 'CompleteDone',
         \'hook_post_source': 'call echodoc#enable()'
@@ -207,7 +139,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"\\  ['-> Denite: Buffers          │ sp-b',  'Denite buffer'],",
         \"\\  ['-> Denite: Line             │ ',  'Denite line'],",
         \"\\  ['────────────────────────────┴──────────────', '']",
-        \"\\]",
+        \"\\ ]",
         \"let s:menus.tools = { 'description': 'Tools' }",
         \"let s:menus.tools.command_candidates = [",
         \"\\  ['  Tools               │ Key Mapping', ''],",
@@ -221,7 +153,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"\\  ['-> Codi (python)      │', 'Codi python'],",
         \"\\  ['-> Codi (javascript)  │', 'Codi javascript'],",
         \"\\  ['──────────────────────┴──────────────', '']",
-        \"\\]",
+        \"\\ ]",
         \"let s:menus.sessions = { 'description': 'Sessions' }",
         \"let s:menus.sessions.command_candidates = [",
         \"\\  ['  Tools            │ Key Mapping', ''],",
@@ -229,7 +161,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"\\  ['-> Restore session │ sp-s', 'Denite session'],",
         \"\\  ['-> Save session    │', 'Denite session/new'],",
         \"\\  ['───────────────────┴──────────────', '']",
-        \"\\]",
+        \"\\ ]",
         \"call denite#custom#var('menu', 'menus', s:menus)",
         \"call denite#custom#option('default', 'prompt', 'λ:')",
         \"call denite#custom#option('default', 'empty', 0)",
@@ -306,48 +238,48 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"endif"
         \], "\n")
         \})
+  call dein#add('roxma/nvim-completion-manager')
+  call dein#add('fgrsnau/ncm-otherbuf')
+  " call dein#add('roxma/nvim-cm-tern', { 'build': 'npm install' })
+  " call dein#add('autozimu/LanguageClient-neovim', {
+  "       \'rev': 'next',
+  "       \'build': 'bash install.sh'
+  "       \})
   " \'rev': '4.0-serial',
   call dein#add('Shougo/deoplete.nvim', {
-        \'on_event': 'InsertEnter',
+        \'on_event': 'VimEnter',
         \'hook_add': join([
+        \"let g:deoplete#enable_at_startup=1",
         \"let g:deoplete#enable_refresh_always=0",
         \"let g:deoplete#enable_camel_case=1",
-        \"let g:deoplete#enable_at_startup=1",
         \"let g:deoplete#tag#cache_limit_size=800000",
         \"let g:deoplete#file#enable_buffer_path=1",
-        \"let g:echodoc_enable_at_startup=1",
-        \"let g:deoplete#auto_complete_delay=10",
-        \"let g:deoplete#auto_refresh_delay=500",
+        \"let g:deoplete#auto_complete_delay=1",
+        \"let g:deoplete#auto_refresh_delay=1000",
+        \"let g:deoplete#disable_auto_complete=0",
+        \"let g:deoplete#num_processes=1",
         \"set splitbelow",
         \"set completeopt+=noselect"
         \], "\n"),
         \'hook_post_source': join([
-        \"call deoplete#custom#set('omni',          'mark', '⌾')",
-        \"call deoplete#custom#set('ternjs',        'mark', '⌁')",
-        \"call deoplete#custom#set('jedi',          'mark', '⌁')",
-        \"call deoplete#custom#set('vim',           'mark', '⌁')",
-        \"call deoplete#custom#set('neosnippet',    'mark', '⌘')",
-        \"call deoplete#custom#set('tag',           'mark', '⌦')",
-        \"call deoplete#custom#set('around',        'mark', '↻')",
-        \"call deoplete#custom#set('buffer',        'mark', 'ℬ')",
-        \"call deoplete#custom#set('tmux-complete', 'mark', '⊶')",
-        \"call deoplete#custom#set('syntax',        'mark', '♯')",
-        \"call deoplete#custom#set('vim',           'rank', 630)",
-        \"call deoplete#custom#set('ternjs',        'rank', 620)",
-        \"call deoplete#custom#set('jedi',          'rank', 610)",
-        \"call deoplete#custom#set('omni',          'rank', 600)",
-        \"call deoplete#custom#set('neosnippet',    'rank', 510)",
-        \"call deoplete#custom#set('member',        'rank', 500)",
-        \"call deoplete#custom#set('file_include',  'rank', 420)",
-        \"call deoplete#custom#set('file',          'rank', 410)",
-        \"call deoplete#custom#set('tag',           'rank', 400)",
-        \"call deoplete#custom#set('around',        'rank', 330)",
-        \"call deoplete#custom#set('buffer',        'rank', 320)",
-        \"call deoplete#custom#set('dictionary',    'rank', 310)",
-        \"call deoplete#custom#set('tmux-complete', 'rank', 300)",
-        \"call deoplete#custom#set('syntax',        'rank', 200)",
+        \"call deoplete#enable()",
         \"imap <expr><C-u>   pumvisible() ? '<Down>' : '<C-u>'",
-        \"imap <expr><C-i>   pumvisible() ? '<Up>' : '<C-i>'"
+        \"imap <expr><C-i>   pumvisible() ? '<Up>' : '<C-i>'",
+        \"let g:deoplete#sources = {}",
+        \"let g:deoplete#sources._ = [",
+        \"\\   'tern',",
+        \"\\   'neosnippet',",
+        \"\\   'alchemist',",
+        \"\\ ]",
+        \"au User CmSetup call cm#register_source({'name' : 'deoplete',",
+        \"\\ 'priority': 8,",
+        \"\\ 'abbreviation': 'deo',",
+        \"\\ })",
+        \"inoremap <silent> <Plug>_ <C-r>=g:Deoplete_ncm()<CR>",
+        \"func! g:Deoplete_ncm()",
+        \"call cm#complete('deoplete', cm#context(), g:deoplete#_context.complete_position + 1, g:deoplete#_context.candidates)",
+        \"return ''",
+        \"endfunc"
         \], "\n")
         \})
   call dein#add('chemzqm/denite-extra', {
@@ -389,21 +321,16 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
 
   " For c family
-  call dein#add('zchee/deoplete-clang', {
-        \'on_ft': [ 'c', 'cpp' ],
-        \'hook_add': join([
-        \"let g:deoplete#sources#clang#libclang_path='/usr/lib/llvm-3.8/lib/libclang.so.1'",
-        \"let g:deoplete#sources#clang#clang_header='/usr/lib/llvm-3.8/include/llvm'"
-        \], "\n")
+  call dein#add('roxma/ncm-clang', {
+        \'on_ft': [ 'c', 'cpp' ]
         \})
-  " call dein#add('mbbill/echofunc', {
-  "       \'on_ft': [ 'c', 'cpp' ]
-  "       \})
 
   " For html / css
-  " call dein#add('gorodinskiy/vim-coloresque')
   call dein#add('cakebaker/scss-syntax.vim', {
         \'on_ft': 'scss'
+        \})
+  call dein#add('calebeby/ncm-css', {
+        \'on_ft': [ 'css', 'scss' ]
         \})
   call dein#add('Valloric/MatchTagAlways', {
         \'on_ft': [ 'html', 'xml', 'jsx', 'javascript', 'javascript.jsx', 'tsx', 'typescript.tsx', 'eelixir' ],
@@ -412,7 +339,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'on_ft': 'css'
         \})
   call dein#add('alvan/vim-closetag', {
-        \'on_ft': [ 'html', 'jsx', 'javascript', 'javascript.jsx' ]
+        \'on_ft': [ 'html', 'javascript', 'javascript.jsx', 'typescript.tsx' ]
         \})
   call dein#add('mattn/emmet-vim', {
         \'on_ft': [ 'html', 'css', 'scss', 'jsx', 'javascript', 'javascript.jsx', 'tsx', 'typescript.tsx', 'eelixir' ],
@@ -429,48 +356,35 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('digitaltoad/vim-pug', { 'on_ft': 'pug' })
 
   " For javascript
-  " call dein#add('pangloss/vim-javascript')
-  " call dein#add('maxmellon/vim-jsx-pretty', {
-  "       \'on_ft': [ 'javascript', 'jsx', 'javascript.jsx' ],
-  "       \'hook_post_source':join([
-  "       \"let g:vim_jsx_pretty_enable_jsx_highlight = 0",
-  "       \"let g:vim_jsx_pretty_colorful_config = 1",
-  "       \"hi def link jsxTag Function",
-  "       \"hi def link jsxTagName Function",
-  "       \"hi def link jsxCloseTag Function",
-  "       \"hi def link jsxCloseString Function",
-  "       \"hi def link jsxString String",
-  "       \"hi def link jsxNameSpace Function",
-  "       \"hi def link jsxComment Error",
-  "       \"hi def link jsxAttrib Type",
-  "       \"hi def link jsxEscapeJs jsxEscapeJs"
-  "       \], "\n")
-  "       \})
-  " call dein#add('mxw/vim-jsx')
-  " let g:jsx_ext_required = 0 " Allow JSX in normal JS files"
-  " call dein#add('othree/jspc.vim', {
-  "       \'on_ft': [ 'javascript', 'jsx', 'javascript.jsx', 'tsx', 'typescript', 'typescript.tsx' ]
-  "       \})
   call dein#add('moll/vim-node', {
-        \'on_ft': [ 'javascript', 'jsx', 'javascript.jsx', 'tsx', 'typescript', 'typescript.tsx' ]
+        \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ]
         \})
   call dein#add('styled-components/vim-styled-components', {
-        \'on_ft': [ 'javascript', 'jsx', 'javascript.jsx', 'tsx', 'typescript', 'typescript.tsx' ]
+        \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ]
+        \})
+  call dein#add('ternjs/tern_for_vim', {
+        \'on_ft': [ 'javascript', 'javascript.jsx' ],
         \})
   call dein#add('carlitux/deoplete-ternjs', {
-        \'on_event': 'InsertEnter',
-        \'on_ft': [ 'javascript', 'jsx', 'javascript.jsx' ],
+        \'on_event': 'VimEnter',
+        \'on_ft': [ 'javascript', 'javascript.jsx' ],
         \'hook_add': join([
         \"let g:tern_request_timeout = 1",
         \"let g:tern_show_signature_in_pum = '0'",
-        \"let g:tern#filetypes = [ 'js', 'jsx', 'javascript.jsx', 'vue' ]"
+        \"let g:deoplete#sources#ternjs#types = 1",
+        \"let g:deoplete#sources#ternjs#depths = 1",
+        \"let g:deoplete#sources#ternjs#docs = 1",
+        \"let g:deoplete#sources#ternjs#filter = 0",
+        \"let g:deoplete#sources#ternjs#case_insensitive = 1",
+        \"let g:deoplete#sources#ternjs#include_keywords = 1",
+        \"let g:deoplete#sources#ternjs#filetypes = [ 'javascript', 'javascript.jsx', 'vue' ]"
         \], "\n")
         \})
   call dein#add('chemzqm/vim-jsx-improve', {
-        \'on_ft': [ 'javascript', 'jsx', 'javascript.jsx' ]
+        \'on_ft': [ 'javascript', 'javascript.jsx' ]
         \})
   call dein#add('heavenshell/vim-jsdoc', {
-        \'on_ft': [ 'javascript', 'jsx', 'javascript.jsx', 'typescript', 'tsx', 'typescript.tsx' ]
+        \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ]
         \})
 
   " For json
@@ -480,6 +394,9 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
 
   " For elm
+  call dein#add('roxma/ncm-elm-oracle', {
+        \'on_ft': 'elm'
+        \})
   call dein#add('ElmCast/elm-vim', {
         \'on_ft': 'elm',
         \'hook_add': join([
@@ -494,17 +411,13 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   " For typescript
   call dein#add('mhartington/nvim-typescript', {
-        \'on_event': 'InsertEnter',
-        \'on_ft': [ 'typescript', 'ts', 'tsx', 'typescript.tsx' ],
+        \'on_ft': [ 'typescript', 'typescript.tsx' ],
         \})
   call dein#add('leafgarland/typescript-vim', {
-        \'on_ft': [ 'typescript', 'tsx', 'typescript.tsx' ]
+        \'on_ft': [ 'typescript', 'typescript.tsx' ]
         \})
-  " call dein#add('HerringtonDarkholme/yats.vim', {
-  "       \'on_ft': [ 'typescript', 'tsx', 'typescript.tsx' ]
-  "       \})
   call dein#add('ianks/vim-tsx', {
-        \'on_ft': [ 'typescript', 'tsx', 'typescript.tsx' ]
+        \'on_ft': [ 'typescript', 'typescript.tsx' ]
         \})
 
   " For elixir
@@ -519,7 +432,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('davidhalter/jedi-vim', {
         \'on_ft': 'python',
         \'hook_add': join([
-        \"let g:jedi#completions_enabled = 0",
+        \"let g:jedi#completions_enabled = 1",
         \"let g:jedi#auto_vim_configuration = 0",
         \"let g:jedi#smart_auto_mappings = 0",
         \"let g:jedi#show_call_signatures = 1",
@@ -534,9 +447,6 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"let g:jedi#use_splits_not_buffers = 'right'"
         \], "\n")
         \})
-  call dein#add('zchee/deoplete-jedi', {
-        \'on_ft': 'python'
-        \})
 
   " For go
   call dein#add('fatih/vim-go', {
@@ -545,36 +455,21 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
   call dein#add('nsf/gocode', {
         \'rtp': 'nvim',
-        \'on_ft': 'go'
-        \})
-  call dein#add('zchee/deoplete-go', {
-        \'build': 'make',
         \'on_ft': 'go',
-        \'hook_add': join([
-        \"let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']",
-        \"let g:deoplete#sources#go#use_cache = 1"
-        \], "\n")
+        \'build': '~/.config/nvim/plugged/repos/github.com/nsf/gocode/nvim/symlink.sh'
         \})
 
   " For api
-  call dein#add('kylef/apiblueprint.vim', {
-        \'on_ft': 'apiblueprint'
-        \})
+  call dein#add('kylef/apiblueprint.vim', { 'on_ft': 'apiblueprint' })
 
   " For docker
-  call dein#add('ekalinin/Dockerfile.vim', {
-        \'on_ft': ['Dockerfile', 'docker-compose']
-        \})
+  call dein#add('ekalinin/Dockerfile.vim', { 'on_ft': ['Dockerfile', 'docker-compose'] })
 
   " For yaml
-  call dein#add('stephpy/vim-yaml', {
-        \'on_ft': 'yaml'
-        \})
+  call dein#add('stephpy/vim-yaml', { 'on_ft': 'yaml' })
 
   " For graphql
-  call dein#add('jparise/vim-graphql', {
-        \'on_ft': 'graphql'
-        \})
+  call dein#add('jparise/vim-graphql', { 'on_ft': 'graphql' })
 
   call dein#end()
   call dein#save_state()
@@ -790,7 +685,7 @@ nnoremap <silent> <space>p  :<C-u>Denite -resume<CR>
 nnoremap <silent> <space>j  :call execute('Denite -resume -select=+'.v:count1.' -immediately')<CR>
 nnoremap <silent> <space>k  :call execute('Denite -resume -select=-'.v:count1.' -immediately')<CR>
 nnoremap <c-p> :Denite -highlight-matched-char=None file_rec<cr>
-nnoremap <silent> <space>w  :<C-u>DeniteCursorWord  -auto-resize line<CR>
+nnoremap <silent> <space>w  :<C-u>DeniteCursorWord -mode=normal -auto-resize line<CR>
 nnoremap <silent> <space>l  :<C-u>Denite -mode=normal location_list<CR>
 nnoremap <silent> <space>g  :<C-u>Denite grep<cr>
 nnoremap <silent> <space>n  :<C-u>Denite -mode=normal -ignorecase=false -input='TODO\\|FIXME\\|CHANGED\\|BUG\\|HACK\\|FEATURE' grep<cr>
@@ -834,6 +729,22 @@ nnoremap tt :TSType<cr>
 nnoremap ttd :TSTypeDef<cr>
 nnoremap tr :TSRename<cr>
 
+" Plugins
+
+" if dein#tap('LanguageClient-neovim')
+"   let g:LanguageClient_autoStart = 1
+"   let g:LanguageClient_serverCommands = {
+"     \ 'javascript': ['javascript-typescript-stdio'],
+"     \ 'javascript.jsx': ['javascript-typescript-stdio'],
+"     \ 'typescript': ['javascript-typescript-stdio'],
+"     \ 'typescript.tsx': ['javascript-typescript-stdio'],
+"     \ }
+"
+"   nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+"   nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+"   nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+" endif
+
 if dein#tap('goyo.vim')
 	nnoremap <Leader>G :Goyo<CR>
 endif
@@ -871,6 +782,8 @@ if dein#tap('undotree')
 endif
 
 if dein#tap('tern_for_vim')
+  let g:tern#command = ["tern"]
+  let g:tern#arguments = ["--persistent"]
 	autocmd FileType javascript,jsx,javascript.jsx
 		\  nnoremap <silent><buffer> K          :<C-u>TernDoc<CR>
 		\| nnoremap <silent><buffer> <C-]>      :<C-u>TernDef<CR>
@@ -1147,7 +1060,7 @@ endif
 if dein#tap('vim-airline')
   if has('statusline')
     set laststatus=2
-    set statusline=%{getcwd()}
+    " set statusline=%{getcwd()}
     set statusline+=\ %<%f
     set statusline+=\ %{''.(&fenc!=''?&fenc:&enc).''}
     set statusline+=%{(&bomb?\\",BOM\\":\\"\\")}
@@ -1206,8 +1119,9 @@ nnoremap <Leader>c A,<ESC>
 nnoremap <Leader>. A.<ESC>
 nnoremap <Leader>\ A \<ESC>
 nnoremap <Leader>e :tabnew 
+nnoremap <Leader>ee :e <C-R>=expand('%:p:h') . '/'<CR>
+nnoremap <Leader>ef :e <C-R>=expand('%')<CR>
 nnoremap <Leader>ec :tabnew ~/.config/nvim/init.vim
-nnoremap <Leader>ee :e %
 nnoremap <Leader>p :tabprev<cr>
 nnoremap <Leader>n :tabnext<cr>
 
@@ -1258,14 +1172,6 @@ if has('macunix')
   " vnoremap <C-x> :!pbcopy<cr>
   " vnoremap <C-c> :w !pbcopy<cr><cr>
 endif
-
-function! Multiple_cursors_before()
-  let g:deoplete#disable_auto_complete = 1
-endfunction
-
-function! Multiple_cursors_after()
-  let g:deoplete#disable_auto_complete = 0
-endfunction
 
 nnoremap <leader>u :<C-u>MiniBrowser <C-r><C-p><CR>
 function! s:devdocs(query) abort
@@ -1329,3 +1235,16 @@ autocmd VimEnter * call s:SetCursorLine()
 
 hi LineNr ctermfg=darkgrey guifg=#777777
 hi MatchParen ctermfg=black
+
+if dein#tap('nvim-completion-manager')
+  let g:cm_completed_snippet_engine = 'neosnippet'
+  imap <c-e> <Plug>(cm_force_refresh)
+
+  function! Multiple_cursors_before()
+    call cm#disable_for_buffer()
+  endfunction
+
+  function! Multiple_cursors_after()
+    call cm#enable_for_buffer()
+  endfunction
+endif
