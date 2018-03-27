@@ -43,7 +43,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   " call dein#add('tpope/tpope-vim-abolish'        , { 'on_event' : 'VimEnter' })
   call dein#add('tpope/vim-repeat'               , { 'on_event' : 'VimEnter' })
   call dein#add('Raimondi/delimitMate'           , { 'on_event' : 'VimEnter' })
-  call dein#add('ntpeters/vim-better-whitespace' , { 'on_event' : 'InsertCharPre' })
+  call dein#add('ntpeters/vim-better-whitespace' , { 'on_event' : 'InsertEnter' })
   call dein#add('MattesGroeger/vim-bookmarks'    , { 'on_cmd'   : 'BookmarkToggle' })
   call dein#add('godlygeek/tabular'              , { 'on_cmd'   : 'Tabularize' })
   call dein#add('ggVGc/vim-fuzzysearch'          , { 'on_cmd'   : 'FuzzySearch' })
@@ -66,7 +66,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
   call dein#add('Shougo/neosnippet', {
         \'depends': 'neosnippet-snippets',
-        \'on_event': 'InsertCharPre',
+        \'on_event': 'InsertEnter',
         \'on_ft': 'snippet'
         \})
 
@@ -220,7 +220,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('scrooloose/nerdtree', {
         \'on_cmd': 'NERDTreeToggle',
         \'hook_add': join([
-        \"let g:NERDTreeWinSize=32",
+        \"let g:NERDTreeWinSize=24",
         \"let g:NERDTreeShowHidden=1",
         \"let g:NERDTreeMinimalUI=1",
         \"let g:NERDTreeAutoDeleteBuffer=1",
@@ -326,8 +326,11 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
 
   " For html / css
-  call dein#add('cakebaker/scss-syntax.vim', {
-        \'on_ft': 'scss'
+  " call dein#add('cakebaker/scss-syntax.vim', {
+  "       \'on_ft': 'scss'
+  "       \})
+  call dein#add('tpope/vim-haml', {
+        \'on_ft': [ 'scss', 'sass', 'haml' ]
         \})
   call dein#add('calebeby/ncm-css', {
         \'on_ft': [ 'css', 'scss' ]
@@ -563,6 +566,8 @@ set pastetoggle=<F5>                         " when in insert mode, toggle betwe
 
 set foldmethod=manual
 set shortmess+=c
+set tabline=
+set guitablabel=%t
 
 " let &colorcolumn="80,".join(range(120,999),",")
 let &colorcolumn="120"
@@ -579,16 +584,20 @@ autocmd InsertLeave * :set relativenumber   " show relativenumber when leave ins
 " ----------------------------------------------------------------------------
 
 " Theme
+set t_Co=256
+
 if dein#tap('oceanic-next')
   colorscheme OceanicNext
-  " hi TabLineFill ctermfg=237 ctermbg=145 guifg=#343d46 guibg=#a7adba
+  let g:oceanic_next_terminal_bold = 1
+  let g:oceanic_next_terminal_italic = 1
+  hi StatusLine ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#1b2b34
+  hi StatusLineNC ctermfg=235 ctermbg=145 guibg=#65737e guifg=#1b2b34
+  hi TabLine ctermfg=145 ctermbg=235 guibg=#1b2b34 guifg=#65737e
+  hi TabLineSel ctermfg=145 ctermbg=345 guibg=#1b2b34 guifg=#ff5555
+  hi TabLineFill ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#1b2b34
 else
   colorscheme desert
 endif
-
-set t_Co=256
-let g:oceanic_next_terminal_bold = 1
-let g:oceanic_next_terminal_italic = 1
 
 if has('clipboard')
   set clipboard& clipboard+=unnamedplus
@@ -1061,7 +1070,8 @@ if dein#tap('vim-airline')
   if has('statusline')
     set laststatus=2
     " set statusline=%{getcwd()}
-    set statusline+=\ %<%f
+    " set statusline+=\ %<%f
+    set statusline+=%f
     set statusline+=\ %{''.(&fenc!=''?&fenc:&enc).''}
     set statusline+=%{(&bomb?\\",BOM\\":\\"\\")}
     if has('fugitive')
