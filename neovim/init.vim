@@ -586,15 +586,20 @@ autocmd InsertLeave * :set relativenumber   " show relativenumber when leave ins
 " Theme
 set t_Co=256
 
-if dein#tap('oceanic-next')
-  colorscheme OceanicNext
-  let g:oceanic_next_terminal_bold = 1
-  let g:oceanic_next_terminal_italic = 1
+function! s:patch_oceanic_next_colors()
   hi StatusLine ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#1b2b34
   hi StatusLineNC ctermfg=235 ctermbg=145 guibg=#65737e guifg=#1b2b34
   hi TabLine ctermfg=145 ctermbg=235 guibg=#1b2b34 guifg=#65737e
   hi TabLineSel ctermfg=145 ctermbg=345 guibg=#1b2b34 guifg=#ff5555
   hi TabLineFill ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#1b2b34
+endfunction
+
+autocmd! ColorScheme OceanicNext call s:patch_oceanic_next_colors()
+
+if dein#tap('oceanic-next')
+  colorscheme OceanicNext
+  let g:oceanic_next_terminal_bold = 1
+  let g:oceanic_next_terminal_italic = 1
 else
   colorscheme desert
 endif
