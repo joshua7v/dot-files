@@ -1253,6 +1253,7 @@ hi MatchParen ctermfg=black
 
 if dein#tap('nvim-completion-manager')
   let g:cm_completed_snippet_engine = 'neosnippet'
+  let g:cm_matcher={'module': 'cm_matchers.abbrev_matcher', 'case': 'smartcase'}
   imap <c-e> <Plug>(cm_force_refresh)
 
   function! Multiple_cursors_before()
