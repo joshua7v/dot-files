@@ -32,7 +32,6 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('moll/vim-bbye'                  , { 'on_cmd'   : 'Bdelete', })
   call dein#add('tpope/vim-unimpaired'           , { 'on_event' : 'VimEnter' })
   call dein#add('eugen0329/vim-esearch'          , { 'on_event' : 'VimEnter' })
-  call dein#add('terryma/vim-multiple-cursors'   , { 'on_event' : 'VimEnter' })
   call dein#add('editorconfig/editorconfig-vim'  , { 'on_event' : 'VimEnter' })
   call dein#add('tomtom/tcomment_vim'            , { 'on_cmd'   : ['TComment', 'TCommentAs'] })
   call dein#add('metakirby5/codi.vim'            , { 'on_cmd'   : 'Codi' })
@@ -1255,12 +1254,4 @@ if dein#tap('nvim-completion-manager')
   let g:cm_completed_snippet_engine = 'neosnippet'
   let g:cm_matcher={'module': 'cm_matchers.abbrev_matcher', 'case': 'smartcase'}
   imap <c-e> <Plug>(cm_force_refresh)
-
-  function! Multiple_cursors_before()
-    call cm#disable_for_buffer()
-  endfunction
-
-  function! Multiple_cursors_after()
-    call cm#enable_for_buffer()
-  endfunction
 endif
