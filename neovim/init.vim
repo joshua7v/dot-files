@@ -25,6 +25,8 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('danro/rename.vim')
   call dein#add('pbrisbin/vim-mkdir')
   call dein#add('kopischke/vim-stay')
+  call dein#add('itchyny/vim-gitbranch')
+  call dein#add('t9md/vim-quickhl'               , { 'lazy'     : 1 })
   call dein#add('kana/vim-operator-user'         , { 'lazy'     : 1 })
   call dein#add('reedes/vim-wordy'               , { 'on_cmd'   : 'Wordy' })
   call dein#add('vim-scripts/DrawIt'             , { 'on_cmd'   : 'DrawIt' })
@@ -108,60 +110,6 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('Shougo/denite.nvim', {
         \'on_cmd': 'Denite',
         \'hook_source': join([
-        \"let s:menus = {}",
-        \"let s:menus.dein = { 'description': 'Plugin management' }",
-        \"let s:menus.dein.command_candidates = [",
-        \"\\  ['  Project Tools         │ Key Mapping', ''],",
-        \"\\  ['────────────────────────┼──────────────', ''],",
-        \"\\  ['-> Dein: Plugins update │', 'call dein#update()'],",
-        \"\\  ['-> Dein: Update log     │', 'echo dein#get_updates_log()'],",
-        \"\\  ['-> Dein: Log            │', 'echo dein#get_log()'],",
-        \"\\  ['-> Denite: Dein Log     │', 'Denite dein -no-quit'],",
-        \"\\  ['────────────────────────┴──────────────', '']",
-        \"\\ ]",
-        \"let s:menus.project = { 'description': 'Project & structure' }",
-        \"let s:menus.project.command_candidates = [",
-        \"\\  ['  Project Tools  │ Key Mapping', ''],",
-        \"\\  ['─────────────────┼──────────────', ''],",
-        \"\\  ['-> File Explorer │ ,f',   'NERDTreeToggle'],",
-        \"\\  ['-> Outline       │ ,o',   'TagbarToggle'],",
-        \"\\  ['-> Bookmarks     │ ,mm',  'BookmarkToggle'],",
-        \"\\  ['-> Undo Tree     │ ,ud',  'UndotreeToggle'],",
-        \"\\  ['─────────────────┴──────────────', '']",
-        \"\\ ]",
-        \"let s:menus.files = { 'description': 'File tools' }",
-        \"let s:menus.files.command_candidates = [",
-        \"\\  ['  File Tools                │ Key Mapping', ''],",
-        \"\\  ['────────────────────────────┼──────────────', ''],",
-        \"\\  ['-> Denite: Find files       │ c-p',  'Denite file_rec'],",
-        \"\\  ['-> Denite: Find in files    │ sp-g',  'Denite grep:.'],",
-        \"\\  ['-> Denite: Buffers          │ sp-b',  'Denite buffer'],",
-        \"\\  ['-> Denite: Line             │ ',  'Denite line'],",
-        \"\\  ['────────────────────────────┴──────────────', '']",
-        \"\\ ]",
-        \"let s:menus.tools = { 'description': 'Tools' }",
-        \"let s:menus.tools.command_candidates = [",
-        \"\\  ['  Tools               │ Key Mapping', ''],",
-        \"\\  ['──────────────────────┼──────────────', ''],",
-        \"\\  ['-> Check Syntax       │,l', 'ALELint'],",
-        \"\\  ['-> Goyo               │', 'Goyo'],",
-        \"\\  ['-> List marks         │', 'Denite marks'],",
-        \"\\  ['-> Xterm color-table  │', 'XtermColorTable'],",
-        \"\\  ['-> Hex editor         │', 'Vinarise'],",
-        \"\\  ['-> Tag-bar            │', 'TagbarToggle'],",
-        \"\\  ['-> Codi (python)      │', 'Codi python'],",
-        \"\\  ['-> Codi (javascript)  │', 'Codi javascript'],",
-        \"\\  ['──────────────────────┴──────────────', '']",
-        \"\\ ]",
-        \"let s:menus.sessions = { 'description': 'Sessions' }",
-        \"let s:menus.sessions.command_candidates = [",
-        \"\\  ['  Tools            │ Key Mapping', ''],",
-        \"\\  ['───────────────────┼──────────────', ''],",
-        \"\\  ['-> Restore session │ sp-s', 'Denite session'],",
-        \"\\  ['-> Save session    │', 'Denite session/new'],",
-        \"\\  ['───────────────────┴──────────────', '']",
-        \"\\ ]",
-        \"call denite#custom#var('menu', 'menus', s:menus)",
         \"call denite#custom#option('default', 'prompt', 'λ:')",
         \"call denite#custom#option('default', 'empty', 0)",
         \"call denite#custom#option('default', 'auto_resize', 1)",
@@ -281,15 +229,10 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"endfunc"
         \], "\n")
         \})
-  call dein#add('chemzqm/denite-extra', {
-        \'on_cmd': 'Denite'
-        \})
-  call dein#add('chemzqm/unite-location', {
-        \'on_source': 'denite.nvim'
-        \})
-  call dein#add('rafi/vim-denite-session', {
-        \'on_source': 'denite.nvim'
-        \})
+  call dein#add('yyotti/denite-marks'     , { 'on_source' : 'denite.nvim' })
+  call dein#add('chemzqm/denite-extra'    , { 'on_source' : 'denite.nvim' })
+  call dein#add('chemzqm/unite-location'  , { 'on_source' : 'denite.nvim' })
+  call dein#add('rafi/vim-denite-session' , { 'on_source' : 'denite.nvim' })
   call dein#add('mbbill/undotree', {
         \'on_cmd': 'UndotreeToggle',
         \'hook_add': join([
@@ -704,7 +647,6 @@ nnoremap <silent> <space>g  :<C-u>Denite grep<cr>
 nnoremap <silent> <space>n  :<C-u>Denite -mode=normal -ignorecase=false -input='TODO\\|FIXME\\|CHANGED\\|BUG\\|HACK\\|FEATURE' grep<cr>
 nnoremap <silent> <space>t  :<C-u>Denite project<cr>
 nnoremap <silent> <space>s  :<C-u>Denite session<cr>
-nnoremap <silent> <space>m  :<C-u>Denite -mode=normal menu<cr>
 nnoremap <silent> <space>a  :<C-u>Denite node<CR>
 nnoremap <silent> <space>e  :<C-u>Denite buffer<cr>
 nnoremap <silent> <space>h  :<C-u>Denite history:all<cr>
@@ -712,6 +654,7 @@ nnoremap <silent> <space>q  :<C-u>Denite commands<cr>
 nnoremap <silent> <space>f  :<C-u>Denite file_rec<cr>
 nnoremap <silent> <space>o  :<C-u>Denite outline<cr>
 nnoremap <silent> <space>y  :<C-u>Denite -mode=normal miniyank<cr>
+nnoremap <silent> <space>m  :<C-u>Denite -mode=normal marks<cr>
 nnoremap <silent> <space>/  :Denite grep:. -mode=normal<cr>
 
 nnoremap <leader>l :ALELint<cr>
@@ -760,6 +703,13 @@ nnoremap tr :TSRename<cr>
 
 if dein#tap('goyo.vim')
 	nnoremap <Leader>G :Goyo<CR>
+endif
+
+if dein#tap('vim-quickhl')
+  nmap <leader>w <Plug>(quickhl-manual-this)
+  xmap <leader>w <Plug>(quickhl-manual-this)
+  nmap <leader>W <Plug>(quickhl-manual-reset)
+  xmap <leader>W <Plug>(quickhl-manual-reset)
 endif
 
 if dein#tap('nvim-miniyank')
@@ -1078,12 +1028,12 @@ if dein#tap('vim-airline')
     set statusline+=%f
     set statusline+=\ %{''.(&fenc!=''?&fenc:&enc).''}
     set statusline+=%{(&bomb?\\",BOM\\":\\"\\")}
-    if has('fugitive')
-        set statusline+=%{fugitive#statusline()}
-    endif
     set statusline+=\ %{&ff}\ %y
     set statusline+=\ %m%r%w
-    set statusline+=%=%-14.(%l/%L,%c%V%)\ %p%%
+    if dein#tap('vim-gitbranch')
+      set statusline+=%=%{gitbranch#name()}\ 
+    endif
+    set statusline+=%-14.(%l/%L,%c%V%)\ %p%%
   endif
   let g:airline_powerline_fonts = 1
   let g:airline#extensions#tabline#enabled = 1
