@@ -26,7 +26,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('pbrisbin/vim-mkdir')
   call dein#add('kopischke/vim-stay')
   call dein#add('itchyny/vim-gitbranch')
-  call dein#add('t9md/vim-quickhl'               , { 'lazy'     : 1 })
+  call dein#add('t9md/vim-quickhl')
   call dein#add('kana/vim-operator-user'         , { 'lazy'     : 1 })
   call dein#add('reedes/vim-wordy'               , { 'on_cmd'   : 'Wordy' })
   call dein#add('vim-scripts/DrawIt'             , { 'on_cmd'   : 'DrawIt' })
@@ -534,6 +534,8 @@ function! s:patch_oceanic_next_colors()
   hi TabLine ctermfg=145 ctermbg=235 guibg=#1b2b34 guifg=#65737e
   hi TabLineSel ctermfg=145 ctermbg=345 guibg=#1b2b34 guifg=#ff5555
   hi TabLineFill ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#1b2b34
+  hi PmenuSel ctermbg=145 guibg=#ff5555
+  hi WildMenu ctermbg=145 guibg=#ff5555
 endfunction
 
 autocmd! ColorScheme OceanicNext call s:patch_oceanic_next_colors()
@@ -647,6 +649,7 @@ nnoremap <silent> <space>g  :<C-u>Denite grep<cr>
 nnoremap <silent> <space>n  :<C-u>Denite -mode=normal -ignorecase=false -input='TODO\\|FIXME\\|CHANGED\\|BUG\\|HACK\\|FEATURE' grep<cr>
 nnoremap <silent> <space>t  :<C-u>Denite project<cr>
 nnoremap <silent> <space>s  :<C-u>Denite session<cr>
+" nnoremap <silent> <space>m  :<C-u>Denite -mode=normal menu<cr>
 nnoremap <silent> <space>a  :<C-u>Denite node<CR>
 nnoremap <silent> <space>e  :<C-u>Denite buffer<cr>
 nnoremap <silent> <space>h  :<C-u>Denite history:all<cr>
