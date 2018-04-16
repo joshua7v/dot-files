@@ -212,12 +212,9 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"call deoplete#enable()",
         \"imap <expr><C-u>   pumvisible() ? '<Down>' : '<C-u>'",
         \"imap <expr><C-i>   pumvisible() ? '<Up>' : '<C-i>'",
-        \"let g:deoplete#sources = {}",
-        \"let g:deoplete#sources._ = [",
-        \"\\   'tern',",
-        \"\\   'neosnippet',",
-        \"\\   'alchemist',",
-        \"\\ ]",
+        \"call deoplete#custom#option('sources', {",
+        \" \\ '_': ['tern', 'neosnippet', 'alchemist'],",
+        \" \\})",
         \"au User CmSetup call cm#register_source({'name' : 'deoplete',",
         \"\\ 'priority': 8,",
         \"\\ 'abbreviation': 'deo',",
@@ -268,12 +265,12 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
 
   " For html / css
-  " call dein#add('cakebaker/scss-syntax.vim', {
-  "       \'on_ft': 'scss'
-  "       \})
-  call dein#add('tpope/vim-haml', {
-        \'on_ft': [ 'scss', 'sass', 'haml' ]
+  call dein#add('cakebaker/scss-syntax.vim', {
+        \'on_ft': 'scss'
         \})
+  " call dein#add('tpope/vim-haml', {
+  "       \'on_ft': [ 'scss', 'sass', 'haml' ]
+  "       \})
   call dein#add('calebeby/ncm-css', {
         \'on_ft': [ 'css', 'scss' ]
         \})
@@ -1205,6 +1202,8 @@ hi MatchParen ctermfg=black
 
 if dein#tap('nvim-completion-manager')
   let g:cm_completed_snippet_engine = 'neosnippet'
-  let g:cm_matcher={'module': 'cm_matchers.abbrev_matcher', 'case': 'smartcase'}
+  let g:cm_matcher={'module': 'cm_matchers.prefix_matcher', 'case': 'smartcase'}
   imap <c-e> <Plug>(cm_force_refresh)
 endif
+
+command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 -tu4 /dev/urandom'), '^\_s*\zs.\{-}\ze\_s*$') % line('$')).'G'
