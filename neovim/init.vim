@@ -22,7 +22,6 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('bfredl/nvim-miniyank')
   call dein#add('tpope/vim-speeddating')
   call dein#add('tmhedberg/matchit')
-  call dein#add('danro/rename.vim')
   call dein#add('pbrisbin/vim-mkdir')
   call dein#add('kopischke/vim-stay')
   call dein#add('itchyny/vim-gitbranch')
@@ -33,6 +32,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('tyru/open-browser.vim'          , { 'on_map'   : { 'nv': '<Plug>(openbrowser-smart-search)' }})
   call dein#add('moll/vim-bbye'                  , { 'on_cmd'   : 'Bdelete', })
   call dein#add('tpope/vim-unimpaired'           , { 'on_event' : 'VimEnter' })
+  call dein#add('tpope/vim-eunuch'               , { 'on_event' : 'VimEnter' })
   call dein#add('eugen0329/vim-esearch'          , { 'on_event' : 'VimEnter' })
   call dein#add('editorconfig/editorconfig-vim'  , { 'on_event' : 'VimEnter' })
   call dein#add('tomtom/tcomment_vim'            , { 'on_cmd'   : ['TComment', 'TCommentAs'] })
@@ -164,27 +164,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"let g:ale_keep_list_window_open = 0",
         \], "\n")
         \})
-  call dein#add('scrooloose/nerdtree', {
-        \'on_cmd': 'NERDTreeToggle',
-        \'hook_add': join([
-        \"let g:NERDTreeWinSize=24",
-        \"let g:NERDTreeShowHidden=1",
-        \"let g:NERDTreeMinimalUI=1",
-        \"let g:NERDTreeAutoDeleteBuffer=1",
-        \"let g:NERDTreeHighlightCursorline=1",
-        \"let g:NERDTreeQuitOnOpen=0",
-        \"let g:NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.obj$', '\.o$', '\.so$', '\.egg$', '^\.git$', '^\.svn$', '^\.hg$' ]",
-        \"let g:NERDTreeBookmarksFile = expand('$HOME/.config/nvim/.NERDTreeBookmarks')"
-        \], "\n")
-        \})
-  call dein#add('majutsushi/tagbar', {
-        \'on_cmd': 'TagbarToggle',
-        \'hook_source': join([
-        \"if executable('jsctags')",
-        \"  let g:tagbar_type_javascript = { 'ctagsbin': 'jsctags' }",
-        \"endif"
-        \], "\n")
-        \})
+  call dein#add('justinmk/vim-dirvish')
   call dein#add('roxma/nvim-completion-manager')
   call dein#add('fgrsnau/ncm-otherbuf')
   " call dein#add('roxma/nvim-cm-tern', { 'build': 'npm install' })
@@ -227,6 +207,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \], "\n")
         \})
   call dein#add('yyotti/denite-marks'     , { 'on_source' : 'denite.nvim' })
+  call dein#add('Shougo/neomru.vim'       , { 'on_source' : 'denite.nvim' })
   call dein#add('chemzqm/denite-extra'    , { 'on_source' : 'denite.nvim' })
   call dein#add('chemzqm/unite-location'  , { 'on_source' : 'denite.nvim' })
   call dein#add('rafi/vim-denite-session' , { 'on_source' : 'denite.nvim' })
@@ -327,6 +308,11 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
   call dein#add('heavenshell/vim-jsdoc', {
         \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ]
+        \})
+
+  " For vim
+  call dein#add('Shougo/neco-vim', {
+        \'on_ft': 'vim'
         \})
 
   " For json
@@ -623,18 +609,6 @@ smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expan
 nnoremap <leader>i :IndentLinesToggle<cr>
 
 nnoremap <leader>T :Deol 
-" nnoremap <silent><leader>T :Ttoggle<cr>
-" nnoremap <silent><leader>Tt :Ttoggle<cr>
-" nnoremap <silent><leader>Tta :Ttoggle<cr>
-" nnoremap <silent><leader>Tc :Tclose<cr>
-" nnoremap <silent><leader>Tca :TcloseAll<cr>
-" nnoremap <silent><leader>Tv :Tpos vertical<cr>
-" nnoremap <silent><leader>Th :Tpos horizontal<cr>
-" nnoremap <silent><leader>Tsf :TREPLSendFile<cr>
-" nnoremap <silent><leader>Tsl :TREPLSendLine<cr>
-" vnoremap <silent><leader>Ts :TREPLSendSelection<cr>
-" nnoremap <silent><leader>Tl :call neoterm#clear()<cr>
-" nnoremap <silent><leader>Tk :call neoterm#kill()<cr>",command! -nargs=+ Tg :T git <args>
 
 nnoremap <silent> <space>p  :<C-u>Denite -resume<CR>
 nnoremap <silent> <space>j  :call execute('Denite -resume -select=+'.v:count1.' -immediately')<CR>
@@ -643,6 +617,8 @@ nnoremap <c-p> :Denite -highlight-matched-char=None file_rec<cr>
 nnoremap <silent> <space>w  :<C-u>DeniteCursorWord -mode=normal -auto-resize line<CR>
 nnoremap <silent> <space>l  :<C-u>Denite -mode=normal location_list<CR>
 nnoremap <silent> <space>g  :<C-u>Denite grep<cr>
+nnoremap <silent> <space>u  :<C-u>Denite -mode=normal -highlight-matched-char=None file_mru<cr>
+nnoremap <silent> <space>d  :<C-u>Denite -mode=normal -highlight-matched-char=None directory_mru<cr>
 nnoremap <silent> <space>n  :<C-u>Denite -mode=normal -ignorecase=false -input='TODO\\|FIXME\\|CHANGED\\|BUG\\|HACK\\|FEATURE' grep<cr>
 nnoremap <silent> <space>t  :<C-u>Denite project<cr>
 nnoremap <silent> <space>s  :<C-u>Denite session<cr>
@@ -652,21 +628,12 @@ nnoremap <silent> <space>e  :<C-u>Denite buffer<cr>
 nnoremap <silent> <space>h  :<C-u>Denite history:all<cr>
 nnoremap <silent> <space>q  :<C-u>Denite commands<cr>
 nnoremap <silent> <space>f  :<C-u>Denite file_rec<cr>
-nnoremap <silent> <space>o  :<C-u>Denite outline<cr>
-nnoremap <silent> <space>y  :<C-u>Denite -mode=normal miniyank<cr>
-nnoremap <silent> <space>m  :<C-u>Denite -mode=normal marks<cr>
-nnoremap <silent> <space>/  :Denite grep:. -mode=normal<cr>
+nnoremap <silent> <space>o  :<C-u>Denite -mode=normal -highlight-matched-char=None outline<cr>
+nnoremap <silent> <space>y  :<C-u>Denite -mode=normal -highlight-matched-char=None miniyank<cr>
+nnoremap <silent> <space>m  :<C-u>Denite -mode=normal -highlight-matched-char=None marks<cr>
+nnoremap <silent> <space>/  :Denite grep:. -mode=normal -highlight-matched-char=None<cr>
 
 nnoremap <leader>l :ALELint<cr>
-
-autocmd bufenter * if (winnr('$') == 1 && exists('b:NERDTreeType') && b:NERDTreeType == 'primary') | q | end
-nnoremap <leader>tt :NERDTreeToggle<cr>
-nnoremap <leader>tb :NERDTreeFromBookmark 
-nnoremap <leader>ta :Bookmark 
-nnoremap <leader>tc :ClearBookmarks 
-nnoremap <leader>tx :ClearAllBookmarks<cr>
-
-nnoremap <leader>o :TagbarToggle<cr>
 
 autocmd CompleteDone * pclose
 inoremap <expr><c-l> deoplete#complete_common_string()
@@ -701,8 +668,31 @@ nnoremap tr :TSRename<cr>
 "   nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 " endif
 
+if dein#tap('vim-dirvish')
+  let g:dirvish_relative_paths = 0
+  let g:dirvish_mode = ':sort ,^.*[\/],'
+
+  nmap <leader>s <Plug>(dirvish_split_up)
+  nmap <leader>d <Plug>(dirvish_vsplit_up)
+
+  autocmd FileType dirvish silent keeppatterns g@\v/\.[^\/]+/?$@d _
+
+  augroup dirvish_config
+    autocmd!
+    autocmd FileType dirvish silent! unmap <buffer> <C-p>
+    autocmd FileType dirvish
+      \  nnoremap <silent><buffer> t :call dirvish#open('tabedit', 0)<CR>
+      \ |xnoremap <silent><buffer> t :call dirvish#open('tabedit', 0)<CR>
+  augroup END
+
+  let g:loaded_netrwPlugin = 1
+  command! -nargs=? -complete=dir Explore Dirvish <args>
+  command! -nargs=? -complete=dir Sexplore belowright split | silent Dirvish <args>
+  command! -nargs=? -complete=dir Vexplore leftabove vsplit | silent Dirvish <args>
+endif
+
 if dein#tap('goyo.vim')
-	nnoremap <Leader>G :Goyo<CR>
+  nnoremap <Leader>G :Goyo<CR>
 endif
 
 if dein#tap('vim-quickhl')
@@ -860,26 +850,6 @@ if dein#tap('FastFold')
   let g:fastfold_fold_movement_commands = [']z', '[z', 'zj', 'zk']
   let g:javascript_folding = 1
 endif
-
-" if dein#tap('vim-easymotion')
-"   let g:EasyMotion_do_mapping = 1
-"   let g:EasyMotion_prompt = 'Jump to → '
-"   let g:EasyMotion_keys = 'fjdksweoavn'
-"   let g:EasyMotion_smartcase = 1
-"   let g:EasyMotion_use_smartsign_us = 1
-"   let g:EasyMotion_smartcase = 1
-" 	nmap ss <Plug>(easymotion-s)
-" 	nmap sf <Plug>(easymotion-f)
-"   nmap sF <Plug>(easymotion-F)
-" 	map  sh <Plug>(easymotion-linebackward)
-" 	map  sl <Plug>(easymotion-lineforward)
-" 	" map  sj <Plug>(easymotion-j)
-" 	" map  sk <Plug>(easymotion-k)
-" 	map  s/ <Plug>(easymotion-sn)
-" 	omap s/ <Plug>(easymotion-tn)
-" 	map  sn <Plug>(easymotion-next)
-" 	map  sp <Plug>(easymotion-prev)
-" endif
 
 if dein#tap('delimitMate')
   let delimitMate_matchpairs = '(:),[:],{:}'
