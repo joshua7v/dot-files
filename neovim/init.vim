@@ -18,6 +18,77 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('mhartington/oceanic-next')
 
   " Edit
+  " For textobj
+  call dein#add('kana/vim-textobj-user')
+  call dein#add('sgur/vim-textobj-parameter')
+  call dein#add('kana/vim-textobj-function', {
+        \'on_map': { 'ox': '<Plug>' },
+        \'depends': 'vim-textobj-user',
+        \'hook_add': join([
+        \"omap <silent> af <Plug>(textobj-function-a)",
+        \"xmap <silent> af <Plug>(textobj-function-a)",
+        \"omap <silent> if <Plug>(textobj-function-i)",
+        \"xmap <silent> if <Plug>(textobj-function-i)",
+        \], "\n")
+        \})
+  call dein#add('kana/vim-textobj-syntax', {
+        \'on_map': { 'ox': '<Plug>' },
+        \'depends': 'vim-textobj-user',
+        \'hook_add': join([
+        \"omap <silent> ay <Plug>(textobj-syntax-a)",
+        \"xmap <silent> ay <Plug>(textobj-syntax-a)",
+        \"omap <silent> iy <Plug>(textobj-syntax-i)",
+        \"xmap <silent> iy <Plug>(textobj-syntax-i)",
+        \], "\n")
+        \})
+  call dein#add('kana/vim-textobj-datetime', {
+        \'on_map': { 'ox': '<Plug>' },
+        \'depends': 'vim-textobj-user',
+        \'hook_add': join([
+        \"omap <silent> ada <Plug>(textobj-datetime-auto)",
+        \"xmap <silent> ada <Plug>(textobj-datetime-auto)",
+        \"omap <silent> ida <Plug>(textobj-datetime-auto)",
+        \"xmap <silent> ida <Plug>(textobj-datetime-auto)",
+        \], "\n")
+        \})
+  call dein#add('kana/vim-textobj-entire', {
+        \'on_map': { 'ox': '<Plug>' },
+        \'depends': 'vim-textobj-user',
+        \'hook_add': join([
+        \"omap <silent> ae <Plug>(textobj-entire-a)",
+        \"xmap <silent> ae <Plug>(textobj-entire-a)",
+        \"omap <silent> ie <Plug>(textobj-entire-i)",
+        \"xmap <silent> ie <Plug>(textobj-entire-i)",
+        \], "\n")
+        \})
+  call dein#add('kana/vim-textobj-indent', {
+        \'on_map': { 'ox': '<Plug>' },
+        \'depends': 'vim-textobj-user',
+        \'hook_add': join([
+        \"omap <silent> ai <Plug>(textobj-indent-a)",
+        \"xmap <silent> ai <Plug>(textobj-indent-a)",
+        \"omap <silent> ii <Plug>(textobj-indent-i)",
+        \"xmap <silent> ii <Plug>(textobj-indent-i)",
+        \"omap <silent> aI <Plug>(textobj-indent-same-a)",
+        \"xmap <silent> aI <Plug>(textobj-indent-same-a)",
+        \"omap <silent> iI <Plug>(textobj-indent-same-i)",
+        \"xmap <silent> iI <Plug>(textobj-indent-same-i)",
+        \], "\n")
+        \})
+  call dein#add('jceb/vim-textobj-uri')
+  call dein#add('Julian/vim-textobj-variable-segment')
+  call dein#add('fvictorio/vim-textobj-backticks')
+  call dein#add('glts/vim-textobj-comment', {
+        \'on_map': { 'ox': '<Plug>' },
+        \'depends': 'vim-textobj-user',
+        \'hook_add': join([
+        \"omap <silent> ac <Plug>(textobj-comment-a)",
+        \"xmap <silent> ac <Plug>(textobj-comment-a)",
+        \"omap <silent> ic <Plug>(textobj-comment-i)",
+        \"xmap <silent> ic <Plug>(textobj-comment-i)",
+        \], "\n")
+        \})
+
   call dein#add('justinmk/vim-sneak')
   call dein#add('bfredl/nvim-miniyank')
   call dein#add('tpope/vim-speeddating')
@@ -54,13 +125,10 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('tpope/vim-obsession'            , { 'on_cmd'   : 'Obsession' })
   call dein#add('Shougo/neosnippet-snippets'     , { 'on_event' : 'VimEnter' })
   call dein#add('honza/vim-snippets'             , { 'on_event' : 'VimEnter' })
-  call dein#add('kana/vim-textobj-user'          , { 'on_func'  : 'textobj#user#' })
   call dein#add('AndrewRadev/sideways.vim'       , { 'on_map'   : { 'ox': '<Plug>Sideways' }})
   call dein#add('AndrewRadev/splitjoin.vim'      , { 'on_map'   : { 'n': '<Plug>Splitjoin' }})
   call dein#add('haya14busa/vim-edgemotion'      , { 'on_map'   : { 'nv': '<Plug>' }})
-  call dein#add('bkad/CamelCaseMotion'           , { 'on_map'   : { 'nox': '<Plug>CamelCaseMotion' }})
   call dein#add('terryma/vim-expand-region'      , { 'on_map'   : { 'x': '<Plug>' }})
-  " call dein#add('kana/vim-textobj-function'      , { 'on_map'   : { 'ox': '<Plug>' }})
   call dein#add('haya14busa/vim-operator-flashy', {
         \'depends': 'vim-operator-user',
         \'on_map': { 'nx': '<Plug>' }
@@ -156,10 +224,11 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"\\'typescript': ['eslint']",
         \"\\}",
         \"let g:ale_lint_on_save = 0",
+        \"let g:ale_lint_on_enter = 0",
+        \"let g:ale_lint_on_filetype_changed = 0",
+        \"let g:ale_lint_on_text_changed = 'never'",
         \"let g:ale_sign_error = '✖'",
         \"let g:ale_sign_warning = '⚠'",
-        \"let g:ale_lint_on_text_changed = 'never'",
-        \"let g:ale_lint_on_enter = 0",
         \"let g:ale_open_list = 0",
         \"let g:ale_keep_list_window_open = 0",
         \], "\n")
@@ -776,18 +845,6 @@ if dein#tap('nvim-typescript')
   let g:nvim_typescript#vue_support = 1
 endif
 
-if dein#tap('CamelCaseMotion')
-	nmap <silent> e <Plug>CamelCaseMotion_e
-	xmap <silent> e <Plug>CamelCaseMotion_e
-	omap <silent> e <Plug>CamelCaseMotion_e
-	nmap <silent> w <Plug>CamelCaseMotion_w
-	xmap <silent> w <Plug>CamelCaseMotion_w
-	omap <silent> w <Plug>CamelCaseMotion_w
-	nmap <silent> b <Plug>CamelCaseMotion_b
-	xmap <silent> b <Plug>CamelCaseMotion_b
-	omap <silent> b <Plug>CamelCaseMotion_b
-endif
-
 if dein#tap('vim-operator-flashy')
 	map y <Plug>(operator-flashy)
 	nmap Y <Plug>(operator-flashy)$
@@ -1015,14 +1072,6 @@ if dein#tap('indentLine')
   let g:indentLine_enabled = 0
 endif
 
-" if dein#tap('vim-textobj-function')
-"   let g:textobj_function_no_default_key_mappings = 1
-" 	omap af <Plug>(textobj-function-a)
-" 	omap if <Plug>(textobj-function-i)
-" 	xmap af <Plug>(textobj-function-a)
-" 	xmap if <Plug>(textobj-function-i)
-" endif
-
 " if dein#tap('vim-wintabs')
 "   map <leader>M <Plug>(wintabs_previous)
 "   map <leader>m <Plug>(wintabs_next)
@@ -1086,8 +1135,6 @@ nnoremap <silent> * *zz
 nnoremap <silent> # #zz
 nnoremap <silent> g* g*zz
 
-" Select all
-noremap <leader>sa ggVG
 noremap <leader><leader> :messages<cr>
 
 " Remap U to <C-r> for easier redo
