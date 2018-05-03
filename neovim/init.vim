@@ -393,7 +393,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('leafgarland/typescript-vim', {
         \'on_ft': [ 'typescript', 'typescript.tsx' ]
         \})
-  call dein#add('ianks/vim-tsx', {
+  call dein#add('tasn/vim-tsx', {
         \'on_ft': [ 'typescript', 'typescript.tsx' ]
         \})
 
