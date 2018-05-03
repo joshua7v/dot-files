@@ -221,7 +221,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'hook_add': join([
         \"let g:ale_fixers = {",
         \"\\'javascript': ['eslint'],",
-        \"\\'typescript': ['eslint']",
+        \"\\'typescript': ['tslint']",
         \"\\}",
         \"let g:ale_lint_on_save = 0",
         \"let g:ale_lint_on_enter = 0",
@@ -234,16 +234,18 @@ if dein#load_state('~/.config/nvim/plugged/')
         \], "\n")
         \})
   call dein#add('justinmk/vim-dirvish')
-  call dein#add('roxma/nvim-completion-manager')
-  call dein#add('fgrsnau/ncm-otherbuf')
-  " call dein#add('roxma/nvim-cm-tern', { 'build': 'npm install' })
   " call dein#add('autozimu/LanguageClient-neovim', {
   "       \'rev': 'next',
   "       \'build': 'bash install.sh'
   "       \})
   " \'rev': '4.0-serial',
+  call dein#add('kien/rainbow_parentheses.vim', {
+        \'on_cmd': 'RainbowParenthesesToggle'
+        \})
+  call dein#add('Shougo/context_filetype.vim')
   call dein#add('Shougo/deoplete.nvim', {
         \'on_event': 'VimEnter',
+        \'depends': 'context_filetype.vim',
         \'hook_add': join([
         \"let g:deoplete#enable_at_startup=1",
         \"let g:deoplete#enable_refresh_always=0",
@@ -258,21 +260,8 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"set completeopt+=noselect"
         \], "\n"),
         \'hook_post_source': join([
-        \"call deoplete#enable()",
         \"imap <expr><C-u>   pumvisible() ? '<Down>' : '<C-u>'",
         \"imap <expr><C-i>   pumvisible() ? '<Up>' : '<C-i>'",
-        \"call deoplete#custom#option('sources', {",
-        \" \\ '_': ['tern', 'neosnippet', 'alchemist'],",
-        \" \\})",
-        \"au User CmSetup call cm#register_source({'name' : 'deoplete',",
-        \"\\ 'priority': 8,",
-        \"\\ 'abbreviation': 'deo',",
-        \"\\ })",
-        \"inoremap <silent> <Plug>_ <C-r>=g:Deoplete_ncm()<CR>",
-        \"func! g:Deoplete_ncm()",
-        \"call cm#complete('deoplete', cm#context(), g:deoplete#_context.complete_position + 1, g:deoplete#_context.candidates)",
-        \"return ''",
-        \"endfunc"
         \], "\n")
         \})
   call dein#add('yyotti/denite-marks'     , { 'on_source' : 'denite.nvim' })
@@ -310,9 +299,6 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
 
   " For c family
-  call dein#add('roxma/ncm-clang', {
-        \'on_ft': [ 'c', 'cpp' ]
-        \})
 
   " For html / css
   call dein#add('cakebaker/scss-syntax.vim', {
@@ -321,9 +307,6 @@ if dein#load_state('~/.config/nvim/plugged/')
   " call dein#add('tpope/vim-haml', {
   "       \'on_ft': [ 'scss', 'sass', 'haml' ]
   "       \})
-  call dein#add('calebeby/ncm-css', {
-        \'on_ft': [ 'css', 'scss' ]
-        \})
   call dein#add('Valloric/MatchTagAlways', {
         \'on_ft': [ 'html', 'xml', 'jsx', 'javascript', 'javascript.jsx', 'tsx', 'typescript.tsx', 'eelixir' ],
         \})
@@ -391,9 +374,6 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
 
   " For elm
-  call dein#add('roxma/ncm-elm-oracle', {
-        \'on_ft': 'elm'
-        \})
   call dein#add('ElmCast/elm-vim', {
         \'on_ft': 'elm',
         \'hook_add': join([
@@ -625,6 +605,7 @@ inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 " autocmd FileType python,elm,go set tabstop=4 shiftwidth=4 expandtab ai
 " autocmd FileType vim,javascript,json,css,scss,html,yaml,typescript,typescript.tsx,javascript.jsx,md,ex,exs set tabstop=2 shiftwidth=2 expandtab ai
+autocmd FileType vim set tabstop=2 shiftwidth=2 expandtab ai
 
 autocmd BufNewFile,BufRead .tern-project setfiletype json
 autocmd BufNewFile,BufRead .jsbeautifyrc setfiletype json
@@ -1047,6 +1028,13 @@ if dein#tap('tcomment_vim')
   vmap gca :TCommentAs 
 endif
 
+if dein#tap('context_filetype.vim')
+  let g:context_filetype#same_filetypes = {
+    \ 'typescript': 'typescript,typescript.tsx',
+    \ 'typescript.tsx': 'typescript,typescript.tsx'
+    \ }
+endif
+
 if dein#tap('vim-airline')
   if has('statusline')
     set laststatus=2
@@ -1216,11 +1204,5 @@ autocmd VimEnter * call s:SetCursorLine()
 
 hi LineNr ctermfg=darkgrey guifg=#777777
 hi MatchParen ctermfg=black
-
-if dein#tap('nvim-completion-manager')
-  let g:cm_completed_snippet_engine = 'neosnippet'
-  let g:cm_matcher={'module': 'cm_matchers.prefix_matcher', 'case': 'smartcase'}
-  imap <c-e> <Plug>(cm_force_refresh)
-endif
 
 command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 -tu4 /dev/urandom'), '^\_s*\zs.\{-}\ze\_s*$') % line('$')).'G'
