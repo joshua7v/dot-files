@@ -217,7 +217,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \], "\n")
         \})
   call dein#add('w0rp/ale', {
-        \'on_event': 'VimEnter',
+        \'on_cmd': 'ALEEnable',
         \'hook_add': join([
         \"let g:ale_fixers = {",
         \"\\'javascript': ['eslint'],",
@@ -226,7 +226,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"let g:ale_lint_on_save = 0",
         \"let g:ale_lint_on_enter = 0",
         \"let g:ale_lint_on_filetype_changed = 0",
-        \"let g:ale_lint_on_text_changed = 'never'",
+        \"let g:ale_lint_on_text_changed = 'always'",
         \"let g:ale_sign_error = '✖'",
         \"let g:ale_sign_warning = '⚠'",
         \"let g:ale_open_list = 0",
