@@ -16,6 +16,7 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   " Color Schemes
   call dein#add('mhartington/oceanic-next')
+  call dein#add('arcticicestudio/nord-vim')
 
   " Edit
   " For textobj
@@ -247,13 +248,13 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'on_event': 'VimEnter',
         \'depends': 'context_filetype.vim',
         \'hook_add': join([
-        \"let g:deoplete#enable_at_startup=1",
+        \"let g:deoplete#enable_at_startup=0",
         \"let g:deoplete#enable_refresh_always=0",
         \"let g:deoplete#enable_camel_case=1",
         \"let g:deoplete#tag#cache_limit_size=800000",
         \"let g:deoplete#file#enable_buffer_path=1",
         \"let g:deoplete#auto_complete_delay=1",
-        \"let g:deoplete#auto_refresh_delay=1000",
+        \"let g:deoplete#auto_refresh_delay=0",
         \"let g:deoplete#disable_auto_complete=0",
         \"let g:deoplete#num_processes=1",
         \"set splitbelow",
@@ -262,6 +263,12 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'hook_post_source': join([
         \"imap <expr><C-u>   pumvisible() ? '<Down>' : '<C-u>'",
         \"imap <expr><C-i>   pumvisible() ? '<Up>' : '<C-i>'",
+        \"inoremap <expr><BS>  deoplete#smart_close_popup().'\<C-h>'",
+        \"call dein#local('~/GitHub', {},['nvim-typescript'])",
+        \"let g:deoplete#enable_at_startup = 1",
+        \"let g:deoplete#enable_debug = 1",
+        \"let g:deoplete#enable_profile = 1",
+        \"call deoplete#enable_logging('DEBUG', './deoplete.log')",
         \], "\n")
         \})
   call dein#add('yyotti/denite-marks'     , { 'on_source' : 'denite.nvim' })
@@ -388,12 +395,12 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   " For typescript
   call dein#add('mhartington/nvim-typescript', {
-        \'on_ft': [ 'typescript', 'typescript.tsx' ],
+        \'on_ft': [ 'typescript', 'typescript.tsx' ]
         \})
   call dein#add('leafgarland/typescript-vim', {
         \'on_ft': [ 'typescript', 'typescript.tsx' ]
         \})
-  call dein#add('tasn/vim-tsx', {
+  call dein#add('joshua7v/vim-tsx-improve', {
         \'on_ft': [ 'typescript', 'typescript.tsx' ]
         \})
 
@@ -1206,3 +1213,8 @@ hi LineNr ctermfg=darkgrey guifg=#777777
 hi MatchParen ctermfg=black
 
 command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 -tu4 /dev/urandom'), '^\_s*\zs.\{-}\ze\_s*$') % line('$')).'G'
+
+if exists("g:gui_oni")
+else
+  autocmd InsertEnter * call deoplete#enable()
+endif
