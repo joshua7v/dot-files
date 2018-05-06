@@ -251,7 +251,6 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \'rev': 'next',
   "       \'build': 'bash install.sh'
   "       \})
-  " \'rev': '4.0-serial',
   call dein#add('kien/rainbow_parentheses.vim', {
         \'on_cmd': 'RainbowParenthesesToggle'
         \})
@@ -264,12 +263,12 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"let g:deoplete#enable_camel_case=1",
         \"let g:deoplete#tag#cache_limit_size=800000",
         \"let g:deoplete#file#enable_buffer_path=1",
-        \"let g:deoplete#auto_complete_delay=1",
+        \"let g:deoplete#auto_complete_delay=50",
         \"let g:deoplete#auto_refresh_delay=0",
         \"let g:deoplete#disable_auto_complete=0",
         \"let g:deoplete#num_processes=1",
         \"set splitbelow",
-        \"set completeopt+=noselect"
+        \"set completeopt+=noselect",
         \], "\n"),
         \'hook_post_source': join([
         \"imap <expr><C-u>   pumvisible() ? '<Down>' : '<C-u>'",
@@ -736,10 +735,6 @@ nnoremap tr :TSRename<cr>
 "   nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 "   nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 " endif
-
-if dein#tap('deoplete.nvim')
-  inoremap <expr><c-h>  deoplete#smart_close_popup().'\<C-h>'
-endif
 
 if dein#tap('vim-dirvish')
   let g:dirvish_relative_paths = 0
