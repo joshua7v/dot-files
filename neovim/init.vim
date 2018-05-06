@@ -1,9 +1,15 @@
 " dein
 " curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh | bash ~/.config/nvim
 
+" if (!isdirectory(expand("$HOME/.config/nvim/repos/github.com/Shougo/dein.vim")))
+" 	call system(expand("mkdir -p $HOME/.config/nvim/repos/github.com"))
+" 	call system(expand("git clone https://github.com/Shougo/dein.vim $HOME/.config/nvim/repos/github.com/Shougo/dein.vim"))
+" endif
+
 if &compatible
   set nocompatible
 endif
+
 set runtimepath+=~/.config/nvim/repos/github.com/Shougo/dein.vim
 
 if dein#load_state('~/.config/nvim/plugged/')
@@ -98,6 +104,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('kopischke/vim-stay')
   call dein#add('itchyny/vim-gitbranch')
   call dein#add('t9md/vim-quickhl')
+  call dein#add('jiangmiao/auto-pairs')
   call dein#add('kana/vim-operator-user'         , { 'lazy'     : 1 })
   call dein#add('reedes/vim-wordy'               , { 'on_cmd'   : 'Wordy' })
   call dein#add('vim-scripts/DrawIt'             , { 'on_cmd'   : 'DrawIt' })
@@ -106,6 +113,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('tpope/vim-unimpaired'           , { 'on_event' : 'VimEnter' })
   call dein#add('tpope/vim-eunuch'               , { 'on_event' : 'VimEnter' })
   call dein#add('eugen0329/vim-esearch'          , { 'on_event' : 'VimEnter' })
+  call dein#add('dkprice/vim-easygrep'           , { 'on_cmd'   : 'Grep' })
   call dein#add('editorconfig/editorconfig-vim'  , { 'on_event' : 'VimEnter' })
   call dein#add('tomtom/tcomment_vim'            , { 'on_cmd'   : ['TComment', 'TCommentAs'] })
   call dein#add('metakirby5/codi.vim'            , { 'on_cmd'   : 'Codi' })
@@ -115,17 +123,13 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('tpope/vim-surround'             , { 'on_event' : 'VimEnter' })
   " call dein#add('tpope/tpope-vim-abolish'        , { 'on_event' : 'VimEnter' })
   call dein#add('tpope/vim-repeat'               , { 'on_event' : 'VimEnter' })
-  call dein#add('Raimondi/delimitMate'           , { 'on_event' : 'VimEnter' })
   call dein#add('ntpeters/vim-better-whitespace' , { 'on_event' : 'InsertEnter' })
   call dein#add('MattesGroeger/vim-bookmarks'    , { 'on_cmd'   : 'BookmarkToggle' })
   call dein#add('godlygeek/tabular'              , { 'on_cmd'   : 'Tabularize' })
   call dein#add('ggVGc/vim-fuzzysearch'          , { 'on_cmd'   : 'FuzzySearch' })
   call dein#add('vim-scripts/BufOnly.vim'        , { 'on_cmd'   : 'BufOnly' })
-  call dein#add('brooth/far.vim'                 , { 'on_cmd'   : [ 'Far', 'Farp', 'F' ] })
   call dein#add('sbdchd/neoformat'               , { 'on_cmd'   : 'Neoformat' })
   call dein#add('tpope/vim-obsession'            , { 'on_cmd'   : 'Obsession' })
-  call dein#add('Shougo/neosnippet-snippets'     , { 'on_event' : 'VimEnter' })
-  call dein#add('honza/vim-snippets'             , { 'on_event' : 'VimEnter' })
   call dein#add('AndrewRadev/sideways.vim'       , { 'on_map'   : { 'ox': '<Plug>Sideways' }})
   call dein#add('AndrewRadev/splitjoin.vim'      , { 'on_map'   : { 'n': '<Plug>Splitjoin' }})
   call dein#add('haya14busa/vim-edgemotion'      , { 'on_map'   : { 'nv': '<Plug>' }})
@@ -134,10 +138,18 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'depends': 'vim-operator-user',
         \'on_map': { 'nx': '<Plug>' }
         \})
+  call dein#add('Shougo/neosnippet-snippets')
+  call dein#add('honza/vim-snippets')
   call dein#add('Shougo/neosnippet', {
-        \'depends': 'neosnippet-snippets',
-        \'on_event': 'InsertEnter',
-        \'on_ft': 'snippet'
+        \'hook_add': join([
+        \"let g:neosnippet#enable_snipmate_compatibility = 0",
+        \"let g:neosnippet#enable_completed_snippet = 1",
+        \"let g:neosnippet#expand_word_boundary = 1",
+        \"let g:neosnippet#snippets_directory = [",
+        \"\\ $HOME.'/.config/nvim/snippets/',",
+        \"\\ $HOME.'/.config/nvim/plugged/repos/github.com/honza/vim-snippets/snippets/',",
+        \"\\ ]",
+        \], "\n")
         \})
 
   " UI
@@ -245,7 +257,6 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
   call dein#add('Shougo/context_filetype.vim')
   call dein#add('Shougo/deoplete.nvim', {
-        \'on_event': 'VimEnter',
         \'depends': 'context_filetype.vim',
         \'hook_add': join([
         \"let g:deoplete#enable_at_startup=0",
@@ -263,12 +274,6 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'hook_post_source': join([
         \"imap <expr><C-u>   pumvisible() ? '<Down>' : '<C-u>'",
         \"imap <expr><C-i>   pumvisible() ? '<Up>' : '<C-i>'",
-        \"inoremap <expr><BS>  deoplete#smart_close_popup().'\<C-h>'",
-        \"call dein#local('~/GitHub', {},['nvim-typescript'])",
-        \"let g:deoplete#enable_at_startup = 1",
-        \"let g:deoplete#enable_debug = 1",
-        \"let g:deoplete#enable_profile = 1",
-        \"call deoplete#enable_logging('DEBUG', './deoplete.log')",
         \], "\n")
         \})
   call dein#add('yyotti/denite-marks'     , { 'on_source' : 'denite.nvim' })
@@ -306,6 +311,10 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
 
   " For c family
+  call dein#add('Shougo/deoplete-clangx', {
+        \'on_ft': [ 'c', 'cpp' ],
+        \'hook_add': 'let g:c_syntax_for_h = 1'
+        \})
 
   " For html / css
   call dein#add('cakebaker/scss-syntax.vim', {
@@ -575,6 +584,7 @@ function! s:patch_oceanic_next_colors()
   hi TabLineFill ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#1b2b34
   hi PmenuSel ctermbg=145 guibg=#ff5555
   hi WildMenu ctermbg=145 guibg=#ff5555
+  hi Search ctermfg=0 ctermbg=6 guibg=#88C0D0 guifg=#3B4252
 endfunction
 
 autocmd! ColorScheme OceanicNext call s:patch_oceanic_next_colors()
@@ -585,6 +595,14 @@ if dein#tap('oceanic-next')
   let g:oceanic_next_terminal_italic = 1
 else
   colorscheme desert
+endif
+
+if dein#tap('nord-vim')
+  let g:nord_italic = 1
+  let g:nord_italic_comments = 1
+  let g:nord_uniform_status_lines = 0
+  let g:nord_comment_brightness = 20
+  let g:nord_uniform_diff_background = 1
 endif
 
 if has('clipboard')
@@ -657,12 +675,6 @@ vmap <Leader>aa :Tabularize /
 
 nnoremap <leader>fs :FuzzySearch<cr>
 
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <C-k> <Plug>(neosnippet_expand_or_jump)
-xmap <C-k> <Plug>(neosnippet_expand_target)
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
 nnoremap <leader>i :IndentLinesToggle<cr>
 
 nnoremap <leader>T :Deol 
@@ -724,6 +736,10 @@ nnoremap tr :TSRename<cr>
 "   nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 "   nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 " endif
+
+if dein#tap('deoplete.nvim')
+  inoremap <expr><c-h>  deoplete#smart_close_popup().'\<C-h>'
+endif
 
 if dein#tap('vim-dirvish')
   let g:dirvish_relative_paths = 0
@@ -829,8 +845,9 @@ endif
 
 if dein#tap('nvim-typescript')
   let g:nvim_typescript#type_info_on_hold = 0
-  let g:nvim_typescript#javascript_support = 1
-  let g:nvim_typescript#vue_support = 1
+  let g:nvim_typescript#javascript_support = 0
+  let g:nvim_typescript#vue_support = 0
+  let g:nvim_typescript#signature_complete = 0
 endif
 
 if dein#tap('vim-operator-flashy')
@@ -990,13 +1007,11 @@ if dein#tap('neoformat')
 endif
 
 if dein#tap('neosnippet')
-  let g:neosnippet#snippets_directory = [
-  \ '~/.config/nvim/plugged/repos/github.com/honza/vim-snippets/snippets/',
-  \ '~/.config/nvim/snippets/'
-  \ ]
-  let g:neosnippet#enable_snipmate_compatibility = 1
-  let g:neosnippet#enable_completed_snippet = 1
-  let g:neosnippet#expand_word_boundary = 1
+  imap <C-k> <Plug>(neosnippet_expand_or_jump)
+  smap <C-k> <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k> <Plug>(neosnippet_expand_target)
+  imap <C-k> <Plug>(neosnippet_expand_or_jump)
+  smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 endif
 
 if dein#tap('sideways.vim')
