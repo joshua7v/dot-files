@@ -230,21 +230,8 @@ if dein#load_state('~/.config/nvim/plugged/')
         \], "\n")
         \})
   call dein#add('w0rp/ale', {
-        \'on_cmd': 'ALEEnable',
-        \'hook_add': join([
-        \"let g:ale_fixers = {",
-        \"\\'javascript': ['eslint'],",
-        \"\\'typescript': ['tslint']",
-        \"\\}",
-        \"let g:ale_lint_on_save = 0",
-        \"let g:ale_lint_on_enter = 0",
-        \"let g:ale_lint_on_filetype_changed = 0",
-        \"let g:ale_lint_on_text_changed = 'always'",
-        \"let g:ale_sign_error = '✖'",
-        \"let g:ale_sign_warning = '⚠'",
-        \"let g:ale_open_list = 0",
-        \"let g:ale_keep_list_window_open = 0",
-        \], "\n")
+        \'on_cmd': ['ALEEnable', 'ALEToggle'],
+        \'hook_post_source': 'set statusline+=\ %{LinterStatus()}'
         \})
   call dein#add('justinmk/vim-dirvish')
   " call dein#add('autozimu/LanguageClient-neovim', {
@@ -701,8 +688,6 @@ nnoremap <silent> <space>y  :<C-u>Denite -mode=normal -highlight-matched-char=No
 nnoremap <silent> <space>m  :<C-u>Denite -mode=normal -highlight-matched-char=None marks<cr>
 nnoremap <silent> <space>/  :Denite grep:. -mode=normal -highlight-matched-char=None<cr>
 
-nnoremap <leader>l :ALELint<cr>
-
 autocmd CompleteDone * pclose
 inoremap <expr><c-l> deoplete#complete_common_string()
 
@@ -843,6 +828,7 @@ if dein#tap('nvim-typescript')
   let g:nvim_typescript#javascript_support = 0
   let g:nvim_typescript#vue_support = 0
   let g:nvim_typescript#signature_complete = 0
+  " let g:nvim_typescript#server_path = $HOME.'erinn/asdf/shims/tsserver'
 endif
 
 if dein#tap('vim-operator-flashy')
@@ -1048,7 +1034,9 @@ endif
 if dein#tap('context_filetype.vim')
   let g:context_filetype#same_filetypes = {
     \ 'typescript': 'typescript,typescript.tsx',
-    \ 'typescript.tsx': 'typescript,typescript.tsx'
+    \ 'typescript.tsx': 'typescript,typescript.tsx',
+    \ 'scss': 'javascript,javascript.jsx,typescript,typescript.tsx,css',
+    \ 'css': 'javascript,javascript.jsx,typescript,typescript.tsx,css',
     \ }
 endif
 
@@ -1071,6 +1059,55 @@ if dein#tap('vim-airline')
   let g:airline#extensions#tabline#enabled = 1
   let g:airline#extensions#tabline#formatter = 'unique_tail'
   let g:airline#extensions#tabline#buffer_nr_show = 1
+endif
+
+if dein#tap('ale')
+  let g:ale_fixers = {
+  \  'javascript': ['eslint'],
+  \  'javascript.jsx': ['eslint'],
+  \  'typescript': ['tslint'],
+  \  'typescript.tsx': ['tslint'],
+  \}
+  let g:ale_linters = {
+  \  'javascript': ['eslint'],
+  \  'javascript.jsx': ['eslint'],
+  \  'typescript': ['tslint'],
+  \  'typescript.tsx': ['tslint'],
+  \}
+  let g:ale_linter_aliases = {'jsx': 'javascript', 'tsx': 'typescript'}
+  let g:ale_lint_on_save = 0
+  let g:ale_lint_on_enter = 0
+  let g:ale_lint_on_filetype_changed = 0
+  let g:ale_lint_on_text_changed = 'always'
+  let g:ale_sign_error = '✖'
+  let g:ale_sign_warning = '⚠'
+  let g:ale_open_list = 0
+  let g:ale_keep_list_window_open = 0
+  let g:ale_set_loclist = 0
+  let g:ale_set_quickfix = 1
+  let g:ale_sign_column_always = 1
+  nmap <silent> [ae <Plug>(ale_previous_wrap)
+  nmap <silent> ]ae <Plug>(ale_next_wrap)
+
+  let g:ale_echo_msg_error_str = 'E'
+  let g:ale_echo_msg_warning_str = 'W'
+  let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+  nnoremap <leader>le :ALEEnable<cr>
+  nnoremap <leader>ll :ALELint<cr>
+  nnoremap <leader>lt :ALEToggle<cr>
+  nnoremap <leader>1 :ALEFix<cr>
+  function! LinterStatus() abort
+    let l:counts = ale#statusline#Count(bufnr(''))
+
+    let l:all_errors = l:counts.error + l:counts.style_error
+    let l:all_non_errors = l:counts.total - l:all_errors
+
+    return l:counts.total == 0 ? 'OK' : printf(
+    \   '%dW %dE',
+    \   all_non_errors,
+    \   all_errors
+    \)
+  endfunction
 endif
 
 if dein#tap('indentLine')
