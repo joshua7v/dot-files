@@ -113,7 +113,6 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('tpope/vim-unimpaired'           , { 'on_event' : 'VimEnter' })
   call dein#add('tpope/vim-eunuch'               , { 'on_event' : 'VimEnter' })
   call dein#add('eugen0329/vim-esearch'          , { 'on_event' : 'VimEnter' })
-  call dein#add('dkprice/vim-easygrep'           , { 'on_cmd'   : 'Grep' })
   call dein#add('editorconfig/editorconfig-vim'  , { 'on_event' : 'VimEnter' })
   call dein#add('tomtom/tcomment_vim'            , { 'on_cmd'   : ['TComment', 'TCommentAs'] })
   call dein#add('metakirby5/codi.vim'            , { 'on_cmd'   : 'Codi' })
@@ -281,12 +280,12 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   " Git
   call dein#add('airblade/vim-gitgutter', {
-        \'on_cmd': 'GitGutterEnable',
+        \'on_cmd': ['GitGutterEnable', 'GitGutterToggle'],
         \'hook_source': join([
-        \"nmap <Leader>hj <Plug>GitGutterNextHunk",
-        \"nmap <Leader>hk <Plug>GitGutterPrevHunk",
+        \"nmap ]h <Plug>GitGutterNextHunk",
+        \"nmap [h <Plug>GitGutterPrevHunk",
         \"nmap <Leader>hs <Plug>GitGutterStageHunk",
-        \"nmap <Leader>hr <Plug>GitGutterUndoHunk",
+        \"nmap <Leader>hu <Plug>GitGutterUndoHunk",
         \"nmap <Leader>hp <Plug>GitGutterPreviewHunk"
         \], "\n")
         \})
@@ -565,12 +564,20 @@ set t_Co=256
 function! s:patch_oceanic_next_colors()
   hi StatusLine ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#1b2b34
   hi StatusLineNC ctermfg=235 ctermbg=145 guibg=#65737e guifg=#1b2b34
-  hi TabLine ctermfg=145 ctermbg=235 guibg=#1b2b34 guifg=#65737e
+  hi TabLine cterm=NONE ctermfg=145 ctermbg=235 gui=NONE guibg=#1b2b34 guifg=#65737e
   hi TabLineSel ctermfg=145 ctermbg=345 guibg=#1b2b34 guifg=#ff5555
   hi TabLineFill ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#1b2b34
   hi PmenuSel ctermbg=145 guibg=#ff5555
   hi WildMenu ctermbg=145 guibg=#ff5555
   hi Search ctermfg=0 ctermbg=6 guibg=#88C0D0 guifg=#3B4252
+
+  hi DiffAdd ctermfg=2 ctermbg=0 guifg=#A3BE8C guibg=#2E3440
+  hi DiffChange ctermfg=3 ctermbg=0 guifg=#EBCB8B guibg=#2E3440
+  hi DiffDelete ctermfg=1 ctermbg=0 guifg=#BF616A guibg=#2E3440
+  hi DiffText ctermfg=4 ctermbg=0 guifg=#81A1C1 guibg=#2E3440
+  hi! link DiffAdded DiffAdd
+  hi! link DiffChanged DiffChange
+  hi! link DiffRemoved DiffDelete
 endfunction
 
 autocmd! ColorScheme OceanicNext call s:patch_oceanic_next_colors()
@@ -636,7 +643,14 @@ inoremap jj <ESC>
 
 nnoremap <leader>al :AirlineToggle<cr>
 
-command Need Ack! 'TODO\|FIXME\|CHANGED\|BUG\|HACK\|FEATURE'
+command Need Ack! '//\ (TODO\|FIXME\|CHANGED\|BUG\|HACK\|FEATURE\|TEMP)'
+command TEMP Ack! '//\ TEMP'
+command TODO Ack! '//\ TODO'
+command FIXME Ack! '//\ FIXME'
+command HACK Ack! '//\ HACK'
+command FEATURE Ack! '//\ FEATURE'
+command BUG Ack! '//\ BUG'
+command CHANGED Ack! '//\ CHANGED'
 
 nmap zuz <Plug>(FastFoldUpdate)
 
@@ -661,49 +675,64 @@ vmap <Leader>aa :Tabularize /
 
 nnoremap <leader>fs :FuzzySearch<cr>
 
-nnoremap <leader>i :IndentLinesToggle<cr>
 
-nnoremap <leader>T :Deol 
+if dein#tap('deol.nvim')
+  nnoremap <leader>T :Deol 
+endif
 
-nnoremap <silent> <space>p  :<C-u>Denite -resume<CR>
-nnoremap <silent> <space>j  :call execute('Denite -resume -select=+'.v:count1.' -immediately')<CR>
-nnoremap <silent> <space>k  :call execute('Denite -resume -select=-'.v:count1.' -immediately')<CR>
-nnoremap <c-p> :Denite -highlight-matched-char=None file_rec<cr>
-nnoremap <silent> <space>w  :<C-u>DeniteCursorWord -mode=normal -auto-resize line<CR>
-nnoremap <silent> <space>l  :<C-u>Denite -mode=normal location_list<CR>
-nnoremap <silent> <space>g  :<C-u>Denite grep<cr>
-nnoremap <silent> <space>u  :<C-u>Denite -mode=normal -highlight-matched-char=None file_mru<cr>
-nnoremap <silent> <space>d  :<C-u>Denite -mode=normal -highlight-matched-char=None directory_mru<cr>
-nnoremap <silent> <space>n  :<C-u>Denite -mode=normal -ignorecase=false -input='TODO\\|FIXME\\|CHANGED\\|BUG\\|HACK\\|FEATURE' grep<cr>
-nnoremap <silent> <space>t  :<C-u>Denite project<cr>
-nnoremap <silent> <space>s  :<C-u>Denite session<cr>
-" nnoremap <silent> <space>m  :<C-u>Denite -mode=normal menu<cr>
-nnoremap <silent> <space>a  :<C-u>Denite node<CR>
-nnoremap <silent> <space>e  :<C-u>Denite buffer<cr>
-nnoremap <silent> <space>h  :<C-u>Denite history:all<cr>
-nnoremap <silent> <space>q  :<C-u>Denite commands<cr>
-nnoremap <silent> <space>f  :<C-u>Denite file_rec<cr>
-nnoremap <silent> <space>o  :<C-u>Denite -mode=normal -highlight-matched-char=None outline<cr>
-nnoremap <silent> <space>y  :<C-u>Denite -mode=normal -highlight-matched-char=None miniyank<cr>
-nnoremap <silent> <space>m  :<C-u>Denite -mode=normal -highlight-matched-char=None marks<cr>
-nnoremap <silent> <space>/  :Denite grep:. -mode=normal -highlight-matched-char=None<cr>
+if dein#tap('deoplete.nvim')
+  nnoremap <silent> <space>p  :<C-u>Denite -resume<CR>
+  nnoremap <silent> <space>j  :call execute('Denite -resume -select=+'.v:count1.' -immediately')<CR>
+  nnoremap <silent> <space>k  :call execute('Denite -resume -select=-'.v:count1.' -immediately')<CR>
+  nnoremap <c-p> :Denite -highlight-matched-char=None file_rec<cr>
+  nnoremap <silent> <space>w  :<C-u>DeniteCursorWord -mode=normal -auto-resize line<CR>
+  nnoremap <silent> <space>l  :<C-u>Denite -mode=normal location_list<CR>
+  nnoremap <silent> <space>g  :<C-u>Denite grep<cr>
+  nnoremap <silent> <space>u  :<C-u>Denite -mode=normal -highlight-matched-char=None file_mru<cr>
+  nnoremap <silent> <space>d  :<C-u>Denite -mode=normal -highlight-matched-char=None directory_mru<cr>
+  nnoremap <silent> <space>n  :<C-u>Denite -mode=normal -ignorecase=false -input='TODO\\|FIXME\\|CHANGED\\|BUG\\|HACK\\|FEATURE' grep<cr>
+  " nnoremap <silent> <space>t  :<C-u>Denite project<cr>
+  nnoremap <silent> <space>s  :<C-u>Denite session<cr>
+  " nnoremap <silent> <space>m  :<C-u>Denite -mode=normal menu<cr>
+  nnoremap <silent> <space>a  :<C-u>Denite node<CR>
+  nnoremap <silent> <space>e  :<C-u>Denite buffer<cr>
+  nnoremap <silent> <space>h  :<C-u>Denite history:all<cr>
+  nnoremap <silent> <space>q  :<C-u>Denite commands<cr>
+  nnoremap <silent> <space>f  :<C-u>Denite file_rec<cr>
+  nnoremap <silent> <space>o  :<C-u>Denite -mode=normal -highlight-matched-char=None outline<cr>
+  nnoremap <silent> <space>y  :<C-u>Denite -mode=normal -highlight-matched-char=None miniyank<cr>
+  nnoremap <silent> <space>m  :<C-u>Denite -mode=normal -highlight-matched-char=None marks<cr>
+  nnoremap <silent> <space>/  :Denite grep:. -mode=normal -highlight-matched-char=None<cr>
 
-autocmd CompleteDone * pclose
-inoremap <expr><c-l> deoplete#complete_common_string()
+  autocmd CompleteDone * pclose
+  inoremap <expr><c-l> deoplete#complete_common_string()
+endif
 
-nnoremap <leader>ct :ColorToggle<cr>
+if dein#tap('nvim-typescript')
+  let g:nvim_typescript#type_info_on_hold = 0
+  let g:nvim_typescript#javascript_support = 0
+  let g:nvim_typescript#vue_support = 0
+  let g:nvim_typescript#signature_complete = 0
+  let g:nvim_typescript#max_completion_detail = 50
+  " let g:nvim_typescript#server_path = $HOME.'erinn/asdf/shims/tsserver'
 
-nnoremap <leader>jdd :JsDoc<cr>
+  nnoremap K :TSDoc<cr>
+  nnoremap <c-]> :TSDef<cr>
+  nnoremap tdp :TSDefPreview<cr>
+  nnoremap ti :TSImport<cr>
+  nnoremap tec :TSEditConfig<cr>
+  nnoremap trs :TSRefs<cr>
+  nnoremap tr :TSRename<cr>
+  nnoremap <silent> <space>to  :<C-u>Denite -highlight-mode-insert=Search TSDocumentSymbol<cr>
+endif
 
-nnoremap td :TSDoc<cr>
-nnoremap <c-]> :TSDef<cr>
-nnoremap tdp :TSDefPreview<cr>
-nnoremap ti :TSImport<cr>
-nnoremap tec :TSEditConfig<cr>
-nnoremap tre :TSRefs<cr>
-nnoremap tt :TSType<cr>
-nnoremap ttd :TSTypeDef<cr>
-nnoremap tr :TSRename<cr>
+if dein#tap('Colorizer')
+  nnoremap <leader>ct :ColorToggle<cr>
+endif
+
+if dein#tap('vim-jsdoc')
+  nnoremap <leader>jdd :JsDoc<cr>
+endif
 
 " Plugins
 
@@ -821,14 +850,6 @@ if dein#tap('jedi-vim')
 	let g:jedi#goto_assignments_command = '<leader>g'
 	let g:jedi#rename_command = '<Leader>r'
 	let g:jedi#usages_command = '<Leader>n'
-endif
-
-if dein#tap('nvim-typescript')
-  let g:nvim_typescript#type_info_on_hold = 0
-  let g:nvim_typescript#javascript_support = 0
-  let g:nvim_typescript#vue_support = 0
-  let g:nvim_typescript#signature_complete = 0
-  " let g:nvim_typescript#server_path = $HOME.'erinn/asdf/shims/tsserver'
 endif
 
 if dein#tap('vim-operator-flashy')
@@ -1055,6 +1076,35 @@ if dein#tap('vim-airline')
     endif
     set statusline+=%-14.(%l/%L,%c%V%)\ %p%%
   endif
+  if exists('+showtabline')
+    function! Tabline()
+      let s = ''
+      for i in range(tabpagenr('$'))
+        let tab = i + 1
+        let winnr = tabpagewinnr(tab)
+        let buflist = tabpagebuflist(tab)
+        let bufnr = buflist[winnr - 1]
+        let bufname = bufname(bufnr)
+        let bufmodified = getbufvar(bufnr, "&mod")
+
+        let s .= '%' . tab . 'T'
+        let s .= (tab == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#')
+        let s .= '[' . tab .']'
+        let s .= (bufname != '' ? ' '. fnamemodify(bufname, ':t') . '  ' : '[No Name] ')
+
+        if bufmodified
+          let s .= '[+] '
+        endif
+      endfor
+
+      let s .= '%#TabLineFill#'
+      if (exists("g:tablineclosebutton"))
+        let s .= '%=%999XX'
+      endif
+      return s
+    endfunction
+    set tabline=%!Tabline()
+  endif
   let g:airline_powerline_fonts = 1
   let g:airline#extensions#tabline#enabled = 1
   let g:airline#extensions#tabline#formatter = 'unique_tail'
@@ -1112,6 +1162,7 @@ endif
 
 if dein#tap('indentLine')
   let g:indentLine_enabled = 0
+  nnoremap <leader>i :IndentLinesToggle<cr>
 endif
 
 " if dein#tap('vim-wintabs')
