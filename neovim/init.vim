@@ -175,6 +175,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'hook_post_source': 'call echodoc#enable()'
         \})
   call dein#add('Shougo/deol.nvim', { 'on_cmd': 'Deol' })
+  call dein#add('Lenovsky/nuake', { 'on_cmd': 'Nuake' })
   call dein#add('zefei/vim-wintabs', {
         \'on_cmd': 'WintabsRefresh',
         \'hook_add': join([
@@ -554,6 +555,23 @@ set numberwidth=3
 autocmd InsertEnter * :set norelativenumber " no relativenumber in insert mode
 autocmd InsertLeave * :set relativenumber   " show relativenumber when leave insert mode
 
+let g:terminal_color_0  = '#2e3436'
+let g:terminal_color_1  = '#cc0000'
+let g:terminal_color_2  = '#4e9a06'
+let g:terminal_color_3  = '#c4a000'
+let g:terminal_color_4  = '#3465a4'
+let g:terminal_color_5  = '#75507b'
+let g:terminal_color_6  = '#0b939b'
+let g:terminal_color_7  = '#d3d7cf'
+let g:terminal_color_8  = '#555753'
+let g:terminal_color_9  = '#ef2929'
+let g:terminal_color_10 = '#8ae234'
+let g:terminal_color_11 = '#fce94f'
+let g:terminal_color_12 = '#729fcf'
+let g:terminal_color_13 = '#ad7fa8'
+let g:terminal_color_14 = '#00f5e9'
+let g:terminal_color_15 = '#eeeeec'
+
 " ----------------------------------------------------------------------------
 " Settings: plugin
 " ----------------------------------------------------------------------------
@@ -578,6 +596,54 @@ function! s:patch_oceanic_next_colors()
   hi! link DiffAdded DiffAdd
   hi! link DiffChanged DiffChange
   hi! link DiffRemoved DiffDelete
+
+  let s:nord0_gui = "#2E3440"
+  let s:nord1_gui = "#3B4252"
+  let s:nord2_gui = "#434C5E"
+  let s:nord3_gui = "#4C566A"
+  let s:nord4_gui = "#D8DEE9"
+  let s:nord5_gui = "#E5E9F0"
+  let s:nord6_gui = "#ECEFF4"
+  let s:nord7_gui = "#8FBCBB"
+  let s:nord8_gui = "#88C0D0"
+  let s:nord9_gui = "#81A1C1"
+  let s:nord10_gui = "#5E81AC"
+  let s:nord11_gui = "#BF616A"
+  let s:nord12_gui = "#D08770"
+  let s:nord13_gui = "#EBCB8B"
+  let s:nord14_gui = "#A3BE8C"
+  let s:nord15_gui = "#B48EAD"
+
+  let s:nord1_term = "0"
+  let s:nord3_term = "8"
+  let s:nord5_term = "7"
+  let s:nord6_term = "15"
+  let s:nord7_term = "14"
+  let s:nord8_term = "6"
+  let s:nord9_term = "4"
+  let s:nord10_term = "12"
+  let s:nord11_term = "1"
+  let s:nord12_term = "11"
+  let s:nord13_term = "3"
+  let s:nord14_term = "2"
+  let s:nord15_term = "5"
+
+  let g:terminal_color_0 = s:nord1_gui
+  let g:terminal_color_1 = s:nord11_gui
+  let g:terminal_color_2 = s:nord14_gui
+  let g:terminal_color_3 = s:nord13_gui
+  let g:terminal_color_4 = s:nord9_gui
+  let g:terminal_color_5 = s:nord15_gui
+  let g:terminal_color_6 = s:nord8_gui
+  let g:terminal_color_7 = s:nord5_gui
+  let g:terminal_color_8 = s:nord3_gui
+  let g:terminal_color_9 = s:nord11_gui
+  let g:terminal_color_10 = s:nord14_gui
+  let g:terminal_color_11 = s:nord13_gui
+  let g:terminal_color_12 = s:nord9_gui
+  let g:terminal_color_13 = s:nord15_gui
+  let g:terminal_color_14 = s:nord7_gui
+  let g:terminal_color_15 = s:nord6_gui
 endfunction
 
 autocmd! ColorScheme OceanicNext call s:patch_oceanic_next_colors()
@@ -675,9 +741,8 @@ vmap <Leader>aa :Tabularize /
 
 nnoremap <leader>fs :FuzzySearch<cr>
 
-
-if dein#tap('deol.nvim')
-  nnoremap <leader>T :Deol 
+if dein#tap('nuake')
+  nnoremap <leader>T :Nuake<cr>
 endif
 
 if dein#tap('deoplete.nvim')
@@ -1056,8 +1121,8 @@ if dein#tap('context_filetype.vim')
   let g:context_filetype#same_filetypes = {
     \ 'typescript': 'typescript,typescript.tsx',
     \ 'typescript.tsx': 'typescript,typescript.tsx',
-    \ 'scss': 'javascript,javascript.jsx,typescript,typescript.tsx,css',
-    \ 'css': 'javascript,javascript.jsx,typescript,typescript.tsx,css',
+    \ 'scss': '_',
+    \ 'css': '_',
     \ }
 endif
 
@@ -1262,23 +1327,6 @@ function! s:devdocs(query) abort
     execute 'MiniBrowser' 'http://devdocs.io/#q='.escape(a:query, ' \')
 endfunction
 command! -nargs=* DevDocs call <SID>devdocs(<q-args>)
-
-let g:terminal_color_0  = '#2e3436'
-let g:terminal_color_1  = '#cc0000'
-let g:terminal_color_2  = '#4e9a06'
-let g:terminal_color_3  = '#c4a000'
-let g:terminal_color_4  = '#3465a4'
-let g:terminal_color_5  = '#75507b'
-let g:terminal_color_6  = '#0b939b'
-let g:terminal_color_7  = '#d3d7cf'
-let g:terminal_color_8  = '#555753'
-let g:terminal_color_9  = '#ef2929'
-let g:terminal_color_10 = '#8ae234'
-let g:terminal_color_11 = '#fce94f'
-let g:terminal_color_12 = '#729fcf'
-let g:terminal_color_13 = '#ad7fa8'
-let g:terminal_color_14 = '#00f5e9'
-let g:terminal_color_15 = '#eeeeec'
 
 hi! link SignColumn   LineNr
 hi! link ShowMarksHLl DiffAdd
