@@ -27,7 +27,6 @@ if dein#load_state('~/.config/nvim/plugged/')
   " Edit
   " For textobj
   call dein#add('kana/vim-textobj-user')
-  call dein#add('sgur/vim-textobj-parameter')
   call dein#add('kana/vim-textobj-function', {
         \'on_map': { 'ox': '<Plug>' },
         \'depends': 'vim-textobj-user',
@@ -1155,7 +1154,7 @@ if dein#tap('vim-airline')
         let s .= '%' . tab . 'T'
         let s .= (tab == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#')
         let s .= '[' . tab .']'
-        let s .= (bufname != '' ? ' '. fnamemodify(bufname, ':t') . '  ' : '[No Name] ')
+        let s .= (bufname != '' ? ' '. fnamemodify(bufname, ':t') . ' ' : ' - ')
 
         if bufmodified
           let s .= '[+] '
