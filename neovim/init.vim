@@ -309,16 +309,14 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \'on_ft': [ 'scss', 'sass', 'haml' ]
   "       \})
   call dein#add('Valloric/MatchTagAlways', {
-        \'on_ft': [ 'html', 'xml', 'jsx', 'javascript', 'javascript.jsx', 'tsx', 'typescript.tsx', 'eelixir' ],
+        \'on_ft': [ 'html', 'xml', 'javascript', 'javascript.jsx', 'typescript.tsx', 'eelixir' ],
         \})
   call dein#add('hail2u/vim-css3-syntax', {
         \'on_ft': 'css'
         \})
-  call dein#add('alvan/vim-closetag', {
-        \'on_ft': [ 'html', 'javascript', 'javascript.jsx', 'typescript.tsx' ]
-        \})
+  call dein#add('alvan/vim-closetag')
   call dein#add('mattn/emmet-vim', {
-        \'on_ft': [ 'html', 'css', 'scss', 'jsx', 'javascript', 'javascript.jsx', 'tsx', 'typescript.tsx', 'eelixir' ],
+        \'on_ft': [ 'html', 'css', 'scss', 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx', 'eelixir' ],
         \})
   call dein#add('chrisbra/Colorizer', { 'on_cmd': 'ColorToggle' })
   call dein#add('othree/html5.vim', {
@@ -447,7 +445,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('stephpy/vim-yaml', { 'on_ft': 'yaml' })
 
   " For graphql
-  call dein#add('jparise/vim-graphql', { 'on_ft': 'graphql' })
+  call dein#add('jparise/vim-graphql', { 'on_ft': ['graphql', 'typescript', 'typescript.tsx'] })
 
   call dein#end()
   call dein#save_state()
@@ -863,10 +861,8 @@ if dein#tap('MatchTagAlways')
     \ 'xhtml' : 1,
     \ 'xml' : 1,
     \ 'jinja' : 1,
-    \ 'jsx': 1,
     \ 'javascript': 1,
     \ 'javascript.jsx': 1,
-    \ 'tsx': 1,
     \ 'typescript.tsx': 1
     \}
 endif
@@ -937,7 +933,7 @@ if dein#tap('emmet-vim')
 endif
 
 if dein#tap('vim-closetag')
-  let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.erb,*.jsx"
+  let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.erb,*.js,*.jsx,*.tsx"
   let g:closetag_shortcut = '>'
   let g:closetag_close_shortcut = '<leader>>'
 endif
@@ -1179,14 +1175,14 @@ if dein#tap('ale')
   let g:ale_fixers = {
   \  'javascript': ['eslint'],
   \  'javascript.jsx': ['eslint'],
-  \  'typescript': ['tslint'],
-  \  'typescript.tsx': ['tslint'],
+  \  'typescript': ['tslint', 'tsserver'],
+  \  'typescript.tsx': ['tslint', 'tsserver'],
   \}
   let g:ale_linters = {
   \  'javascript': ['eslint'],
   \  'javascript.jsx': ['eslint'],
-  \  'typescript': ['tslint'],
-  \  'typescript.tsx': ['tslint'],
+  \  'typescript': ['tslint', 'tsserver'],
+  \  'typescript.tsx': ['tslint', 'tsserver'],
   \}
   let g:ale_linter_aliases = {'jsx': 'javascript', 'tsx': 'typescript'}
   let g:ale_lint_on_save = 0
