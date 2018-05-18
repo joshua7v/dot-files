@@ -314,7 +314,6 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('hail2u/vim-css3-syntax', {
         \'on_ft': 'css'
         \})
-  call dein#add('alvan/vim-closetag')
   call dein#add('mattn/emmet-vim', {
         \'on_ft': [ 'html', 'css', 'scss', 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx', 'eelixir' ],
         \})
@@ -743,6 +742,48 @@ if dein#tap('nuake')
 endif
 
 if dein#tap('deoplete.nvim')
+  autocmd CompleteDone * pclose
+  inoremap <expr><c-l> deoplete#complete_common_string()
+
+  inoremap <silent><expr> <c-e> deoplete#mappings#manual_complete()
+
+  call deoplete#custom#option('ignore_sources', {'typescript': ['member']})
+
+  call deoplete#custom#source('typescript',    'mark', 'T')
+  call deoplete#custom#source('omni',          'mark', '⌾')
+  call deoplete#custom#source('flow',          'mark', '⌁')
+  call deoplete#custom#source('TernJS',        'mark', '⌁')
+  call deoplete#custom#source('go',            'mark', '⌁')
+  call deoplete#custom#source('jedi',          'mark', '⌁')
+  call deoplete#custom#source('vim',           'mark', '⌁')
+  call deoplete#custom#source('neosnippet',    'mark', '⌘')
+  call deoplete#custom#source('tag',           'mark', '⌦')
+  call deoplete#custom#source('around',        'mark', '↻')
+  call deoplete#custom#source('buffer',        'mark', 'ℬ')
+  call deoplete#custom#source('tmux-complete', 'mark', '⊶')
+  call deoplete#custom#source('syntax',        'mark', '♯')
+  call deoplete#custom#source('member',        'mark', 'M')
+
+  call deoplete#custom#source('typescript',    'rank', 660)
+  call deoplete#custom#source('go',            'rank', 650)
+  call deoplete#custom#source('vim',           'rank', 640)
+  call deoplete#custom#source('flow',          'rank', 630)
+  call deoplete#custom#source('TernJS',        'rank', 620)
+  call deoplete#custom#source('jedi',          'rank', 610)
+  call deoplete#custom#source('omni',          'rank', 600)
+  call deoplete#custom#source('neosnippet',    'rank', 510)
+  call deoplete#custom#source('member',        'rank', 500)
+  call deoplete#custom#source('file_include',  'rank', 420)
+  call deoplete#custom#source('file',          'rank', 410)
+  call deoplete#custom#source('tag',           'rank', 400)
+  call deoplete#custom#source('around',        'rank', 330)
+  call deoplete#custom#source('buffer',        'rank', 320)
+  call deoplete#custom#source('dictionary',    'rank', 310)
+  call deoplete#custom#source('tmux-complete', 'rank', 300)
+  call deoplete#custom#source('syntax',        'rank', 200)
+endif
+
+if dein#tap('denite.nvim')
   nnoremap <silent> <space>p  :<C-u>Denite -resume<CR>
   nnoremap <silent> <space>j  :call execute('Denite -resume -select=+'.v:count1.' -immediately')<CR>
   nnoremap <silent> <space>k  :call execute('Denite -resume -select=-'.v:count1.' -immediately')<CR>
@@ -765,9 +806,6 @@ if dein#tap('deoplete.nvim')
   nnoremap <silent> <space>y  :<C-u>Denite -mode=normal -highlight-matched-char=None miniyank<cr>
   nnoremap <silent> <space>m  :<C-u>Denite -mode=normal -highlight-matched-char=None marks<cr>
   nnoremap <silent> <space>/  :Denite grep:. -mode=normal -highlight-matched-char=None<cr>
-
-  autocmd CompleteDone * pclose
-  inoremap <expr><c-l> deoplete#complete_common_string()
 endif
 
 if dein#tap('nvim-typescript')
@@ -775,7 +813,7 @@ if dein#tap('nvim-typescript')
   let g:nvim_typescript#javascript_support = 0
   let g:nvim_typescript#vue_support = 0
   let g:nvim_typescript#signature_complete = 0
-  let g:nvim_typescript#max_completion_detail = 50
+  let g:nvim_typescript#max_completion_detail = 100
   " let g:nvim_typescript#server_path = $HOME.'erinn/asdf/shims/tsserver'
 
   nnoremap K :TSDoc<cr>
@@ -930,12 +968,6 @@ if dein#tap('emmet-vim')
   \   'extends': 'jsx'
   \ }
   \}
-endif
-
-if dein#tap('vim-closetag')
-  let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.erb,*.js,*.jsx,*.tsx"
-  let g:closetag_shortcut = '>'
-  let g:closetag_close_shortcut = '<leader>>'
 endif
 
 if dein#tap('vim-operator-flashy')
