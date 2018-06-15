@@ -104,6 +104,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('itchyny/vim-gitbranch')
   call dein#add('t9md/vim-quickhl')
   call dein#add('jiangmiao/auto-pairs')
+  call dein#add('skywind3000/asyncrun.vim')
   call dein#add('kana/vim-operator-user'         , { 'lazy'     : 1 })
   call dein#add('reedes/vim-wordy'               , { 'on_cmd'   : 'Wordy' })
   call dein#add('vim-scripts/DrawIt'             , { 'on_cmd'   : 'DrawIt' })
@@ -233,6 +234,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'hook_post_source': 'set statusline+=\ %{LinterStatus()}'
         \})
   call dein#add('justinmk/vim-dirvish')
+  call dein#add('tpope/vim-projectionist')
   " call dein#add('autozimu/LanguageClient-neovim', {
   "       \'rev': 'next',
   "       \'build': 'bash install.sh'
@@ -261,11 +263,12 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"imap <expr><C-i>   pumvisible() ? '<Up>' : '<C-i>'",
         \], "\n")
         \})
-  call dein#add('yyotti/denite-marks'     , { 'on_source' : 'denite.nvim' })
-  call dein#add('Shougo/neomru.vim'       , { 'on_source' : 'denite.nvim' })
-  call dein#add('chemzqm/denite-extra'    , { 'on_source' : 'denite.nvim' })
-  call dein#add('chemzqm/unite-location'  , { 'on_source' : 'denite.nvim' })
-  call dein#add('rafi/vim-denite-session' , { 'on_source' : 'denite.nvim' })
+  call dein#add('wellle/tmux-complete.vim')
+  call dein#add('yyotti/denite-marks'     , { 'on_source' : 'denite.nvim'   })
+  call dein#add('Shougo/neomru.vim'       , { 'on_source' : 'denite.nvim'   })
+  call dein#add('chemzqm/denite-extra'    , { 'on_source' : 'denite.nvim'   })
+  call dein#add('chemzqm/unite-location'  , { 'on_source' : 'denite.nvim'   })
+  call dein#add('rafi/vim-denite-session' , { 'on_source' : 'denite.nvim'   })
   call dein#add('mbbill/undotree', {
         \'on_cmd': 'UndotreeToggle',
         \'hook_add': join([
@@ -386,12 +389,17 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   " For typescript
   call dein#add('mhartington/nvim-typescript', {
-        \'on_ft': [ 'typescript', 'typescript.tsx' ]
+        \'on_ft': [ 'typescript', 'typescript.tsx' ],
+        \'build': './install.sh'
         \})
   call dein#add('leafgarland/typescript-vim', {
         \'on_ft': [ 'typescript', 'typescript.tsx' ]
         \})
   call dein#add('joshua7v/vim-tsx-improve', {
+        \'on_ft': [ 'typescript', 'typescript.tsx' ]
+        \})
+  call dein#add('neoclide/tslint.nvim')
+  call dein#add('neoclide/tsc.nvim', {
         \'on_ft': [ 'typescript', 'typescript.tsx' ]
         \})
 
@@ -428,10 +436,14 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'on_event': 'InsertEnter',
         \'on_ft': 'go'
         \})
+  call dein#add('zchee/deoplete-go', {
+        \'on_ft': 'go'
+        \})
+  " call dein#add('mdempsky/gocode', {
   call dein#add('nsf/gocode', {
         \'rtp': 'nvim',
         \'on_ft': 'go',
-        \'build': '~/.config/nvim/plugged/repos/github.com/nsf/gocode/nvim/symlink.sh'
+        \'build': '~/.config/nvim/plugged/nsf/gocode/nvim/symlink.sh'
         \})
 
   " For api
@@ -550,6 +562,8 @@ set relativenumber " show relative line number
 set numberwidth=3
 autocmd InsertEnter * :set norelativenumber " no relativenumber in insert mode
 autocmd InsertLeave * :set relativenumber   " show relativenumber when leave insert mode
+
+set omnifunc=syntaxcomplete#Complete
 
 let g:terminal_color_0  = '#2e3436'
 let g:terminal_color_1  = '#cc0000'
@@ -747,8 +761,9 @@ if dein#tap('deoplete.nvim')
 
   inoremap <silent><expr> <c-e> deoplete#mappings#manual_complete()
 
-  call deoplete#custom#option('ignore_sources', {'typescript': ['member']})
+  " call deoplete#custom#option('ignore_sources', {'typescript': ['member'], 'go': ['member']})
 
+  call deoplete#custom#source('alchemist',     'mark', 'A')
   call deoplete#custom#source('typescript',    'mark', 'T')
   call deoplete#custom#source('omni',          'mark', '⌾')
   call deoplete#custom#source('flow',          'mark', '⌁')
@@ -764,6 +779,7 @@ if dein#tap('deoplete.nvim')
   call deoplete#custom#source('syntax',        'mark', '♯')
   call deoplete#custom#source('member',        'mark', 'M')
 
+  call deoplete#custom#source('alchemist',     'rank', 670)
   call deoplete#custom#source('typescript',    'rank', 660)
   call deoplete#custom#source('go',            'rank', 650)
   call deoplete#custom#source('vim',           'rank', 640)
@@ -823,6 +839,7 @@ if dein#tap('nvim-typescript')
   nnoremap tec :TSEditConfig<cr>
   nnoremap trs :TSRefs<cr>
   nnoremap tr :TSRename<cr>
+  nnoremap ts :TSSortImports<cr>
   nnoremap <silent> <space>to  :<C-u>Denite -highlight-mode-insert=Search TSDocumentSymbol<cr>
 endif
 
@@ -850,6 +867,14 @@ endif
 "   nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 " endif
 
+if dein#tap('asyncrun.vim')
+  noremap <leader>q :call asyncrun#quickfix_toggle(8)<cr>
+
+  augroup vimrc
+    autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)
+  augroup END
+endif
+
 if dein#tap('vim-dirvish')
   let g:dirvish_relative_paths = 0
   let g:dirvish_mode = ':sort ,^.*[\/],'
@@ -871,6 +896,9 @@ if dein#tap('vim-dirvish')
   command! -nargs=? -complete=dir Explore Dirvish <args>
   command! -nargs=? -complete=dir Sexplore belowright split | silent Dirvish <args>
   command! -nargs=? -complete=dir Vexplore leftabove vsplit | silent Dirvish <args>
+endif
+
+if dein#tap('vim-projectionist')
 endif
 
 if dein#tap('goyo.vim')
@@ -1207,8 +1235,8 @@ if dein#tap('ale')
   let g:ale_fixers = {
   \  'javascript': ['eslint'],
   \  'javascript.jsx': ['eslint'],
-  \  'typescript': ['tslint', 'tsserver'],
-  \  'typescript.tsx': ['tslint', 'tsserver'],
+  \  'typescript': ['tslint'],
+  \  'typescript.tsx': ['tslint'],
   \}
   let g:ale_linters = {
   \  'javascript': ['eslint'],
@@ -1290,8 +1318,8 @@ nnoremap <Leader>e :tabnew
 nnoremap <Leader>ee :e <C-R>=expand('%:p:h') . '/'<CR>
 nnoremap <Leader>ef :e <C-R>=expand('%')<CR>
 nnoremap <Leader>ec :tabnew ~/.config/nvim/init.vim
-nnoremap <Leader>p :tabprev<cr>
-nnoremap <Leader>n :tabnext<cr>
+nnoremap tp :tabprev<cr>
+nnoremap tn :tabnext<cr>
 
 " Treat long lines as break lines (useful when moving around in them)
 noremap j gj
