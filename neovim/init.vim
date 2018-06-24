@@ -322,7 +322,8 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
   call dein#add('chrisbra/Colorizer', { 'on_cmd': 'ColorToggle' })
   call dein#add('othree/html5.vim', {
-        \'on_ft': 'html', 'hook_add': join([
+        \'on_ft': 'html',
+        \'hook_add': join([
         \"let g:html5_event_handler_attributes_complete = 0",
         \"let g:html5_rdfa_attributes_complete = 0",
         \"let g:html5_microdata_attributes_complete = 0",
@@ -340,6 +341,9 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
   call dein#add('neoclide/vim-jsx-improve', {
         \'on_ft': [ 'javascript', 'javascript.jsx' ]
+        \})
+  call dein#add('othree/javascript-libraries-syntax.vim', {
+        \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ]
         \})
   call dein#add('heavenshell/vim-jsdoc', {
         \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ]
@@ -827,6 +831,27 @@ endif
 
 if dein#tap('Colorizer')
   nnoremap <leader>ct :ColorToggle<cr>
+endif
+
+if dein#tap('javascript-libraries-syntax.vim')
+  let b:javascript_lib_use_jquery = 1
+  let b:javascript_lib_use_underscore = 1
+  let b:javascript_lib_use_backbone = 1
+  let b:javascript_lib_use_prelude = 1
+  let b:javascript_lib_use_angularjs = 1
+  let b:javascript_lib_use_angularui = 1
+  let b:javascript_lib_use_angularuirouter = 1
+  let b:javascript_lib_use_react = 1
+  let b:javascript_lib_use_flux = 1
+  let b:javascript_lib_use_requirejs = 1
+  let b:javascript_lib_use_sugar = 1
+  let b:javascript_lib_use_jasmine = 1
+  let b:javascript_lib_use_chai = 1
+  let b:javascript_lib_use_handlebars = 1
+  let b:javascript_lib_use_ramda = 1
+  let b:javascript_lib_use_vue = 1
+  let b:javascript_lib_use_d3 = 1
+  let b:javascript_lib_use_tape = 1
 endif
 
 if dein#tap('vim-jsdoc')
