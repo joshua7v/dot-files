@@ -338,25 +338,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('styled-components/vim-styled-components', {
         \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ]
         \})
-  call dein#add('ternjs/tern_for_vim', {
-        \'on_ft': [ 'javascript', 'javascript.jsx' ],
-        \})
-  call dein#add('carlitux/deoplete-ternjs', {
-        \'on_event': 'VimEnter',
-        \'on_ft': [ 'javascript', 'javascript.jsx' ],
-        \'hook_add': join([
-        \"let g:tern_request_timeout = 1",
-        \"let g:tern_show_signature_in_pum = '0'",
-        \"let g:deoplete#sources#ternjs#types = 1",
-        \"let g:deoplete#sources#ternjs#depths = 1",
-        \"let g:deoplete#sources#ternjs#docs = 1",
-        \"let g:deoplete#sources#ternjs#filter = 0",
-        \"let g:deoplete#sources#ternjs#case_insensitive = 1",
-        \"let g:deoplete#sources#ternjs#include_keywords = 1",
-        \"let g:deoplete#sources#ternjs#filetypes = [ 'javascript', 'javascript.jsx', 'vue' ]"
-        \], "\n")
-        \})
-  call dein#add('chemzqm/vim-jsx-improve', {
+  call dein#add('neoclide/vim-jsx-improve', {
         \'on_ft': [ 'javascript', 'javascript.jsx' ]
         \})
   call dein#add('heavenshell/vim-jsdoc', {
@@ -389,7 +371,7 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   " For typescript
   call dein#add('mhartington/nvim-typescript', {
-        \'on_ft': [ 'typescript', 'typescript.tsx' ],
+        \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ],
         \'build': './install.sh'
         \})
   call dein#add('leafgarland/typescript-vim', {
@@ -398,10 +380,9 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('joshua7v/vim-tsx-improve', {
         \'on_ft': [ 'typescript', 'typescript.tsx' ]
         \})
-  call dein#add('neoclide/tslint.nvim')
-  call dein#add('neoclide/tsc.nvim', {
-        \'on_ft': [ 'typescript', 'typescript.tsx' ]
-        \})
+  " call dein#add('chemzqm/tstool.nvim', {
+  "       \'on_ft': [ 'typescript', 'typescript.tsx' ]
+  "       \})
 
   " For elixir
   call dein#add('elixir-editors/vim-elixir', {
@@ -707,6 +688,7 @@ autocmd BufNewFile,BufRead .eslintrc     setfiletype json
 autocmd BufNewFile,BufRead .babelrc      setfiletype json
 autocmd BufNewFile,BufRead .prettierrc   setfiletype json
 autocmd BufNewFile,BufRead .jscsrc       setfiletype json
+autocmd BufNewFile,BufRead *.jsx         set ft=javascript.jsx
 
 autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
 
@@ -826,8 +808,8 @@ endif
 
 if dein#tap('nvim-typescript')
   let g:nvim_typescript#type_info_on_hold = 0
-  let g:nvim_typescript#javascript_support = 0
-  let g:nvim_typescript#vue_support = 0
+  let g:nvim_typescript#javascript_support = 1
+  let g:nvim_typescript#vue_support = 1
   let g:nvim_typescript#signature_complete = 0
   let g:nvim_typescript#max_completion_detail = 100
   " let g:nvim_typescript#server_path = $HOME.'erinn/asdf/shims/tsserver'
