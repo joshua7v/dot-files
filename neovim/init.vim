@@ -906,6 +906,10 @@ if dein#tap('vim-dirvish')
 endif
 
 if dein#tap('vim-projectionist')
+  augroup user_projectionist
+    autocmd!
+    autocmd FileType dirvish call ProjectionistDetect(resolve(expand('%:p')))
+  augroup END
 endif
 
 if dein#tap('goyo.vim')
