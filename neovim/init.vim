@@ -443,6 +443,9 @@ if dein#load_state('~/.config/nvim/plugged/')
   " For graphql
   call dein#add('jparise/vim-graphql', { 'on_ft': ['graphql', 'typescript', 'typescript.tsx'] })
 
+  " For jenkins
+  call dein#add('martinda/Jenkinsfile-vim-syntax', { 'on_ft': ['Jenkinsfile'] })
+
   call dein#end()
   call dein#save_state()
 endif
