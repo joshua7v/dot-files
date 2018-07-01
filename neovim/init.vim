@@ -27,16 +27,6 @@ if dein#load_state('~/.config/nvim/plugged/')
   " Edit
   " For textobj
   call dein#add('kana/vim-textobj-user')
-  call dein#add('kana/vim-textobj-function', {
-        \'on_map': { 'ox': '<Plug>' },
-        \'depends': 'vim-textobj-user',
-        \'hook_add': join([
-        \"omap <silent> af <Plug>(textobj-function-a)",
-        \"xmap <silent> af <Plug>(textobj-function-a)",
-        \"omap <silent> if <Plug>(textobj-function-i)",
-        \"xmap <silent> if <Plug>(textobj-function-i)",
-        \], "\n")
-        \})
   call dein#add('kana/vim-textobj-syntax', {
         \'on_map': { 'ox': '<Plug>' },
         \'depends': 'vim-textobj-user',
@@ -83,7 +73,6 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
   call dein#add('jceb/vim-textobj-uri')
   call dein#add('Julian/vim-textobj-variable-segment')
-  call dein#add('fvictorio/vim-textobj-backticks')
   call dein#add('glts/vim-textobj-comment', {
         \'on_map': { 'ox': '<Plug>' },
         \'depends': 'vim-textobj-user',
@@ -97,7 +86,6 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   call dein#add('justinmk/vim-sneak')
   call dein#add('bfredl/nvim-miniyank')
-  call dein#add('tpope/vim-speeddating')
   call dein#add('tmhedberg/matchit')
   call dein#add('pbrisbin/vim-mkdir')
   call dein#add('kopischke/vim-stay')
@@ -263,6 +251,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"imap <expr><C-i>   pumvisible() ? '<Up>' : '<C-i>'",
         \], "\n")
         \})
+  call dein#add('Shougo/neco-syntax')
   call dein#add('wellle/tmux-complete.vim')
   call dein#add('yyotti/denite-marks'     , { 'on_source' : 'denite.nvim'   })
   call dein#add('Shougo/neomru.vim'       , { 'on_source' : 'denite.nvim'   })
@@ -430,6 +419,9 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'on_ft': 'go',
         \'build': '~/.config/nvim/plugged/nsf/gocode/nvim/symlink.sh'
         \})
+
+  " For solidity
+  call dein#add('tomlion/vim-solidity', { 'on_ft': 'solidity' })
 
   " For api
   call dein#add('kylef/apiblueprint.vim', { 'on_ft': 'apiblueprint' })
@@ -915,6 +907,10 @@ if dein#tap('vim-projectionist')
   augroup END
 endif
 
+if dein#tap('gina.vim')
+  command Blame Gina blame --width=100 --format="%su %= %ti %au"
+endif
+
 if dein#tap('goyo.vim')
   nnoremap <Leader>G :Goyo<CR>
 endif
@@ -1350,7 +1346,8 @@ nnoremap <C-e> 2<C-e>
 nnoremap <C-y> 2<C-y>
 
 " No Highlight
-noremap <silent><leader>// :nohls<cr>
+nnoremap <silent><esc> :noh<return><esc>
+nnoremap <silent><cr> :noh<cr>
 
 " I can type :help on my own, thanks.
 noremap <F1> <esc>
