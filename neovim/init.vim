@@ -101,6 +101,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('tpope/vim-unimpaired'           , { 'on_event' : 'VimEnter' })
   call dein#add('tpope/vim-eunuch'               , { 'on_event' : 'VimEnter' })
   call dein#add('eugen0329/vim-esearch'          , { 'on_event' : 'VimEnter' })
+  call dein#add('brooth/far.vim'                 , { 'on_cmd'   : ['Far', 'Farp'] })
   call dein#add('editorconfig/editorconfig-vim'  , { 'on_event' : 'VimEnter' })
   call dein#add('tomtom/tcomment_vim'            , { 'on_cmd'   : ['TComment', 'TCommentAs'] })
   call dein#add('metakirby5/codi.vim'            , { 'on_cmd'   : 'Codi' })
@@ -872,9 +873,9 @@ endif
 if dein#tap('asyncrun.vim')
   noremap <leader>q :call asyncrun#quickfix_toggle(8)<cr>
 
-  augroup vimrc
-    autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)
-  augroup END
+  " augroup vimrc
+    " autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)
+  " augroup END
 endif
 
 if dein#tap('vim-dirvish')
