@@ -811,7 +811,7 @@ if dein#tap('nvim-typescript')
   let g:nvim_typescript#javascript_support = 1
   let g:nvim_typescript#vue_support = 1
   let g:nvim_typescript#signature_complete = 0
-  let g:nvim_typescript#max_completion_detail = 100
+  let g:nvim_typescript#max_completion_detail = 30
   " let g:nvim_typescript#server_path = $HOME.'erinn/asdf/shims/tsserver'
 
   nnoremap K :TSDoc<cr>
