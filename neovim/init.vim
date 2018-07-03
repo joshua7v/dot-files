@@ -103,7 +103,9 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('eugen0329/vim-esearch'          , { 'on_event' : 'VimEnter' })
   call dein#add('brooth/far.vim'                 , { 'on_cmd'   : ['Far', 'Farp'] })
   call dein#add('editorconfig/editorconfig-vim'  , { 'on_event' : 'VimEnter' })
-  call dein#add('tomtom/tcomment_vim'            , { 'on_cmd'   : ['TComment', 'TCommentAs'] })
+  " call dein#add('tomtom/tcomment_vim'            , { 'on_cmd'   : ['TComment', 'TCommentAs'] })
+  call dein#add('tpope/vim-commentary'           , { 'on_event' : 'VimEnter' })
+  call dein#add('suy/vim-context-commentstring'  , { 'on_event' : 'VimEnter' })
   call dein#add('metakirby5/codi.vim'            , { 'on_cmd'   : 'Codi' })
   call dein#add('mileszs/ack.vim'                , { 'on_cmd'   : 'Ack' })
   call dein#add('Konfekt/FastFold'               , { 'on_event' : 'VimEnter' })
@@ -852,6 +854,23 @@ endif
 
 if dein#tap('vim-jsdoc')
   nnoremap <leader>jdd :JsDoc<cr>
+endif
+
+if dein#tap('vim-context-commentstring')
+  let g:context#commentstring#table = {
+    \ 'typescript.tsx': {
+      \ 'tsComment' : '// %s',
+      \ 'tsImport' : '// %s',
+      \ 'tsxStatment' : '// %s',
+      \ 'tsxRegion' : '{/*%s*/}',
+    \},
+    \ 'javascript.jsx': {
+      \ 'jsComment' : '// %s',
+      \ 'jsImport' : '// %s',
+      \ 'jsxStatment' : '// %s',
+      \ 'jsxRegion' : '{/*%s*/}',
+    \},
+  \}
 endif
 
 " Plugins
