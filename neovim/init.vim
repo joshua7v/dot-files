@@ -100,7 +100,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('moll/vim-bbye'                  , { 'on_cmd'   : 'Bdelete', })
   call dein#add('tpope/vim-unimpaired'           , { 'on_event' : 'VimEnter' })
   call dein#add('tpope/vim-eunuch'               , { 'on_event' : 'VimEnter' })
-  call dein#add('eugen0329/vim-esearch'          , { 'on_event' : 'VimEnter' })
+  call dein#add('ddrscott/vim-side-search'       , { 'on_cmd'   : 'SideSearch' })
   call dein#add('brooth/far.vim'                 , { 'on_cmd'   : ['Far', 'Farp'] })
   call dein#add('editorconfig/editorconfig-vim'  , { 'on_event' : 'VimEnter' })
   " call dein#add('tomtom/tcomment_vim'            , { 'on_cmd'   : ['TComment', 'TCommentAs'] })
@@ -802,7 +802,7 @@ if dein#tap('denite.nvim')
   nnoremap <silent> <space>h  :<C-u>Denite history:all<cr>
   nnoremap <silent> <space>q  :<C-u>Denite commands<cr>
   nnoremap <silent> <space>f  :<C-u>Denite file_rec<cr>
-  nnoremap <silent> <space>o  :<C-u>Denite -mode=normal -highlight-matched-char=None outline<cr>
+  nnoremap <silent> <space>o  :<C-u>Denite -highlight-matched-char=None outline<cr>
   nnoremap <silent> <space>y  :<C-u>Denite -mode=normal -highlight-matched-char=None miniyank<cr>
   nnoremap <silent> <space>m  :<C-u>Denite -mode=normal -highlight-matched-char=None marks<cr>
   nnoremap <silent> <space>/  :Denite grep:. -mode=normal -highlight-matched-char=None<cr>
@@ -1037,14 +1037,10 @@ if dein#tap('vim-bbye')
   command! -bang -complete=buffer -nargs=? BD Bdelete<bang> <args>
 endif
 
-if dein#tap('vim-esearch')
-  let g:esearch = {
-    \ 'adapter'    : 'ag',
-    \ 'backend'    : 'nvim',
-    \ 'out'        : 'win',
-    \ 'batch_size' : 1000,
-    \ 'use'        : ['visual', 'hlsearch', 'last'],
-    \}
+if dein#tap('vim-side-search')
+  let g:side_search_split_pct = 0.5
+  nnoremap <Leader>ff :SideSearch 
+  nnoremap <Leader>fw :SideSearch <C-r><C-w><CR>
 endif
 
 if dein#tap('ack.vim')
@@ -1192,14 +1188,6 @@ endif
 if dein#tap('vim-expand-region')
   xmap v <Plug>(expand_region_expand)
   xmap V <Plug>(expand_region_shrink)
-endif
-
-if dein#tap('tcomment_vim')
-  nmap <c-_><c-_> :TComment<cr>
-  nmap gcc :TComment<cr>
-  vmap gc :TComment<cr>
-  nmap gca :TCommentAs 
-  vmap gca :TCommentAs 
 endif
 
 if dein#tap('context_filetype.vim')
