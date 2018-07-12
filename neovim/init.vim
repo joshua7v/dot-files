@@ -73,16 +73,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
   call dein#add('jceb/vim-textobj-uri')
   call dein#add('Julian/vim-textobj-variable-segment')
-  call dein#add('glts/vim-textobj-comment', {
-        \'on_map': { 'ox': '<Plug>' },
-        \'depends': 'vim-textobj-user',
-        \'hook_add': join([
-        \"omap <silent> ac <Plug>(textobj-comment-a)",
-        \"xmap <silent> ac <Plug>(textobj-comment-a)",
-        \"omap <silent> ic <Plug>(textobj-comment-i)",
-        \"xmap <silent> ic <Plug>(textobj-comment-i)",
-        \], "\n")
-        \})
+  call dein#add('coderifous/textobj-word-column.vim')
 
   call dein#add('justinmk/vim-sneak')
   call dein#add('bfredl/nvim-miniyank')
@@ -243,7 +234,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"let g:deoplete#tag#cache_limit_size=800000",
         \"let g:deoplete#file#enable_buffer_path=1",
         \"let g:deoplete#auto_complete_delay=50",
-        \"let g:deoplete#auto_refresh_delay=0",
+        \"let g:deoplete#auto_refresh_delay=100",
         \"let g:deoplete#disable_auto_complete=0",
         \"let g:deoplete#num_processes=1",
         \"set splitbelow",
@@ -376,9 +367,9 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('joshua7v/vim-tsx-improve', {
         \'on_ft': [ 'typescript', 'typescript.tsx' ]
         \})
-  " call dein#add('chemzqm/tstool.nvim', {
-  "       \'on_ft': [ 'typescript', 'typescript.tsx' ]
-  "       \})
+  call dein#add('chemzqm/tstool.nvim', {
+        \'on_ft': [ 'typescript', 'typescript.tsx' ]
+        \})
 
   " For elixir
   call dein#add('elixir-editors/vim-elixir', {
@@ -440,6 +431,9 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   " For jenkins
   call dein#add('martinda/Jenkinsfile-vim-syntax', { 'on_ft': ['Jenkinsfile'] })
+
+  " For dot
+  call dein#add('wannesm/wmgraphviz.vim', { 'on_ft': 'dot' })
 
   call dein#end()
   call dein#save_state()
@@ -547,6 +541,7 @@ autocmd InsertEnter * :set norelativenumber " no relativenumber in insert mode
 autocmd InsertLeave * :set relativenumber   " show relativenumber when leave insert mode
 
 set omnifunc=syntaxcomplete#Complete
+set signcolumn=yes
 
 let g:terminal_color_0  = '#2e3436'
 let g:terminal_color_1  = '#cc0000'
@@ -813,7 +808,7 @@ if dein#tap('nvim-typescript')
   let g:nvim_typescript#javascript_support = 1
   let g:nvim_typescript#vue_support = 1
   let g:nvim_typescript#signature_complete = 0
-  let g:nvim_typescript#max_completion_detail = 30
+  " let g:nvim_typescript#max_completion_detail = 30
   " let g:nvim_typescript#server_path = $HOME.'erinn/asdf/shims/tsserver'
 
   nnoremap K :TSDoc<cr>
@@ -1259,8 +1254,8 @@ if dein#tap('ale')
   let g:ale_linters = {
   \  'javascript': ['eslint'],
   \  'javascript.jsx': ['eslint'],
-  \  'typescript': ['tslint', 'tsserver'],
-  \  'typescript.tsx': ['tslint', 'tsserver'],
+  \  'typescript': ['tslint'],
+  \  'typescript.tsx': ['tslint'],
   \}
   let g:ale_linter_aliases = {'jsx': 'javascript', 'tsx': 'typescript'}
   let g:ale_lint_on_save = 0
@@ -1436,5 +1431,5 @@ command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 -tu4 /dev/u
 
 if exists("g:gui_oni")
 else
-  autocmd InsertEnter * call deoplete#enable()
+  autocmd VimEnter * call deoplete#enable()
 endif
