@@ -18,11 +18,11 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('~/.config/nvim/repos/github.com/Shougo/dein.vim')
 
   " For Nyaovim
-  call dein#add('rhysd/nyaovim-mini-browser')
+  " call dein#add('rhysd/nyaovim-mini-browser')
 
   " Color Schemes
   call dein#add('mhartington/oceanic-next')
-  call dein#add('arcticicestudio/nord-vim')
+  " call dein#add('arcticicestudio/nord-vim')
 
   " Edit
   " For textobj
@@ -85,6 +85,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('jiangmiao/auto-pairs')
   call dein#add('skywind3000/asyncrun.vim')
   call dein#add('kana/vim-operator-user'         , { 'lazy'     : 1 })
+  call dein#add('AndrewRadev/switch.vim'         , { 'on_cmd'   : 'Switch' })
   call dein#add('reedes/vim-wordy'               , { 'on_cmd'   : 'Wordy' })
   call dein#add('vim-scripts/DrawIt'             , { 'on_cmd'   : 'DrawIt' })
   call dein#add('tyru/open-browser.vim'          , { 'on_map'   : { 'nv': '<Plug>(openbrowser-smart-search)' }})
@@ -156,19 +157,18 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'on_event': 'CompleteDone',
         \'hook_post_source': 'call echodoc#enable()'
         \})
-  call dein#add('Shougo/deol.nvim', { 'on_cmd': 'Deol' })
   call dein#add('Lenovsky/nuake', { 'on_cmd': 'Nuake' })
-  call dein#add('zefei/vim-wintabs', {
-        \'on_cmd': 'WintabsRefresh',
-        \'hook_add': join([
-        \"let g:wintabs_display='statusline'",
-        \"let g:wintabs_ui_sep_leftmost='|'",
-        \"let g:wintabs_ui_sep_rightmost='|'",
-        \"let g:wintabs_ui_active_left='|'",
-        \"let g:wintabs_ui_active_right='|'",
-        \"let g:wintabs_ui_buffer_name_format='%n %t'",
-        \], "\n")
-        \})
+  " call dein#add('zefei/vim-wintabs', {
+  "       \'on_cmd': 'WintabsRefresh',
+  "       \'hook_add': join([
+  "       \"let g:wintabs_display='statusline'",
+  "       \"let g:wintabs_ui_sep_leftmost='|'",
+  "       \"let g:wintabs_ui_sep_rightmost='|'",
+  "       \"let g:wintabs_ui_active_left='|'",
+  "       \"let g:wintabs_ui_active_right='|'",
+  "       \"let g:wintabs_ui_buffer_name_format='%n %t'",
+  "       \], "\n")
+  "       \})
   call dein#add('lambdalisue/gina.vim', { 'on_cmd': 'Gina' })
   call dein#add('Shougo/denite.nvim', {
         \'on_cmd': 'Denite',
@@ -226,17 +226,9 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
   call dein#add('Shougo/context_filetype.vim')
   call dein#add('Shougo/deoplete.nvim', {
+        \'ref': '4.0-serial',
         \'depends': 'context_filetype.vim',
         \'hook_add': join([
-        \"let g:deoplete#enable_at_startup=0",
-        \"let g:deoplete#enable_refresh_always=0",
-        \"let g:deoplete#enable_camel_case=1",
-        \"let g:deoplete#tag#cache_limit_size=800000",
-        \"let g:deoplete#file#enable_buffer_path=1",
-        \"let g:deoplete#auto_complete_delay=50",
-        \"let g:deoplete#auto_refresh_delay=100",
-        \"let g:deoplete#disable_auto_complete=0",
-        \"let g:deoplete#num_processes=1",
         \"set splitbelow",
         \"set completeopt+=noselect",
         \], "\n"),
@@ -358,6 +350,7 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   " For typescript
   call dein#add('mhartington/nvim-typescript', {
+        \'rev': '56ac85149144fcf83450cacf71631b4c3774bd43',
         \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ],
         \'build': './install.sh'
         \})
@@ -367,16 +360,16 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('joshua7v/vim-tsx-improve', {
         \'on_ft': [ 'typescript', 'typescript.tsx' ]
         \})
-  call dein#add('chemzqm/tstool.nvim', {
-        \'on_ft': [ 'typescript', 'typescript.tsx' ]
-        \})
+  " call dein#add('chemzqm/tstool.nvim', {
+  "       \'on_ft': [ 'typescript', 'typescript.tsx' ]
+  "       \})
 
   " For elixir
   call dein#add('elixir-editors/vim-elixir', {
         \'on_ft': [ 'elixir', 'eelixir' ]
         \})
   call dein#add('slashmili/alchemist.vim', {
-        \'on_ft': 'elixir'
+        \'on_ft': [ 'elixir', 'eelixir' ]
         \})
 
   " For python
@@ -483,7 +476,6 @@ set incsearch         " instant search
 set smartcase         " ignore case if search pattern is all lowercase, case-sensitive otherwise
 
 set foldenable        " code folding
-set foldmethod=indent " options: manual, indent, expr, syntax, diff, marker
 set foldlevel=99
 
 set smartindent       " Do smart autoindenting when starting a new line
@@ -734,13 +726,36 @@ if dein#tap('nuake')
   nnoremap <leader>T :Nuake<cr>
 endif
 
+if dein#tap('auto-pairs')
+  let g:AutoPairsMultilineClose = 0
+endif
+
 if dein#tap('deoplete.nvim')
+
+  if exists("g:gui_oni")
+  else
+    autocmd VimEnter * call deoplete#enable()
+  endif
+
+  call deoplete#custom#option({
+  \ 'enable_at_startup': 0,
+  \ 'auto_complete_delay': 50,
+  \ 'auto_refresh_delay': 100,
+  \ 'enable_camel_case': 1,
+  \ 'smart_case': v:true,
+  \ 'num_processes': 1,
+  \ 'disable_auto_complete': 0,
+  \ 'enable_refresh_always': 1,
+  \ })
+
   autocmd CompleteDone * pclose
   inoremap <expr><c-l> deoplete#complete_common_string()
 
   inoremap <silent><expr> <c-e> deoplete#mappings#manual_complete()
 
-  " call deoplete#custom#option('ignore_sources', {'typescript': ['member'], 'go': ['member']})
+  " call deoplete#custom#option('ignore_sources', {'typescript': ['member', 'around', 'buffer']})
+
+  let g:deoplete#file#enable_buffer_path = 1
 
   call deoplete#custom#source('alchemist',     'mark', 'A')
   call deoplete#custom#source('typescript',    'mark', 'T')
@@ -776,6 +791,7 @@ if dein#tap('deoplete.nvim')
   call deoplete#custom#source('dictionary',    'rank', 310)
   call deoplete#custom#source('tmux-complete', 'rank', 300)
   call deoplete#custom#source('syntax',        'rank', 200)
+
 endif
 
 if dein#tap('denite.nvim')
@@ -804,11 +820,12 @@ if dein#tap('denite.nvim')
 endif
 
 if dein#tap('nvim-typescript')
+  let g:nvim_typescript#diagnosticsEnable = 0
   let g:nvim_typescript#type_info_on_hold = 0
   let g:nvim_typescript#javascript_support = 1
   let g:nvim_typescript#vue_support = 1
   let g:nvim_typescript#signature_complete = 0
-  " let g:nvim_typescript#max_completion_detail = 30
+  let g:nvim_typescript#max_completion_detail = 33
   " let g:nvim_typescript#server_path = $HOME.'erinn/asdf/shims/tsserver'
 
   nnoremap K :TSDoc<cr>
@@ -1428,8 +1445,3 @@ hi LineNr ctermfg=darkgrey guifg=#777777
 hi MatchParen ctermfg=black
 
 command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 -tu4 /dev/urandom'), '^\_s*\zs.\{-}\ze\_s*$') % line('$')).'G'
-
-if exists("g:gui_oni")
-else
-  autocmd VimEnter * call deoplete#enable()
-endif
