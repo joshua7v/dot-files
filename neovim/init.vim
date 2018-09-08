@@ -22,7 +22,7 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   " Color Schemes
   call dein#add('mhartington/oceanic-next')
-  " call dein#add('arcticicestudio/nord-vim')
+  call dein#add('arcticicestudio/nord-vim')
 
   " Edit
   " For textobj
@@ -71,12 +71,10 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"xmap <silent> iI <Plug>(textobj-indent-same-i)",
         \], "\n")
         \})
-  call dein#add('jceb/vim-textobj-uri')
   call dein#add('Julian/vim-textobj-variable-segment')
   call dein#add('coderifous/textobj-word-column.vim')
 
   call dein#add('justinmk/vim-sneak')
-  call dein#add('bfredl/nvim-miniyank')
   call dein#add('tmhedberg/matchit')
   call dein#add('pbrisbin/vim-mkdir')
   call dein#add('kopischke/vim-stay')
@@ -85,7 +83,6 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('jiangmiao/auto-pairs')
   call dein#add('skywind3000/asyncrun.vim')
   call dein#add('kana/vim-operator-user'         , { 'lazy'     : 1 })
-  call dein#add('AndrewRadev/switch.vim'         , { 'on_cmd'   : 'Switch' })
   call dein#add('reedes/vim-wordy'               , { 'on_cmd'   : 'Wordy' })
   call dein#add('vim-scripts/DrawIt'             , { 'on_cmd'   : 'DrawIt' })
   call dein#add('tyru/open-browser.vim'          , { 'on_map'   : { 'nv': '<Plug>(openbrowser-smart-search)' }})
@@ -146,10 +143,9 @@ if dein#load_state('~/.config/nvim/plugged/')
         \], "\n")
         \})
   call dein#add('vim-airline/vim-airline' , { 'on_cmd': 'AirlineToggle' })
+  " call dein#add('junegunn/goyo.vim'       , { 'on_cmd': 'Goyo' })
+  " call dein#add('junegunn/limelight.vim'  , { 'on_cmd': 'Limelight' })
   call dein#add('Yggdroot/indentLine'     , { 'on_cmd': 'IndentLinesToggle' })
-  call dein#add('junegunn/goyo.vim'       , { 'on_cmd': 'Goyo' })
-  call dein#add('junegunn/limelight.vim'  , { 'on_cmd': 'Limelight' })
-  call dein#add('itchyny/calendar.vim'    , { 'on_cmd': 'Calendar' })
 
   " General
   call dein#add('junegunn/vim-peekaboo')
@@ -170,46 +166,9 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \], "\n")
   "       \})
   call dein#add('lambdalisue/gina.vim', { 'on_cmd': 'Gina' })
-  call dein#add('Shougo/denite.nvim', {
-        \'on_cmd': 'Denite',
-        \'hook_source': join([
-        \"call denite#custom#option('default', 'prompt', 'λ:')",
-        \"call denite#custom#option('default', 'empty', 0)",
-        \"call denite#custom#option('default', 'auto_resize', 1)",
-        \"call denite#custom#filter('matcher_ignore_globs', 'ignore_globs', [ '.git/', '.ropeproject/', '__pycache__/', 'images/', '*.min.*', 'bundle.js', 'img/', 'fonts/'])",
-        \"call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])",
-        \"call denite#custom#var('buffer', 'date_format', '')",
-        \"call denite#custom#var('session', 'path', '~/.vim/session')",
-        \"call denite#custom#var('grep', 'command', ['ag'])",
-        \"call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])",
-        \"call denite#custom#var('grep', 'recursive_opts', [])",
-        \"call denite#custom#var('grep', 'pattern_opt', [])",
-        \"call denite#custom#var('grep', 'separator', ['--'])",
-        \"call denite#custom#var('grep', 'final_opts', [])",
-        \"call denite#custom#map('insert','<c-a>','<denite:move_caret_to_head>','noremap')",
-        \"call denite#custom#map('insert','<down>','<denite:move_to_next_line>','noremap')",
-        \"call denite#custom#map('insert','<up>','<denite:move_to_previous_line>','noremap')",
-        \"call denite#custom#map('insert','<c-t>','<denite:do_action:tabopen>','noremap')",
-        \"call denite#custom#map('insert','<c-d>','<denite:do_action:delete>','noremap')",
-        \"call denite#custom#map('insert','<c-b>','<denite:scroll_page_backwards>','noremap')",
-        \"call denite#custom#map('insert','<c-f>','<denite:scroll_page_forwards>','noremap')",
-        \"call denite#custom#map('insert','<c-p>','<denite:print_messages>','noremap')",
-        \"call denite#custom#map('normal','<esc>','<denite:quit>','noremap')",
-        \"call denite#custom#map('normal','a','<denite:do_action:add>','noremap')",
-        \"call denite#custom#map('normal','d','<denite:do_action:delete>','noremap')",
-        \"call denite#custom#map('normal','r','<denite:do_action:reset>','noremap')",
-        \"call denite#custom#map('normal','e','<denite:do_action:edit>','noremap')",
-        \"call denite#custom#map('normal','h','<denite:do_action:help>','noremap')",
-        \"call denite#custom#map('normal','u','<denite:do_action:update>','noremap')",
-        \"call denite#custom#map('normal','f','<denite:do_action:find>','noremap')",
-        \"call denite#custom#map('insert','<esc>','<denite:enter_mode:normal>','noremap')",
-        \"call denite#custom#map('insert','<c-i>','<denite:do_action:split>','noremap')",
-        \"call denite#custom#map('normal','<c-i>','<denite:do_action:split>','noremap')",
-        \"call denite#custom#map('insert','<c-s>','<denite:do_action:vsplit>','noremap')",
-        \"call denite#custom#map('normal','<c-s>','<denite:do_action:vsplit>','noremap')",
-        \"call denite#custom#map('normal','dw','<denite:delete_word_after_caret>','noremap')",
-        \"hi link deniteMatchedChar Special"
-        \], "\n")
+  call dein#add('Yggdroot/LeaderF', {
+        \'build': './install.sh',
+        \'on_cmd': ['LeaderfFile', 'LeaderfMru', 'LeaderfMruCwd', 'LeaderfBufferAll', 'LeaderfBufTag', 'LeaderfFunctionAll', 'LeaderfLine']
         \})
   call dein#add('w0rp/ale', {
         \'on_cmd': ['ALEEnable', 'ALEToggle'],
@@ -217,33 +176,22 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
   call dein#add('justinmk/vim-dirvish')
   call dein#add('tpope/vim-projectionist')
-  " call dein#add('autozimu/LanguageClient-neovim', {
-  "       \'rev': 'next',
-  "       \'build': 'bash install.sh'
-  "       \})
+  call dein#add('autozimu/LanguageClient-neovim', {
+        \'rev': 'next',
+        \'build': 'bash install.sh'
+        \})
   call dein#add('kien/rainbow_parentheses.vim', {
         \'on_cmd': 'RainbowParenthesesToggle'
         \})
-  call dein#add('Shougo/context_filetype.vim')
-  call dein#add('Shougo/deoplete.nvim', {
-        \'ref': '4.0-serial',
-        \'depends': 'context_filetype.vim',
-        \'hook_add': join([
-        \"set splitbelow",
-        \"set completeopt+=noselect",
-        \], "\n"),
-        \'hook_post_source': join([
-        \"imap <expr><C-u>   pumvisible() ? '<Down>' : '<C-u>'",
-        \"imap <expr><C-i>   pumvisible() ? '<Up>' : '<C-i>'",
-        \], "\n")
-        \})
-  call dein#add('Shougo/neco-syntax')
-  call dein#add('wellle/tmux-complete.vim')
-  call dein#add('yyotti/denite-marks'     , { 'on_source' : 'denite.nvim'   })
-  call dein#add('Shougo/neomru.vim'       , { 'on_source' : 'denite.nvim'   })
-  call dein#add('chemzqm/denite-extra'    , { 'on_source' : 'denite.nvim'   })
-  call dein#add('chemzqm/unite-location'  , { 'on_source' : 'denite.nvim'   })
-  call dein#add('rafi/vim-denite-session' , { 'on_source' : 'denite.nvim'   })
+  call dein#add('ncm2/ncm2')
+  call dein#add('roxma/nvim-yarp')
+  call dein#add('ncm2/ncm2-tmux')
+  call dein#add('ncm2/ncm2-bufword')
+  call dein#add('ncm2/ncm2-path')
+  call dein#add('ncm2/ncm2-cssomni')
+  call dein#add('ncm2/ncm2-html-subscope')
+  call dein#add('ncm2/ncm2-markdown-subscope')
+  call dein#add('filipekiss/ncm2-look.vim')
   call dein#add('mbbill/undotree', {
         \'on_cmd': 'UndotreeToggle',
         \'hook_add': join([
@@ -274,15 +222,14 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
 
   " For c family
-  call dein#add('Shougo/deoplete-clangx', {
+  call dein#add('ncm2/ncm2-pyclang', {
         \'on_ft': [ 'c', 'cpp' ],
-        \'hook_add': 'let g:c_syntax_for_h = 1'
         \})
 
   " For html / css
-  call dein#add('cakebaker/scss-syntax.vim', {
-        \'on_ft': 'scss'
-        \})
+  " call dein#add('cakebaker/scss-syntax.vim', {
+  "       \'on_ft': 'scss'
+  "       \})
   " call dein#add('tpope/vim-haml', {
   "       \'on_ft': [ 'scss', 'sass', 'haml' ]
   "       \})
@@ -325,14 +272,17 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
 
   " For vim
-  call dein#add('Shougo/neco-vim', {
-        \'on_ft': 'vim'
-        \})
+  " call dein#add('ncm2/ncm2-vim', {
+  "       \'on_ft': 'vim'
+  "       \})
 
   " For json
   call dein#add('elzr/vim-json', {
         \'on_ft': 'json',
         \'hook_add': "let g:vim_json_syntax_conceal = 0"
+        \})
+  call dein#add('chemzqm/jsonc.vim', {
+        \'on_ft': 'jsonc',
         \})
 
   " For elm
@@ -349,8 +299,8 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
 
   " For typescript
+  " \'rev': '56ac85149144fcf83450cacf71631b4c3774bd43',
   call dein#add('mhartington/nvim-typescript', {
-        \'rev': '56ac85149144fcf83450cacf71631b4c3774bd43',
         \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ],
         \'build': './install.sh'
         \})
@@ -373,38 +323,21 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
 
   " For python
-  call dein#add('davidhalter/jedi-vim', {
-        \'on_ft': 'python',
-        \'hook_add': join([
-        \"let g:jedi#completions_enabled = 1",
-        \"let g:jedi#auto_vim_configuration = 0",
-        \"let g:jedi#smart_auto_mappings = 0",
-        \"let g:jedi#show_call_signatures = 1",
-        \"let g:jedi#force_py_version = 3"
-        \], "\n"),
-        \'hook_source': join([
-        \"let g:jedi#use_tag_stack = 0",
-        \"let g:jedi#popup_select_first = 0",
-        \"let g:jedi#popup_on_dot = 0",
-        \"let g:jedi#max_doc_height = 100",
-        \"let g:jedi#quickfix_window_height = 10",
-        \"let g:jedi#use_splits_not_buffers = 'right'"
-        \], "\n")
+  call dein#add('ncm2/ncm2-jedi', {
+        \'on_ft': 'python'
         \})
 
   " For go
   call dein#add('fatih/vim-go', {
-        \'on_event': 'InsertEnter',
         \'on_ft': 'go'
         \})
-  call dein#add('zchee/deoplete-go', {
+  call dein#add('ncm2/ncm2-go', {
         \'on_ft': 'go'
         \})
-  " call dein#add('mdempsky/gocode', {
-  call dein#add('nsf/gocode', {
+  call dein#add('mdempsky/gocode', {
         \'rtp': 'nvim',
         \'on_ft': 'go',
-        \'build': '~/.config/nvim/plugged/nsf/gocode/nvim/symlink.sh'
+        \'build': '~/.config/nvim/plugged/repos/github.com/mdempsky/gocode/nvim/symlink.sh'
         \})
 
   " For solidity
@@ -495,7 +428,7 @@ set ttyfast
 set ruler          " show the current line number and column number
 set showcmd        " show the current typing command
 set noshowmode     " Show current mode
-set scrolloff=7    " Set 7 lines to the cursor - when moving vertically using j/k
+set scrolloff=0    " Set 7 lines to the cursor - when moving vertically using j/k
 
 " File encode:encode for varied filetype
 set encoding=utf-8
@@ -506,7 +439,8 @@ set termencoding=utf-8
 set ffs=unix,dos,mac         " Use Unix as the standard file type
 set formatoptions+=m
 set formatoptions+=B         " When joining lines, don't insert a space between two multi-byte characters.
-set completeopt=longest,menu " behaviour of insert mode completion
+set completeopt=longest,menu,noselect " behaviour of insert mode completion
+set completeopt=noinsert,menuone,noselect
 set wildmenu                 " auto complete command
 set wildignore=**.o,*~,.swp,*.bak,*.pyc,*.class " Ignore compiled files
 
@@ -527,13 +461,14 @@ let &colorcolumn="120"
 
 set nowrap " disable wrap
 set number " show line number
-set relativenumber " show relative line number
+" set relativenumber " show relative line number
 set numberwidth=3
-autocmd InsertEnter * :set norelativenumber " no relativenumber in insert mode
-autocmd InsertLeave * :set relativenumber   " show relativenumber when leave insert mode
+" autocmd InsertEnter * :set norelativenumber " no relativenumber in insert mode
+" autocmd InsertLeave * :set relativenumber   " show relativenumber when leave insert mode
 
 set omnifunc=syntaxcomplete#Complete
 set signcolumn=yes
+set splitbelow
 
 let g:terminal_color_0  = '#2e3436'
 let g:terminal_color_1  = '#cc0000'
@@ -677,6 +612,7 @@ autocmd BufNewFile,BufRead .eslintrc     setfiletype json
 autocmd BufNewFile,BufRead .babelrc      setfiletype json
 autocmd BufNewFile,BufRead .prettierrc   setfiletype json
 autocmd BufNewFile,BufRead .jscsrc       setfiletype json
+autocmd BufNewFile,BufRead *.wxml        setfiletype xml
 autocmd BufNewFile,BufRead *.jsx         set ft=javascript.jsx
 
 autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
@@ -701,14 +637,6 @@ command CHANGED Ack! '//\ CHANGED'
 
 nmap zuz <Plug>(FastFoldUpdate)
 
-nnoremap <Leader>mm :BookmarkToggle<cr>
-nnoremap <Leader>i :BookmarkAnnotate<cr>
-nnoremap <Leader>a :BookmarkShowAll<cr>
-nnoremap <Leader>j :BookmarkNext<cr>
-nnoremap <Leader>k :BookmarkPrev<cr>
-nnoremap <Leader>c :BookmarkClear<cr>
-nnoremap <Leader>x :BookmarkClearAll<cr>
-
 nnoremap <leader><space> :StripWhitespace<cr>
 
 nmap <Leader>a= :Tabularize /=<CR>
@@ -730,113 +658,123 @@ if dein#tap('auto-pairs')
   let g:AutoPairsMultilineClose = 0
 endif
 
-if dein#tap('deoplete.nvim')
+if dein#tap('ncm2')
+  autocmd BufEnter * call ncm2#enable_for_buffer()
 
-  if exists("g:gui_oni")
-  else
-    autocmd VimEnter * call deoplete#enable()
-  endif
+  let g:ncm2#complete_length = 1
+  " let g:ncm2_look_enabled = 1
+  let g:ncm2#popup_limit = 27
+  let g:ncm2#matcher = 'substrfuzzy'
 
-  call deoplete#custom#option({
-  \ 'enable_at_startup': 0,
-  \ 'auto_complete_delay': 50,
-  \ 'auto_refresh_delay': 100,
-  \ 'enable_camel_case': 1,
-  \ 'smart_case': v:true,
-  \ 'num_processes': 1,
-  \ 'disable_auto_complete': 0,
-  \ 'enable_refresh_always': 1,
-  \ })
-
-  autocmd CompleteDone * pclose
-  inoremap <expr><c-l> deoplete#complete_common_string()
-
-  inoremap <silent><expr> <c-e> deoplete#mappings#manual_complete()
-
-  " call deoplete#custom#option('ignore_sources', {'typescript': ['member', 'around', 'buffer']})
-
-  let g:deoplete#file#enable_buffer_path = 1
-
-  call deoplete#custom#source('alchemist',     'mark', 'A')
-  call deoplete#custom#source('typescript',    'mark', 'T')
-  call deoplete#custom#source('omni',          'mark', '⌾')
-  call deoplete#custom#source('flow',          'mark', '⌁')
-  call deoplete#custom#source('TernJS',        'mark', '⌁')
-  call deoplete#custom#source('go',            'mark', '⌁')
-  call deoplete#custom#source('jedi',          'mark', '⌁')
-  call deoplete#custom#source('vim',           'mark', '⌁')
-  call deoplete#custom#source('neosnippet',    'mark', '⌘')
-  call deoplete#custom#source('tag',           'mark', '⌦')
-  call deoplete#custom#source('around',        'mark', '↻')
-  call deoplete#custom#source('buffer',        'mark', 'ℬ')
-  call deoplete#custom#source('tmux-complete', 'mark', '⊶')
-  call deoplete#custom#source('syntax',        'mark', '♯')
-  call deoplete#custom#source('member',        'mark', 'M')
-
-  call deoplete#custom#source('alchemist',     'rank', 670)
-  call deoplete#custom#source('typescript',    'rank', 660)
-  call deoplete#custom#source('go',            'rank', 650)
-  call deoplete#custom#source('vim',           'rank', 640)
-  call deoplete#custom#source('flow',          'rank', 630)
-  call deoplete#custom#source('TernJS',        'rank', 620)
-  call deoplete#custom#source('jedi',          'rank', 610)
-  call deoplete#custom#source('omni',          'rank', 600)
-  call deoplete#custom#source('neosnippet',    'rank', 510)
-  call deoplete#custom#source('member',        'rank', 500)
-  call deoplete#custom#source('file_include',  'rank', 420)
-  call deoplete#custom#source('file',          'rank', 410)
-  call deoplete#custom#source('tag',           'rank', 400)
-  call deoplete#custom#source('around',        'rank', 330)
-  call deoplete#custom#source('buffer',        'rank', 320)
-  call deoplete#custom#source('dictionary',    'rank', 310)
-  call deoplete#custom#source('tmux-complete', 'rank', 300)
-  call deoplete#custom#source('syntax',        'rank', 200)
-
+  inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+  " au User Ncm2Plugin call ncm2#register_source({
+  "       \ 'name' : 'omni',
+  "       \ 'priority': 9,
+  "       \ 'subscope_enable': 1,
+  "       \ 'scope': [],
+  "       \ 'mark': 'o',
+  "       \ 'word_pattern': '[\w\-]+',
+  "       \ 'complete_pattern': ':\s*',
+  "       \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+  "       \ })
 endif
 
-if dein#tap('denite.nvim')
-  nnoremap <silent> <space>p  :<C-u>Denite -resume<CR>
-  nnoremap <silent> <space>j  :call execute('Denite -resume -select=+'.v:count1.' -immediately')<CR>
-  nnoremap <silent> <space>k  :call execute('Denite -resume -select=-'.v:count1.' -immediately')<CR>
-  nnoremap <c-p> :Denite -highlight-matched-char=None file_rec<cr>
-  nnoremap <silent> <space>w  :<C-u>DeniteCursorWord -mode=normal -auto-resize line<CR>
-  nnoremap <silent> <space>l  :<C-u>Denite -mode=normal location_list<CR>
-  nnoremap <silent> <space>g  :<C-u>Denite grep<cr>
-  nnoremap <silent> <space>u  :<C-u>Denite -mode=normal -highlight-matched-char=None file_mru<cr>
-  nnoremap <silent> <space>d  :<C-u>Denite -mode=normal -highlight-matched-char=None directory_mru<cr>
-  nnoremap <silent> <space>n  :<C-u>Denite -mode=normal -ignorecase=false -input='TODO\\|FIXME\\|CHANGED\\|BUG\\|HACK\\|FEATURE' grep<cr>
-  " nnoremap <silent> <space>t  :<C-u>Denite project<cr>
-  nnoremap <silent> <space>s  :<C-u>Denite session<cr>
-  " nnoremap <silent> <space>m  :<C-u>Denite -mode=normal menu<cr>
-  nnoremap <silent> <space>a  :<C-u>Denite node<CR>
-  nnoremap <silent> <space>e  :<C-u>Denite buffer<cr>
-  nnoremap <silent> <space>h  :<C-u>Denite history:all<cr>
-  nnoremap <silent> <space>q  :<C-u>Denite commands<cr>
-  nnoremap <silent> <space>f  :<C-u>Denite file_rec<cr>
-  nnoremap <silent> <space>o  :<C-u>Denite -highlight-matched-char=None outline<cr>
-  nnoremap <silent> <space>y  :<C-u>Denite -mode=normal -highlight-matched-char=None miniyank<cr>
-  nnoremap <silent> <space>m  :<C-u>Denite -mode=normal -highlight-matched-char=None marks<cr>
-  nnoremap <silent> <space>/  :Denite grep:. -mode=normal -highlight-matched-char=None<cr>
-endif
+if dein#tap('LeaderF')
+  hi Lf_hl_match ctermfg=145 guifg=#ff5555
+  hi Cursor guifg=white guibg=#ff5555
 
-if dein#tap('nvim-typescript')
-  let g:nvim_typescript#diagnosticsEnable = 0
-  let g:nvim_typescript#type_info_on_hold = 0
-  let g:nvim_typescript#javascript_support = 1
-  let g:nvim_typescript#vue_support = 1
-  let g:nvim_typescript#signature_complete = 0
-  let g:nvim_typescript#max_completion_detail = 33
-  " let g:nvim_typescript#server_path = $HOME.'erinn/asdf/shims/tsserver'
+  " let g:Lf_ShortcutF = '<c-p>'
+  nnoremap <c-p> :LeaderfFile<cr>
+  nnoremap <space>u :LeaderfMruCwd<cr>
+  nnoremap <space>e :LeaderfBufferAll<cr>
+  nnoremap <space>o :LeaderfBufTag<cr>
+  nnoremap <space>f :LeaderfFunctionAll<cr>
+  nnoremap <space>l :LeaderfLine<cr>
 
-  nnoremap K :TSDoc<cr>
-  nnoremap <c-]> :TSDef<cr>
-  nnoremap tdp :TSDefPreview<cr>
-  nnoremap ti :TSImport<cr>
-  nnoremap tec :TSEditConfig<cr>
-  nnoremap trs :TSRefs<cr>
-  nnoremap tr :TSRename<cr>
-  nnoremap ts :TSSortImports<cr>
-  nnoremap <silent> <space>to  :<C-u>Denite -highlight-mode-insert=Search TSDocumentSymbol<cr>
+  let g:Lf_DefaultMode = 'FullPath'
+  let g:Lf_StlSeparator = { 'left': '', 'right': '' }
+  let g:Lf_CursorBlink = 0
+  let g:Lf_StlColorscheme = ''
+  let g:Lf_WildIgnore = {
+  \ 'dir': ['.svn','.git','.hg'],
+  \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
+  \}
+  let g:Lf_MruFileExclude = ['*.so']
+  let g:Lf_CommandMap = { '<tab>': ['<c-[>'], '<F5>': ['<c-r>'] }
+  let g:Lf_StlPalette = {
+  \   'stlName': {
+  \       'gui': 'bold',
+  \       'font': 'NONE',
+  \       'guifg': '#ff5555',
+  \       'guibg': '#1b2b34',
+  \       'cterm': 'bold',
+  \       'ctermfg': '235',
+  \       'ctermbg': '145'
+  \   },
+  \   'stlCategory': {
+  \       'gui': 'bold',
+  \       'font': 'NONE',
+  \       'guifg': '#ff5555',
+  \       'guibg': '#1b2b34',
+  \       'cterm': 'bold',
+  \       'ctermfg': '235',
+  \       'ctermbg': '145'
+  \   },
+  \   'stlNameOnlyMode': {
+  \       'gui': 'bold',
+  \       'font': 'NONE',
+  \       'guifg': '#ff5555',
+  \       'guibg': '#1b2b34',
+  \       'cterm': 'bold',
+  \       'ctermfg': '235',
+  \       'ctermbg': '145'
+  \   },
+  \   'stlFullPathMode': {
+  \       'gui': 'bold',
+  \       'font': 'NONE',
+  \       'guifg': '#ff5555',
+  \       'guibg': '#1b2b34',
+  \       'cterm': 'bold',
+  \       'ctermfg': '235',
+  \       'ctermbg': '145'
+  \   },
+  \   'stlFuzzyMode': {
+  \       'gui': 'bold',
+  \       'font': 'NONE',
+  \       'guifg': '#ff5555',
+  \       'guibg': '#1b2b34',
+  \       'cterm': 'bold',
+  \       'ctermfg': '235',
+  \       'ctermbg': '145'
+  \   },
+  \   'stlRegexMode': {
+  \       'gui': 'bold',
+  \       'font': 'NONE',
+  \       'guifg': '#ff5555',
+  \       'guibg': '#1b2b34',
+  \       'cterm': 'bold',
+  \       'ctermfg': '235',
+  \       'ctermbg': '145'
+  \   },
+  \   'stlTotal': {
+  \       'gui': 'bold',
+  \       'font': 'NONE',
+  \       'guifg': '#ff5555',
+  \       'guibg': '#1b2b34',
+  \       'cterm': 'bold',
+  \       'ctermfg': '235',
+  \       'ctermbg': '145'
+  \   },
+  \   'stlLineInfo': {
+  \       'gui': 'bold',
+  \       'font': 'NONE',
+  \       'guifg': '#ff5555',
+  \       'guibg': '#1b2b34',
+  \       'cterm': 'bold',
+  \       'ctermfg': '235',
+  \       'ctermbg': '145'
+  \   },
+  \ }
 endif
 
 if dein#tap('Colorizer')
@@ -887,19 +825,37 @@ endif
 
 " Plugins
 
-" if dein#tap('LanguageClient-neovim')
-"   let g:LanguageClient_autoStart = 1
-"   let g:LanguageClient_serverCommands = {
-"     \ 'javascript': ['javascript-typescript-stdio'],
-"     \ 'javascript.jsx': ['javascript-typescript-stdio'],
-"     \ 'typescript': ['javascript-typescript-stdio'],
-"     \ 'typescript.tsx': ['javascript-typescript-stdio'],
-"     \ }
-"
-"   nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-"   nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-"   nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-" endif
+if dein#tap('LanguageClient-neovim')
+  let g:LanguageClient_autoStart = 1
+  let g:LanguageClient_serverCommands = {
+    \ 'elixir': ['~/elixir-ls/language_server.sh'],
+    \ 'wxml': ['wxml-langserver']
+    \ }
+
+  nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+  nnoremap <silent> <c-]> :call LanguageClient_textDocument_definition()<CR>
+  nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+endif
+
+if dein#tap('nvim-typescript')
+  let g:nvim_typescript#diagnosticsEnable = 0
+  let g:nvim_typescript#type_info_on_hold = 0
+  let g:nvim_typescript#javascript_support = 1
+  let g:nvim_typescript#vue_support = 1
+  let g:nvim_typescript#signature_complete = 0
+  let g:nvim_typescript#max_completion_detail = 33
+  " let g:nvim_typescript#server_path = $HOME.'erinn/asdf/shims/tsserver'
+
+  nnoremap K :TSDoc<cr>
+  nnoremap <c-]> :TSDef<cr>
+  nnoremap tdp :TSDefPreview<cr>
+  nnoremap ti :TSImport<cr>
+  nnoremap tec :TSEditConfig<cr>
+  nnoremap trs :TSRefs<cr>
+  nnoremap tr :TSRename<cr>
+  nnoremap ts :TSSortImports<cr>
+endif
+
 
 if dein#tap('asyncrun.vim')
   noremap <leader>q :call asyncrun#quickfix_toggle(8)<cr>
@@ -1084,6 +1040,14 @@ if dein#tap('vim-better-whitespace')
 endif
 
 if dein#tap('vim-bookmarks')
+  nnoremap <Leader>mm :BookmarkToggle<cr>
+  nnoremap <Leader>mi :BookmarkAnnotate<cr>
+  nnoremap <Leader>ma :BookmarkShowAll<cr>
+  nnoremap <Leader>j :BookmarkNext<cr>
+  nnoremap <Leader>k :BookmarkPrev<cr>
+  nnoremap <Leader>mc :BookmarkClear<cr>
+  nnoremap <Leader>mx :BookmarkClearAll<cr>
+
   let g:bookmark_sign = '♥'
   let g:bookmark_highlight_lines = 1
   let g:bookmark_no_default_key_mappings = 1
@@ -1151,6 +1115,11 @@ if dein#tap('neoformat')
   \ 'args'  : [],
   \ 'stdin' : 1
   \ }
+  let g:neoformat_python_yapf = {
+  \ 'exe'   : 'yapf',
+  \ 'args'  : [],
+  \ 'stdin' : 1
+  \ }
   let g:neoformat_enabled_javascript = ['prettier']
   let g:neoformat_enabled_typescript = ['prettier']
   let g:neoformat_enabled_scss = ['prettier']
@@ -1162,6 +1131,7 @@ if dein#tap('neoformat')
   let g:neoformat_enabled_elixir = ['mix']
   let g:neoformat_enabled_elm = ['format']
   let g:neoformat_enabled_go = ['fmt']
+  let g:neoformat_enabled_go = ['yapf']
   nnoremap <silent> <space><space> :Neoformat<cr>
   vnoremap <silent> <space><space> :Neoformat<cr>
 endif
@@ -1200,15 +1170,6 @@ endif
 if dein#tap('vim-expand-region')
   xmap v <Plug>(expand_region_expand)
   xmap V <Plug>(expand_region_shrink)
-endif
-
-if dein#tap('context_filetype.vim')
-  let g:context_filetype#same_filetypes = {
-    \ 'typescript': 'typescript,typescript.tsx',
-    \ 'typescript.tsx': 'typescript,typescript.tsx',
-    \ 'scss': '_',
-    \ 'css': '_',
-    \ }
 endif
 
 if dein#tap('vim-airline')
