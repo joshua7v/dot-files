@@ -90,6 +90,8 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('tpope/vim-unimpaired'           , { 'on_event' : 'VimEnter' })
   call dein#add('tpope/vim-eunuch'               , { 'on_event' : 'VimEnter' })
   call dein#add('ddrscott/vim-side-search'       , { 'on_cmd'   : 'SideSearch' })
+  call dein#add('wsdjeg/FlyGrep.vim'             , { 'on_cmd'   : 'FlyGrep' })
+  " call dein#add('eugen0329/vim-esearch')
   call dein#add('brooth/far.vim'                 , { 'on_cmd'   : ['Far', 'Farp'] })
   call dein#add('editorconfig/editorconfig-vim'  , { 'on_event' : 'VimEnter' })
   " call dein#add('tomtom/tcomment_vim'            , { 'on_cmd'   : ['TComment', 'TCommentAs'] })
@@ -117,19 +119,8 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'depends': 'vim-operator-user',
         \'on_map': { 'nx': '<Plug>' }
         \})
-  call dein#add('Shougo/neosnippet-snippets')
+  call dein#add('SirVer/ultisnips')
   call dein#add('honza/vim-snippets')
-  call dein#add('Shougo/neosnippet', {
-        \'hook_add': join([
-        \"let g:neosnippet#enable_snipmate_compatibility = 0",
-        \"let g:neosnippet#enable_completed_snippet = 1",
-        \"let g:neosnippet#expand_word_boundary = 1",
-        \"let g:neosnippet#snippets_directory = [",
-        \"\\ $HOME.'/.config/nvim/snippets/',",
-        \"\\ $HOME.'/.config/nvim/plugged/repos/github.com/honza/vim-snippets/snippets/',",
-        \"\\ ]",
-        \], "\n")
-        \})
 
   " UI
   call dein#add('kshenoy/vim-signature')
@@ -185,13 +176,28 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
   call dein#add('ncm2/ncm2')
   call dein#add('roxma/nvim-yarp')
+  call dein#add('ncm2/ncm2-github')
+  call dein#add('ncm2/ncm2-markdown-subscope')
+  call dein#add('ncm2/ncm2-html-subscope')
   call dein#add('ncm2/ncm2-tmux')
   call dein#add('ncm2/ncm2-bufword')
   call dein#add('ncm2/ncm2-path')
-  call dein#add('ncm2/ncm2-cssomni')
   call dein#add('ncm2/ncm2-html-subscope')
   call dein#add('ncm2/ncm2-markdown-subscope')
   call dein#add('filipekiss/ncm2-look.vim')
+  call dein#add('ncm2/ncm2-ultisnips')
+  call dein#add('ncm2/ncm2-pyclang', {
+        \'on_ft': [ 'c', 'cpp' ],
+        \})
+  call dein#add('ncm2/ncm2-jedi', {
+        \'on_ft': 'python'
+        \})
+  call dein#add('ncm2/ncm2-go', {
+        \'on_ft': 'go'
+        \})
+  call dein#add('ncm2/ncm2-vim', {
+        \'on_ft': 'vim'
+        \})
   call dein#add('mbbill/undotree', {
         \'on_cmd': 'UndotreeToggle',
         \'hook_add': join([
@@ -222,9 +228,6 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
 
   " For c family
-  call dein#add('ncm2/ncm2-pyclang', {
-        \'on_ft': [ 'c', 'cpp' ],
-        \})
 
   " For html / css
   " call dein#add('cakebaker/scss-syntax.vim', {
@@ -272,9 +275,6 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
 
   " For vim
-  " call dein#add('ncm2/ncm2-vim', {
-  "       \'on_ft': 'vim'
-  "       \})
 
   " For json
   call dein#add('elzr/vim-json', {
@@ -299,7 +299,6 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
 
   " For typescript
-  " \'rev': '56ac85149144fcf83450cacf71631b4c3774bd43',
   call dein#add('mhartington/nvim-typescript', {
         \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ],
         \'build': './install.sh'
@@ -323,15 +322,9 @@ if dein#load_state('~/.config/nvim/plugged/')
         \})
 
   " For python
-  call dein#add('ncm2/ncm2-jedi', {
-        \'on_ft': 'python'
-        \})
 
   " For go
   call dein#add('fatih/vim-go', {
-        \'on_ft': 'go'
-        \})
-  call dein#add('ncm2/ncm2-go', {
         \'on_ft': 'go'
         \})
   call dein#add('mdempsky/gocode', {
@@ -663,21 +656,48 @@ if dein#tap('ncm2')
 
   let g:ncm2#complete_length = 1
   " let g:ncm2_look_enabled = 1
-  let g:ncm2#popup_limit = 27
+  let g:ncm2#popup_limit = 7
   let g:ncm2#matcher = 'substrfuzzy'
 
   inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+
+  " inoremap <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+
   " au User Ncm2Plugin call ncm2#register_source({
-  "       \ 'name' : 'omni',
+  "       \ 'name' : 'css',
   "       \ 'priority': 9,
   "       \ 'subscope_enable': 1,
-  "       \ 'scope': [],
-  "       \ 'mark': 'o',
+  "       \ 'scope': ['css', 'scss'],
+  "       \ 'mark': 'css',
   "       \ 'word_pattern': '[\w\-]+',
   "       \ 'complete_pattern': ':\s*',
-  "       \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+  "       \ 'on_complete': ['ncm2#on_complete#omni',
+  "       \               'csscomplete#CompleteCSS'],
   "       \ })
-endif
+
+  " au User Ncm2Plugin call ncm2#register_source({
+  "       \ 'name' : 'elm',
+  "       \ 'priority': 9,
+  "       \ 'subscope_enable': 1,
+  "       \ 'scope': ['elm'],
+  "       \ 'mark': 'elm',
+  "       \ 'word_pattern': '[\w\-]+',
+  "       \ 'complete_pattern': ':\s*',
+  "       \ 'on_complete': ['ncm2#on_complete#omni',
+  "       \               'elm#Complete'],
+  "       \ })
+
+  endif
+
+" if dein#tap('vim-esearch')
+"   let g:esearch = {
+"   \ 'adapter':    'ag',
+"   \ 'backend':    'nvim',
+"   \ 'out':        'qflist',
+"   \ 'batch_size': 1000,
+"   \ 'use':        ['visual', 'hlsearch', 'last'],
+"   \}
+" endif
 
 if dein#tap('LeaderF')
   hi Lf_hl_match ctermfg=145 guifg=#ff5555
@@ -828,6 +848,8 @@ endif
 if dein#tap('LanguageClient-neovim')
   let g:LanguageClient_autoStart = 1
   let g:LanguageClient_serverCommands = {
+    \ 'css': ['css-languageserver', '--stdio'],
+    \ 'scss': ['css-languageserver', '--stdio'],
     \ 'elixir': ['~/elixir-ls/language_server.sh'],
     \ 'wxml': ['wxml-langserver']
     \ }
@@ -838,7 +860,7 @@ if dein#tap('LanguageClient-neovim')
 endif
 
 if dein#tap('nvim-typescript')
-  let g:nvim_typescript#diagnosticsEnable = 0
+  let g:nvim_typescript#diagnostics_enable = 0
   let g:nvim_typescript#type_info_on_hold = 0
   let g:nvim_typescript#javascript_support = 1
   let g:nvim_typescript#vue_support = 1
@@ -846,8 +868,8 @@ if dein#tap('nvim-typescript')
   let g:nvim_typescript#max_completion_detail = 33
   " let g:nvim_typescript#server_path = $HOME.'erinn/asdf/shims/tsserver'
 
-  nnoremap K :TSDoc<cr>
-  nnoremap <c-]> :TSDef<cr>
+  nnoremap td :TSDoc<cr>
+  nnoremap tdf :TSDef<cr>
   nnoremap tdp :TSDefPreview<cr>
   nnoremap ti :TSImport<cr>
   nnoremap tec :TSEditConfig<cr>
@@ -1136,12 +1158,24 @@ if dein#tap('neoformat')
   vnoremap <silent> <space><space> :Neoformat<cr>
 endif
 
-if dein#tap('neosnippet')
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  smap <C-k> <Plug>(neosnippet_expand_or_jump)
-  xmap <C-k> <Plug>(neosnippet_expand_target)
-  imap <C-k> <Plug>(neosnippet_expand_or_jump)
-  smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+if dein#tap('ultisnips')
+  let g:UltiSnipsSnippetDirectories  = [$HOME.'/.snippets']
+  let g:UltiSnipsExpandTrigger       = "<Plug>(ultisnips_expand_or_jump)"
+  let g:UltiSnipsJumpForwardTrigger  = "<Plug>(ultisnips_expand_or_jump)"
+  let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
+
+  function! UltiSnipsExpandOrJumpOrTab()
+    call UltiSnips#ExpandSnippetOrJump()
+    if g:ulti_expand_or_jump_res > 0
+      return ""
+    else
+      return "\<Tab>"
+    endif
+  endfunction
+
+  inoremap <silent> <expr> <Tab> ncm2_ultisnips#expand_or("\<Plug>(ultisnips_try_expand)")
+  inoremap <silent> <Plug>(ultisnips_try_expand) <C-R>=UltiSnipsExpandOrJumpOrTab()<CR>
+  snoremap <silent> <Tab> <Esc>:call UltiSnips#ExpandSnippetOrJump()<cr>
 endif
 
 if dein#tap('sideways.vim')
@@ -1406,3 +1440,7 @@ hi LineNr ctermfg=darkgrey guifg=#777777
 hi MatchParen ctermfg=black
 
 command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 -tu4 /dev/urandom'), '^\_s*\zs.\{-}\ze\_s*$') % line('$')).'G'
+
+if exists("g:gui_oni")
+else
+endif
