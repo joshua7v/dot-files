@@ -850,7 +850,7 @@ if dein#tap('LanguageClient-neovim')
   let g:LanguageClient_serverCommands = {
     \ 'css': ['css-languageserver', '--stdio'],
     \ 'scss': ['css-languageserver', '--stdio'],
-    \ 'elixir': ['~/elixir-ls/language_server.sh'],
+    \ 'elixir': ['~/.elixir-ls/language_server.sh'],
     \ 'wxml': ['wxml-langserver']
     \ }
 
