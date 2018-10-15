@@ -109,7 +109,6 @@ noremap k gk
 nnoremap <C-e> 2<C-e>
 nnoremap <C-y> 2<C-y>
 
-nnoremap <silent><esc> :noh<return><esc>
 nnoremap <silent><cr> :noh<cr>
 
 noremap <F1> <esc>
