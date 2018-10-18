@@ -1,23 +1,22 @@
-export LANG=en_US.utf-8
-export LC_ALL=en_US.utf-8
-export TZ=Asia/Shanghai
-export EDITOR=vim
-
-alias .="cd ~"
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
-alias rmao="find . -iname a.out -exec rm {} \;"
-
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=~/.oh-my-zsh
-export CDPATH=.:~:/etc
-export GOPATH=~/.go
-export PATH=$GOPATH/bin:/usr/local/go/bin:$PATH
+alias px="export http_proxy=http://127.0.0.1:8118;export https_proxy=http://127.0.0.1:8118;"
+alias pc="unset http_proxy;unset https_proxy;"
+alias gpo="git pull origin"
+alias gpod="git pull origin develop"
+alias gs='git status '
+alias gd='git diff'
+
+export ZSH=/Users/joshua/.oh-my-zsh
+export GOPATH=~/golang
+export PATH=$PATH:~/golang/bin
+
+export LANG=en_US.utf-8
+export LC_ALL=en_US.utf-8
+export TZ=Asia/Shanghai
+export EDITOR=vim
 
 export TIMER_FORMAT='%d'
 export TIMER_PRECISION=2
@@ -99,7 +98,7 @@ ZSH_THEME="norm"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z zsh-autosuggestions)
+plugins=(git z d wd web-search catimg encode64 urltools zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -131,3 +130,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+source ~/erinn/asdf/asdf.sh
+source ~/erinn/asdf/completions/asdf.bash
