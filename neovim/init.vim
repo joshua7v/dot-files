@@ -27,16 +27,6 @@ if dein#load_state('~/.config/nvim/plugged/')
   " Edit
   " For textobj
   call dein#add('kana/vim-textobj-user')
-  call dein#add('kana/vim-textobj-syntax', {
-        \'on_map': { 'ox': '<Plug>' },
-        \'depends': 'vim-textobj-user',
-        \'hook_add': join([
-        \"omap <silent> ay <Plug>(textobj-syntax-a)",
-        \"xmap <silent> ay <Plug>(textobj-syntax-a)",
-        \"omap <silent> iy <Plug>(textobj-syntax-i)",
-        \"xmap <silent> iy <Plug>(textobj-syntax-i)",
-        \], "\n")
-        \})
   call dein#add('kana/vim-textobj-datetime', {
         \'on_map': { 'ox': '<Plug>' },
         \'depends': 'vim-textobj-user',
@@ -336,9 +326,6 @@ if dein#load_state('~/.config/nvim/plugged/')
   " For solidity
   call dein#add('tomlion/vim-solidity', { 'on_ft': 'solidity' })
 
-  " For api
-  call dein#add('kylef/apiblueprint.vim', { 'on_ft': 'apiblueprint' })
-
   " For docker
   call dein#add('ekalinin/Dockerfile.vim', { 'on_ft': ['Dockerfile', 'docker-compose'] })
 
@@ -351,8 +338,11 @@ if dein#load_state('~/.config/nvim/plugged/')
   " For jenkins
   call dein#add('martinda/Jenkinsfile-vim-syntax', { 'on_ft': ['Jenkinsfile'] })
 
+  " For api
+  " call dein#add('kylef/apiblueprint.vim', { 'on_ft': 'apiblueprint' })
+
   " For dot
-  call dein#add('wannesm/wmgraphviz.vim', { 'on_ft': 'dot' })
+  " call dein#add('wannesm/wmgraphviz.vim', { 'on_ft': 'dot' })
 
   call dein#end()
   call dein#save_state()
@@ -1357,8 +1347,8 @@ noremap k gk
 " noremap <C-l> <C-W>l
 
 " Speed up scrolling of the viewport slightly
-nnoremap <C-e> 2<C-e>
-nnoremap <C-y> 2<C-y>
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
 
 " No Highlight
 nnoremap <silent><esc> :noh<return><esc>
