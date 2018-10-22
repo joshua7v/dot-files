@@ -9,9 +9,9 @@ alias gpod="git pull origin develop"
 alias gs='git status '
 alias gd='git diff'
 
-export ZSH=/Users/joshua/.oh-my-zsh
-export GOPATH=~/golang
-export PATH=$PATH:~/golang/bin
+export ZSH=~/.oh-my-zsh
+export GOPATH=~/.golang
+export PATH=$PATH:~/.golang/bin
 
 export LANG=en_US.utf-8
 export LC_ALL=en_US.utf-8
@@ -130,6 +130,3 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-source ~/erinn/asdf/asdf.sh
-source ~/erinn/asdf/completions/asdf.bash
