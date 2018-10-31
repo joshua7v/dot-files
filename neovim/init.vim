@@ -22,21 +22,12 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   " Color Schemes
   call dein#add('mhartington/oceanic-next')
-  call dein#add('arcticicestudio/nord-vim')
-
+  " call dein#add('arcticicestudio/nord-vim')
+  "
   " Edit
   " For textobj
+  call dein#add('mg979/vim-visual-multi')
   call dein#add('kana/vim-textobj-user')
-  call dein#add('kana/vim-textobj-datetime', {
-        \'on_map': { 'ox': '<Plug>' },
-        \'depends': 'vim-textobj-user',
-        \'hook_add': join([
-        \"omap <silent> ada <Plug>(textobj-datetime-auto)",
-        \"xmap <silent> ada <Plug>(textobj-datetime-auto)",
-        \"omap <silent> ida <Plug>(textobj-datetime-auto)",
-        \"xmap <silent> ida <Plug>(textobj-datetime-auto)",
-        \], "\n")
-        \})
   call dein#add('kana/vim-textobj-entire', {
         \'on_map': { 'ox': '<Plug>' },
         \'depends': 'vim-textobj-user',
@@ -73,27 +64,25 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('jiangmiao/auto-pairs')
   call dein#add('skywind3000/asyncrun.vim')
   call dein#add('kana/vim-operator-user'         , { 'lazy'     : 1 })
-  call dein#add('reedes/vim-wordy'               , { 'on_cmd'   : 'Wordy' })
+  " call dein#add('reedes/vim-wordy'               , { 'on_cmd'   : 'Wordy' })
   call dein#add('vim-scripts/DrawIt'             , { 'on_cmd'   : 'DrawIt' })
   call dein#add('tyru/open-browser.vim'          , { 'on_map'   : { 'nv': '<Plug>(openbrowser-smart-search)' }})
   call dein#add('moll/vim-bbye'                  , { 'on_cmd'   : 'Bdelete', })
-  call dein#add('tpope/vim-unimpaired'           , { 'on_event' : 'VimEnter' })
-  call dein#add('tpope/vim-eunuch'               , { 'on_event' : 'VimEnter' })
+  call dein#add('tpope/vim-unimpaired')
+  call dein#add('tpope/vim-eunuch')
   call dein#add('ddrscott/vim-side-search'       , { 'on_cmd'   : 'SideSearch' })
   call dein#add('wsdjeg/FlyGrep.vim'             , { 'on_cmd'   : 'FlyGrep' })
   " call dein#add('eugen0329/vim-esearch')
   call dein#add('brooth/far.vim'                 , { 'on_cmd'   : ['Far', 'Farp'] })
-  call dein#add('editorconfig/editorconfig-vim'  , { 'on_event' : 'VimEnter' })
-  " call dein#add('tomtom/tcomment_vim'            , { 'on_cmd'   : ['TComment', 'TCommentAs'] })
-  call dein#add('tpope/vim-commentary'           , { 'on_event' : 'VimEnter' })
-  call dein#add('suy/vim-context-commentstring'  , { 'on_event' : 'VimEnter' })
-  call dein#add('metakirby5/codi.vim'            , { 'on_cmd'   : 'Codi' })
+  call dein#add('editorconfig/editorconfig-vim')
+  call dein#add('tomtom/tcomment_vim'            , { 'on_cmd'   : ['TComment', 'TCommentAs'] })
+  " call dein#add('metakirby5/codi.vim'            , { 'on_cmd'   : 'Codi' })
   call dein#add('mileszs/ack.vim'                , { 'on_cmd'   : 'Ack' })
-  call dein#add('Konfekt/FastFold'               , { 'on_event' : 'VimEnter' })
+  call dein#add('Konfekt/FastFold')
   " call dein#add('easymotion/vim-easymotion'      , { 'on_map'   : { 'n': '<Plug>' }})
-  call dein#add('tpope/vim-surround'             , { 'on_event' : 'VimEnter' })
+  call dein#add('tpope/vim-surround')
   " call dein#add('tpope/tpope-vim-abolish'        , { 'on_event' : 'VimEnter' })
-  call dein#add('tpope/vim-repeat'               , { 'on_event' : 'VimEnter' })
+  call dein#add('tpope/vim-repeat')
   call dein#add('ntpeters/vim-better-whitespace' , { 'on_event' : 'InsertEnter' })
   call dein#add('MattesGroeger/vim-bookmarks'    , { 'on_cmd'   : 'BookmarkToggle' })
   call dein#add('godlygeek/tabular'              , { 'on_cmd'   : 'Tabularize' })
@@ -103,7 +92,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('tpope/vim-obsession'            , { 'on_cmd'   : 'Obsession' })
   call dein#add('AndrewRadev/sideways.vim'       , { 'on_map'   : { 'ox': '<Plug>Sideways' }})
   call dein#add('AndrewRadev/splitjoin.vim'      , { 'on_map'   : { 'n': '<Plug>Splitjoin' }})
-  call dein#add('haya14busa/vim-edgemotion'      , { 'on_map'   : { 'nv': '<Plug>' }})
+  " call dein#add('haya14busa/vim-edgemotion'      , { 'on_map'   : { 'nv': '<Plug>' }})
   call dein#add('terryma/vim-expand-region'      , { 'on_map'   : { 'x': '<Plug>' }})
   call dein#add('haya14busa/vim-operator-flashy', {
         \'depends': 'vim-operator-user',
@@ -115,9 +104,8 @@ if dein#load_state('~/.config/nvim/plugged/')
   " UI
   call dein#add('kshenoy/vim-signature')
   call dein#add('guns/xterm-color-table.vim', { 'on_cmd': 'XtermColorTable' })
-  call dein#add('powerman/vim-plugin-AnsiEsc', { 'on_event': 'VimEnter' })
+  call dein#add('powerman/vim-plugin-AnsiEsc')
   call dein#add('inside/vim-search-pulse', {
-        \'on_event': 'VimEnter',
         \'hook_post_source': join([
         \"let g:vim_search_pulse_mode = 'pattern'",
         \"let g:vim_search_pulse_duration = 400"
@@ -161,9 +149,9 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'rev': 'next',
         \'build': 'bash install.sh'
         \})
-  call dein#add('kien/rainbow_parentheses.vim', {
-        \'on_cmd': 'RainbowParenthesesToggle'
-        \})
+  " call dein#add('kien/rainbow_parentheses.vim', {
+  "       \'on_cmd': 'RainbowParenthesesToggle'
+  "       \})
   call dein#add('ncm2/ncm2')
   call dein#add('roxma/nvim-yarp')
   call dein#add('ncm2/ncm2-github')
@@ -174,7 +162,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('ncm2/ncm2-path')
   call dein#add('ncm2/ncm2-html-subscope')
   call dein#add('ncm2/ncm2-markdown-subscope')
-  call dein#add('filipekiss/ncm2-look.vim')
+  " call dein#add('filipekiss/ncm2-look.vim')
   call dein#add('ncm2/ncm2-ultisnips')
   call dein#add('ncm2/ncm2-pyclang', {
         \'on_ft': [ 'c', 'cpp' ],
@@ -248,9 +236,9 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('digitaltoad/vim-pug', { 'on_ft': 'pug' })
 
   " For javascript
-  call dein#add('moll/vim-node', {
-        \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ]
-        \})
+  " call dein#add('moll/vim-node', {
+  "       \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ]
+  "       \})
   call dein#add('styled-components/vim-styled-components', {
         \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ]
         \})
@@ -261,6 +249,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ]
         \})
   call dein#add('heavenshell/vim-jsdoc', {
+        \'on_cmd': [ 'JsDoc' ],
         \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ]
         \})
 
@@ -317,11 +306,11 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('fatih/vim-go', {
         \'on_ft': 'go'
         \})
-  call dein#add('mdempsky/gocode', {
-        \'rtp': 'nvim',
-        \'on_ft': 'go',
-        \'build': '~/.config/nvim/plugged/repos/github.com/mdempsky/gocode/nvim/symlink.sh'
-        \})
+  " call dein#add('mdempsky/gocode', {
+  "       \'rtp': 'nvim',
+  "       \'on_ft': 'go',
+  "       \'build': '~/.config/nvim/plugged/repos/github.com/mdempsky/gocode/nvim/symlink.sh'
+  "       \})
 
   " For solidity
   call dein#add('tomlion/vim-solidity', { 'on_ft': 'solidity' })
@@ -358,12 +347,13 @@ syntax enable
 let g:mapleader = ','
 set nocompatible
 
+set inccommand=split
 set confirm
 set background=dark
 set t_ut=
 set history=200           " history: number of command-lines remembered
 set autoread              " auto reload file after being modified
-set shortmess=atIcF         " do not show initial page
+set shortmess=atIcF       " do not show initial page
 set nobackup
 set noswapfile
 " set cursorcolumn          " highlight current column
@@ -485,7 +475,6 @@ function! s:patch_oceanic_next_colors()
   hi TabLineFill ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#1b2b34
   hi PmenuSel ctermbg=145 guibg=#ff5555
   hi WildMenu ctermbg=145 guibg=#ff5555
-  hi Search ctermfg=0 ctermbg=6 guibg=#88C0D0 guifg=#3B4252
 
   hi DiffAdd ctermfg=2 ctermbg=0 guifg=#A3BE8C guibg=#2E3440
   hi DiffChange ctermfg=3 ctermbg=0 guifg=#EBCB8B guibg=#2E3440
@@ -689,9 +678,15 @@ if dein#tap('ncm2')
 "   \}
 " endif
 
+if dein#tap('vim-visual-multi')
+  let g:VM_Selection_hl     = 'Cursor'
+  let g:VM_Mono_Cursor_hl   = 'Cursor'
+  let g:VM_Ins_Mode_hl      = 'Cursor'
+  let g:VM_Normal_Cursor_hl = 'Cursor'
+endif
+
 if dein#tap('LeaderF')
   hi Lf_hl_match ctermfg=145 guifg=#ff5555
-  hi Cursor guifg=white guibg=#ff5555
 
   " let g:Lf_ShortcutF = '<c-p>'
   nnoremap <c-p> :LeaderfFile<cr>
@@ -816,21 +811,12 @@ if dein#tap('vim-jsdoc')
   nnoremap <leader>jdd :JsDoc<cr>
 endif
 
-if dein#tap('vim-context-commentstring')
-  let g:context#commentstring#table = {
-    \ 'typescript.tsx': {
-      \ 'tsComment' : '// %s',
-      \ 'tsImport' : '// %s',
-      \ 'tsxStatment' : '// %s',
-      \ 'tsxRegion' : '{/*%s*/}',
-    \},
-    \ 'javascript.jsx': {
-      \ 'jsComment' : '// %s',
-      \ 'jsImport' : '// %s',
-      \ 'jsxStatment' : '// %s',
-      \ 'jsxRegion' : '{/*%s*/}',
-    \},
-  \}
+if dein#tap('tcomment_vim')
+  nmap <c-_><c-_> :TComment<cr>
+  nmap gcc :TComment<cr>
+  vmap gc :TComment<cr>
+  nmap gca :TCommentAs 
+  vmap gca :TCommentAs 
 endif
 
 " Plugins
@@ -994,7 +980,7 @@ if dein#tap('vim-operator-flashy')
 endif
 
 if dein#tap('emmet-vim')
-  let g:user_emmet_leader_key = '<C-e>'
+  let g:user_emmet_leader_key = ','
   let g:user_emmet_settings = {
   \ 'javascript.jsx' : {
   \   'extends' : 'jsx'
@@ -1049,6 +1035,8 @@ endif
 if dein#tap('vim-better-whitespace')
   let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite', 'qf', 'help', 'far_vim']
   let g:better_whitespace_filetypes_verbosity = 1
+  let g:better_whitespace_guicolor = '#6D6D6D'
+  let g:better_whitespace_ctermcolor = '244'
 endif
 
 if dein#tap('vim-bookmarks')
@@ -1428,6 +1416,8 @@ autocmd VimEnter * call s:SetCursorLine()
 
 hi LineNr ctermfg=darkgrey guifg=#777777
 hi MatchParen ctermfg=black
+hi Cursor guifg=white guibg=#ff5555
+hi Search ctermfg=0 ctermbg=6 guibg=#88C0D0 guifg=#3B4252
 
 command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 -tu4 /dev/urandom'), '^\_s*\zs.\{-}\ze\_s*$') % line('$')).'G'
 
