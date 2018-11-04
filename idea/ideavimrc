@@ -1,0 +1,5 @@
+source ~/.vimrc
+
+set surround
+set visualbell
+set noerrorbells
