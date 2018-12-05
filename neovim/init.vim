@@ -135,16 +135,20 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \], "\n")
   "       \})
   call dein#add('lambdalisue/gina.vim', { 'on_cmd': 'Gina' })
-  call dein#add('Yggdroot/LeaderF', {
-        \'build': './install.sh',
-        \'on_cmd': ['LeaderfFile', 'LeaderfMru', 'LeaderfMruCwd', 'LeaderfBufferAll', 'LeaderfBufTag', 'LeaderfFunctionAll', 'LeaderfLine']
-        \})
+  " call dein#add('Yggdroot/LeaderF', {
+  "       \'build': './install.sh',
+  "       \'on_cmd': ['LeaderfFile', 'LeaderfMru', 'LeaderfMruCwd', 'LeaderfBufferAll', 'LeaderfBufTag', 'LeaderfFunctionAll', 'LeaderfLine']
+  "       \})
+  call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
+  call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
+  call dein#add('pbogut/fzf-mru.vim', { 'depends': 'fzf.vim' })
   call dein#add('w0rp/ale', {
         \'on_cmd': ['ALEEnable', 'ALEToggle'],
         \'hook_post_source': 'set statusline+=\ %{LinterStatus()}'
         \})
   call dein#add('justinmk/vim-dirvish')
   call dein#add('tpope/vim-projectionist')
+  " \'rev': '6da13424fcfa3538b7b7e4629c39918d1d2d43e3',
   call dein#add('autozimu/LanguageClient-neovim', {
         \'rev': 'next',
         \'build': 'bash install.sh'
@@ -154,7 +158,8 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \})
   call dein#add('ncm2/ncm2')
   call dein#add('roxma/nvim-yarp')
-  call dein#add('ncm2/ncm2-github')
+  " call dein#add('filipekiss/ncm2-look.vim')
+  " call dein#add('ncm2/ncm2-github')
   call dein#add('ncm2/ncm2-markdown-subscope')
   call dein#add('ncm2/ncm2-html-subscope')
   call dein#add('ncm2/ncm2-tmux')
@@ -162,20 +167,14 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('ncm2/ncm2-path')
   call dein#add('ncm2/ncm2-html-subscope')
   call dein#add('ncm2/ncm2-markdown-subscope')
-  " call dein#add('filipekiss/ncm2-look.vim')
   call dein#add('ncm2/ncm2-ultisnips')
-  call dein#add('ncm2/ncm2-pyclang', {
-        \'on_ft': [ 'c', 'cpp' ],
-        \})
-  call dein#add('ncm2/ncm2-jedi', {
-        \'on_ft': 'python'
-        \})
-  call dein#add('ncm2/ncm2-go', {
-        \'on_ft': 'go'
-        \})
-  call dein#add('ncm2/ncm2-vim', {
-        \'on_ft': 'vim'
-        \})
+  call dein#add('ncm2/ncm2-go')
+  call dein#add('ncm2/ncm2-vim')
+  " call dein#add('ncm2/ncm2-pyclang')
+  " call dein#add('luzhlon/x.vim')
+  " call dein#add('luzhlon/qrun.vim')
+  " call dein#add('luzhlon/xmake.vim')
+  call dein#add('ncm2/ncm2-jedi')
   call dein#add('mbbill/undotree', {
         \'on_cmd': 'UndotreeToggle',
         \'hook_add': join([
@@ -326,6 +325,9 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   " For jenkins
   call dein#add('martinda/Jenkinsfile-vim-syntax', { 'on_ft': ['Jenkinsfile'] })
+
+  " For gml
+  call dein#add('peterhoeg/vim-qml', { 'on_ft': 'qml' })
 
   " For api
   " call dein#add('kylef/apiblueprint.vim', { 'on_ft': 'apiblueprint' })
@@ -637,10 +639,23 @@ if dein#tap('ncm2')
   " let g:ncm2_look_enabled = 1
   let g:ncm2#popup_limit = 7
   let g:ncm2#matcher = 'substrfuzzy'
+  let g:ncm2_go#gocode_path = 'gocode'
 
   inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 
   " inoremap <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+  " au User Ncm2Plugin call ncm2#register_source({
+  "       \ 'name' : 'go',
+  "       \ 'priority': 9,
+  "       \ 'early_cache': 1,
+  "       \ 'subscope_enable': 1,
+  "       \ 'scope': ['go'],
+  "       \ 'mark': 'go',
+  "       \ 'word_pattern': '[\w/]+',
+  "       \ 'complete_pattern': ['\.', '::'],
+  "       \ 'on_complete': ['ncm2#on_complete#delay', 180,
+  "       \ 'ncm2#on_complete#omni', 'go#complete#Complete']
+  "       \ })
 
   " au User Ncm2Plugin call ncm2#register_source({
   "       \ 'name' : 'css',
@@ -685,102 +700,115 @@ if dein#tap('vim-visual-multi')
   let g:VM_Normal_Cursor_hl = 'Cursor'
 endif
 
-if dein#tap('LeaderF')
-  hi Lf_hl_match ctermfg=145 guifg=#ff5555
-
-  " let g:Lf_ShortcutF = '<c-p>'
-  nnoremap <c-p> :LeaderfFile<cr>
-  nnoremap <space>u :LeaderfMruCwd<cr>
-  nnoremap <space>e :LeaderfBufferAll<cr>
-  nnoremap <space>o :LeaderfBufTag<cr>
-  nnoremap <space>f :LeaderfFunctionAll<cr>
-  nnoremap <space>l :LeaderfLine<cr>
-
-  let g:Lf_DefaultMode = 'FullPath'
-  let g:Lf_StlSeparator = { 'left': '', 'right': '' }
-  let g:Lf_CursorBlink = 0
-  let g:Lf_StlColorscheme = ''
-  let g:Lf_WildIgnore = {
-  \ 'dir': ['.svn','.git','.hg'],
-  \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
-  \}
-  let g:Lf_MruFileExclude = ['*.so']
-  let g:Lf_CommandMap = { '<tab>': ['<c-[>'], '<F5>': ['<c-r>'] }
-  let g:Lf_StlPalette = {
-  \   'stlName': {
-  \       'gui': 'bold',
-  \       'font': 'NONE',
-  \       'guifg': '#ff5555',
-  \       'guibg': '#1b2b34',
-  \       'cterm': 'bold',
-  \       'ctermfg': '235',
-  \       'ctermbg': '145'
-  \   },
-  \   'stlCategory': {
-  \       'gui': 'bold',
-  \       'font': 'NONE',
-  \       'guifg': '#ff5555',
-  \       'guibg': '#1b2b34',
-  \       'cterm': 'bold',
-  \       'ctermfg': '235',
-  \       'ctermbg': '145'
-  \   },
-  \   'stlNameOnlyMode': {
-  \       'gui': 'bold',
-  \       'font': 'NONE',
-  \       'guifg': '#ff5555',
-  \       'guibg': '#1b2b34',
-  \       'cterm': 'bold',
-  \       'ctermfg': '235',
-  \       'ctermbg': '145'
-  \   },
-  \   'stlFullPathMode': {
-  \       'gui': 'bold',
-  \       'font': 'NONE',
-  \       'guifg': '#ff5555',
-  \       'guibg': '#1b2b34',
-  \       'cterm': 'bold',
-  \       'ctermfg': '235',
-  \       'ctermbg': '145'
-  \   },
-  \   'stlFuzzyMode': {
-  \       'gui': 'bold',
-  \       'font': 'NONE',
-  \       'guifg': '#ff5555',
-  \       'guibg': '#1b2b34',
-  \       'cterm': 'bold',
-  \       'ctermfg': '235',
-  \       'ctermbg': '145'
-  \   },
-  \   'stlRegexMode': {
-  \       'gui': 'bold',
-  \       'font': 'NONE',
-  \       'guifg': '#ff5555',
-  \       'guibg': '#1b2b34',
-  \       'cterm': 'bold',
-  \       'ctermfg': '235',
-  \       'ctermbg': '145'
-  \   },
-  \   'stlTotal': {
-  \       'gui': 'bold',
-  \       'font': 'NONE',
-  \       'guifg': '#ff5555',
-  \       'guibg': '#1b2b34',
-  \       'cterm': 'bold',
-  \       'ctermfg': '235',
-  \       'ctermbg': '145'
-  \   },
-  \   'stlLineInfo': {
-  \       'gui': 'bold',
-  \       'font': 'NONE',
-  \       'guifg': '#ff5555',
-  \       'guibg': '#1b2b34',
-  \       'cterm': 'bold',
-  \       'ctermfg': '235',
-  \       'ctermbg': '145'
-  \   },
-  \ }
+if dein#tap('fzf.vim')
+  nnoremap <c-p> :Files<cr>
+  nnoremap <space>u :FZFMru<cr>
+  nnoremap <space>e :Buffers<cr>
+  nnoremap <space>o :BTags<cr>
+  nnoremap <space>f :Rg 
+  nnoremap <space>g :GFiles?<cr>
+  nnoremap <space>a :Lines<cr>
+  nnoremap <space>l :BLines<cr>
+  nnoremap <space>m :Marks<cr>
+  nnoremap <space>/ :History/<cr>
 endif
+
+" if dein#tap('LeaderF')
+"   hi Lf_hl_match ctermfg=145 guifg=#ff5555
+"
+"   " let g:Lf_ShortcutF = '<c-p>'
+"   nnoremap <c-p> :LeaderfFile<cr>
+"   nnoremap <space>u :LeaderfMruCwd<cr>
+"   nnoremap <space>e :LeaderfBufferAll<cr>
+"   nnoremap <space>o :LeaderfBufTag<cr>
+"   nnoremap <space>f :LeaderfFunctionAll<cr>
+"   nnoremap <space>l :LeaderfLine<cr>
+"
+"   let g:Lf_DefaultMode = 'FullPath'
+"   let g:Lf_StlSeparator = { 'left': '', 'right': '' }
+"   let g:Lf_CursorBlink = 0
+"   let g:Lf_StlColorscheme = ''
+"   let g:Lf_WildIgnore = {
+"   \ 'dir': ['.svn','.git','.hg'],
+"   \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
+"   \}
+"   let g:Lf_MruFileExclude = ['*.so']
+"   let g:Lf_CommandMap = { '<tab>': ['<c-[>'], '<F5>': ['<c-r>'] }
+"   let g:Lf_StlPalette = {
+"   \   'stlName': {
+"   \       'gui': 'bold',
+"   \       'font': 'NONE',
+"   \       'guifg': '#ff5555',
+"   \       'guibg': '#1b2b34',
+"   \       'cterm': 'bold',
+"   \       'ctermfg': '235',
+"   \       'ctermbg': '145'
+"   \   },
+"   \   'stlCategory': {
+"   \       'gui': 'bold',
+"   \       'font': 'NONE',
+"   \       'guifg': '#ff5555',
+"   \       'guibg': '#1b2b34',
+"   \       'cterm': 'bold',
+"   \       'ctermfg': '235',
+"   \       'ctermbg': '145'
+"   \   },
+"   \   'stlNameOnlyMode': {
+"   \       'gui': 'bold',
+"   \       'font': 'NONE',
+"   \       'guifg': '#ff5555',
+"   \       'guibg': '#1b2b34',
+"   \       'cterm': 'bold',
+"   \       'ctermfg': '235',
+"   \       'ctermbg': '145'
+"   \   },
+"   \   'stlFullPathMode': {
+"   \       'gui': 'bold',
+"   \       'font': 'NONE',
+"   \       'guifg': '#ff5555',
+"   \       'guibg': '#1b2b34',
+"   \       'cterm': 'bold',
+"   \       'ctermfg': '235',
+"   \       'ctermbg': '145'
+"   \   },
+"   \   'stlFuzzyMode': {
+"   \       'gui': 'bold',
+"   \       'font': 'NONE',
+"   \       'guifg': '#ff5555',
+"   \       'guibg': '#1b2b34',
+"   \       'cterm': 'bold',
+"   \       'ctermfg': '235',
+"   \       'ctermbg': '145'
+"   \   },
+"   \   'stlRegexMode': {
+"   \       'gui': 'bold',
+"   \       'font': 'NONE',
+"   \       'guifg': '#ff5555',
+"   \       'guibg': '#1b2b34',
+"   \       'cterm': 'bold',
+"   \       'ctermfg': '235',
+"   \       'ctermbg': '145'
+"   \   },
+"   \   'stlTotal': {
+"   \       'gui': 'bold',
+"   \       'font': 'NONE',
+"   \       'guifg': '#ff5555',
+"   \       'guibg': '#1b2b34',
+"   \       'cterm': 'bold',
+"   \       'ctermfg': '235',
+"   \       'ctermbg': '145'
+"   \   },
+"   \   'stlLineInfo': {
+"   \       'gui': 'bold',
+"   \       'font': 'NONE',
+"   \       'guifg': '#ff5555',
+"   \       'guibg': '#1b2b34',
+"   \       'cterm': 'bold',
+"   \       'ctermfg': '235',
+"   \       'ctermbg': '145'
+"   \   },
+"   \ }
+" endif
 
 if dein#tap('Colorizer')
   nnoremap <leader>ct :ColorToggle<cr>
@@ -823,20 +851,41 @@ endif
 
 if dein#tap('LanguageClient-neovim')
   let g:LanguageClient_autoStart = 1
+  let g:LanguageClient_windowLogMessageLevel = 'Error'
   let g:LanguageClient_serverCommands = {
+    \ 'c': ['ccls', '--log-file=/tmp/cc.log'],
+    \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
+    \ 'cuda': ['ccls', '--log-file=/tmp/cc.log'],
+    \ 'objc': ['ccls', '--log-file=/tmp/cc.log'],
     \ 'css': ['css-languageserver', '--stdio'],
     \ 'scss': ['css-languageserver', '--stdio'],
     \ 'elixir': ['~/.elixir-ls/language_server.sh'],
-    \ 'wxml': ['wxml-langserver']
+    \ 'wxml': ['wxml-langserver'],
     \ }
 
-  nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-  nnoremap <silent> <c-]> :call LanguageClient_textDocument_definition()<CR>
-  nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+  " \ 'typescript': ['javascript-typescript-stdio']
+  " \ 'typescript.tsx': ['typescript-language-server', '--stdio'],
+  " let g:LanguageClient_hasSnippetSupport = 1
+
+  nnoremap <silent> K :call LanguageClient_textDocument_hover()<cr>
+  nnoremap <silent> <c-]> :call LanguageClient#textDocument_definition()<cr>
+  nnoremap <silent> <c-r> :call LanguageClient#textDocument_rename()<cr>
+  nnoremap <silent> <c-k> :call LanguageClient#textDocument_references()<cr>
+  nnoremap <silent> <c-s> :call LanguageClient#textDocument_documentSymbol()<cr>
+
+  augroup LanguageClient_config
+    au!
+    au BufEnter * let b:Plugin_LanguageClient_started = 0
+    au User LanguageClientStarted setl signcolumn=yes
+    au User LanguageClientStarted let b:Plugin_LanguageClient_started = 1
+    au User LanguageClientStopped setl signcolumn=auto
+    au User LanguageClientStopped let b:Plugin_LanguageClient_stopped = 0
+    au CursorMoved * if b:Plugin_LanguageClient_started | sil call LanguageClient#textDocument_documentHighlight() | endif
+  augroup END
 endif
 
 if dein#tap('nvim-typescript')
-  let g:nvim_typescript#diagnostics_enable = 0
+  let g:nvim_typescript#diagnostics_enable = 1
   let g:nvim_typescript#type_info_on_hold = 0
   let g:nvim_typescript#javascript_support = 1
   let g:nvim_typescript#vue_support = 1
@@ -844,16 +893,18 @@ if dein#tap('nvim-typescript')
   let g:nvim_typescript#max_completion_detail = 33
   " let g:nvim_typescript#server_path = $HOME.'erinn/asdf/shims/tsserver'
 
-  nnoremap td :TSDoc<cr>
-  nnoremap tdf :TSDef<cr>
-  nnoremap tdp :TSDefPreview<cr>
-  nnoremap ti :TSImport<cr>
-  nnoremap tec :TSEditConfig<cr>
-  nnoremap trs :TSRefs<cr>
-  nnoremap tr :TSRename<cr>
-  nnoremap ts :TSSortImports<cr>
+  autocmd FileType typescript       call s:patch_ts_keys()
+  autocmd FileType typescript.tsx   call s:patch_ts_keys()
 endif
 
+function! s:patch_ts_keys()
+  nnoremap <buffer> K :TSDoc<cr>
+  nnoremap <buffer> <c-]> :TSDef<cr>
+  nnoremap <buffer> <c-r> :TSRename<cr>
+  nnoremap <buffer> <c-k> :TSRefs<cr>
+  nnoremap <buffer> <c-t> :TSImport<cr>
+  nnoremap <buffer> <c-s> :TSSearchFZF 
+endfunction
 
 if dein#tap('asyncrun.vim')
   noremap <leader>q :call asyncrun#quickfix_toggle(8)<cr>
@@ -914,7 +965,7 @@ if dein#tap('nvim-miniyank')
 end
 
 if dein#tap('vim-sneak')
-  let g:sneak#label = 1
+  let g:sneak#label = 0
 endif
 
 if dein#tap('MatchTagAlways')
