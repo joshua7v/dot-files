@@ -5,6 +5,8 @@
 " 	call system(expand("mkdir -p $HOME/.config/nvim/repos/github.com"))
 " 	call system(expand("git clone https://github.com/Shougo/dein.vim $HOME/.config/nvim/repos/github.com/Shougo/dein.vim"))
 " endif
+"
+" CocInstall coc-html coc-css coc-json coc-tsserver coc-ultisnips coc-tslint coc-prettier coc-pyls
 
 if &compatible
   set nocompatible
