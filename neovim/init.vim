@@ -128,7 +128,24 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('pbogut/fzf-mru.vim', { 'depends': 'fzf.vim' })
   call dein#add('justinmk/vim-dirvish')
   call dein#add('tpope/vim-projectionist')
-  call dein#add('neoclide/coc.nvim', { 'build': 'yarn install' })
+  call dein#add('neoclide/coc.nvim', {
+        \'build': 'yarn install',
+        \'hook_source': join([
+        \"call coc#add_extension('coc-json')",
+        \"call coc#add_extension('coc-tsserver')",
+        \"call coc#add_extension('coc-tslint')",
+        \"call coc#add_extension('coc-eslint')",
+        \"call coc#add_extension('coc-html')",
+        \"call coc#add_extension('coc-css')",
+        \"call coc#add_extension('coc-jest')",
+        \"call coc#add_extension('coc-emoji')",
+        \"call coc#add_extension('coc-ultisnips')",
+        \"call coc#add_extension('coc-prettier')",
+        \"call coc#add_extension('coc-wxml')",
+        \"call coc#add_extension('coc-yaml')",
+        \"call coc#add_extension('coc-pyls')"
+        \], "\n")
+        \})
   call dein#add('mbbill/undotree', {
         \'on_cmd': 'UndotreeToggle',
         \'hook_add': join([
@@ -175,7 +192,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ]
         \})
   call dein#add('neoclide/vim-jsx-improve', {
-        \'on_ft': [ 'javascript.jsx' ]
+        \'on_ft': [ 'javascript' ]
         \})
   call dein#add('othree/javascript-libraries-syntax.vim', {
         \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ]

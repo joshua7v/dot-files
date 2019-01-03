@@ -1,0 +1,19 @@
+{
+  "coc.preferences.diagnostic.enable": true,
+  "coc.preferences.diagnostic.signOffset": 1000,
+  "coc.preferences.diagnostic.errorSign": "E",
+  "coc.preferences.diagnostic.warningSign": "W",
+  "coc.preferences.diagnostic.infoSign": "I",
+  "coc.preferences.diagnostic.hintSign": "H",
+  "coc.preferences.timeout": 2000,
+  "languageserver": {
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "objc", "objcpp"],
+      "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+      "initializationOptions": {
+        "cacheDirectory": "/tmp/ccls"
+      }
+    }
+  }
+}
