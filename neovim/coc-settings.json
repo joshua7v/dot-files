@@ -1,19 +1,49 @@
 {
-  "coc.preferences.diagnostic.enable": true,
-  "coc.preferences.diagnostic.signOffset": 1000,
-  "coc.preferences.diagnostic.errorSign": "E",
-  "coc.preferences.diagnostic.warningSign": "W",
-  "coc.preferences.diagnostic.infoSign": "I",
-  "coc.preferences.diagnostic.hintSign": "H",
-  "coc.preferences.timeout": 2000,
+  "diagnostic.enable": true,
+  "diagnostic.signOffset": 1000,
+  "diagnostic.errorSign": "E",
+  "diagnostic.warningSign": "W",
+  "diagnostic.infoSign": "I",
+  "diagnostic.hintSign": "H",
+  "suggest.timeout": 2000,
+  "suggest.enablePreview": true,
+  "codeLens.enable": true,
+  "diagnostic.virtualText": true,
+  "list.indicator": "λ",
+  "list.normalMappings": {},
+  "python.jediEnabled": false,
   "languageserver": {
     "ccls": {
       "command": "ccls",
       "filetypes": ["c", "cpp", "objc", "objcpp"],
       "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
       "initializationOptions": {
-        "cacheDirectory": "/tmp/ccls"
+        "clang": {
+          "extraArgs": ["-stdlib=libc++", "-I/usr/local/Cellar/llvm/8.0.0/include/c++/v1"]
+        },
+        "cache": {
+          "directory": "/tmp/ccls"
+        }
       }
+    },
+    "elixir": {
+      "command": "elixir-ls",
+      "filetypes": ["elixir", "eelixir"]
+    },
+    "lua": {
+      "command": "lua-lsp",
+      "filetypes": ["lua"]
+    },
+    "dockerfile": {
+      "command": "docker-langserver",
+      "filetypes": ["Dockerfile"],
+      "args": ["--stdio"]
+    },
+    "bash": {
+      "command": "bash-language-server",
+      "args": ["start"],
+      "filetypes": ["sh"],
+      "ignoredRootPaths": ["~"]
     }
   }
 }

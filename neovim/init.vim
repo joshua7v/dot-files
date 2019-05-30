@@ -5,8 +5,6 @@
 " 	call system(expand("mkdir -p $HOME/.config/nvim/repos/github.com"))
 " 	call system(expand("git clone https://github.com/Shougo/dein.vim $HOME/.config/nvim/repos/github.com/Shougo/dein.vim"))
 " endif
-"
-" CocInstall coc-html coc-css coc-json coc-tsserver coc-ultisnips coc-tslint coc-prettier coc-pyls
 
 if &compatible
   set nocompatible
@@ -18,10 +16,9 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#begin('~/.config/nvim/plugged/')
 
   call dein#add('~/.config/nvim/repos/github.com/Shougo/dein.vim')
-
   " For Nyaovim
   " call dein#add('rhysd/nyaovim-mini-browser')
-
+ 
   " Color Schemes
   call dein#add('mhartington/oceanic-next')
   " call dein#add('arcticicestudio/nord-vim')
@@ -54,26 +51,32 @@ if dein#load_state('~/.config/nvim/plugged/')
         \], "\n")
         \})
   call dein#add('Julian/vim-textobj-variable-segment')
-  call dein#add('coderifous/textobj-word-column.vim')
-
+ 
   " For delightful editing
   call dein#add('justinmk/vim-sneak')
   call dein#add('tmhedberg/matchit')
   call dein#add('pbrisbin/vim-mkdir')
   call dein#add('kopischke/vim-stay')
-  call dein#add('itchyny/vim-gitbranch')
+  " call dein#add('itchyny/vim-gitbranch')
   call dein#add('t9md/vim-quickhl')
   call dein#add('jiangmiao/auto-pairs')
   call dein#add('skywind3000/asyncrun.vim')
+  call dein#add('roman/golden-ratio')
   call dein#add('kana/vim-operator-user'         , { 'lazy'     : 1 })
   " call dein#add('reedes/vim-wordy'               , { 'on_cmd'   : 'Wordy' })
   call dein#add('vim-scripts/DrawIt'             , { 'on_cmd'   : 'DrawIt' })
+  call dein#add('rhysd/git-messenger.vim', {
+            \   'lazy' : 1,
+            \   'on_cmd' : 'GitMessenger',
+            \   'on_map' : '<Plug>(git-messenger',
+            \ })
   call dein#add('tyru/open-browser.vim'          , { 'on_map'   : { 'nv': '<Plug>(openbrowser-smart-search)' }})
   call dein#add('moll/vim-bbye'                  , { 'on_cmd'   : 'Bdelete', })
   call dein#add('tpope/vim-unimpaired')
   call dein#add('tpope/vim-eunuch')
   " call dein#add('ddrscott/vim-side-search'       , { 'on_cmd'   : 'SideSearch' })
   call dein#add('eugen0329/vim-esearch')
+  " call dein#add('brooth/far.vim')
   call dein#add('editorconfig/editorconfig-vim')
   call dein#add('tomtom/tcomment_vim'            , { 'on_cmd'   : ['TComment', 'TCommentAs'] })
   " call dein#add('metakirby5/codi.vim'            , { 'on_cmd'   : 'Codi' })
@@ -94,15 +97,16 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('AndrewRadev/splitjoin.vim'      , { 'on_map'   : { 'n': '<Plug>Splitjoin' }})
   call dein#add('haya14busa/vim-edgemotion'      , { 'on_map'   : { 'nv': '<Plug>' }})
   call dein#add('terryma/vim-expand-region'      , { 'on_map'   : { 'x': '<Plug>' }})
-  call dein#add('haya14busa/vim-operator-flashy', {
-        \'depends': 'vim-operator-user',
-        \'on_map': { 'nx': '<Plug>' }
-        \})
+  " call dein#add('haya14busa/vim-operator-flashy', {
+  "       \'depends': 'vim-operator-user',
+  "       \'on_map': { 'nx': '<Plug>' }
+  "       \})
   call dein#add('SirVer/ultisnips')
   call dein#add('honza/vim-snippets')
   call dein#add('kshenoy/vim-signature')
   call dein#add('guns/xterm-color-table.vim', { 'on_cmd': 'XtermColorTable' })
   call dein#add('powerman/vim-plugin-AnsiEsc')
+  call dein#add('Shougo/deol.nvim')
   call dein#add('inside/vim-search-pulse', {
         \'hook_post_source': join([
         \"let g:vim_search_pulse_mode = 'pattern'",
@@ -110,30 +114,29 @@ if dein#load_state('~/.config/nvim/plugged/')
         \], "\n")
         \})
   call dein#add('vim-airline/vim-airline' , { 'on_cmd': 'AirlineToggle' })
-  call dein#add('bfredl/nvim-miniyank')
+  " call dein#add('bfredl/nvim-miniyank')
   " call dein#add('junegunn/goyo.vim'       , { 'on_cmd': 'Goyo' })
   " call dein#add('junegunn/limelight.vim'  , { 'on_cmd': 'Limelight' })
   call dein#add('Yggdroot/indentLine'     , { 'on_cmd': 'IndentLinesToggle' })
-
+ 
   " General
   call dein#add('junegunn/vim-peekaboo')
   " call dein#add('Shougo/echodoc.vim', {
   "       \'on_event': 'CompleteDone',
   "       \'hook_post_source': 'call echodoc#enable()'
   "       \})
-  call dein#add('Lenovsky/nuake', { 'on_cmd': 'Nuake' })
-  call dein#add('lambdalisue/gina.vim', { 'on_cmd': 'Gina' })
-  call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
-  call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
-  call dein#add('pbogut/fzf-mru.vim', { 'depends': 'fzf.vim' })
+  " call dein#add('Lenovsky/nuake', { 'on_cmd': 'Nuake' })
+  " call dein#add('lambdalisue/gina.vim', { 'on_cmd': 'Gina' })
+  call dein#add('tpope/vim-fugitive')
   call dein#add('justinmk/vim-dirvish')
   call dein#add('tpope/vim-projectionist')
+  call dein#add('tpope/vim-dispatch')
   call dein#add('neoclide/coc.nvim', {
         \'build': 'yarn install',
         \'hook_source': join([
         \"call coc#add_extension('coc-json')",
         \"call coc#add_extension('coc-tsserver')",
-        \"call coc#add_extension('coc-tslint')",
+        \"call coc#add_extension('coc-tslint-plugin')",
         \"call coc#add_extension('coc-eslint')",
         \"call coc#add_extension('coc-html')",
         \"call coc#add_extension('coc-css')",
@@ -143,7 +146,14 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"call coc#add_extension('coc-prettier')",
         \"call coc#add_extension('coc-wxml')",
         \"call coc#add_extension('coc-yaml')",
-        \"call coc#add_extension('coc-pyls')"
+        \"call coc#add_extension('coc-python')",
+        \"call coc#add_extension('coc-lists')",
+        \"call coc#add_extension('coc-word')",
+        \"call coc#add_extension('coc-tailwindcss')",
+        \"call coc#add_extension('coc-svg')",
+        \"call coc#add_extension('coc-yank')",
+        \"call coc#add_extension('coc-git')",
+        \"call coc#add_extension('coc-post')",
         \], "\n")
         \})
   call dein#add('mbbill/undotree', {
@@ -157,27 +167,28 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"endif"
         \], "\n")
         \})
-
+ 
   " Git
-  call dein#add('airblade/vim-gitgutter', {
-        \'on_cmd': ['GitGutterEnable', 'GitGutterToggle'],
-        \'hook_source': join([
-        \"nmap ]h <Plug>GitGutterNextHunk",
-        \"nmap [h <Plug>GitGutterPrevHunk",
-        \"nmap <Leader>hs <Plug>GitGutterStageHunk",
-        \"nmap <Leader>hu <Plug>GitGutterUndoHunk",
-        \"nmap <Leader>hp <Plug>GitGutterPreviewHunk"
-        \], "\n")
-        \})
-
+  " call dein#add('mhinz/vim-signify')
+  " call dein#add('airblade/vim-gitgutter', {
+  "       \'on_cmd': ['GitGutterEnable', 'GitGutterToggle'],
+  "       \'hook_source': join([
+  "       \"nmap ]h <Plug>GitGutterNextHunk",
+  "       \"nmap [h <Plug>GitGutterPrevHunk",
+  "       \"nmap <Leader>hs <Plug>GitGutterStageHunk",
+  "       \"nmap <Leader>hu <Plug>GitGutterUndoHunk",
+  "       \"nmap <Leader>hp <Plug>GitGutterPreviewHunk"
+  "       \], "\n")
+  "       \})
+ 
   " For binary
   call dein#add('Shougo/vinarise.vim', {
         \'on_cmd': 'Vinarise'
         \})
-
+ 
   " For c family
   call dein#add('sakhnik/nvim-gdb', { 'build': './install.sh' })
-
+ 
   " For html / css
   call dein#add('Valloric/MatchTagAlways', {
         \'on_ft': [ 'html', 'xml', 'javascript', 'javascript.jsx', 'typescript.tsx', 'eelixir' ],
@@ -186,10 +197,14 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'on_ft': [ 'html', 'css', 'scss', 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx', 'eelixir' ],
         \})
   " call dein#add('chrisbra/Colorizer', { 'on_cmd': 'ColorToggle' })
-
+ 
+  " call dein#add('purescript-contrib/purescript-vim', {
+  "       \'on_ft': [ 'purescript' ]
+  "       \})
+ 
   " For javascript
   call dein#add('styled-components/vim-styled-components', {
-        \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ]
+        \'on_ft': [ 'javascript.jsx', 'typescript.tsx' ]
         \})
   call dein#add('neoclide/vim-jsx-improve', {
         \'on_ft': [ 'javascript' ]
@@ -201,11 +216,12 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'on_cmd': [ 'JsDoc' ],
         \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ]
         \})
-
+ 
   " For vim
-
+ 
   " For json
-
+  call dein#add('neoclide/jsonc.vim')
+ 
   " For elm
   " call dein#add('ElmCast/elm-vim', {
   "       \'on_ft': 'elm',
@@ -218,9 +234,12 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \"let g:elm_format_two_spaces = 1"
   "       \], "\n")
   "       \})
-
+ 
   call dein#add('Shougo/denite.nvim')
-
+  " call dein#add('Shougo/neomru.vim')
+  call dein#add('raghur/fruzzy')
+  " call dein#add('neoclide/denite-extra')
+ 
   " For typescript
   call dein#add('leafgarland/typescript-vim', {
         \'on_ft': [ 'typescript', 'typescript.tsx' ]
@@ -228,17 +247,14 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('joshua7v/vim-tsx-improve', {
         \'on_ft': [ 'typescript', 'typescript.tsx' ]
         \})
-
+ 
   " For elixir
   call dein#add('elixir-editors/vim-elixir', {
         \'on_ft': [ 'elixir', 'eelixir' ]
         \})
-  call dein#add('slashmili/alchemist.vim', {
-        \'on_ft': [ 'elixir', 'eelixir' ]
-        \})
-
+ 
   " For python
-
+ 
   " For go
   " call dein#add('fatih/vim-go', {
   "       \'on_ft': 'go'
@@ -248,30 +264,37 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \'on_ft': 'go',
   "       \'build': '~/.config/nvim/plugged/repos/github.com/mdempsky/gocode/nvim/symlink.sh'
   "       \})
-
+ 
   " For solidity
   call dein#add('tomlion/vim-solidity', { 'on_ft': 'solidity' })
-
+ 
   " For docker
   call dein#add('ekalinin/Dockerfile.vim', { 'on_ft': ['Dockerfile', 'docker-compose'] })
-
+ 
   " For yaml
   call dein#add('stephpy/vim-yaml', { 'on_ft': 'yaml' })
-
+ 
   " For graphql
   call dein#add('jparise/vim-graphql', { 'on_ft': ['graphql', 'typescript', 'typescript.tsx'] })
-
+ 
   " For jenkins
   call dein#add('martinda/Jenkinsfile-vim-syntax', { 'on_ft': ['Jenkinsfile'] })
-
+ 
   " For gml
   call dein#add('peterhoeg/vim-qml', { 'on_ft': 'qml' })
-
+ 
   " For api
   " call dein#add('kylef/apiblueprint.vim', { 'on_ft': 'apiblueprint' })
-
+ 
   " For dot
   " call dein#add('wannesm/wmgraphviz.vim', { 'on_ft': 'dot' })
+  
+  " For glsl
+  call dein#add('tikhomirov/vim-glsl', { 'on_ft': 'glsl' })
+
+  " For markdown
+  call dein#add('iamcco/markdown-preview.nvim', {'on_ft': ['markdown', 'pandoc.markdown', 'rmd'],
+					\ 'build': 'cd app & yarn install' })
 
   call dein#end()
   call dein#save_state()
@@ -516,17 +539,23 @@ inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 " autocmd FileType python,elm,go set tabstop=4 shiftwidth=4 expandtab ai
 " autocmd FileType vim,javascript,json,css,scss,html,yaml,typescript,typescript.tsx,javascript.jsx,md,ex,exs set tabstop=2 shiftwidth=2 expandtab ai
-autocmd FileType vim set tabstop=2 shiftwidth=2 expandtab ai
+autocmd FileType vim   set tabstop=4 shiftwidth=4 expandtab ai
+autocmd FileType c,cpp set tabstop=2 shiftwidth=2 expandtab ai
 
-autocmd BufNewFile,BufRead .tern-project setfiletype json
-autocmd BufNewFile,BufRead .jsbeautifyrc setfiletype json
-autocmd BufNewFile,BufRead .eslintrc     setfiletype json
-autocmd BufNewFile,BufRead .babelrc      setfiletype json
-autocmd BufNewFile,BufRead .prettierrc   setfiletype json
-autocmd BufNewFile,BufRead .jscsrc       setfiletype json
-autocmd BufNewFile,BufRead *.wxml        setfiletype xml
-autocmd BufNewFile,BufRead *.jsx         set ft=javascript.jsx
-autocmd BufNewFile,BufRead *.tsx         set ft=typescript.tsx
+autocmd BufNewFile,BufRead .tern-project  setfiletype json
+autocmd BufNewFile,BufRead .jsbeautifyrc  setfiletype json
+autocmd BufNewFile,BufRead .eslintrc      setfiletype json
+autocmd BufNewFile,BufRead .babelrc       setfiletype json
+autocmd BufNewFile,BufRead .luacompleterc setfiletype json
+autocmd BufNewFile,BufRead .prettierrc    setfiletype json
+autocmd BufNewFile,BufRead .jscsrc        setfiletype json
+autocmd BufNewFile,BufRead *.wxml         setfiletype xml
+autocmd BufNewFile,BufRead *.jsx          set ft=javascript.jsx
+autocmd BufNewFile,BufRead *.tsx          set ft=typescript.tsx
+autocmd BufNewFile,BufRead *.ex           set ft=elixir
+autocmd BufNewFile,BufRead *.exs          set ft=elixir
+autocmd BufNewFile,BufRead *.eex          set ft=eelixir
+autocmd BufNewFile,BufRead *.vs,*.fs      set ft=glsl
 
 autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
 
@@ -536,6 +565,9 @@ autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
 
 tnoremap <Esc> <C-\><C-n>
 " inoremap jj <ESC>
+nnoremap == <c-w>=
+nnoremap =v <c-w>_
+nnoremap =h <c-w><bar>
 
 nnoremap <leader>al :AirlineToggle<cr>
 
@@ -563,19 +595,25 @@ vmap <Leader>aa :Tabularize /
 
 nnoremap <leader>fs :FuzzySearch<cr>
 
-if dein#tap('nuake')
-  nnoremap <leader>T :Nuake<cr>
+if dein#tap('deol.nvim')
+    nnoremap <silent><leader>1 :Deol -split=floating<CR>
+    inoremap <silent><leader>1 <C-\><C-n>:q<CR>
+    tnoremap <silent><leader>1 <C-\><C-n>:q<CR>
 endif
 
 if dein#tap('auto-pairs')
   let g:AutoPairsMultilineClose = 0
 endif
 
+if dein#tap('far.vim')
+  let g:far#source = 'rgnvim'
+endif
+
 if dein#tap('vim-esearch')
   call esearch#map('<leader>zz', 'esearch')
   call esearch#map('<leader>zw', 'esearch-word-under-cursor')
   let g:esearch = {
-  \ 'adapter':    'ag',
+  \ 'adapter':    'rg',
   \ 'backend':    'nvim',
   \ 'out':        'win',
   \ 'batch_size': 1000,
@@ -625,33 +663,32 @@ endif
 
 " Plugins
 
-if dein#tap('fzf.vim')
-  nnoremap <c-p> :Files<cr>
-  nnoremap <space>u :FZFMru<cr>
-  nnoremap <space>b :Buffers<cr>
-  nnoremap <space>o :BTags<cr>
-  nnoremap <space>f :Rg 
-  nnoremap <space>g :GFiles?<cr>
-  nnoremap <space>a :Lines<cr>
-  nnoremap <space>l :BLines<cr>
-  nnoremap <space>m :Marks<cr>
-  nnoremap <space>/ :History/<cr>
-endif
-
 if dein#tap('denite.nvim')
+  " let g:fruzzy#usenative = 1
+
+  call denite#custom#option('_', 'highlight_mode_insert', 'CursorLine')
+  call denite#custom#option('_', 'highlight_matched_range', 'None')
+  call denite#custom#option('_', 'highlight_matched_char', 'DeniteMatcher')
+  call denite#custom#source('_', 'matchers', ['matcher/fruzzy'])
+  call denite#custom#source(
+	\ 'file_mru', 'matchers', ['matcher/fruzzy', 'matcher/project_files'])
+  call denite#custom#source('line', 'matchers', ['matcher_regexp'])
   call denite#custom#option('default', 'prompt', 'λ:')
   call denite#custom#option('default', 'empty', 0)
   call denite#custom#option('default', 'auto_resize', 1)
+  call denite#custom#option('default', 'auto_resume', 1)
   call denite#custom#filter('matcher_ignore_globs', 'ignore_globs', [ '.git/', '.ropeproject/', '__pycache__/', 'images/', '*.min.*', 'bundle.js', 'img/', 'fonts/'])
-  call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
-  call denite#custom#var('buffer', 'date_format', '')
-  call denite#custom#var('session', 'path', '~/.vim/session')
-  call denite#custom#var('grep', 'command', ['ag'])
-  call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
+  " call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+  call denite#custom#var('file/rec', 'command',
+  \ ['rg', '--color', 'never', '--files'])
+  call denite#custom#var('grep', 'command', ['rg'])
+  call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--no-follow', '--smart-case'])
   call denite#custom#var('grep', 'recursive_opts', [])
   call denite#custom#var('grep', 'pattern_opt', [])
   call denite#custom#var('grep', 'separator', ['--'])
   call denite#custom#var('grep', 'final_opts', [])
+  call denite#custom#var('buffer', 'date_format', '')
+  call denite#custom#var('session', 'path', '~/.vim/session')
   call denite#custom#map('insert','<c-a>','<denite:move_caret_to_head>','noremap')
   call denite#custom#map('insert','<down>','<denite:move_to_next_line>','noremap')
   call denite#custom#map('insert','<up>','<denite:move_to_previous_line>','noremap')
@@ -674,37 +711,44 @@ if dein#tap('denite.nvim')
   call denite#custom#map('insert','<c-s>','<denite:do_action:vsplit>','noremap')
   call denite#custom#map('normal','<c-s>','<denite:do_action:vsplit>','noremap')
   call denite#custom#map('normal','dw','<denite:delete_word_after_caret>','noremap')
-  hi link deniteMatchedChar Special
 
   " nnoremap <silent> <space>p  :<C-u>Denite -resume<CR>
   " nnoremap <silent> <space>j  :call execute('Denite -resume -select=+'.v:count1.' -immediately')<CR>
   " nnoremap <silent> <space>k  :call execute('Denite -resume -select=-'.v:count1.' -immediately')<CR>
-  " nnoremap <c-p> :Denite -highlight-matched-char=None file_rec<cr>
+  nnoremap <c-p> :Denite file/rec<cr>
   " nnoremap <silent> <space>w  :<C-u>DeniteCursorWord -mode=normal -auto-resize line<CR>
-  " nnoremap <silent> <space>l  :<C-u>Denite -mode=normal location_list<CR>
-  " nnoremap <silent> <space>g  :<C-u>Denite grep<cr>
-  " nnoremap <silent> <space>u  :<C-u>Denite -mode=normal -highlight-matched-char=None file_mru<cr>
+  nnoremap <silent> <space>l  :<C-u>Denite line<CR>
+  " nnoremap <silent> <space>f  :<C-u>Denite grep<cr>
+  " nnoremap <silent> <space>u  :<C-u>Denite -mode=normal file_mru<cr>
   " nnoremap <silent> <space>d  :<C-u>Denite -mode=normal -highlight-matched-char=None directory_mru<cr>
   " nnoremap <silent> <space>n  :<C-u>Denite -mode=normal -ignorecase=false -input='TODO\\|FIXME\\|CHANGED\\|BUG\\|HACK\\|FEATURE' grep<cr>
   " " nnoremap <silent> <space>t  :<C-u>Denite project<cr>
   " nnoremap <silent> <space>s  :<C-u>Denite session<cr>
-  " " nnoremap <silent> <space>m  :<C-u>Denite -mode=normal menu<cr>
+  " nnoremap <silent> <space>m  :<C-u>Denite -mode=normal menu<cr>
   " nnoremap <silent> <space>a  :<C-u>Denite node<CR>
-  " nnoremap <silent> <space>e  :<C-u>Denite buffer<cr>
+  " nnoremap <silent> <space>b  :<C-u>Denite buffer<cr>
   " nnoremap <silent> <space>h  :<C-u>Denite history:all<cr>
   " nnoremap <silent> <space>q  :<C-u>Denite commands<cr>
-  " nnoremap <silent> <space>f  :<C-u>Denite file_rec<cr>
+  " nnoremap <silent> <space>f  :<C-u>Denite file/rec<cr>
   " nnoremap <silent> <space>o  :<C-u>Denite -highlight-matched-char=None outline<cr>
-  nnoremap <silent> <space>y  :<C-u>Denite -mode=normal -highlight-matched-char=None miniyank<cr>
-  " nnoremap <silent> <space>m  :<C-u>Denite -mode=normal -highlight-matched-char=None marks<cr>
+  " nnoremap <silent> <space>y  :<C-u>Denite -mode=normal miniyank<cr>
+  " nnoremap <silent> <space>m  :<C-u>Denite -mode=normal mark<cr>
   " nnoremap <silent> <space>/  :Denite grep:. -mode=normal -highlight-matched-char=None<cr>
 endif
 
+if dein#tap('git-messenger.vim')
+  nmap gm <Plug>(git-messenger)
+endif
+
 if dein#tap('coc.nvim')
+  nmap [g <Plug>(coc-git-prevchunk)
+  nmap ]g <Plug>(coc-git-nextchunk)
+  nmap gs <Plug>(coc-git-chunkinfo)
   nmap <silent>gd <Plug>(coc-definition)
   nmap <silent>gy <Plug>(coc-type-definition)
   nmap <silent>gi <Plug>(coc-implementation)
   nmap <silent>gr <Plug>(coc-references)
+  nmap <silent>gh :CocCommand git.chunkInfo<cr>
   nmap <leader>rn <Plug>(coc-rename)
   vmap <leader>f  <Plug>(coc-format-selected)
   nmap <leader>f  <Plug>(coc-format-selected)
@@ -713,13 +757,23 @@ if dein#tap('coc.nvim')
   nmap <leader>ac <Plug>(coc-codeaction)
   nnoremap <silent> K :call <SID>show_documentation()<cr>
 
-  nnoremap <silent> <space>e  :<C-u>Denite coc-extension<cr>
-  nnoremap <silent> <space>o  :<C-u>Denite coc-symbols<cr>
-  nnoremap <silent> <space>t  :<C-u>Denite coc-workspace<cr>
-  nnoremap <silent> <space>a  :<C-u>Denite coc-diagnostic<cr>
-  nnoremap <silent> <space>c  :<C-u>Denite coc-command<cr>
-  nnoremap <silent> <space>s  :<C-u>Denite coc-service<cr>
-  nnoremap <silent> <space>l  :<C-u>Denite coc-link<cr>
+  nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+  nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+  nnoremap <silent> <space>u  :<C-u>CocList --normal mru<cr>
+  nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+  nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+  nnoremap <silent> <space>s  :<C-u>CocList service<cr>
+  nnoremap <silent> <space>b  :<C-u>CocList buffers<cr>
+  nnoremap <silent> <space>y  :<C-u>CocList --normal yank<cr>
+  nnoremap <silent> <space>g  :<C-u>CocList --normal gstatus<cr>
+  nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+  nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+  nnoremap <silent> <space>m  :<C-u>CocList --normal marks<CR>
+  nnoremap <silent> <space>h  :<C-u>CocList --normal searchhistory<CR>
+  nnoremap <silent> <space>k  :<C-u>CocList --normal maps<CR>
+  nnoremap <silent> <space>q  :<C-u>CocList --normal post<CR>
+  nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
+  " nnoremap <silent> <space>l  :<C-u>Denite coc-link<cr>
 
   inoremap <expr> <tab> pumvisible() ? "\<C-y>" : "\<tab>"
   let g:coc_snippet_next = '<tab>'
@@ -732,6 +786,32 @@ if dein#tap('coc.nvim')
   command! -nargs=0 Prettier :CocCommand prettier.formatFile
   command! -nargs=0 Format :call CocAction('format')
   command! -nargs=? Fold :call CocAction('fold', <f-args>)
+  command! -nargs=+ -complete=custom,s:GrepArgs Rg exe 'CocList grep '.<q-args>
+  command! -nargs=0 Rgf exe 'CocList -I grep'
+
+  function! s:GrepArgs(...)
+    let list = ['-S', '-smartcase', '-i', '-ignorecase', '-w', '-word',
+          \ '-e', '-regex', '-u', '-skip-vcs-ignores', '-t', '-extension']
+    return join(list, "\n")
+  endfunction
+
+  vnoremap <leader>g :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
+  nnoremap <leader>g :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@
+
+  function! s:GrepFromSelected(type)
+    let saved_unnamed_register = @@
+    if a:type ==# 'v'
+      normal! `<v`>y
+    elseif a:type ==# 'char'
+      normal! `[v`]y
+    else
+      return
+    endif
+    let word = substitute(@@, '\n$', '', 'g')
+    let word = escape(word, '| ')
+    let @@ = saved_unnamed_register
+    execute 'CocList --normal grep '.word
+  endfunction
 
   function! s:show_documentation()
     if &filetype == 'vim'
@@ -753,8 +833,8 @@ if dein#tap('coc.nvim')
     autocmd!
     autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
     autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-    autocmd FileType typescript,json nmap <space><space> :Prettier<cr>
-    autocmd FileType cpp nmap <space><space> :Format<cr>
+    autocmd FileType typescript,javascript,json,html,scss,css,graphql nmap <space><space> :Prettier<cr>
+    autocmd FileType cpp,c,svg,python nmap <space><space> :Format<cr>
   augroup end
 endif
 
@@ -762,11 +842,15 @@ if dein#tap('asyncrun.vim')
   let g:asyncrun_bell = 1
 
   noremap <leader>q :call asyncrun#quickfix_toggle(8)<cr>
-  noremap <leader>r :AsuncRun xmake<cr>
 
-  " augroup vimrc
-    " autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)
-  " augroup END
+  autocmd FileType c,cpp noremap <leader>c :AsyncRun xmake -r<cr>
+  autocmd FileType c,cpp noremap <leader>r :AsyncRun xmake run<cr>
+  autocmd FileType c,cpp noremap <leader>l :AsyncRun xmake project -k compile_commands<cr>
+  autocmd FileType javascript noremap <leader>r :AsyncRun node %<cr>
+
+  augroup vimrc
+    autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)
+  augroup END
 endif
 
 if dein#tap('vim-dirvish')
@@ -803,6 +887,16 @@ if dein#tap('gina.vim')
   command Blame Gina blame --width=100 --format="%su %= %ti %au"
 endif
 
+if dein#tap('vim-signify')
+  nmap ]h <plug>(signify-next-hunk)
+  nmap [h <plug>(signify-prev-hunk)
+
+  omap ih <plug>(signify-motion-inner-pending)
+  xmap ih <plug>(signify-motion-inner-visual)
+  omap ah <plug>(signify-motion-outer-pending)
+  xmap ah <plug>(signify-motion-outer-visual)
+endif
+
 if dein#tap('vim-quickhl')
   nmap <leader>w <Plug>(quickhl-manual-this)
   xmap <leader>w <Plug>(quickhl-manual-this)
@@ -810,10 +904,10 @@ if dein#tap('vim-quickhl')
   xmap <leader>W <Plug>(quickhl-manual-reset)
 endif
 
-if dein#tap('nvim-miniyank')
-  let g:miniyank_maxitems = 100
-  let g:miniyank_filename = $HOME."/.config/nvim/.miniyank.mpack"
-end
+" if dein#tap('nvim-miniyank')
+"   let g:miniyank_maxitems = 100
+"   let g:miniyank_filename = $HOME."/.config/nvim/.miniyank.mpack"
+" end
 
 if dein#tap('vim-sneak')
   let g:sneak#label = 1
@@ -833,7 +927,7 @@ endif
 
 if dein#tap('open-browser.vim')
   nmap gx <Plug>(openbrowser-smart-search)
-	vmap gx <Plug>(openbrowser-smart-search)
+  vmap gx <Plug>(openbrowser-smart-search)
 endif
 
 if dein#tap('undotree')
@@ -856,11 +950,6 @@ if dein#tap('vim-go')
 		\ | nmap <Leader>gov  <Plug>(go-vet)
 endif
 
-if dein#tap('vim-operator-flashy')
-	map y <Plug>(operator-flashy)
-	nmap Y <Plug>(operator-flashy)$
-endif
-
 if dein#tap('emmet-vim')
   let g:user_emmet_leader_key = ','
   let g:user_emmet_settings = {
@@ -879,6 +968,8 @@ endif
 if dein#tap('vim-operator-flashy')
   let g:operator#flashy#flash_time = 300
   hi Flashy term=bold ctermbg=1 guibg=red
+  " 	map y <Plug>(operator-flashy)
+  " 	nmap Y <Plug>(operator-flashy)$
 endif
 
 if dein#tap('vim-bbye')
@@ -980,6 +1071,13 @@ if dein#tap('vim-expand-region')
   xmap V <Plug>(expand_region_shrink)
 endif
 
+if dein#tap('golden-ratio')
+  let g:golden_ratio_exclude_nonmodifiable = 1
+  let g:golden_ratio_autocommand = 0
+
+  nmap <silent><leader>z <Plug>(golden_ratio_resize)
+endif
+
 if dein#tap('vim-airline')
   function! StatusDiagnostic() abort
     let info = get(b:, 'coc_diagnostic_info', {})
@@ -1010,10 +1108,8 @@ if dein#tap('vim-airline')
     set statusline+=\ %{&ff}\ %y
     set statusline+=\ %m%r%w
     set statusline+=%=%{StatusDiagnostic()}\ 
-    if dein#tap('vim-gitbranch')
-      set statusline+=%{gitbranch#name()}\ 
-    endif
     set statusline+=%-14.(%l/%L,%c%V%)\ %p%%
+    set statusline^=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}
   endif
   if exists('+showtabline')
     function! Tabline()
@@ -1070,7 +1166,7 @@ if has('conceal')
 endif
 
 nnoremap <Leader>; A;<ESC>
-nnoremap <Leader>c A,<ESC>
+nnoremap <Leader>cc A,<ESC>
 nnoremap <Leader>. A.<ESC>
 nnoremap <Leader>\ A \<ESC>
 nnoremap <Leader>e :tabnew 
@@ -1160,10 +1256,15 @@ hi LineNr ctermfg=darkgrey guifg=#777777
 hi MatchParen ctermfg=black
 hi Cursor guifg=white guibg=#ff5555
 hi Search ctermfg=0 ctermbg=6 guibg=#88C0D0 guifg=#3B4252
+hi DeniteMatcher guifg=#ff5555 guibg=None
 hi! link ESearchMatch Search
+hi! link TermCursor Cursor
+hi! link TermCursorNC CursorNC
 
 command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 -tu4 /dev/urandom'), '^\_s*\zs.\{-}\ze\_s*$') % line('$')).'G'
 
 if exists("g:gui_oni")
 else
 endif
+
+autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | endif
