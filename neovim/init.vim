@@ -16,9 +16,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#begin('~/.config/nvim/plugged/')
 
   call dein#add('~/.config/nvim/repos/github.com/Shougo/dein.vim')
-  " For Nyaovim
-  " call dein#add('rhysd/nyaovim-mini-browser')
- 
+
   " Color Schemes
   call dein#add('mhartington/oceanic-next')
   " call dein#add('arcticicestudio/nord-vim')
@@ -59,7 +57,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('kopischke/vim-stay')
   " call dein#add('itchyny/vim-gitbranch')
   call dein#add('t9md/vim-quickhl')
-  call dein#add('jiangmiao/auto-pairs')
+  " call dein#add('jiangmiao/auto-pairs')
   call dein#add('skywind3000/asyncrun.vim')
   call dein#add('roman/golden-ratio')
   call dein#add('kana/vim-operator-user'         , { 'lazy'     : 1 })
@@ -113,7 +111,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"let g:vim_search_pulse_duration = 400"
         \], "\n")
         \})
-  call dein#add('vim-airline/vim-airline' , { 'on_cmd': 'AirlineToggle' })
+  " call dein#add('vim-airline/vim-airline' , { 'on_cmd': 'AirlineToggle' })
   " call dein#add('bfredl/nvim-miniyank')
   " call dein#add('junegunn/goyo.vim'       , { 'on_cmd': 'Goyo' })
   " call dein#add('junegunn/limelight.vim'  , { 'on_cmd': 'Limelight' })
@@ -129,11 +127,13 @@ if dein#load_state('~/.config/nvim/plugged/')
   " call dein#add('lambdalisue/gina.vim', { 'on_cmd': 'Gina' })
   call dein#add('tpope/vim-fugitive')
   call dein#add('justinmk/vim-dirvish')
+  " call dein#add('tpope/vim-vinegar')
   call dein#add('tpope/vim-projectionist')
   call dein#add('tpope/vim-dispatch')
   call dein#add('neoclide/coc.nvim', {
         \'build': 'yarn install',
         \'hook_source': join([
+        \"call coc#add_extension('coc-pairs')",
         \"call coc#add_extension('coc-json')",
         \"call coc#add_extension('coc-tsserver')",
         \"call coc#add_extension('coc-tslint-plugin')",
@@ -154,6 +154,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"call coc#add_extension('coc-yank')",
         \"call coc#add_extension('coc-git')",
         \"call coc#add_extension('coc-post')",
+        \"call coc#add_extension('coc-tabnine')",
         \], "\n")
         \})
   call dein#add('mbbill/undotree', {
@@ -235,9 +236,9 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \], "\n")
   "       \})
  
-  call dein#add('Shougo/denite.nvim')
+  " call dein#add('Shougo/denite.nvim')
   " call dein#add('Shougo/neomru.vim')
-  call dein#add('raghur/fruzzy')
+  " call dein#add('raghur/fruzzy')
   " call dein#add('neoclide/denite-extra')
  
   " For typescript
@@ -301,7 +302,7 @@ if dein#load_state('~/.config/nvim/plugged/')
 endif
 
 filetype plugin indent on
-syntax enable
+syntax on
 
 " ----------------------------------------------------------------------------
 " Settings: basic
@@ -539,8 +540,8 @@ inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 " autocmd FileType python,elm,go set tabstop=4 shiftwidth=4 expandtab ai
 " autocmd FileType vim,javascript,json,css,scss,html,yaml,typescript,typescript.tsx,javascript.jsx,md,ex,exs set tabstop=2 shiftwidth=2 expandtab ai
-autocmd FileType vim   set tabstop=4 shiftwidth=4 expandtab ai
-autocmd FileType c,cpp set tabstop=2 shiftwidth=2 expandtab ai
+autocmd FileType vim                                        set tabstop=4 shiftwidth=4 expandtab ai
+autocmd FileType c,cpp,javascript,typescript,typescript.tsx set tabstop=2 shiftwidth=2 expandtab ai
 
 autocmd BufNewFile,BufRead .tern-project  setfiletype json
 autocmd BufNewFile,BufRead .jsbeautifyrc  setfiletype json
@@ -556,6 +557,7 @@ autocmd BufNewFile,BufRead *.ex           set ft=elixir
 autocmd BufNewFile,BufRead *.exs          set ft=elixir
 autocmd BufNewFile,BufRead *.eex          set ft=eelixir
 autocmd BufNewFile,BufRead *.vs,*.fs      set ft=glsl
+autocmd BufNewFile,BufRead *.tpl          set ft=html
 
 autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
 
@@ -715,9 +717,9 @@ if dein#tap('denite.nvim')
   " nnoremap <silent> <space>p  :<C-u>Denite -resume<CR>
   " nnoremap <silent> <space>j  :call execute('Denite -resume -select=+'.v:count1.' -immediately')<CR>
   " nnoremap <silent> <space>k  :call execute('Denite -resume -select=-'.v:count1.' -immediately')<CR>
-  nnoremap <c-p> :Denite file/rec<cr>
+  " nnoremap <c-p> :Denite file/rec<cr>
   " nnoremap <silent> <space>w  :<C-u>DeniteCursorWord -mode=normal -auto-resize line<CR>
-  nnoremap <silent> <space>l  :<C-u>Denite line<CR>
+  " nnoremap <silent> <space>l  :<C-u>Denite line<CR>
   " nnoremap <silent> <space>f  :<C-u>Denite grep<cr>
   " nnoremap <silent> <space>u  :<C-u>Denite -mode=normal file_mru<cr>
   " nnoremap <silent> <space>d  :<C-u>Denite -mode=normal -highlight-matched-char=None directory_mru<cr>
@@ -757,6 +759,7 @@ if dein#tap('coc.nvim')
   nmap <leader>ac <Plug>(coc-codeaction)
   nnoremap <silent> K :call <SID>show_documentation()<cr>
 
+  nnoremap <silent> <c-p>     :<C-u>CocList files<cr>
   nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
   nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
   nnoremap <silent> <space>u  :<C-u>CocList --normal mru<cr>
@@ -788,6 +791,7 @@ if dein#tap('coc.nvim')
   command! -nargs=? Fold :call CocAction('fold', <f-args>)
   command! -nargs=+ -complete=custom,s:GrepArgs Rg exe 'CocList grep '.<q-args>
   command! -nargs=0 Rgf exe 'CocList -I grep'
+  command! -nargs=0 TODO exe "CocList --normal grep //\ TODO"
 
   function! s:GrepArgs(...)
     let list = ['-S', '-smartcase', '-i', '-ignorecase', '-w', '-word',
@@ -1044,8 +1048,8 @@ if dein#tap('ultisnips')
 endif
 
 if dein#tap('sideways.vim')
-  nnoremap <c-h> :SidewaysLeft<cr>
-  nnoremap <c-l> :SidewaysRight<cr>
+  " nnoremap <leader>h :SidewaysLeft<cr>
+  " nnoremap <leader>l :SidewaysRight<cr>
   omap aa <Plug>SidewaysArgumentTextobjA
   xmap aa <Plug>SidewaysArgumentTextobjA
   omap ia <Plug>SidewaysArgumentTextobjI
@@ -1078,7 +1082,7 @@ if dein#tap('golden-ratio')
   nmap <silent><leader>z <Plug>(golden_ratio_resize)
 endif
 
-if dein#tap('vim-airline')
+" if dein#tap('vim-airline')
   function! StatusDiagnostic() abort
     let info = get(b:, 'coc_diagnostic_info', {})
     if empty(info) | return '' | endif
@@ -1098,18 +1102,27 @@ if dein#tap('vim-airline')
     return join(msgs, ' ') . '' . get(g:, 'coc_status', '')
   endfunction
 
+  function! GetBufName()
+    let bufname = expand('%:~:.')
+    if (bufname) == ''
+        let bufname = '[no name]'
+    endif
+    return bufname
+  endfunction
+
   if has('statusline')
     set laststatus=2
     " set statusline=%{getcwd()}
     " set statusline+=\ %<%f
-    set statusline+=%F
+    " set statusline+=%F
+    set statusline+=%{GetBufName()}
     set statusline+=\ %{''.(&fenc!=''?&fenc:&enc).''}
     set statusline+=%{(&bomb?\\",BOM\\":\\"\\")}
     set statusline+=\ %{&ff}\ %y
     set statusline+=\ %m%r%w
     set statusline+=%=%{StatusDiagnostic()}\ 
+    set statusline+=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}\ 
     set statusline+=%-14.(%l/%L,%c%V%)\ %p%%
-    set statusline^=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}
   endif
   if exists('+showtabline')
     function! Tabline()
@@ -1140,11 +1153,11 @@ if dein#tap('vim-airline')
     endfunction
     set tabline=%!Tabline()
   endif
-  let g:airline_powerline_fonts = 1
-  let g:airline#extensions#tabline#enabled = 1
-  let g:airline#extensions#tabline#formatter = 'unique_tail'
-  let g:airline#extensions#tabline#buffer_nr_show = 1
-endif
+"   let g:airline_powerline_fonts = 1
+"   let g:airline#extensions#tabline#enabled = 1
+"   let g:airline#extensions#tabline#formatter = 'unique_tail'
+"   let g:airline#extensions#tabline#buffer_nr_show = 1
+" endif
 
 if dein#tap('indentLine')
   let g:indentLine_enabled = 0
