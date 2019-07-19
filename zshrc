@@ -8,10 +8,22 @@ alias gpo="git pull origin"
 alias gpod="git pull origin develop"
 alias gs='git status '
 alias gd='git diff'
+alias rclone='rclone --config ~/erinn/satori/rclone.conf'
+
+eval "$(lua ~/scripts/z.lua --init zsh)"
+
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+
+export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
+export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
+
+export LDFLAGS="-L/usr/local/opt/llvm/lib"
+export CPPFLAGS="-I/usr/local/opt/llvm/include"
 
 export ZSH=~/.oh-my-zsh
-export GOPATH=~/.golang
-export PATH=$PATH:~/.golang/bin
+export GOPATH=~/golang
+export PATH=$PATH:~/golang/bin
+export PATH="/usr/local/opt/llvm/bin:$PATH"
 
 export LANG=en_US.utf-8
 export LC_ALL=en_US.utf-8
@@ -20,6 +32,12 @@ export EDITOR=vim
 
 export TIMER_FORMAT='%d'
 export TIMER_PRECISION=2
+
+export HISTSIZE=1000000
+export HISTFILE=~/.zsh_history
+export SAVEHIST=$HISTSIZE
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
 
 __timer_current_time() {
   perl -MTime::HiRes=time -e'print time'
@@ -98,7 +116,7 @@ ZSH_THEME="norm"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z d wd web-search catimg encode64 urltools zsh-autosuggestions)
+plugins=(git d wd web-search catimg encode64 urltools zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -130,3 +148,7 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+source ~/erinn/asdf/asdf.sh
+source ~/erinn/asdf/completions/asdf.bash
+[[ -s "$HOME/.xmake/profile" ]] && source "$HOME/.xmake/profile" # load xmake profile
