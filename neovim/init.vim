@@ -58,7 +58,8 @@ if dein#load_state('~/.config/nvim/plugged/')
   " call dein#add('itchyny/vim-gitbranch')
   call dein#add('t9md/vim-quickhl')
   " call dein#add('jiangmiao/auto-pairs')
-  call dein#add('skywind3000/asyncrun.vim')
+  " call dein#add('skywind3000/asyncrun.vim')
+  call dein#add('macthecadillac/axe')
   call dein#add('roman/golden-ratio')
   call dein#add('kana/vim-operator-user'         , { 'lazy'     : 1 })
   " call dein#add('reedes/vim-wordy'               , { 'on_cmd'   : 'Wordy' })
@@ -72,6 +73,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('moll/vim-bbye'                  , { 'on_cmd'   : 'Bdelete', })
   call dein#add('tpope/vim-unimpaired')
   call dein#add('tpope/vim-eunuch')
+  call dein#add('tpope/vim-rhubarb')
   " call dein#add('ddrscott/vim-side-search'       , { 'on_cmd'   : 'SideSearch' })
   call dein#add('eugen0329/vim-esearch')
   " call dein#add('brooth/far.vim')
@@ -118,7 +120,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('Yggdroot/indentLine'     , { 'on_cmd': 'IndentLinesToggle' })
  
   " General
-  call dein#add('junegunn/vim-peekaboo')
+  " call dein#add('junegunn/vim-peekaboo')
   " call dein#add('Shougo/echodoc.vim', {
   "       \'on_event': 'CompleteDone',
   "       \'hook_post_source': 'call echodoc#enable()'
@@ -153,7 +155,11 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"call coc#add_extension('coc-svg')",
         \"call coc#add_extension('coc-yank')",
         \"call coc#add_extension('coc-git')",
-        \"call coc#add_extension('coc-post')",
+        \"call coc#add_extension('coc-smartf')",
+        \"call coc#add_extension('coc-go')",
+        \"call coc#add_extension('coc-elixir')",
+        \"call coc#add_extension('coc-marketplace')",
+        \"call coc#add_extension('coc-import-cost')",
         \"call coc#add_extension('coc-tabnine')",
         \], "\n")
         \})
@@ -294,7 +300,8 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('tikhomirov/vim-glsl', { 'on_ft': 'glsl' })
 
   " For markdown
-  call dein#add('iamcco/markdown-preview.nvim', {'on_ft': ['markdown', 'pandoc.markdown', 'rmd'],
+  call dein#add('tpope/vim-markdown', { 'on_ft': ['markdown'] })
+  call dein#add('iamcco/markdown-preview.nvim', { 'on_ft': ['markdown'],
 					\ 'build': 'cd app & yarn install' })
 
   call dein#end()
@@ -538,10 +545,9 @@ inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
 inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
-" autocmd FileType python,elm,go set tabstop=4 shiftwidth=4 expandtab ai
-" autocmd FileType vim,javascript,json,css,scss,html,yaml,typescript,typescript.tsx,javascript.jsx,md,ex,exs set tabstop=2 shiftwidth=2 expandtab ai
-autocmd FileType vim                                        set tabstop=4 shiftwidth=4 expandtab ai
-autocmd FileType c,cpp,javascript,typescript,typescript.tsx set tabstop=2 shiftwidth=2 expandtab ai
+" Respect .editorconfig
+" autocmd FileType python,elm,go,c,cpp,h set tabstop=4 shiftwidth=4 expandtab ai
+" autocmd FileType vim,javascript,javascript.jsx,typescript,typescript.tsx,json,css,scss,html,yaml,md       set tabstop=2 shiftwidth=2 expandtab ai
 
 autocmd BufNewFile,BufRead .tern-project  setfiletype json
 autocmd BufNewFile,BufRead .jsbeautifyrc  setfiletype json
@@ -743,10 +749,29 @@ if dein#tap('git-messenger.vim')
 endif
 
 if dein#tap('coc.nvim')
+  function! s:GoToDefinition()
+    if CocAction('jumpDefinition')
+      return v:true
+    endif
+
+    let ret = execute("silent! normal \<C-]>")
+    if ret[:5] =~ "Error"
+      call searchdecl(expand('<cword>'))
+    endif
+  endfunction
+
+  xmap if <Plug>(coc-funcobj-i)
+  xmap af <Plug>(coc-funcobj-a)
+  omap if <Plug>(coc-funcobj-i)
+  omap af <Plug>(coc-funcobj-a)
+
+  nmap <silent> [c <Plug>(coc-diagnostic-prev)
+  nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
   nmap [g <Plug>(coc-git-prevchunk)
   nmap ]g <Plug>(coc-git-nextchunk)
-  nmap gs <Plug>(coc-git-chunkinfo)
-  nmap <silent>gd <Plug>(coc-definition)
+  " nmap gs <Plug>(coc-git-chunkinfo)
+  " nmap <silent>gd <Plug>(coc-definition)
   nmap <silent>gy <Plug>(coc-type-definition)
   nmap <silent>gi <Plug>(coc-implementation)
   nmap <silent>gr <Plug>(coc-references)
@@ -757,7 +782,27 @@ if dein#tap('coc.nvim')
   vmap <leader>a  <Plug>(coc-codeaction-selected)
   nmap <leader>a  <Plug>(coc-codeaction-selected)
   nmap <leader>ac <Plug>(coc-codeaction)
-  nnoremap <silent> K :call <SID>show_documentation()<cr>
+  nmap <silent> K :call <SID>show_documentation()<cr>
+  nmap <silent> gd :call <SID>GoToDefinition()<cr>
+
+  nmap f <Plug>(coc-smartf-forward)
+  nmap F <Plug>(coc-smartf-backward)
+  nmap ; <Plug>(coc-smartf-repeat)
+  nmap , <Plug>(coc-smartf-repeat-opposite)
+  augroup Smartf
+    autocmd User SmartfEnter :hi Conceal ctermfg=220 guifg=white guibg=#ff5555
+  augroup end
+
+  " multiple cursors
+  " nmap <silent> <C-c> <Plug>(coc-cursors-position)
+  " nmap <silent> <C-d> <Plug>(coc-cursors-word)
+  " xmap <silent> <C-d> <Plug>(coc-cursors-range)
+  " " use normal command like `<leader>xi(`
+  " nmap <leader>x  <Plug>(coc-cursors-operator)
+  " hi CocCursorRange ctermfg=220 guifg=white guibg=#ff5555
+
+  command! -nargs=0 ColorPresentation :call CocAction('colorPresentation')
+  command! -nargs=0 PickColor :call CocAction('pickColor')
 
   nnoremap <silent> <c-p>     :<C-u>CocList files<cr>
   nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
@@ -789,8 +834,8 @@ if dein#tap('coc.nvim')
   command! -nargs=0 Prettier :CocCommand prettier.formatFile
   command! -nargs=0 Format :call CocAction('format')
   command! -nargs=? Fold :call CocAction('fold', <f-args>)
-  command! -nargs=+ -complete=custom,s:GrepArgs Rg exe 'CocList grep '.<q-args>
-  command! -nargs=0 Rgf exe 'CocList -I grep'
+  command! -nargs=+ -complete=custom,s:GrepArgs Rgl exe 'CocList grep '.<q-args>
+  command! -nargs=0 Rg exe 'CocList -I grep'
   command! -nargs=0 TODO exe "CocList --normal grep //\ TODO"
 
   function! s:GrepArgs(...)
@@ -838,23 +883,50 @@ if dein#tap('coc.nvim')
     autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
     autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
     autocmd FileType typescript,javascript,json,html,scss,css,graphql nmap <space><space> :Prettier<cr>
-    autocmd FileType cpp,c,svg,python nmap <space><space> :Format<cr>
+    autocmd FileType cpp,c,svg,python,go nmap <space><space> :Format<cr>
   augroup end
 endif
 
-if dein#tap('asyncrun.vim')
-  let g:asyncrun_bell = 1
+" if dein#tap('asyncrun.vim')
+"   let g:asyncrun_bell = 1
+"
+"   noremap <leader>q :call asyncrun#quickfix_toggle(8)<cr>
+"
+"   autocmd FileType c,cpp noremap <leader>c :AsyncRun xmake -r<cr>
+"   autocmd FileType c,cpp noremap <leader>r :AsyncRun xmake run<cr>
+"   autocmd FileType c,cpp noremap <leader>l :AsyncRun xmake project -k compile_commands<cr>
+"   autocmd FileType javascript noremap <leader>r :AsyncRun node %<cr>
+"
+"   augroup vimrc
+"     autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)
+"   augroup END
+" endif
 
-  noremap <leader>q :call asyncrun#quickfix_toggle(8)<cr>
+if dein#tap('axe')
+  let g:axe#cmds = {
+    \ '*': {
+    \   },
+    \ 'javascript': {
+    \     'run': {
+    \       'cmd': 'node',
+    \       'in_term': 1
+    \     },
+    \   },
+    \ 'typescript': {
+    \     'run': {
+    \       'cmd': 'tsnode',
+    \       'in_term': 1
+    \     },
+    \   },
+    \ 'python': {
+    \     'run': {
+    \       'cmd': 'python',
+    \       'in_term': 1
+    \     },
+    \   },
+    \ }
 
-  autocmd FileType c,cpp noremap <leader>c :AsyncRun xmake -r<cr>
-  autocmd FileType c,cpp noremap <leader>r :AsyncRun xmake run<cr>
-  autocmd FileType c,cpp noremap <leader>l :AsyncRun xmake project -k compile_commands<cr>
-  autocmd FileType javascript noremap <leader>r :AsyncRun node %<cr>
-
-  augroup vimrc
-    autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)
-  augroup END
+  nnoremap <silent> <leader>r  :<C-u>Axe run<cr>
 endif
 
 if dein#tap('vim-dirvish')

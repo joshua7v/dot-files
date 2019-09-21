@@ -8,23 +8,28 @@
   "suggest.timeout": 2000,
   "suggest.enablePreview": true,
   "codeLens.enable": true,
-  "diagnostic.virtualText": true,
+  "diagnostic.virtualText": false,
   "list.indicator": "λ",
+  "list.interactiveDebounceTime": 1000,
+  "list.limitLines": 300,
   "list.normalMappings": {},
+  "list.source.grep.excludePatterns": ["**/*.min.js", "**/*.min.css", "**/*.js.map"],
   "python.jediEnabled": false,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": true,
+  "tabnine.priority": 70,
+  "tabnine.limit": 5,
+  "smartf.timeout": 1000,
+  "smartf.jumpOnTrigger": true,
+  "smartf.charactersIgnoreByNavigator": ["a", "b", "f", "g", "i", "j", "k", "h", "l", "x", "p"],
+  "smartf.wordJump": true,
+  "highlight.disableLanguages": ["dirvish"],
+  "elixir.pathToElixirLS": "/usr/local/bin/elixir-ls",
   "languageserver": {
-    "ccls": {
-      "command": "ccls",
-      "filetypes": ["c", "cpp", "objc", "objcpp"],
-      "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
-      "initializationOptions": {
-        "clang": {
-          "extraArgs": ["-stdlib=libc++", "-I/usr/local/Cellar/llvm/8.0.0/include/c++/v1"]
-        },
-        "cache": {
-          "directory": "/tmp/ccls"
-        }
-      }
+    "clangd": {
+      /* "command": "clangd", */
+      "command": "/usr/local/Cellar/llvm/8.0.1/bin/clangd",
+      "rootPatterns": ["compile_flags.txt", "compile_commands.json", ".vim/", ".git/", ".hg/"],
+      "filetypes": ["c", "cpp", "objc", "objcpp"]
     },
     "elixir": {
       "command": "elixir-ls",
@@ -44,6 +49,17 @@
       "args": ["start"],
       "filetypes": ["sh"],
       "ignoredRootPaths": ["~"]
+    },
+    "elmLS": {
+      "command": "elm-language-server",
+      "args": ["--stdio"],
+      "filetypes": ["elm"],
+      "rootPatterns": ["elm.json"],
+      "initializationOptions": {
+        "runtime": "node",
+        "elmPath": "elm",
+        "elmFormatPath": "elm-format"
+      }
     }
   }
 }
