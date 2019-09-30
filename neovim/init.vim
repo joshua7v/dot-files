@@ -58,8 +58,8 @@ if dein#load_state('~/.config/nvim/plugged/')
   " call dein#add('itchyny/vim-gitbranch')
   call dein#add('t9md/vim-quickhl')
   " call dein#add('jiangmiao/auto-pairs')
-  " call dein#add('skywind3000/asyncrun.vim')
-  call dein#add('macthecadillac/axe')
+  call dein#add('skywind3000/asyncrun.vim')
+  " call dein#add('macthecadillac/axe')
   call dein#add('roman/golden-ratio')
   call dein#add('kana/vim-operator-user'         , { 'lazy'     : 1 })
   " call dein#add('reedes/vim-wordy'               , { 'on_cmd'   : 'Wordy' })
@@ -160,9 +160,10 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"call coc#add_extension('coc-elixir')",
         \"call coc#add_extension('coc-marketplace')",
         \"call coc#add_extension('coc-import-cost')",
-        \"call coc#add_extension('coc-tabnine')",
+        \"call coc#add_extension('coc-omni')",
         \], "\n")
         \})
+        " \"call coc#add_extension('coc-tabnine')",
   call dein#add('mbbill/undotree', {
         \'on_cmd': 'UndotreeToggle',
         \'hook_add': join([
@@ -298,6 +299,9 @@ if dein#load_state('~/.config/nvim/plugged/')
   
   " For glsl
   call dein#add('tikhomirov/vim-glsl', { 'on_ft': 'glsl' })
+
+  " For cmake
+  call dein#add('richq/vim-cmake-completion', { 'on_ft': 'cmake' })
 
   " For markdown
   call dein#add('tpope/vim-markdown', { 'on_ft': ['markdown'] })
@@ -604,9 +608,9 @@ vmap <Leader>aa :Tabularize /
 nnoremap <leader>fs :FuzzySearch<cr>
 
 if dein#tap('deol.nvim')
-    nnoremap <silent><leader>1 :Deol -split=floating<CR>
-    inoremap <silent><leader>1 <C-\><C-n>:q<CR>
-    tnoremap <silent><leader>1 <C-\><C-n>:q<CR>
+    nnoremap <silent><leader><leader> :Deol -split=floating<CR>
+    inoremap <silent><leader><leader> <C-\><C-n>:q<CR>
+    tnoremap <silent><leader><leader> <C-\><C-n>:q<CR>
 endif
 
 if dein#tap('auto-pairs')
@@ -828,7 +832,7 @@ if dein#tap('coc.nvim')
 	let g:coc_snippet_prev = '<s-tab>'
 	nmap <silent>[c <Plug>(coc-diagnostic-prev)
 	nmap <silent>]c <Plug>(coc-diagnostic-next)
-  nmap <leader><leader> <Plug>(coc-diagnostic-info)
+  nmap <leader>e <Plug>(coc-diagnostic-info)
   nmap <leader>cl <Plug>(coc-codelens-action)
 
   command! -nargs=0 Prettier :CocCommand prettier.formatFile
@@ -887,47 +891,51 @@ if dein#tap('coc.nvim')
   augroup end
 endif
 
-" if dein#tap('asyncrun.vim')
-"   let g:asyncrun_bell = 1
-"
-"   noremap <leader>q :call asyncrun#quickfix_toggle(8)<cr>
-"
-"   autocmd FileType c,cpp noremap <leader>c :AsyncRun xmake -r<cr>
-"   autocmd FileType c,cpp noremap <leader>r :AsyncRun xmake run<cr>
-"   autocmd FileType c,cpp noremap <leader>l :AsyncRun xmake project -k compile_commands<cr>
-"   autocmd FileType javascript noremap <leader>r :AsyncRun node %<cr>
-"
-"   augroup vimrc
-"     autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)
-"   augroup END
-" endif
+if dein#tap('asyncrun.vim')
+  let g:asyncrun_bell = 1
 
-if dein#tap('axe')
-  let g:axe#cmds = {
-    \ '*': {
-    \   },
-    \ 'javascript': {
-    \     'run': {
-    \       'cmd': 'node',
-    \       'in_term': 1
-    \     },
-    \   },
-    \ 'typescript': {
-    \     'run': {
-    \       'cmd': 'tsnode',
-    \       'in_term': 1
-    \     },
-    \   },
-    \ 'python': {
-    \     'run': {
-    \       'cmd': 'python',
-    \       'in_term': 1
-    \     },
-    \   },
-    \ }
+  noremap <leader>q :call asyncrun#quickfix_toggle(8)<cr>
 
-  nnoremap <silent> <leader>r  :<C-u>Axe run<cr>
+  noremap <leader>ar :AsyncRun 
+  noremap <leader>arr :AsyncRun! 
+  autocmd FileType c,cpp noremap <leader>m :AsyncRun cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -B build .<cr>
+  autocmd FileType c,cpp noremap <leader>c :AsyncRun -cwd=build make<cr>
+  autocmd FileType c,cpp noremap <leader>r :AsyncRun -cwd=build -raw make run<cr>
+  autocmd FileType c,cpp noremap <leader>cc :AsyncRun make -cwd=build make clean<cr>
+  autocmd FileType javascript noremap <leader>r :AsyncRun node %<cr>
+  autocmd FileType python noremap <leader>r :AsyncRun python %<cr>
+
+  augroup vimrc
+    autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)
+  augroup END
 endif
+
+" if dein#tap('axe')
+"   let g:axe#cmds = {
+"     \ '*': {
+"     \   },
+"     \ 'javascript': {
+"     \     'run': {
+"     \       'cmd': 'node',
+"     \       'in_term': 1
+"     \     },
+"     \   },
+"     \ 'typescript': {
+"     \     'run': {
+"     \       'cmd': 'tsnode',
+"     \       'in_term': 1
+"     \     },
+"     \   },
+"     \ 'python': {
+"     \     'run': {
+"     \       'cmd': 'python',
+"     \       'in_term': 1
+"     \     },
+"     \   },
+"     \ }
+"
+"   nnoremap <silent> <leader>r  :<C-u>Axe run<cr>
+" endif
 
 if dein#tap('vim-dirvish')
   let g:dirvish_relative_paths = 0
@@ -1236,8 +1244,8 @@ if dein#tap('indentLine')
   nnoremap <leader>i :IndentLinesToggle<cr>
 endif
 
-nnoremap <Leader>M :bn<cr>
-nnoremap <Leader>m :bp<cr>
+" nnoremap <Leader>M :bn<cr>
+" nnoremap <Leader>m :bp<cr>
 nnoremap <Leader>b <C-^>
 nnoremap qq :bd<cr>
 
@@ -1254,7 +1262,7 @@ nnoremap <Leader>; A;<ESC>
 nnoremap <Leader>cc A,<ESC>
 nnoremap <Leader>. A.<ESC>
 nnoremap <Leader>\ A \<ESC>
-nnoremap <Leader>e :tabnew 
+" nnoremap <Leader>e :tabnew 
 nnoremap <Leader>ee :e <C-R>=expand('%:p:h') . '/'<CR>
 nnoremap <Leader>ef :e <C-R>=expand('%')<CR>
 nnoremap <Leader>ec :tabnew ~/.config/nvim/init.vim
