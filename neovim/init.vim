@@ -133,7 +133,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('tpope/vim-projectionist')
   call dein#add('tpope/vim-dispatch')
   call dein#add('neoclide/coc.nvim', {
-        \'build': 'yarn install',
+        \'rev': 'release',
         \'hook_source': join([
         \"call coc#add_extension('coc-pairs')",
         \"call coc#add_extension('coc-json')",
@@ -196,6 +196,8 @@ if dein#load_state('~/.config/nvim/plugged/')
  
   " For c family
   call dein#add('sakhnik/nvim-gdb', { 'build': './install.sh' })
+  call dein#add('vim-scripts/a.vim', { 'on_ft': ['cpp'] })
+  call dein#add('tenfyzhong/vim-gencode-cpp', { 'on_ft': ['cpp'] })
  
   " For html / css
   call dein#add('Valloric/MatchTagAlways', {
@@ -550,8 +552,8 @@ inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDow
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 " Respect .editorconfig
-" autocmd FileType python,elm,go,c,cpp,h set tabstop=4 shiftwidth=4 expandtab ai
-" autocmd FileType vim,javascript,javascript.jsx,typescript,typescript.tsx,json,css,scss,html,yaml,md       set tabstop=2 shiftwidth=2 expandtab ai
+" autocmd FileType python,c,cpp set tabstop=4 shiftwidth=4 expandtab ai
+autocmd FileType vim set tabstop=2 shiftwidth=2 expandtab ai
 
 autocmd BufNewFile,BufRead .tern-project  setfiletype json
 autocmd BufNewFile,BufRead .jsbeautifyrc  setfiletype json
@@ -894,7 +896,7 @@ endif
 if dein#tap('asyncrun.vim')
   let g:asyncrun_bell = 1
 
-  noremap <leader>q :call asyncrun#quickfix_toggle(8)<cr>
+  noremap <leader>q :call asyncrun#quickfix_toggle(18)<cr>
 
   noremap <leader>ar :AsyncRun 
   noremap <leader>arr :AsyncRun! 
@@ -906,7 +908,7 @@ if dein#tap('asyncrun.vim')
   autocmd FileType python noremap <leader>r :AsyncRun python %<cr>
 
   augroup vimrc
-    autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)
+    autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(18, 1)
   augroup END
 endif
 
@@ -1125,6 +1127,11 @@ if dein#tap('ultisnips')
   " inoremap <silent> <expr> <Tab> ncm2_ultisnips#expand_or("\<Plug>(ultisnips_try_expand)")
   " inoremap <silent> <Plug>(ultisnips_try_expand) <C-R>=UltiSnipsExpandOrJumpOrTab()<CR>
   " snoremap <silent> <Tab> <Esc>:call UltiSnips#ExpandSnippetOrJump()<cr>
+endif
+
+if dein#tap('vim-gencode-cpp')
+  nnoremap <silent><leader>td :GenDeclaration<cr>
+  nnoremap <silent><leader>ti :GenDefinition<cr>
 endif
 
 if dein#tap('sideways.vim')
