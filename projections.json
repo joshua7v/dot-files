@@ -1,0 +1,33 @@
+{
+  "*.tsx": {
+    "template": [
+      "import React from 'react';",
+      "",
+      "type Props = {open}{close};",
+      "",
+      "function {basename}(props: Props) {",
+      "  return <div className=\"{basename}\" />;",
+      "}",
+      "",
+      "export default {basename};"
+    ]
+  },
+  "*.{css,scss}": {
+    "template": [".{basename} {open}", "{close}"]
+  },
+  "*.module.scss": {
+    "template": [".container {open}", "{close}"]
+  },
+  "*.cpp": {
+    "template": [
+      "#include <iostream>",
+      "",
+      "int main(int argc, const char *argv[]) {",
+      "    return 0;",
+      "}"
+    ]
+  },
+  "*.h": {
+    "template": ["#pragma once"]
+  }
+}
