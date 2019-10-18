@@ -1,3 +1,9 @@
+" File              : init.vim
+" Date              : 15.10.2019
+" Last Modified Date: 15.10.2019
+" File              : init.vim
+" Date              : 15.10.2019
+" Last Modified Date: 15.10.2019
 " dein
 " curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh | bash ~/.config/nvim
 
@@ -51,6 +57,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('Julian/vim-textobj-variable-segment')
  
   " For delightful editing
+  call dein#add('ahonn/vim-fileheader')
   call dein#add('justinmk/vim-sneak')
   call dein#add('tmhedberg/matchit')
   call dein#add('pbrisbin/vim-mkdir')
@@ -133,7 +140,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('tpope/vim-projectionist')
   call dein#add('tpope/vim-dispatch')
   call dein#add('neoclide/coc.nvim', {
-        \'rev': 'release',
+        \'build': 'yarn install',
         \'hook_source': join([
         \"call coc#add_extension('coc-pairs')",
         \"call coc#add_extension('coc-json')",
@@ -196,8 +203,6 @@ if dein#load_state('~/.config/nvim/plugged/')
  
   " For c family
   call dein#add('sakhnik/nvim-gdb', { 'build': './install.sh' })
-  call dein#add('vim-scripts/a.vim', { 'on_ft': ['cpp'] })
-  call dein#add('tenfyzhong/vim-gencode-cpp', { 'on_ft': ['cpp'] })
  
   " For html / css
   call dein#add('Valloric/MatchTagAlways', {
@@ -552,8 +557,8 @@ inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDow
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 " Respect .editorconfig
-" autocmd FileType python,c,cpp set tabstop=4 shiftwidth=4 expandtab ai
-autocmd FileType vim set tabstop=2 shiftwidth=2 expandtab ai
+" autocmd FileType python,elm,go,c,cpp,h set tabstop=4 shiftwidth=4 expandtab ai
+" autocmd FileType vim,javascript,javascript.jsx,typescript,typescript.tsx,json,css,scss,html,yaml,md       set tabstop=2 shiftwidth=2 expandtab ai
 
 autocmd BufNewFile,BufRead .tern-project  setfiletype json
 autocmd BufNewFile,BufRead .jsbeautifyrc  setfiletype json
@@ -610,9 +615,9 @@ vmap <Leader>aa :Tabularize /
 nnoremap <leader>fs :FuzzySearch<cr>
 
 if dein#tap('deol.nvim')
-    nnoremap <silent><leader><leader> :Deol -split=floating<CR>
-    inoremap <silent><leader><leader> <C-\><C-n>:q<CR>
-    tnoremap <silent><leader><leader> <C-\><C-n>:q<CR>
+    nnoremap <silent><leader>t :Deol -split=floating<CR>
+    inoremap <silent><leader>t <C-\><C-n>:q<CR>
+    tnoremap <silent><leader>t <C-\><C-n>:q<CR>
 endif
 
 if dein#tap('auto-pairs')
@@ -896,7 +901,7 @@ endif
 if dein#tap('asyncrun.vim')
   let g:asyncrun_bell = 1
 
-  noremap <leader>q :call asyncrun#quickfix_toggle(18)<cr>
+  noremap <leader>q :call asyncrun#quickfix_toggle(8)<cr>
 
   noremap <leader>ar :AsyncRun 
   noremap <leader>arr :AsyncRun! 
@@ -908,7 +913,7 @@ if dein#tap('asyncrun.vim')
   autocmd FileType python noremap <leader>r :AsyncRun python %<cr>
 
   augroup vimrc
-    autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(18, 1)
+    autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)
   augroup END
 endif
 
@@ -1127,11 +1132,6 @@ if dein#tap('ultisnips')
   " inoremap <silent> <expr> <Tab> ncm2_ultisnips#expand_or("\<Plug>(ultisnips_try_expand)")
   " inoremap <silent> <Plug>(ultisnips_try_expand) <C-R>=UltiSnipsExpandOrJumpOrTab()<CR>
   " snoremap <silent> <Tab> <Esc>:call UltiSnips#ExpandSnippetOrJump()<cr>
-endif
-
-if dein#tap('vim-gencode-cpp')
-  nnoremap <silent><leader>td :GenDeclaration<cr>
-  nnoremap <silent><leader>ti :GenDefinition<cr>
 endif
 
 if dein#tap('sideways.vim')
