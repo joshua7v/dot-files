@@ -110,7 +110,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \})
   call dein#add('SirVer/ultisnips')
   call dein#add('honza/vim-snippets')
-  call dein#add('kshenoy/vim-signature')
+  " call dein#add('kshenoy/vim-signature')
   call dein#add('guns/xterm-color-table.vim', { 'on_cmd': 'XtermColorTable' })
   call dein#add('powerman/vim-plugin-AnsiEsc')
   call dein#add('Shougo/deol.nvim')
@@ -139,8 +139,9 @@ if dein#load_state('~/.config/nvim/plugged/')
   " call dein#add('tpope/vim-vinegar')
   call dein#add('tpope/vim-projectionist')
   call dein#add('tpope/vim-dispatch')
+  " call dein#add('dense-analysis/ale')
   call dein#add('neoclide/coc.nvim', {
-        \'build': 'yarn install',
+        \'rev': 'release',
         \'hook_source': join([
         \"call coc#add_extension('coc-pairs')",
         \"call coc#add_extension('coc-json')",
@@ -203,6 +204,7 @@ if dein#load_state('~/.config/nvim/plugged/')
  
   " For c family
   call dein#add('sakhnik/nvim-gdb', { 'build': './install.sh' })
+  call dein#add('tenfyzhong/vim-gencode-cpp', { 'on_ft': ['cpp'] })
  
   " For html / css
   call dein#add('Valloric/MatchTagAlways', {
@@ -901,20 +903,25 @@ endif
 if dein#tap('asyncrun.vim')
   let g:asyncrun_bell = 1
 
-  noremap <leader>q :call asyncrun#quickfix_toggle(8)<cr>
+  noremap <leader>q :call asyncrun#quickfix_toggle(30)<cr>
 
   noremap <leader>ar :AsyncRun 
   noremap <leader>arr :AsyncRun! 
-  autocmd FileType c,cpp noremap <leader>m :AsyncRun cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -B build .<cr>
-  autocmd FileType c,cpp noremap <leader>c :AsyncRun -cwd=build make<cr>
-  autocmd FileType c,cpp noremap <leader>r :AsyncRun -cwd=build -raw make run<cr>
-  autocmd FileType c,cpp noremap <leader>cc :AsyncRun make -cwd=build make clean<cr>
+  autocmd FileType c,cpp,cmake noremap <leader>m :AsyncRun cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -B build .<cr>
+  autocmd FileType c,cpp,cmake noremap <leader>c :AsyncRun -cwd=build make<cr>
+  autocmd FileType c,cpp,cmake noremap <leader>r :AsyncRun -cwd=build -raw make run<cr>
+  autocmd FileType c,cpp,cmake noremap <leader>cc :AsyncRun make -cwd=build make clean<cr>
   autocmd FileType javascript noremap <leader>r :AsyncRun node %<cr>
   autocmd FileType python noremap <leader>r :AsyncRun python %<cr>
 
   augroup vimrc
-    autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(8, 1)
+    autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(30, 1)
   augroup END
+endif
+
+if dein#tap('vim-gencode-cpp')
+    noremap <leader>tdc :GenDeclaration<cr>
+    noremap <leader>tdd :GenDefinition<cr>
 endif
 
 " if dein#tap('axe')
@@ -1042,7 +1049,7 @@ if dein#tap('vim-go')
 endif
 
 if dein#tap('emmet-vim')
-  let g:user_emmet_leader_key = ','
+  let g:user_emmet_leader_key = '<c-e>'
   let g:user_emmet_settings = {
   \ 'javascript.jsx' : {
   \   'extends' : 'jsx'
@@ -1315,21 +1322,21 @@ if has('macunix')
   " vnoremap <C-c> :w !pbcopy<cr><cr>
 endif
 
-nnoremap <leader>u :<C-u>MiniBrowser <C-r><C-p><CR>
-function! s:devdocs(query) abort
-    if a:query ==# ''
-        let cword = expand('<cword>')
-        if cword ==# ''
-            MiniBrowser http://devdocs.io/
-        else
-            execute 'MiniBrowser' 'http://devdocs.io/#q='.escape(cword, ' \')
-        endif
-        return
-    endif
-
-    execute 'MiniBrowser' 'http://devdocs.io/#q='.escape(a:query, ' \')
-endfunction
-command! -nargs=* DevDocs call <SID>devdocs(<q-args>)
+" nnoremap <leader>u :<C-u>MiniBrowser <C-r><C-p><CR>
+" function! s:devdocs(query) abort
+"     if a:query ==# ''
+"         let cword = expand('<cword>')
+"         if cword ==# ''
+"             MiniBrowser http://devdocs.io/
+"         else
+"             execute 'MiniBrowser' 'http://devdocs.io/#q='.escape(cword, ' \')
+"         endif
+"         return
+"     endif
+"
+"     execute 'MiniBrowser' 'http://devdocs.io/#q='.escape(a:query, ' \')
+" endfunction
+" command! -nargs=* DevDocs call <SID>devdocs(<q-args>)
 
 hi! link SignColumn   LineNr
 hi! link ShowMarksHLl DiffAdd
