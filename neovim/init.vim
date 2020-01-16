@@ -57,6 +57,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('Julian/vim-textobj-variable-segment')
  
   " For delightful editing
+  call dein#add('rizzatti/dash.vim')
   call dein#add('ahonn/vim-fileheader')
   call dein#add('justinmk/vim-sneak')
   call dein#add('tmhedberg/matchit')
@@ -80,7 +81,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('moll/vim-bbye'                  , { 'on_cmd'   : 'Bdelete', })
   call dein#add('tpope/vim-unimpaired')
   call dein#add('tpope/vim-eunuch')
-  call dein#add('tpope/vim-rhubarb')
+  " call dein#add('tpope/vim-rhubarb')
   " call dein#add('ddrscott/vim-side-search'       , { 'on_cmd'   : 'SideSearch' })
   call dein#add('eugen0329/vim-esearch')
   " call dein#add('brooth/far.vim')
@@ -96,7 +97,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('ntpeters/vim-better-whitespace' , { 'on_event' : 'InsertEnter' })
   call dein#add('MattesGroeger/vim-bookmarks'    , { 'on_cmd'   : 'BookmarkToggle' })
   call dein#add('godlygeek/tabular'              , { 'on_cmd'   : 'Tabularize' })
-  call dein#add('ggVGc/vim-fuzzysearch'          , { 'on_cmd'   : 'FuzzySearch' })
+  " call dein#add('ggVGc/vim-fuzzysearch'          , { 'on_cmd'   : 'FuzzySearch' })
   call dein#add('vim-scripts/BufOnly.vim'        , { 'on_cmd'   : 'BufOnly' })
   " call dein#add('sbdchd/neoformat'               , { 'on_cmd'   : 'Neoformat' })
   call dein#add('tpope/vim-obsession'            , { 'on_cmd'   : 'Obsession' })
@@ -163,7 +164,6 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"call coc#add_extension('coc-svg')",
         \"call coc#add_extension('coc-yank')",
         \"call coc#add_extension('coc-git')",
-        \"call coc#add_extension('coc-smartf')",
         \"call coc#add_extension('coc-go')",
         \"call coc#add_extension('coc-elixir')",
         \"call coc#add_extension('coc-marketplace')",
@@ -232,6 +232,11 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('heavenshell/vim-jsdoc', {
         \'on_cmd': [ 'JsDoc' ],
         \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ]
+        \})
+
+  " For svelte
+  call dein#add('evanleck/vim-svelte', {
+        \'on_ft': [ 'svelte' ]
         \})
  
   " For vim
@@ -614,12 +619,14 @@ vmap <Leader>a\" :Tabularize /\"<CR>
 nmap <Leader>aa :Tabularize /
 vmap <Leader>aa :Tabularize /
 
-nnoremap <leader>fs :FuzzySearch<cr>
-
 if dein#tap('deol.nvim')
     nnoremap <silent><leader>t :Deol -split=floating<CR>
     inoremap <silent><leader>t <C-\><C-n>:q<CR>
     tnoremap <silent><leader>t <C-\><C-n>:q<CR>
+endif
+
+if dein#tap('dash.vim')
+    nnoremap gz :Dash<cr>
 endif
 
 if dein#tap('auto-pairs')
@@ -798,14 +805,6 @@ if dein#tap('coc.nvim')
   nmap <silent> K :call <SID>show_documentation()<cr>
   nmap <silent> gd :call <SID>GoToDefinition()<cr>
 
-  nmap f <Plug>(coc-smartf-forward)
-  nmap F <Plug>(coc-smartf-backward)
-  nmap ; <Plug>(coc-smartf-repeat)
-  nmap , <Plug>(coc-smartf-repeat-opposite)
-  augroup Smartf
-    autocmd User SmartfEnter :hi Conceal ctermfg=220 guifg=white guibg=#ff5555
-  augroup end
-
   " multiple cursors
   " nmap <silent> <C-c> <Plug>(coc-cursors-position)
   " nmap <silent> <C-d> <Plug>(coc-cursors-word)
@@ -896,7 +895,8 @@ if dein#tap('coc.nvim')
     autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
     autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
     autocmd FileType typescript,javascript,json,html,scss,css,graphql nmap <space><space> :Prettier<cr>
-    autocmd FileType cpp,c,svg,python,go nmap <space><space> :Format<cr>
+    autocmd FileType cpp,c,svg,python,go,svelte nmap <space><space> :Format<cr>
+    " autocmd FileType svelte nmap <space><space> :!npx prettier --write %<cr>
   augroup end
 endif
 
