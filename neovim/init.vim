@@ -63,8 +63,9 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('pbrisbin/vim-mkdir')
   call dein#add('kopischke/vim-stay')
   call dein#add('t9md/vim-quickhl')
-  call dein#add('skywind3000/asyncrun.vim')
   call dein#add('skywind3000/vim-terminal-help')
+  call dein#add('skywind3000/asyncrun.vim')
+  call dein#add('skywind3000/asynctasks.vim')
   call dein#add('roman/golden-ratio')
   call dein#add('kana/vim-operator-user'         , { 'lazy'     : 1 })
   " call dein#add('reedes/vim-wordy'               , { 'on_cmd'   : 'Wordy' })
@@ -126,7 +127,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('tpope/vim-fugitive')
   call dein#add('justinmk/vim-dirvish')
   call dein#add('tpope/vim-projectionist')
-  call dein#add('tpope/vim-dispatch')
+  call dein#add('liuchengxu/vista.vim')
   call dein#add('neoclide/coc.nvim', {
         \'rev': 'release',
         \'hook_source': join([
@@ -242,6 +243,9 @@ if dein#load_state('~/.config/nvim/plugged/')
   " call dein#add('fatih/vim-go', {
   "       \'on_ft': 'go'
   "       \})
+
+  " For v
+  call dein#add('cheap-glitch/vim-v', { 'on_ft': 'v' })
  
   " For solidity
   call dein#add('tomlion/vim-solidity', { 'on_ft': 'solidity' })
@@ -272,6 +276,9 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   " For cmake
   call dein#add('richq/vim-cmake-completion', { 'on_ft': 'cmake' })
+
+  " For toml
+  call dein#add('cespare/vim-toml', { 'on_ft': 'toml' })
 
   " For markdown
   call dein#add('tpope/vim-markdown', { 'on_ft': ['markdown'] })
@@ -582,6 +589,7 @@ if dein#tap('vim-terminal-help')
   let g:terminal_key = '<leader>t'
   let g:terminal_cwd = 2
   let g:terminal_list = 0
+  let g:terminal_height = 30
 endif
 
 if dein#tap('auto-pairs')
@@ -648,6 +656,16 @@ endif
 
 if dein#tap('git-messenger.vim')
   nmap gm <Plug>(git-messenger)
+endif
+
+if dein#tap('vista.vim')
+  let g:vista_default_executive = 'coc'
+  let g:vista_stay_on_open = 1
+  let g:vista_echo_cursor_strategy = 'floating_win'
+  let g:vista_highlight_whole_line = 1
+  let g:vista_sidebar_width = 50
+  let g:vista_cursor_delay = 600000
+  nmap <space>t :Vista!!<cr>
 endif
 
 if dein#tap('coc.nvim')
@@ -793,21 +811,28 @@ if dein#tap('asyncrun.vim')
   noremap <leader>q :call asyncrun#quickfix_toggle(30)<cr>
 
   noremap <leader>ar :AsyncRun -mode=term -pos=bottom 
-  autocmd FileType c,cpp,cmake noremap <leader>m :AsyncRun -mode=term -pos=bottom cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -B build .<cr>
-  autocmd FileType c,cpp,cmake noremap <leader>c :AsyncRun -mode=term -pos=bottom -cwd=build make<cr>
-  autocmd FileType c,cpp,cmake noremap <leader>r :AsyncRun -mode=term -pos=bottom -cwd=build -raw make run<cr>
-  autocmd FileType c,cpp,cmake noremap <leader>cc :AsyncRun -mode=term -pos=bottom make -cwd=build make clean<cr>
-  autocmd FileType javascript noremap <leader>r :AsyncRun -mode=term -pos=bottom node %<cr>
-  autocmd FileType python noremap <leader>r :AsyncRun -mode=term -pos=bottom python %<cr>
+  " autocmd FileType c,cpp,cmake noremap <leader>m :AsyncRun -mode=term -pos=bottom cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -B build .<cr>
+  " autocmd FileType c,cpp,cmake noremap <leader>c :AsyncRun -mode=term -pos=bottom -cwd=build make<cr>
+  " autocmd FileType c,cpp,cmake noremap <leader>cc :AsyncRun -mode=term -pos=bottom make -cwd=build make clean<cr>
 
   augroup vimrc
     autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(30, 1)
   augroup END
 endif
 
+if dein#tap('asynctasks.vim')
+  let g:asynctasks_rtp_config = 'asynctasks/tasks.ini'
+  let g:asyncrun_open = 6
+  let g:asynctasks_term_pos = 'bottom'
+  let g:asyncrun_rootmarks = ['.git', '.svn', '.root', '.project', '.hg', '.projectionist.json', '.editorconfig', 'compile_commands.json']
+  noremap <leader>r :AsyncTask run<cr>
+  noremap <leader>b :AsyncTask build<cr>
+  noremap <leader>c :AsyncTask clean<cr>
+endif
+
 if dein#tap('vim-gencode-cpp')
-    noremap <leader>tdc :GenDeclaration<cr>
-    noremap <leader>tdd :GenDefinition<cr>
+  noremap <leader>tdc :GenDeclaration<cr>
+  noremap <leader>tdd :GenDefinition<cr>
 endif
 
 if dein#tap('vim-dirvish')
@@ -1113,7 +1138,7 @@ endif
 
 " nnoremap <Leader>M :bn<cr>
 " nnoremap <Leader>m :bp<cr>
-nnoremap <Leader>b <C-^>
+nnoremap <Leader><leader> <C-^>
 nnoremap qq :bd<cr>
 
 nnoremap <silent> qo :BufOnly<cr>
