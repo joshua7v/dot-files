@@ -104,6 +104,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   "       \})
   call dein#add('SirVer/ultisnips')
   call dein#add('honza/vim-snippets')
+  call dein#add('pechorin/any-jump.vim')
   call dein#add('guns/xterm-color-table.vim', { 'on_cmd': 'XtermColorTable' })
   call dein#add('powerman/vim-plugin-AnsiEsc')
   call dein#add('inside/vim-search-pulse', {
@@ -610,6 +611,23 @@ if dein#tap('vim-esearch')
   \ 'batch_size': 1000,
   \ 'use':        ['visual', 'hlsearch', 'last'],
   \}
+endif
+
+if dein#tap('any-jump.vim')
+  let g:any_jump_list_numbers = 0
+  let g:any_jump_usages_enabled = 1
+  let g:any_jump_grouping_enabled = 0
+  let g:any_jump_preview_lines_count = 5
+  let g:any_jump_max_search_results = 7
+  let g:any_jump_search_prefered_engine = 'rg'
+  let g:any_jump_results_ui_style = 'filename_first'
+
+  let g:any_jump_window_width_ratio  = 1.0
+  let g:any_jump_window_height_ratio = 0.6
+  let g:any_jump_window_top_offset   = 0
+
+  nnoremap <leader>n :AnyJump<CR>
+  nnoremap <leader>m :AnyJumpLastResults<CR>
 endif
 
 if dein#tap('vim-visual-multi')
