@@ -25,6 +25,7 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   " Color Schemes
   call dein#add('mhartington/oceanic-next')
+  call dein#add('joshdick/onedark.vim')
   " call dein#add('arcticicestudio/nord-vim')
   "
   " For textobj
@@ -120,11 +121,6 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('Yggdroot/indentLine'     , { 'on_cmd': 'IndentLinesToggle' })
  
   " General
-  " call dein#add('junegunn/vim-peekaboo')
-  " call dein#add('Shougo/echodoc.vim', {
-  "       \'on_event': 'CompleteDone',
-  "       \'hook_post_source': 'call echodoc#enable()'
-  "       \})
   call dein#add('tpope/vim-fugitive')
   call dein#add('justinmk/vim-dirvish')
   call dein#add('tpope/vim-projectionist')
@@ -173,9 +169,6 @@ if dein#load_state('~/.config/nvim/plugged/')
         \], "\n")
         \})
  
-  " Git
-  " call dein#add('mhinz/vim-signify')
- 
   " For binary
   call dein#add('Shougo/vinarise.vim', {
         \'on_cmd': 'Vinarise'
@@ -187,102 +180,39 @@ if dein#load_state('~/.config/nvim/plugged/')
  
   " For html / css
   call dein#add('Valloric/MatchTagAlways', {
-        \'on_ft': [ 'html', 'xml', 'javascript', 'javascript.jsx', 'typescript.tsx', 'eelixir' ],
+        \'on_ft': [ 'html', 'xml', 'javascript', 'javascript.jsx', 'typescript.tsx', 'typescriptreact', 'eelixir' ],
         \})
   call dein#add('mattn/emmet-vim', {
-        \'on_ft': [ 'html', 'css', 'scss', 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx', 'eelixir' ],
+        \'on_ft': [ 'html', 'css', 'scss', 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx', 'typescriptreact', 'eelixir' ],
         \})
   " call dein#add('chrisbra/Colorizer', { 'on_cmd': 'ColorToggle' })
- 
-  " call dein#add('purescript-contrib/purescript-vim', {
-  "       \'on_ft': [ 'purescript' ]
-  "       \})
- 
+
   " For javascript
   call dein#add('styled-components/vim-styled-components', {
-        \'on_ft': [ 'javascript.jsx', 'typescript.tsx' ]
+        \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript.tsx', 'typescriptreact' ]
         \})
-  call dein#add('neoclide/vim-jsx-improve', {
-        \'on_ft': [ 'javascript' ]
-        \})
-  call dein#add('othree/javascript-libraries-syntax.vim', {
-        \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ]
-        \})
+  " call dein#add('neoclide/vim-jsx-improve', {
+  "       \'on_ft': [ 'javascript' ]
+  "       \})
+  " call dein#add('othree/javascript-libraries-syntax.vim', {
+  "       \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ]
+  "       \})
   call dein#add('heavenshell/vim-jsdoc', {
         \'on_cmd': [ 'JsDoc' ],
-        \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ]
+        \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx', 'typescriptreact' ]
         \})
-
-  " For svelte
-  call dein#add('evanleck/vim-svelte', {
-        \'on_ft': [ 'svelte' ]
-        \})
- 
-  " For vim
+  call dein#add('sheerun/vim-polyglot')
  
   " For json
   call dein#add('neoclide/jsonc.vim')
  
-  " For elm
- 
-  " For typescript
-  call dein#add('leafgarland/typescript-vim', {
-        \'on_ft': [ 'typescript', 'typescript.tsx' ]
-        \})
-  call dein#add('joshua7v/vim-tsx-improve', {
-        \'on_ft': [ 'typescript', 'typescript.tsx' ]
-        \})
- 
-  " For elixir
-  call dein#add('elixir-editors/vim-elixir', {
-        \'on_ft': [ 'elixir', 'eelixir' ]
-        \})
- 
-  " For python
- 
-  " For go
-  " call dein#add('fatih/vim-go', {
-  "       \'on_ft': 'go'
-  "       \})
-
-  " For v
-  call dein#add('cheap-glitch/vim-v', { 'on_ft': 'v' })
- 
-  " For solidity
-  call dein#add('tomlion/vim-solidity', { 'on_ft': 'solidity' })
- 
-  " For docker
-  call dein#add('ekalinin/Dockerfile.vim', { 'on_ft': ['Dockerfile', 'docker-compose'] })
- 
-  " For yaml
-  call dein#add('stephpy/vim-yaml', { 'on_ft': 'yaml' })
- 
-  " For graphql
-  call dein#add('jparise/vim-graphql', { 'on_ft': ['graphql', 'typescript', 'typescript.tsx'] })
- 
-  " For jenkins
-  call dein#add('martinda/Jenkinsfile-vim-syntax', { 'on_ft': ['Jenkinsfile'] })
- 
-  " For gml
-  call dein#add('peterhoeg/vim-qml', { 'on_ft': 'qml' })
- 
-  " For api
-  " call dein#add('kylef/apiblueprint.vim', { 'on_ft': 'apiblueprint' })
- 
   " For dot
   " call dein#add('wannesm/wmgraphviz.vim', { 'on_ft': 'dot' })
-  
-  " For glsl
-  call dein#add('tikhomirov/vim-glsl', { 'on_ft': 'glsl' })
 
   " For cmake
   call dein#add('richq/vim-cmake-completion', { 'on_ft': 'cmake' })
 
-  " For toml
-  call dein#add('cespare/vim-toml', { 'on_ft': 'toml' })
-
   " For markdown
-  call dein#add('tpope/vim-markdown', { 'on_ft': ['markdown'] })
   call dein#add('iamcco/markdown-preview.nvim', { 'on_ft': ['markdown'],
 					\ 'build': 'cd app & yarn install' })
 
@@ -390,6 +320,7 @@ set nowrap " disable wrap
 set number " show line number
 set relativenumber " show relative line number
 set numberwidth=3
+" set re=1
 autocmd InsertEnter * :set norelativenumber " no relativenumber in insert mode
 autocmd InsertLeave * :set relativenumber   " show relativenumber when leave insert mode
 
@@ -429,6 +360,8 @@ function! s:patch_oceanic_next_colors()
   hi TabLineFill ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#1b2b34
   hi PmenuSel ctermbg=145 guibg=#ff5555
   hi WildMenu ctermbg=145 guibg=#ff5555
+  hi Type ctermfg=221 guifg=#fac863 term=NONE gui=NONE
+  " hi! link Special Keyword
 
   hi DiffAdd ctermfg=2 ctermbg=0 guifg=#A3BE8C guibg=#2E3440
   hi DiffChange ctermfg=3 ctermbg=0 guifg=#EBCB8B guibg=#2E3440
@@ -540,8 +473,8 @@ autocmd BufNewFile,BufRead .luacompleterc setfiletype json
 autocmd BufNewFile,BufRead .prettierrc    setfiletype json
 autocmd BufNewFile,BufRead .jscsrc        setfiletype json
 autocmd BufNewFile,BufRead *.wxml         setfiletype xml
-autocmd BufNewFile,BufRead *.jsx          set ft=javascript.jsx
-autocmd BufNewFile,BufRead *.tsx          set ft=typescript.tsx
+" autocmd BufNewFile,BufRead *.jsx          set ft=javascript.jsx
+" autocmd BufNewFile,BufRead *.tsx          set ft=typescript.tsx
 autocmd BufNewFile,BufRead *.ex           set ft=elixir
 autocmd BufNewFile,BufRead *.exs          set ft=elixir
 autocmd BufNewFile,BufRead *.eex          set ft=eelixir
@@ -818,7 +751,7 @@ if dein#tap('coc.nvim')
     autocmd!
     autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
     autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-    autocmd FileType typescript,typescript.tsx,javascript,json,html,scss,css,graphql nmap <space><space> :Prettier<cr>
+    autocmd FileType typescript,typescript.tsx,typescriptreact,javascript,json,html,scss,css,graphql nmap <space><space> :Prettier<cr>
     autocmd FileType cpp,c,svg,python,go nmap <space><space> :Format<cr>
   augroup end
 endif
@@ -921,7 +854,8 @@ if dein#tap('MatchTagAlways')
     \ 'jinja' : 1,
     \ 'javascript': 1,
     \ 'javascript.jsx': 1,
-    \ 'typescript.tsx': 1
+    \ 'typescript.tsx': 1,
+    \ 'typescriptreact': 1
     \}
 endif
 
