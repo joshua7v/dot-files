@@ -64,6 +64,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('pbrisbin/vim-mkdir')
   call dein#add('kopischke/vim-stay')
   call dein#add('t9md/vim-quickhl')
+  call dein#add('voldikss/vim-floaterm')
   call dein#add('skywind3000/vim-terminal-help')
   call dein#add('skywind3000/asyncrun.vim')
   call dein#add('skywind3000/asynctasks.vim')
@@ -188,9 +189,9 @@ if dein#load_state('~/.config/nvim/plugged/')
   " call dein#add('chrisbra/Colorizer', { 'on_cmd': 'ColorToggle' })
 
   " For javascript
-  call dein#add('styled-components/vim-styled-components', {
-        \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript.tsx', 'typescriptreact' ]
-        \})
+  " call dein#add('styled-components/vim-styled-components', {
+  "       \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript.tsx', 'typescriptreact' ]
+  "       \})
   " call dein#add('neoclide/vim-jsx-improve', {
   "       \'on_ft': [ 'javascript' ]
   "       \})
@@ -475,11 +476,14 @@ autocmd BufNewFile,BufRead .jscsrc        setfiletype json
 autocmd BufNewFile,BufRead *.wxml         setfiletype xml
 " autocmd BufNewFile,BufRead *.jsx          set ft=javascript.jsx
 " autocmd BufNewFile,BufRead *.tsx          set ft=typescript.tsx
-autocmd BufNewFile,BufRead *.ex           set ft=elixir
-autocmd BufNewFile,BufRead *.exs          set ft=elixir
-autocmd BufNewFile,BufRead *.eex          set ft=eelixir
-autocmd BufNewFile,BufRead *.vs,*.fs      set ft=glsl
-autocmd BufNewFile,BufRead *.tpl          set ft=html
+autocmd BufNewFile,BufRead *.ex               set ft=elixir
+autocmd BufNewFile,BufRead *.exs              set ft=elixir
+autocmd BufNewFile,BufRead *.eex              set ft=eelixir
+autocmd BufNewFile,BufRead *.vs,*.fs          set ft=glsl
+autocmd BufNewFile,BufRead *.tpl              set ft=html
+autocmd BufNewFile,BufRead tsconfig.json      set ft=jsonc
+autocmd BufNewFile,BufRead tslint.json        set ft=jsonc
+autocmd BufNewFile,BufRead coc-settings.json  set ft=jsonc
 
 autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
 
@@ -487,11 +491,13 @@ autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
 " Key Mappings: Customized keys
 " ----------------------------------------------------------------------------
 
-tnoremap <Esc> <C-\><C-n>
+" tnoremap <Esc> <C-\><C-n>
 " inoremap jj <ESC>
 nnoremap == <c-w>=
 nnoremap =v <c-w>_
 nnoremap =h <c-w><bar>
+nnoremap P "0p
+xnoremap P "0p
 
 nnoremap <leader>al :AirlineToggle<cr>
 
@@ -519,11 +525,40 @@ vmap <Leader>aa :Tabularize /
 
 nnoremap <leader>fs :FuzzySearch<cr>
 
+if dein#tap('vim-floaterm')
+
+  function! s:runner_proc(opts)
+    let curr_bufnr = floaterm#curr()
+    if has_key(a:opts, 'silent') && a:opts.silent == 1
+      call floaterm#hide()
+    endif
+    let cmd = 'cd ' . shellescape(getcwd())
+    call floaterm#terminal#send(curr_bufnr, [cmd])
+    call floaterm#terminal#send(curr_bufnr, [a:opts.cmd])
+    stopinsert
+    if &filetype == 'floaterm' && g:floaterm_autoinsert
+      call floaterm#util#startinsert()
+    endif
+  endfunction
+
+  let g:asyncrun_runner = get(g:, 'asyncrun_runner', {})
+  let g:asyncrun_runner.floaterm = function('s:runner_proc')
+  " let g:asynctasks_term_pos = 'floaterm'
+  let g:floaterm_keymap_toggle = '<c-q>'
+  let g:floaterm_wintitle = v:true
+  let g:floaterm_width = 0.8
+  let g:floaterm_height = 0.8
+
+  nnoremap <c-r> :Ranger<cr>
+  command! Ranger FloatermNew ranger
+  autocmd User Startified setlocal buflisted
+endif
+
 if dein#tap('vim-terminal-help')
   let g:terminal_key = '<leader>t'
   let g:terminal_cwd = 2
   let g:terminal_list = 0
-  let g:terminal_height = 30
+  let g:terminal_height = 12
 endif
 
 if dein#tap('auto-pairs')
