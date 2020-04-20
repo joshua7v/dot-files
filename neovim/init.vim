@@ -550,7 +550,7 @@ if dein#tap('vim-floaterm')
   let g:floaterm_height = 0.8
 
   nnoremap <c-r> :Ranger<cr>
-  command! Ranger FloatermNew ranger
+  command! Ranger FloatermNew vifm
   autocmd User Startified setlocal buflisted
 endif
 
