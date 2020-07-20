@@ -1,9 +1,6 @@
 " File              : init.vim
 " Date              : 15.10.2019
 " Last Modified Date: 15.10.2019
-" File              : init.vim
-" Date              : 15.10.2019
-" Last Modified Date: 15.10.2019
 " dein
 " curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh | bash ~/.config/nvim
 
@@ -122,6 +119,8 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('Yggdroot/indentLine'     , { 'on_cmd': 'IndentLinesToggle' })
  
   " General
+  " call dein#add('beeender/Comrade')
+  " call dein#add('nvim-treesitter/nvim-treesitter', { 'merged': 0 })
   call dein#add('tpope/vim-fugitive')
   call dein#add('justinmk/vim-dirvish')
   call dein#add('tpope/vim-projectionist')
@@ -202,16 +201,13 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'on_cmd': [ 'JsDoc' ],
         \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx', 'typescriptreact' ]
         \})
-  call dein#add('sheerun/vim-polyglot')
+  " call dein#add('sheerun/vim-polyglot')
  
   " For json
   call dein#add('neoclide/jsonc.vim')
  
   " For dot
   " call dein#add('wannesm/wmgraphviz.vim', { 'on_ft': 'dot' })
-
-  " For cmake
-  call dein#add('richq/vim-cmake-completion', { 'on_ft': 'cmake' })
 
   " For markdown
   call dein#add('iamcco/markdown-preview.nvim', { 'on_ft': ['markdown'],
@@ -422,6 +418,7 @@ function! s:patch_oceanic_next_colors()
 endfunction
 
 autocmd! ColorScheme OceanicNext call s:patch_oceanic_next_colors()
+autocmd! ColorScheme onedark call s:patch_oceanic_next_colors()
 
 if dein#tap('oceanic-next')
   colorscheme OceanicNext
@@ -787,7 +784,7 @@ if dein#tap('coc.nvim')
     autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
     autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
     autocmd FileType typescript,typescript.tsx,typescriptreact,javascript,json,html,scss,css,graphql nmap <space><space> :Prettier<cr>
-    autocmd FileType cpp,c,svg,python,go nmap <space><space> :Format<cr>
+    autocmd FileType cpp,objcpp,c,svg,python,go,rust,java nmap <space><space> :Format<cr>
   augroup end
 endif
 
@@ -813,6 +810,7 @@ if dein#tap('asynctasks.vim')
   let g:asyncrun_rootmarks = ['.git', '.svn', '.root', '.project', '.hg', '.projectionist.json', '.editorconfig', 'compile_commands.json']
   noremap <leader>r :AsyncTask run<cr>
   noremap <leader>b :AsyncTask build<cr>
+  noremap <leader>x :AsyncTask test<cr>
   noremap <leader>c :AsyncTask clean<cr>
 endif
 
