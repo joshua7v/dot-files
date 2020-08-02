@@ -1,0 +1,30 @@
+[file-run]
+command="$(VIM_FILEPATH)"
+command:python=python "$(VIM_FILENAME)"
+command:javascript=node "$(VIM_FILENAME)"
+output=terminal
+cwd=$(VIM_FILEDIR)
+
+[project-build]
+command:c,cpp=pushd build && vcvarsall x64 > nul && cl -FC -Zi ../src/main.cpp && popd
+command:rust=cargo build
+cwd=$(VIM_ROOT)
+output=terminal
+
+[project-run]
+command:c,cpp=pushd build && main.exe && popd
+command:rust=cargo run
+cwd=$(VIM_ROOT)
+output=terminal
+
+[project-test]
+command:c,cpp=
+command:rust=cargo test
+cwd=$(VIM_ROOT)
+output=terminal
+
+[project-clean]
+command:c,cpp=del build
+command:rust=cargo clean
+cwd=$(VIM_ROOT)
+output=terminal
