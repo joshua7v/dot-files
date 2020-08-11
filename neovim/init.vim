@@ -60,7 +60,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('tmhedberg/matchit')
   call dein#add('pbrisbin/vim-mkdir')
   call dein#add('kopischke/vim-stay')
-  call dein#add('t9md/vim-quickhl')
+  call dein#add('lfv89/vim-interestingwords')
   call dein#add('voldikss/vim-floaterm')
   call dein#add('skywind3000/vim-terminal-help')
   call dein#add('skywind3000/asyncrun.vim')
@@ -96,7 +96,6 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('AndrewRadev/sideways.vim'       , { 'on_map'   : { 'ox': '<Plug>Sideways' }})
   call dein#add('AndrewRadev/splitjoin.vim'      , { 'on_map'   : { 'n': '<Plug>Splitjoin' }})
   call dein#add('haya14busa/vim-edgemotion'      , { 'on_map'   : { 'nv': '<Plug>' }})
-  call dein#add('terryma/vim-expand-region'      , { 'on_map'   : { 'x': '<Plug>' }})
   " call dein#add('haya14busa/vim-operator-flashy', {
   "       \'depends': 'vim-operator-user',
   "       \'on_map': { 'nx': '<Plug>' }
@@ -128,32 +127,6 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('neoclide/coc.nvim', {
         \'rev': 'release',
         \'hook_source': join([
-        \"call coc#add_extension('coc-pairs')",
-        \"call coc#add_extension('coc-json')",
-        \"call coc#add_extension('coc-tsserver')",
-        \"call coc#add_extension('coc-tslint-plugin')",
-        \"call coc#add_extension('coc-eslint')",
-        \"call coc#add_extension('coc-html')",
-        \"call coc#add_extension('coc-css')",
-        \"call coc#add_extension('coc-jest')",
-        \"call coc#add_extension('coc-emoji')",
-        \"call coc#add_extension('coc-ultisnips')",
-        \"call coc#add_extension('coc-prettier')",
-        \"call coc#add_extension('coc-wxml')",
-        \"call coc#add_extension('coc-yaml')",
-        \"call coc#add_extension('coc-python')",
-        \"call coc#add_extension('coc-lists')",
-        \"call coc#add_extension('coc-word')",
-        \"call coc#add_extension('coc-tailwindcss')",
-        \"call coc#add_extension('coc-svg')",
-        \"call coc#add_extension('coc-yank')",
-        \"call coc#add_extension('coc-git')",
-        \"call coc#add_extension('coc-smartf')",
-        \"call coc#add_extension('coc-go')",
-        \"call coc#add_extension('coc-elixir')",
-        \"call coc#add_extension('coc-marketplace')",
-        \"call coc#add_extension('coc-import-cost')",
-        \"call coc#add_extension('coc-omni')",
         \], "\n")
         \})
         " \"call coc#add_extension('coc-tabnine')",
@@ -236,6 +209,9 @@ set autoread              " auto reload file after being modified
 set shortmess=atIcF       " do not show initial page
 set nobackup
 set noswapfile
+set nowritebackup
+set updatetime=300
+
 " set cursorcolumn          " highlight current column
 " set cursorline            " highlight current line
 set t_ti= t_te=           " alway show the content on the screen after exist VIM
@@ -652,6 +628,27 @@ if dein#tap('vista.vim')
 endif
 
 if dein#tap('coc.nvim')
+  let g:coc_global_extensions = [
+              \"coc-pairs",
+              \"coc-json",
+              \"coc-tsserver",
+              \"coc-html",
+              \"coc-css",
+              \"coc-emoji",
+              \"coc-ultisnips",
+              \"coc-prettier",
+              \"coc-yaml",
+              \"coc-python",
+              \"coc-lists",
+              \"coc-word",
+              \"coc-tailwindcss",
+              \"coc-svg",
+              \"coc-yank",
+              \"coc-git",
+              \"coc-marketplace",
+              \"coc-import-cost",
+              \]
+
   nmap <space>f :CocCommand explorer<cr>
 
   function! s:GoToDefinition()
@@ -690,6 +687,18 @@ if dein#tap('coc.nvim')
   nmap <silent> K :call <SID>show_documentation()<cr>
   nmap <silent> gd :call <SID>GoToDefinition()<cr>
 
+  xmap if <Plug>(coc-funcobj-i)
+  omap if <Plug>(coc-funcobj-i)
+  xmap af <Plug>(coc-funcobj-a)
+  omap af <Plug>(coc-funcobj-a)
+  xmap ic <Plug>(coc-classobj-i)
+  omap ic <Plug>(coc-classobj-i)
+  xmap ac <Plug>(coc-classobj-a)
+  omap ac <Plug>(coc-classobj-a)
+
+  nmap <silent> <C-s> <Plug>(coc-range-select)
+  xmap <silent> <C-s> <Plug>(coc-range-select)
+
   augroup Smartf
     autocmd User SmartfEnter :hi Conceal ctermfg=220 guifg=white guibg=#ff5555
   augroup end
@@ -711,7 +720,6 @@ if dein#tap('coc.nvim')
   nnoremap <silent> <space>u  :<C-u>CocList --normal mru<cr>
   nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
   nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-  nnoremap <silent> <space>s  :<C-u>CocList service<cr>
   nnoremap <silent> <space>b  :<C-u>CocList buffers<cr>
   nnoremap <silent> <space>y  :<C-u>CocList --normal yank<cr>
   nnoremap <silent> <space>g  :<C-u>CocList --normal gstatus<cr>
@@ -735,6 +743,7 @@ if dein#tap('coc.nvim')
   command! -nargs=0 Prettier :CocCommand prettier.formatFile
   command! -nargs=0 Format :call CocAction('format')
   command! -nargs=? Fold :call CocAction('fold', <f-args>)
+  command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
   command! -nargs=+ -complete=custom,s:GrepArgs Rgl exe 'CocList grep '.<q-args>
   command! -nargs=0 Rg exe 'CocList -I grep'
   command! -nargs=0 TODO exe "CocList --normal grep //\ TODO"
@@ -863,11 +872,17 @@ if dein#tap('vim-signify')
   xmap ah <plug>(signify-motion-outer-visual)
 endif
 
-if dein#tap('vim-quickhl')
-  nmap <leader>w <Plug>(quickhl-manual-this)
-  xmap <leader>w <Plug>(quickhl-manual-this)
-  nmap <leader>W <Plug>(quickhl-manual-reset)
-  xmap <leader>W <Plug>(quickhl-manual-reset)
+if dein#tap('vim-interestingwords')
+  let g:interestingWordsRandomiseColors = 0
+  let g:interestingWordsDefaultMappings = 0
+  let g:interestingWordsGUIColors = ['#A4E57E', '#FFDB72', '#FF7272', '#FFB3FF', '#9999FF']
+  let g:interestingWordsTermColors = ['121', '211', '137', '214', '222']
+
+  nnoremap <silent> <leader>w :call InterestingWords('n')<cr>
+  vnoremap <silent> <leader>w :call InterestingWords('v')<cr>
+  nnoremap <silent> <leader>W :call UncolorAllWords()<cr>
+  nnoremap <silent> ]] :call WordNavigation(1)<cr>
+  nnoremap <silent> [[ :call WordNavigation(0)<cr>
 endif
 
 " if dein#tap('nvim-miniyank')
@@ -1027,11 +1042,6 @@ if dein#tap('vim-edgemotion')
   vmap <c-k> <Plug>(edgemotion-k)
 endif
 
-if dein#tap('vim-expand-region')
-  xmap v <Plug>(expand_region_expand)
-  xmap V <Plug>(expand_region_shrink)
-endif
-
 if dein#tap('golden-ratio')
   let g:golden_ratio_exclude_nonmodifiable = 1
   let g:golden_ratio_autocommand = 0
@@ -1078,7 +1088,8 @@ endif
     set statusline+=\ %{&ff}\ %y
     set statusline+=\ %m%r%w
     set statusline+=%=%{StatusDiagnostic()}\ 
-    set statusline+=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}\ 
+    " set statusline+=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}\ 
+    set statusline+=%{coc#status()}%{get(b:,'coc_current_function','')}\ 
     set statusline+=%-14.(%l/%L,%c%V%)\ %p%%
   endif
   if exists('+showtabline')
