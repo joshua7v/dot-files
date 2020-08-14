@@ -14,6 +14,7 @@ if &compatible
 endif
 
 set runtimepath+=~/.config/nvim/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/AppData/Local/nvim/repos/github.com/Shougo/dein.vim
 
 if dein#load_state('~/.config/nvim/plugged/')
   call dein#begin('~/.config/nvim/plugged/')
@@ -817,10 +818,10 @@ if dein#tap('asynctasks.vim')
   let g:asyncrun_open = 6
   let g:asynctasks_term_pos = 'bottom'
   let g:asyncrun_rootmarks = ['.git', '.svn', '.root', '.project', '.hg', '.projectionist.json', '.editorconfig', 'compile_commands.json']
-  noremap <leader>r :AsyncTask run<cr>
-  noremap <leader>b :AsyncTask build<cr>
-  noremap <leader>x :AsyncTask test<cr>
-  noremap <leader>c :AsyncTask clean<cr>
+  noremap <leader>r :AsyncTask project-run<cr>
+  noremap <leader>b :AsyncTask project-build<cr>
+  noremap <leader>x :AsyncTask project-test<cr>
+  noremap <leader>c :AsyncTask project-clean<cr>
 endif
 
 if dein#tap('vim-gencode-cpp')
@@ -1154,6 +1155,7 @@ nnoremap <Leader>\ A \<ESC>
 nnoremap <Leader>ee :e <C-R>=expand('%:p:h') . '/'<CR>
 nnoremap <Leader>ef :e <C-R>=expand('%')<CR>
 nnoremap <Leader>ec :tabnew ~/.config/nvim/init.vim
+" nnoremap <Leader>ec :tabnew ~/AppData/Local/nvim/init.vim
 nnoremap tp :tabprev<cr>
 nnoremap tn :tabnext<cr>
 
