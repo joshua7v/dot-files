@@ -23,7 +23,8 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   " Color Schemes
   call dein#add('mhartington/oceanic-next')
-  call dein#add('joshdick/onedark.vim')
+  " call dein#add('joshdick/onedark.vim')
+  call dein#add('rhysd/vim-color-spring-night')
   " call dein#add('arcticicestudio/nord-vim')
   "
   " For textobj
@@ -175,7 +176,7 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'on_cmd': [ 'JsDoc' ],
         \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx', 'typescriptreact' ]
         \})
-  " call dein#add('sheerun/vim-polyglot')
+  call dein#add('sheerun/vim-polyglot')
  
   " For json
   call dein#add('neoclide/jsonc.vim')
@@ -325,93 +326,6 @@ let g:terminal_color_15 = '#eeeeec'
 
 " Theme
 set t_Co=256
-
-function! s:patch_oceanic_next_colors()
-  hi StatusLine ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#1b2b34
-  hi StatusLineNC ctermfg=235 ctermbg=145 guibg=#65737e guifg=#1b2b34
-  hi TabLine cterm=NONE ctermfg=145 ctermbg=235 gui=NONE guibg=#1b2b34 guifg=#65737e
-  hi TabLineSel ctermfg=145 ctermbg=345 guibg=#1b2b34 guifg=#ff5555
-  hi TabLineFill ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#1b2b34
-  hi PmenuSel ctermbg=145 guibg=#ff5555
-  hi WildMenu ctermbg=145 guibg=#ff5555
-  hi Type ctermfg=221 guifg=#fac863 term=NONE gui=NONE
-  " hi! link Special Keyword
-
-  hi DiffAdd ctermfg=2 ctermbg=0 guifg=#A3BE8C guibg=#2E3440
-  hi DiffChange ctermfg=3 ctermbg=0 guifg=#EBCB8B guibg=#2E3440
-  hi DiffDelete ctermfg=1 ctermbg=0 guifg=#BF616A guibg=#2E3440
-  hi DiffText ctermfg=4 ctermbg=0 guifg=#81A1C1 guibg=#2E3440
-  hi! link DiffAdded DiffAdd
-  hi! link DiffChanged DiffChange
-  hi! link DiffRemoved DiffDelete
-
-  let s:nord0_gui = "#2E3440"
-  let s:nord1_gui = "#3B4252"
-  let s:nord2_gui = "#434C5E"
-  let s:nord3_gui = "#4C566A"
-  let s:nord4_gui = "#D8DEE9"
-  let s:nord5_gui = "#E5E9F0"
-  let s:nord6_gui = "#ECEFF4"
-  let s:nord7_gui = "#8FBCBB"
-  let s:nord8_gui = "#88C0D0"
-  let s:nord9_gui = "#81A1C1"
-  let s:nord10_gui = "#5E81AC"
-  let s:nord11_gui = "#BF616A"
-  let s:nord12_gui = "#D08770"
-  let s:nord13_gui = "#EBCB8B"
-  let s:nord14_gui = "#A3BE8C"
-  let s:nord15_gui = "#B48EAD"
-
-  let s:nord1_term = "0"
-  let s:nord3_term = "8"
-  let s:nord5_term = "7"
-  let s:nord6_term = "15"
-  let s:nord7_term = "14"
-  let s:nord8_term = "6"
-  let s:nord9_term = "4"
-  let s:nord10_term = "12"
-  let s:nord11_term = "1"
-  let s:nord12_term = "11"
-  let s:nord13_term = "3"
-  let s:nord14_term = "2"
-  let s:nord15_term = "5"
-
-  let g:terminal_color_0 = s:nord1_gui
-  let g:terminal_color_1 = s:nord11_gui
-  let g:terminal_color_2 = s:nord14_gui
-  let g:terminal_color_3 = s:nord13_gui
-  let g:terminal_color_4 = s:nord9_gui
-  let g:terminal_color_5 = s:nord15_gui
-  let g:terminal_color_6 = s:nord8_gui
-  let g:terminal_color_7 = s:nord5_gui
-  let g:terminal_color_8 = s:nord3_gui
-  let g:terminal_color_9 = s:nord11_gui
-  let g:terminal_color_10 = s:nord14_gui
-  let g:terminal_color_11 = s:nord13_gui
-  let g:terminal_color_12 = s:nord9_gui
-  let g:terminal_color_13 = s:nord15_gui
-  let g:terminal_color_14 = s:nord7_gui
-  let g:terminal_color_15 = s:nord6_gui
-endfunction
-
-autocmd! ColorScheme OceanicNext call s:patch_oceanic_next_colors()
-autocmd! ColorScheme onedark call s:patch_oceanic_next_colors()
-
-if dein#tap('oceanic-next')
-  colorscheme OceanicNext
-  let g:oceanic_next_terminal_bold = 1
-  let g:oceanic_next_terminal_italic = 1
-else
-  colorscheme desert
-endif
-
-if dein#tap('nord-vim')
-  let g:nord_italic = 1
-  let g:nord_italic_comments = 1
-  let g:nord_uniform_status_lines = 0
-  let g:nord_comment_brightness = 20
-  let g:nord_uniform_diff_background = 1
-endif
 
 if has('clipboard')
   set clipboard& clipboard+=unnamedplus
@@ -1214,9 +1128,119 @@ endif
 " endfunction
 " command! -nargs=* DevDocs call <SID>devdocs(<q-args>)
 
-hi! link SignColumn   LineNr
-hi! link ShowMarksHLl DiffAdd
-hi! link ShowMarksHLu DiffChange
+command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 -tu4 /dev/urandom'), '^\_s*\zs.\{-}\ze\_s*$') % line('$')).'G'
+
+autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | endif
+
+function! s:patch_oceanic_next_colors()
+  hi StatusLine ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#1b2b34
+  hi StatusLineNC ctermfg=235 ctermbg=145 guibg=#65737e guifg=#1b2b34
+  hi TabLine cterm=NONE ctermfg=145 ctermbg=235 gui=NONE guibg=#1b2b34 guifg=#65737e
+  hi TabLineSel ctermfg=145 ctermbg=345 guibg=#1b2b34 guifg=#ff5555
+  hi TabLineFill ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#1b2b34
+  hi PmenuSel ctermbg=145 guibg=#ff5555
+  hi WildMenu ctermbg=145 guibg=#ff5555
+  hi Type ctermfg=221 guifg=#fac863 term=NONE gui=NONE
+  " hi! link Special Keyword
+
+  hi DiffAdd ctermfg=2 ctermbg=0 guifg=#A3BE8C guibg=#2E3440
+  hi DiffChange ctermfg=3 ctermbg=0 guifg=#EBCB8B guibg=#2E3440
+  hi DiffDelete ctermfg=1 ctermbg=0 guifg=#BF616A guibg=#2E3440
+  hi DiffText ctermfg=4 ctermbg=0 guifg=#81A1C1 guibg=#2E3440
+  hi! link DiffAdded DiffAdd
+  hi! link DiffChanged DiffChange
+  hi! link DiffRemoved DiffDelete
+
+  let s:nord0_gui = "#2E3440"
+  let s:nord1_gui = "#3B4252"
+  let s:nord2_gui = "#434C5E"
+  let s:nord3_gui = "#4C566A"
+  let s:nord4_gui = "#D8DEE9"
+  let s:nord5_gui = "#E5E9F0"
+  let s:nord6_gui = "#ECEFF4"
+  let s:nord7_gui = "#8FBCBB"
+  let s:nord8_gui = "#88C0D0"
+  let s:nord9_gui = "#81A1C1"
+  let s:nord10_gui = "#5E81AC"
+  let s:nord11_gui = "#BF616A"
+  let s:nord12_gui = "#D08770"
+  let s:nord13_gui = "#EBCB8B"
+  let s:nord14_gui = "#A3BE8C"
+  let s:nord15_gui = "#B48EAD"
+
+  let s:nord1_term = "0"
+  let s:nord3_term = "8"
+  let s:nord5_term = "7"
+  let s:nord6_term = "15"
+  let s:nord7_term = "14"
+  let s:nord8_term = "6"
+  let s:nord9_term = "4"
+  let s:nord10_term = "12"
+  let s:nord11_term = "1"
+  let s:nord12_term = "11"
+  let s:nord13_term = "3"
+  let s:nord14_term = "2"
+  let s:nord15_term = "5"
+
+  let g:terminal_color_0 = s:nord1_gui
+  let g:terminal_color_1 = s:nord11_gui
+  let g:terminal_color_2 = s:nord14_gui
+  let g:terminal_color_3 = s:nord13_gui
+  let g:terminal_color_4 = s:nord9_gui
+  let g:terminal_color_5 = s:nord15_gui
+  let g:terminal_color_6 = s:nord8_gui
+  let g:terminal_color_7 = s:nord5_gui
+  let g:terminal_color_8 = s:nord3_gui
+  let g:terminal_color_9 = s:nord11_gui
+  let g:terminal_color_10 = s:nord14_gui
+  let g:terminal_color_11 = s:nord13_gui
+  let g:terminal_color_12 = s:nord9_gui
+  let g:terminal_color_13 = s:nord15_gui
+  let g:terminal_color_14 = s:nord7_gui
+  let g:terminal_color_15 = s:nord6_gui
+endfunction
+
+function! s:patch_spring_night_colors()
+  hi StatusLine ctermfg=235 ctermbg=230 guibg=#111926 guifg=#ff5555
+  hi StatusLineNC ctermfg=235 ctermbg=230 guibg=#111926 guifg=#ff5555
+  hi TabLine cterm=NONE ctermfg=145 ctermbg=235 gui=NONE guibg=#1b2b34 guifg=#65737e
+  hi TabLineSel ctermfg=145 ctermbg=345 guibg=#1b2b34 guifg=#ff5555
+  hi TabLineFill ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#111926
+  " hi PmenuSel ctermbg=145 guibg=#ff5555 guifg=#2E3A4B
+  " hi WildMenu ctermbg=145 guibg=#ff5555
+  hi CursorLineNr term=NONE guifg=#e7d5ff ctermfg=189 guibg=#111926 ctermbg=238
+
+  hi LineNr ctermfg=darkgrey guifg=#777777 guibg=#111926
+  hi MatchParen ctermfg=black
+  hi Cursor guifg=white guibg=#ff5555
+  hi Search ctermfg=0 ctermbg=6 guibg=#88C0D0 guifg=#3B4252
+  hi! link SignColumn   LineNr
+  hi! link ESearchMatch Search
+  hi! link TermCursor Cursor
+  hi! link TermCursorNC CursorNC
+
+  hi DiffAdd ctermfg=2 ctermbg=0 guifg=#A3BE8C guibg=#111926
+  hi DiffChange ctermfg=3 ctermbg=0 guifg=#EBCB8B guibg=#111926
+  hi DiffDelete ctermfg=1 ctermbg=0 guifg=#BF616A guibg=#111926
+  hi DiffText ctermfg=4 ctermbg=0 guifg=#81A1C1 guibg=#111926
+  hi! link DiffAdded DiffAdd
+  hi! link DiffChanged DiffChange
+  hi! link DiffRemoved DiffDelete
+endfunction
+
+autocmd! ColorScheme OceanicNext call s:patch_oceanic_next_colors()
+autocmd! ColorScheme spring-night call s:patch_spring_night_colors()
+
+if dein#tap('vim-color-spring-night')
+  colorscheme spring-night
+else
+  colorscheme desert
+endif
+
+if dein#tap('oceanic-next')
+  let g:oceanic_next_terminal_bold = 1
+  let g:oceanic_next_terminal_italic = 1
+endif
 
 " For error highlight
 " set spell
@@ -1234,20 +1258,6 @@ function s:SetCursorLine()
   hi cursorline cterm=none ctermbg=235
 endfunction
 autocmd VimEnter * call s:SetCursorLine()
-
-hi LineNr ctermfg=darkgrey guifg=#777777
-hi MatchParen ctermfg=black
-hi Cursor guifg=white guibg=#ff5555
-hi Search ctermfg=0 ctermbg=6 guibg=#88C0D0 guifg=#3B4252
-hi DeniteMatcher guifg=#ff5555 guibg=None
-hi! link ESearchMatch Search
-hi! link TermCursor Cursor
-hi! link TermCursorNC CursorNC
-
-command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 -tu4 /dev/urandom'), '^\_s*\zs.\{-}\ze\_s*$') % line('$')).'G'
-
-if exists("g:gui_oni")
-else
-endif
-
-autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | endif
+"
+" set t_ZH=^[[3m
+" set t_ZR=^[[23m
