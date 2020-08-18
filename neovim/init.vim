@@ -1004,7 +1004,8 @@ endif
     set statusline+=\ %m%r%w
     set statusline+=%=%{StatusDiagnostic()}\ 
     " set statusline+=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}\ 
-    set statusline+=%{coc#status()}%{get(b:,'coc_current_function','')}\ 
+    " set statusline+=%{coc#status()}%{get(b:,'coc_current_function','')}\ 
+    set statusline+=%{coc#status()}\ 
     set statusline+=%-14.(%l/%L,%c%V%)\ %p%%
   endif
   if exists('+showtabline')
@@ -1201,16 +1202,16 @@ function! s:patch_oceanic_next_colors()
 endfunction
 
 function! s:patch_spring_night_colors()
-  hi StatusLine ctermfg=235 ctermbg=230 guibg=#111926 guifg=#ff5555
-  hi StatusLineNC ctermfg=235 ctermbg=230 guibg=#111926 guifg=#ff5555
+  hi StatusLine ctermfg=235 ctermbg=230 guibg=#0f2134 guifg=#ff5555
+  hi StatusLineNC ctermfg=235 ctermbg=230 guibg=#0f2134 guifg=#ff5555
   hi TabLine cterm=NONE ctermfg=145 ctermbg=235 gui=NONE guibg=#1b2b34 guifg=#65737e
   hi TabLineSel ctermfg=145 ctermbg=345 guibg=#1b2b34 guifg=#ff5555
-  hi TabLineFill ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#111926
+  hi TabLineFill ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#0f2134
   " hi PmenuSel ctermbg=145 guibg=#ff5555 guifg=#2E3A4B
   " hi WildMenu ctermbg=145 guibg=#ff5555
-  hi CursorLineNr term=NONE guifg=#e7d5ff ctermfg=189 guibg=#111926 ctermbg=238
+  hi CursorLineNr term=NONE guifg=#e7d5ff ctermfg=189 guibg=#0f2134 ctermbg=238
 
-  hi LineNr ctermfg=darkgrey guifg=#777777 guibg=#111926
+  hi LineNr ctermfg=darkgrey guifg=#777777 guibg=#0f2134
   hi MatchParen ctermfg=black
   hi Cursor guifg=white guibg=#ff5555
   hi Search ctermfg=0 ctermbg=6 guibg=#88C0D0 guifg=#3B4252
@@ -1219,10 +1220,10 @@ function! s:patch_spring_night_colors()
   hi! link TermCursor Cursor
   hi! link TermCursorNC CursorNC
 
-  hi DiffAdd ctermfg=2 ctermbg=0 guifg=#A3BE8C guibg=#111926
-  hi DiffChange ctermfg=3 ctermbg=0 guifg=#EBCB8B guibg=#111926
-  hi DiffDelete ctermfg=1 ctermbg=0 guifg=#BF616A guibg=#111926
-  hi DiffText ctermfg=4 ctermbg=0 guifg=#81A1C1 guibg=#111926
+  hi DiffAdd ctermfg=2 ctermbg=0 guifg=#A3BE8C guibg=#0f2134
+  hi DiffChange ctermfg=3 ctermbg=0 guifg=#EBCB8B guibg=#0f2134
+  hi DiffDelete ctermfg=1 ctermbg=0 guifg=#BF616A guibg=#0f2134
+  hi DiffText ctermfg=4 ctermbg=0 guifg=#81A1C1 guibg=#0f2134
   hi! link DiffAdded DiffAdd
   hi! link DiffChanged DiffChange
   hi! link DiffRemoved DiffDelete
@@ -1258,6 +1259,3 @@ function s:SetCursorLine()
   hi cursorline cterm=none ctermbg=235
 endfunction
 autocmd VimEnter * call s:SetCursorLine()
-"
-" set t_ZH=^[[3m
-" set t_ZR=^[[23m
