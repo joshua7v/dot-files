@@ -21,6 +21,8 @@ if dein#load_state('~/.config/nvim/plugged/')
 
   call dein#add('~/.config/nvim/repos/github.com/Shougo/dein.vim')
 
+  call dein#add('rhysd/devdocs.vim')
+
   " Color Schemes
   call dein#add('mhartington/oceanic-next')
   " call dein#add('joshdick/onedark.vim')
@@ -84,7 +86,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('tpope/vim-unimpaired')
   call dein#add('tpope/vim-eunuch')
   call dein#add('tpope/vim-rhubarb')
-  call dein#add('eugen0329/vim-esearch')
+  " call dein#add('eugen0329/vim-esearch')
   " call dein#add('brooth/far.vim')
   call dein#add('editorconfig/editorconfig-vim')
   call dein#add('tomtom/tcomment_vim'            , { 'on_cmd'   : ['TComment', 'TCommentAs'] })
@@ -112,8 +114,6 @@ if dein#load_state('~/.config/nvim/plugged/')
         \"let g:vim_search_pulse_duration = 400"
         \], "\n")
         \})
-  " call dein#add('vim-airline/vim-airline' , { 'on_cmd': 'AirlineToggle' })
-  " call dein#add('bfredl/nvim-miniyank')
   " call dein#add('junegunn/goyo.vim'       , { 'on_cmd': 'Goyo' })
   " call dein#add('junegunn/limelight.vim'  , { 'on_cmd': 'Limelight' })
   call dein#add('Yggdroot/indentLine'     , { 'on_cmd': 'IndentLinesToggle' })
@@ -367,8 +367,6 @@ nnoremap == <c-w>=
 nnoremap =v <c-w>_
 nnoremap =h <c-w><bar>
 
-nnoremap <leader>al :AirlineToggle<cr>
-
 command Need Ack! '//\ (TODO\|FIXME\|CHANGED\|BUG\|HACK\|FEATURE\|TEMP)'
 command TEMP Ack! '//\ TEMP'
 command TODO Ack! '//\ TODO'
@@ -427,10 +425,6 @@ if dein#tap('vim-terminal-help')
   let g:terminal_cwd = 2
   let g:terminal_list = 0
   let g:terminal_height = 12
-endif
-
-if dein#tap('auto-pairs')
-  let g:AutoPairsMultilineClose = 0
 endif
 
 if dein#tap('far.vim')
@@ -713,6 +707,13 @@ if dein#tap('coc.nvim')
   augroup end
 endif
 
+if dein#tap('devdocs.vim')
+  let g:devdocs_filetype_map = {
+    \   'javascriptreact': 'react',
+    \   'typescriptreact': 'react',
+    \ }
+endif
+
 if dein#tap('asyncrun.vim')
   let g:asyncrun_bell = 1
 
@@ -800,11 +801,6 @@ if dein#tap('vim-interestingwords')
   nnoremap <silent> ]] :call WordNavigation(1)<cr>
   nnoremap <silent> [[ :call WordNavigation(0)<cr>
 endif
-
-" if dein#tap('nvim-miniyank')
-"   let g:miniyank_maxitems = 100
-"   let g:miniyank_filename = $HOME."/.config/nvim/.miniyank.mpack"
-" end
 
 if dein#tap('vim-sneak')
   let g:sneak#label = 1
@@ -965,84 +961,78 @@ if dein#tap('golden-ratio')
   nmap <silent><leader>z <Plug>(golden_ratio_resize)
 endif
 
-" if dein#tap('vim-airline')
-  function! StatusDiagnostic() abort
-    let info = get(b:, 'coc_diagnostic_info', {})
-    if empty(info) | return '' | endif
-    let msgs = []
-    if get(info, 'hint', 0)
-      call add(msgs, 'H' . info['hint'])
-    endif
-    if get(info, 'information', 0)
-      call add(msgs, 'I' . info['information'])
-    endif
-    if get(info, 'warning', 0)
-      call add(msgs, 'W' . info['warning'])
-    endif
-    if get(info, 'error', 0)
-      call add(msgs, 'E' . info['error'])
-    endif
-    return join(msgs, ' ') . '' . get(g:, 'coc_status', '')
-  endfunction
-
-  function! GetBufName()
-    let bufname = expand('%:~:.')
-    if (bufname) == ''
-        let bufname = '[no name]'
-    endif
-    return bufname
-  endfunction
-
-  if has('statusline')
-    set laststatus=2
-    " set statusline=%{getcwd()}
-    " set statusline+=\ %<%f
-    " set statusline+=%F
-    set statusline+=%{GetBufName()}
-    set statusline+=\ %{''.(&fenc!=''?&fenc:&enc).''}
-    set statusline+=%{(&bomb?\\",BOM\\":\\"\\")}
-    set statusline+=\ %{&ff}\ %y
-    set statusline+=\ %m%r%w
-    set statusline+=%=%{StatusDiagnostic()}\ 
-    " set statusline+=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}\ 
-    " set statusline+=%{coc#status()}%{get(b:,'coc_current_function','')}\ 
-    set statusline+=%{coc#status()}\ 
-    set statusline+=%-14.(%l/%L,%c%V%)\ %p%%
+function! StatusDiagnostic() abort
+  let info = get(b:, 'coc_diagnostic_info', {})
+  if empty(info) | return '' | endif
+  let msgs = []
+  if get(info, 'hint', 0)
+    call add(msgs, 'H' . info['hint'])
   endif
-  if exists('+showtabline')
-    function! Tabline()
-      let s = ''
-      for i in range(tabpagenr('$'))
-        let tab = i + 1
-        let winnr = tabpagewinnr(tab)
-        let buflist = tabpagebuflist(tab)
-        let bufnr = buflist[winnr - 1]
-        let bufname = bufname(bufnr)
-        let bufmodified = getbufvar(bufnr, "&mod")
+  if get(info, 'information', 0)
+    call add(msgs, 'I' . info['information'])
+  endif
+  if get(info, 'warning', 0)
+    call add(msgs, 'W' . info['warning'])
+  endif
+  if get(info, 'error', 0)
+    call add(msgs, 'E' . info['error'])
+  endif
+  return join(msgs, ' ') . '' . get(g:, 'coc_status', '')
+endfunction
 
-        let s .= '%' . tab . 'T'
-        let s .= (tab == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#')
-        let s .= '[' . tab .']'
-        let s .= (bufname != '' ? ' '. fnamemodify(bufname, ':t') . ' ' : ' - ')
+function! GetBufName()
+  let bufname = expand('%:~:.')
+  if (bufname) == ''
+      let bufname = '[no name]'
+  endif
+  return bufname
+endfunction
 
-        if bufmodified
-          let s .= '[+] '
-        endif
-      endfor
+if has('statusline')
+  set laststatus=2
+  " set statusline=%{getcwd()}
+  " set statusline+=\ %<%f
+  " set statusline+=%F
+  set statusline+=%{GetBufName()}
+  set statusline+=\ %{''.(&fenc!=''?&fenc:&enc).''}
+  set statusline+=%{(&bomb?\\",BOM\\":\\"\\")}
+  set statusline+=\ %{&ff}\ %y
+  set statusline+=\ %m%r%w
+  set statusline+=%=%{StatusDiagnostic()}\ 
+  " set statusline+=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}\ 
+  " set statusline+=%{coc#status()}%{get(b:,'coc_current_function','')}\ 
+  set statusline+=%{coc#status()}\ 
+  set statusline+=%-14.(%l/%L,%c%V%)\ %p%%
+endif
+if exists('+showtabline')
+  function! Tabline()
+    let s = ''
+    for i in range(tabpagenr('$'))
+      let tab = i + 1
+      let winnr = tabpagewinnr(tab)
+      let buflist = tabpagebuflist(tab)
+      let bufnr = buflist[winnr - 1]
+      let bufname = bufname(bufnr)
+      let bufmodified = getbufvar(bufnr, "&mod")
 
-      let s .= '%#TabLineFill#'
-      if (exists("g:tablineclosebutton"))
-        let s .= '%=%999XX'
+      let s .= '%' . tab . 'T'
+      let s .= (tab == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#')
+      let s .= '[' . tab .']'
+      let s .= (bufname != '' ? ' '. fnamemodify(bufname, ':t') . ' ' : ' - ')
+
+      if bufmodified
+        let s .= '[+] '
       endif
-      return s
-    endfunction
-    set tabline=%!Tabline()
-  endif
-"   let g:airline_powerline_fonts = 1
-"   let g:airline#extensions#tabline#enabled = 1
-"   let g:airline#extensions#tabline#formatter = 'unique_tail'
-"   let g:airline#extensions#tabline#buffer_nr_show = 1
-" endif
+    endfor
+
+    let s .= '%#TabLineFill#'
+    if (exists("g:tablineclosebutton"))
+      let s .= '%=%999XX'
+    endif
+    return s
+  endfunction
+  set tabline=%!Tabline()
+endif
 
 if dein#tap('indentLine')
   let g:indentLine_enabled = 0
@@ -1070,8 +1060,12 @@ nnoremap <Leader>\ A \<ESC>
 " nnoremap <Leader>e :tabnew 
 nnoremap <Leader>ee :e <C-R>=expand('%:p:h') . '/'<CR>
 nnoremap <Leader>ef :e <C-R>=expand('%')<CR>
-nnoremap <Leader>ec :tabnew ~/.config/nvim/init.vim
-" nnoremap <Leader>ec :tabnew ~/AppData/Local/nvim/init.vim
+
+nnoremap <Leader>ec :tabnew ~/AppData/Local/nvim/init.vim
+if has('macunix')
+    nnoremap <Leader>ec :tabnew ~/.config/nvim/init.vim
+endif
+
 nnoremap tp :tabprev<cr>
 nnoremap tn :tabnext<cr>
 
