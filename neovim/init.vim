@@ -28,7 +28,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   " call dein#add('arcticicestudio/nord-vim')
   "
   " For textobj
-  call dein#add('mg979/vim-visual-multi')
+  " call dein#add('mg979/vim-visual-multi')
   call dein#add('kana/vim-textobj-user')
   call dein#add('kana/vim-textobj-entire', {
         \'on_map': { 'ox': '<Plug>' },
@@ -58,6 +58,9 @@ if dein#load_state('~/.config/nvim/plugged/')
  
   " For delightful editing
   call dein#add('ahonn/vim-fileheader')
+  call dein#add('tpope/vim-abolish')
+  call dein#add('svermeulen/vim-subversive')
+  call dein#add('svermeulen/vim-yoink')
   call dein#add('justinmk/vim-sneak')
   call dein#add('tmhedberg/matchit')
   call dein#add('pbrisbin/vim-mkdir')
@@ -98,10 +101,6 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('AndrewRadev/sideways.vim'       , { 'on_map'   : { 'ox': '<Plug>Sideways' }})
   call dein#add('AndrewRadev/splitjoin.vim'      , { 'on_map'   : { 'n': '<Plug>Splitjoin' }})
   call dein#add('haya14busa/vim-edgemotion'      , { 'on_map'   : { 'nv': '<Plug>' }})
-  " call dein#add('haya14busa/vim-operator-flashy', {
-  "       \'depends': 'vim-operator-user',
-  "       \'on_map': { 'nx': '<Plug>' }
-  "       \})
   call dein#add('SirVer/ultisnips')
   call dein#add('honza/vim-snippets')
   call dein#add('pechorin/any-jump.vim')
@@ -126,12 +125,7 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('justinmk/vim-dirvish')
   call dein#add('tpope/vim-projectionist')
   call dein#add('liuchengxu/vista.vim')
-  call dein#add('neoclide/coc.nvim', {
-        \'rev': 'release',
-        \'hook_source': join([
-        \], "\n")
-        \})
-        " \"call coc#add_extension('coc-tabnine')",
+  call dein#add('neoclide/coc.nvim', { 'rev': 'release' })
   call dein#add('mbbill/undotree', {
         \'on_cmd': 'UndotreeToggle',
         \'hook_add': join([
@@ -163,15 +157,6 @@ if dein#load_state('~/.config/nvim/plugged/')
   " call dein#add('chrisbra/Colorizer', { 'on_cmd': 'ColorToggle' })
 
   " For javascript
-  " call dein#add('styled-components/vim-styled-components', {
-  "       \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript.tsx', 'typescriptreact' ]
-  "       \})
-  " call dein#add('neoclide/vim-jsx-improve', {
-  "       \'on_ft': [ 'javascript' ]
-  "       \})
-  " call dein#add('othree/javascript-libraries-syntax.vim', {
-  "       \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx' ]
-  "       \})
   call dein#add('heavenshell/vim-jsdoc', {
         \'on_cmd': [ 'JsDoc' ],
         \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx', 'typescriptreact' ]
@@ -180,9 +165,6 @@ if dein#load_state('~/.config/nvim/plugged/')
  
   " For json
   call dein#add('neoclide/jsonc.vim')
- 
-  " For dot
-  " call dein#add('wannesm/wmgraphviz.vim', { 'on_ft': 'dot' })
 
   " For markdown
   call dein#add('iamcco/markdown-preview.nvim', { 'on_ft': ['markdown'],
@@ -202,7 +184,7 @@ syntax on
 let g:mapleader = ','
 set nocompatible
 
-set inccommand=split
+set inccommand=nosplit
 set confirm
 set background=dark
 set t_ut=
@@ -384,8 +366,6 @@ autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
 nnoremap == <c-w>=
 nnoremap =v <c-w>_
 nnoremap =h <c-w><bar>
-nnoremap P "0p
-xnoremap P "0p
 
 nnoremap <leader>al :AirlineToggle<cr>
 
@@ -542,6 +522,28 @@ if dein#tap('vista.vim')
   nmap <space>t :Vista!!<cr>
 endif
 
+if dein#tap('vim-yoink')
+  nmap [y <plug>(YoinkRotateBack)
+  nmap ]y <plug>(YoinkRotateForward)
+  nmap p <plug>(YoinkPaste_p)
+  nmap P <plug>(YoinkPaste_P)
+
+  let g:yoinkSavePersistently = 1
+
+  nmap <expr> <c-p> yoink#canSwap() ? '<plug>(YoinkPostPasteSwapForward)' : ':<C-u>CocList files<cr>'
+  nmap <expr> <c-n> yoink#canSwap() ? '<plug>(YoinkPostPasteSwapBack)' : ''
+endif
+
+if dein#tap('vim-subversive')
+  nmap <leader>rr <plug>(SubversiveSubstituteRange)
+  xmap <leader>rr <plug>(SubversiveSubstituteRange)
+  nmap <leader><leader>rr <plug>(SubversiveSubvertRange)
+  xmap <leader><leader>rr <plug>(SubversiveSubvertRange)
+  xmap s <plug>(SubversiveSubstitute)
+  xmap p <plug>(SubversiveSubstitute)
+  xmap P <plug>(SubversiveSubstitute)
+endif
+
 if dein#tap('coc.nvim')
   let g:coc_global_extensions = [
               \"coc-pairs",
@@ -558,7 +560,6 @@ if dein#tap('coc.nvim')
               \"coc-word",
               \"coc-tailwindcss",
               \"coc-svg",
-              \"coc-yank",
               \"coc-git",
               \"coc-marketplace",
               \"coc-import-cost",
@@ -629,7 +630,7 @@ if dein#tap('coc.nvim')
   command! -nargs=0 ColorPresentation :call CocAction('colorPresentation')
   command! -nargs=0 PickColor :call CocAction('pickColor')
 
-  nnoremap <silent> <c-p>     :<C-u>CocList files<cr>
+  " nnoremap <silent> <c-p>     :<C-u>CocList files<cr>
   nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
   nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
   nnoremap <silent> <space>u  :<C-u>CocList --normal mru<cr>
@@ -935,8 +936,8 @@ if dein#tap('ultisnips')
 endif
 
 if dein#tap('sideways.vim')
-  " nnoremap <leader>h :SidewaysLeft<cr>
-  " nnoremap <leader>l :SidewaysRight<cr>
+  nnoremap <leader>h :SidewaysLeft<cr>
+  nnoremap <leader>l :SidewaysRight<cr>
   omap aa <Plug>SidewaysArgumentTextobjA
   xmap aa <Plug>SidewaysArgumentTextobjA
   omap ia <Plug>SidewaysArgumentTextobjI
