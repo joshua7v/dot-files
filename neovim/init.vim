@@ -119,6 +119,8 @@ if dein#load_state('~/.config/nvim/plugged/')
   call dein#add('Yggdroot/indentLine'     , { 'on_cmd': 'IndentLinesToggle' })
  
   " General
+  call dein#add('kkoomen/vim-doge')
+  call dein#add('sheerun/vim-polyglot')
   " call dein#add('beeender/Comrade')
   " call dein#add('nvim-treesitter/nvim-treesitter', { 'merged': 0 })
   call dein#add('tpope/vim-fugitive')
@@ -155,13 +157,6 @@ if dein#load_state('~/.config/nvim/plugged/')
         \'on_ft': [ 'html', 'css', 'scss', 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx', 'typescriptreact', 'eelixir' ],
         \})
   " call dein#add('chrisbra/Colorizer', { 'on_cmd': 'ColorToggle' })
-
-  " For javascript
-  call dein#add('heavenshell/vim-jsdoc', {
-        \'on_cmd': [ 'JsDoc' ],
-        \'on_ft': [ 'javascript', 'javascript.jsx', 'typescript', 'typescript.tsx', 'typescriptreact' ]
-        \})
-  call dein#add('sheerun/vim-polyglot')
  
   " For json
   call dein#add('neoclide/jsonc.vim')
@@ -488,8 +483,9 @@ if dein#tap('javascript-libraries-syntax.vim')
   let b:javascript_lib_use_tape = 1
 endif
 
-if dein#tap('vim-jsdoc')
-  nnoremap <leader>jdd :JsDoc<cr>
+if dein#tap('vim-doge')
+  " nnoremap <leader>dd :DogeGenerate<cr>
+  command! -nargs=0 Doc :DogeGenerate<cr>
 endif
 
 if dein#tap('tcomment_vim')
