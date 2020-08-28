@@ -484,6 +484,7 @@ if dein#tap('javascript-libraries-syntax.vim')
 endif
 
 if dein#tap('vim-doge')
+  let g:doge_enable_mappings = 0
   " nnoremap <leader>dd :DogeGenerate<cr>
   command! -nargs=0 Doc :DogeGenerate<cr>
 endif
@@ -741,29 +742,6 @@ if dein#tap('vim-gencode-cpp')
   noremap <leader>tdd :GenDefinition<cr>
 endif
 
-if dein#tap('vim-dirvish')
-  let g:dirvish_relative_paths = 0
-  let g:dirvish_mode = ':sort ,^.*[\/],'
-
-  nmap <leader>s <Plug>(dirvish_split_up)
-  nmap <leader>d <Plug>(dirvish_vsplit_up)
-
-  autocmd FileType dirvish silent keeppatterns g@\v/\.[^\/]+/?$@d _
-
-  augroup dirvish_config
-    autocmd!
-    autocmd FileType dirvish silent! unmap <buffer> <C-p>
-    autocmd FileType dirvish
-      \  nnoremap <silent><buffer> t :call dirvish#open('tabedit', 0)<CR>
-      \ |xnoremap <silent><buffer> t :call dirvish#open('tabedit', 0)<CR>
-  augroup END
-
-  let g:loaded_netrwPlugin = 1
-  command! -nargs=? -complete=dir Explore Dirvish <args>
-  command! -nargs=? -complete=dir Sexplore belowright split | silent Dirvish <args>
-  command! -nargs=? -complete=dir Vexplore leftabove vsplit | silent Dirvish <args>
-endif
-
 if dein#tap('vim-projectionist')
   augroup user_projectionist
     autocmd!
@@ -955,6 +933,29 @@ if dein#tap('golden-ratio')
   let g:golden_ratio_autocommand = 0
 
   nmap <silent><leader>z <Plug>(golden_ratio_resize)
+endif
+
+if dein#tap('vim-dirvish')
+  let g:dirvish_relative_paths = 0
+  let g:dirvish_mode = ':sort ,^.*[\/],'
+
+  nmap <leader>s <Plug>(dirvish_split_up)
+  nmap <leader>d <Plug>(dirvish_vsplit_up)
+
+  autocmd FileType dirvish silent keeppatterns g@\v/\.[^\/]+/?$@d _
+
+  augroup dirvish_config
+    autocmd!
+    autocmd FileType dirvish silent! unmap <buffer> <C-p>
+    autocmd FileType dirvish
+      \  nnoremap <silent><buffer> t :call dirvish#open('tabedit', 0)<CR>
+      \ |xnoremap <silent><buffer> t :call dirvish#open('tabedit', 0)<CR>
+  augroup END
+
+  let g:loaded_netrwPlugin = 1
+  command! -nargs=? -complete=dir Explore Dirvish <args>
+  command! -nargs=? -complete=dir Sexplore belowright split | silent Dirvish <args>
+  command! -nargs=? -complete=dir Vexplore leftabove vsplit | silent Dirvish <args>
 endif
 
 function! StatusDiagnostic() abort
