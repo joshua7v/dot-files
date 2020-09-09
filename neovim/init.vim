@@ -998,9 +998,10 @@ if has('statusline')
   set statusline+=%=%{StatusDiagnostic()}\ 
   " set statusline+=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}\ 
   " set statusline+=%{coc#status()}%{get(b:,'coc_current_function','')}\ 
-  set statusline+=%{coc#status()}\ 
+  " set statusline+=%{coc#status()}\ 
   set statusline+=%-14.(%l/%L,%c%V%)\ %p%%
 endif
+
 if exists('+showtabline')
   function! Tabline()
     let s = ''
