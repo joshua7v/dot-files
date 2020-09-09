@@ -5,11 +5,11 @@
       "",
       "type Props = {open}{close};",
       "",
-      "function {basename}(props: Props) {",
-      "  return <div className=\"{basename}\" />;",
+      "function {basename|camelcase|capitalize}(props: Props) {",
+      "  return <div className=\"{basename|camelcase|capitalize}\" />;",
       "}",
       "",
-      "export default {basename};"
+      "export default {basename|camelcase|capitalize};"
     ]
   },
   "*.{css,scss}": {
@@ -22,12 +22,27 @@
     "template": [
       "#include <iostream>",
       "",
-      "int main(int argc, const char *argv[]) {",
+      "int main(int argc, const char **argv) {",
+      "    return 0;",
+      "}"
+    ]
+  },
+  "*.c": {
+    "template": [
+      "#include <stdio.h>",
+      "",
+      "int main(int argc, const char **argv) {",
       "    return 0;",
       "}"
     ]
   },
   "*.h": {
-    "template": ["#pragma once"]
+    "template": [
+      "#ifndef __{basename|uppercase}_H",
+      "",
+      "",
+      "#define __{basename|uppercase}_H",
+      "#endif"
+    ]
   }
 }
