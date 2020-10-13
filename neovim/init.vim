@@ -631,12 +631,12 @@ if dein#tap('coc.nvim')
   nnoremap <silent> <space>y  :<C-u>CocList --normal yank<cr>
   nnoremap <silent> <space>g  :<C-u>CocList --normal gstatus<cr>
   nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-  nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-  nnoremap <silent> <space>m  :<C-u>CocList --normal marks<CR>
-  nnoremap <silent> <space>h  :<C-u>CocList --normal searchhistory<CR>
-  nnoremap <silent> <space>k  :<C-u>CocList --normal maps<CR>
-  nnoremap <silent> <space>q  :<C-u>CocList --normal post<CR>
-  nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<CR>
+  nnoremap <silent> <space>p  :<C-u>CocListResume<cr>
+  nnoremap <silent> <space>m  :<C-u>CocList --normal marks<cr>
+  nnoremap <silent> <space>h  :<C-u>CocList --normal searchhistory<cr>
+  nnoremap <silent> <space>k  :<C-u>CocList --normal maps<cr>
+  nnoremap <silent> <space>q  :<C-u>CocList --normal tasks<cr>
+  nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<cr>
   " nnoremap <silent> <space>l  :<C-u>Denite coc-link<cr>
 
   inoremap <expr> <tab> pumvisible() ? "\<C-y>" : "\<tab>"
