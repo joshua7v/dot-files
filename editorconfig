@@ -1,11 +1,10 @@
 root = true
 
-[*.{ts,tsx,js,jsx,json,css,scss,html,gql,ex,eex}]
+[*]
 indent_style = space
-indent_size = 2
 max_line_length = 120
-
-[*.{c,cpp,h,py,go}]
-indent_style = space
 indent_size = 4
-max_line_length = 120
+end_of_line = lf
+
+[*.{ts,tsx,js,jsx,json,css,scss,html,gql,ex,eex}]
+indent_size = 2
