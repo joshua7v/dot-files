@@ -1,11 +1,8 @@
 {
-  "diagnostic.enable": true,
-  "diagnostic.signOffset": 1000,
   "diagnostic.errorSign": "E",
   "diagnostic.warningSign": "W",
   "diagnostic.infoSign": "I",
   "diagnostic.hintSign": "H",
-  "diagnostic.displayByAle": false,
   "suggest.timeout": 2000,
   "suggest.enablePreview": true,
   "codeLens.enable": true,
@@ -19,23 +16,9 @@
     "**/*.min.css",
     "**/*.js.map"
   ],
-  "python.jediEnabled": false,
   "tabnine.priority": 70,
   "tabnine.limit": 5,
   "highlight.disableLanguages": ["dirvish"],
-  "coc.source.omni.filetypes": ["cmake"],
-  "languageserver": {
-    "clangd": {
-      /* "command": "clangd", */
-      "command": "/usr/local/Cellar/llvm/HEAD-2c4ca68/bin/clangd",
-      "rootPatterns": [
-        "compile_flags.txt",
-        "compile_commands.json",
-        ".vim/",
-        ".git/",
-        ".hg/"
-      ],
-      "filetypes": ["c", "cpp", "objc", "objcpp"]
-    }
-  }
+  "highlight.disableLanguages": ["dirvish"],
+  "coc.source.omni.filetypes": ["cmake"]
 }
