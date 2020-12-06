@@ -805,7 +805,12 @@ function! s:run_floaterm(opts)
   stopinsert
 endfunction
 
-let g:floaterm_shell = 'powershell'
+if has('macunix')
+  let g:floaterm_shell = '/bin/zsh'
+else
+  let g:floaterm_shell = 'powershell'
+endif
+
 let g:floaterm_keymap_toggle = '<c-q>'
 let g:floaterm_wintitle = v:true
 let g:floaterm_width = 0.8
