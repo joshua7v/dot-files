@@ -19,6 +19,9 @@
     "template": [".container {open}", "{close}"]
   },
   "*.cpp": {
+    "alternate": [
+      "{}.h"
+    ],
     "template": [
       "#include <iostream>",
       "",
@@ -28,6 +31,9 @@
     ]
   },
   "*.c": {
+    "alternate": [
+      "{}.h"
+    ],
     "template": [
       "#include <stdio.h>",
       "",
@@ -37,6 +43,10 @@
     ]
   },
   "*.h": {
+    "alternate": [
+      "{}.c",
+      "{}.cpp"
+    ],
     "template": [
       "#ifndef __{basename|uppercase}_H",
       "",
