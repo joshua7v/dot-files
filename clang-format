@@ -2,3 +2,10 @@ BasedOnStyle: LLVM
 IndentWidth: 4
 ColumnLimit: 120
 IndentCaseLabels: true
+BinPackParameters: false
+BinPackArguments: false
+AlignConsecutiveDeclarations: false
+AlignConsecutiveAssignments: false
+AllowAllArgumentsOnNextLine: false
+AllowShortBlocksOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: true
