@@ -1,5 +1,7 @@
 call plug#begin(stdpath('data') . '/plugged')
 
+if exists(":PlugInstall")
+
 " colorscheme
 Plug 'rhysd/vim-color-spring-night'
 
@@ -39,14 +41,13 @@ Plug 'mattn/emmet-vim'
 " project
 Plug 'rhysd/devdocs.vim', { 'on': ['DevDocsAllUnderCursor'] }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-Plug 'voldikss/vim-floaterm', { 'on': ['FloatermNew', 'FloatermToggle'] }
+Plug 'voldikss/vim-floaterm'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'skywind3000/asynctasks.vim'
 Plug 'liuchengxu/vista.vim', { 'on': ['Vista'] }
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-Plug 'pechorin/any-jump.vim', { 'on': ['AnyJump', 'AnyJumpLastResults'] }
 Plug 'kkoomen/vim-doge', { 'on': ['DogeGenerate'] }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -85,6 +86,9 @@ Plug 'vim-scripts/DrawIt', { 'on': ['DrawIt'] }
 " Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
 " Plug 'tenfyzhong/vim-gencode-cpp', { 'for': ['cpp'] }
 " Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown'] }
+" Plug 'pechorin/any-jump.vim', { 'on': ['AnyJump', 'AnyJumpLastResults'] }
+
+endif
 
 call plug#end()
 
@@ -609,7 +613,8 @@ vmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>ac <Plug>(coc-codeaction)
 nmap <silent>K :call <SID>show_documentation()<cr>
-nmap <silent>gd :call <SID>GoToDefinition()<cr>
+" nmap <silent>gd :call <SID>GoToDefinition()<cr>
+nmap <silent> gd <Plug>(coc-definition)
 vnoremap <leader>g :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
 nnoremap <leader>g :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@ 
 
@@ -642,34 +647,6 @@ command! -nargs=+ -complete=custom,s:GrepArgs Rgl exe 'CocList grep '.<q-args>
 command! -nargs=0 Rg exe 'CocList -I grep'
 command! -nargs=0 TODO exe "CocList --normal grep TODO:"
 
-" vim-floaterm
-function! s:runner_proc(opts)
-  let curr_bufnr = floaterm#curr()
-  if has_key(a:opts, 'silent') && a:opts.silent == 1
-    call floaterm#hide()
-  endif
-  let cmd = 'cd ' . shellescape(getcwd())
-  call floaterm#terminal#send(curr_bufnr, [cmd])
-  call floaterm#terminal#send(curr_bufnr, [a:opts.cmd])
-  stopinsert
-  if &filetype == 'floaterm' && g:floaterm_autoinsert
-    call floaterm#util#startinsert()
-  endif
-endfunction
-
-let g:floaterm_shell = 'powershell'
-let g:asyncrun_runner = get(g:, 'asyncrun_runner', {})
-let g:asyncrun_runner.floaterm = function('s:runner_proc')
-" let g:asynctasks_term_pos = 'floaterm'
-let g:floaterm_keymap_toggle = '<c-q>'
-let g:floaterm_wintitle = v:true
-let g:floaterm_width = 0.8
-let g:floaterm_height = 0.8
-
-nnoremap <c-r> :Ranger<cr>
-command! Ranger FloatermNew vifm
-autocmd User Startified setlocal buflisted
-
 " editorconfig-vim
 if s:is_installed('editorconfig-vim')
   " respect .editorconfig
@@ -696,6 +673,7 @@ autocmd BufNewFile,BufRead *.tpl              set ft=html
 autocmd BufNewFile,BufRead tsconfig.json      set ft=jsonc
 autocmd BufNewFile,BufRead tslint.json        set ft=jsonc
 autocmd BufNewFile,BufRead coc-settings.json  set ft=jsonc
+autocmd BufNewFile,BufRead settings.json      set ft=jsonc
 
 autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
 
@@ -703,14 +681,14 @@ autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
 let g:sneak#label = 1
 
 " tabular
-nmap <Leader>a= :Tabularize /=<CR>
-vmap <Leader>a= :Tabularize /=<CR>
-nmap <Leader>a: :Tabularize /:<CR>
-vmap <Leader>a: :Tabularize /:<CR>
-nmap <Leader>a\" :Tabularize /\"<CR>
-vmap <Leader>a\" :Tabularize /\"<CR>
-nmap <Leader>aa :Tabularize /
-vmap <Leader>aa :Tabularize /
+nmap <leader>a= :Tabularize /=<CR>
+vmap <leader>a= :Tabularize /=<CR>
+nmap <leader>a: :Tabularize /:<CR>
+vmap <leader>a: :Tabularize /:<CR>
+nmap <leader>a\" :Tabularize /\"<CR>
+vmap <leader>a\" :Tabularize /\"<CR>
+nmap <leader>aa :Tabularize /
+vmap <leader>aa :Tabularize /
 
 " vim-better-whitespace
 let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite', 'qf', 'help', 'far_vim']
@@ -814,6 +792,33 @@ noremap <leader>b :AsyncTask project-build<cr>
 noremap <leader>x :AsyncTask project-test<cr>
 noremap <leader>c :AsyncTask project-clean<cr>
 
+" vim-floaterm
+function! s:run_floaterm(opts)
+  let curr_bufnr = floaterm#curr()
+  if has_key(a:opts, 'silent') && a:opts.silent == 1
+    FloatermHide!
+  endif
+  let cmd = 'cd ' . shellescape(getcwd())
+  call floaterm#terminal#send(curr_bufnr, [cmd])
+  call floaterm#terminal#send(curr_bufnr, [a:opts.cmd])
+  " Back to the normal mode
+  stopinsert
+endfunction
+
+let g:floaterm_shell = 'powershell'
+let g:floaterm_keymap_toggle = '<c-q>'
+let g:floaterm_wintitle = v:true
+let g:floaterm_width = 0.8
+let g:floaterm_height = 0.8
+
+let g:asyncrun_runner = get(g:, 'asyncrun_runner', {})
+let g:asyncrun_runner.floaterm = function('s:run_floaterm')
+" let g:asynctasks_term_pos = 'floaterm'
+
+nnoremap <c-r> :Ranger<cr>
+command! Ranger FloatermNew vifm
+autocmd User Startified setlocal buflisted
+
 " vista.vim
 let g:vista_default_executive = 'coc'
 let g:vista_stay_on_open = 1
@@ -887,22 +892,6 @@ xmap aa <Plug>SidewaysArgumentTextobjA
 omap ia <Plug>SidewaysArgumentTextobjI
 xmap ia <Plug>SidewaysArgumentTextobjI
 
-" any-jump.vim
-let g:any_jump_list_numbers = 0
-let g:any_jump_usages_enabled = 1
-let g:any_jump_grouping_enabled = 0
-let g:any_jump_preview_lines_count = 5
-let g:any_jump_max_search_results = 7
-let g:any_jump_search_prefered_engine = 'rg'
-let g:any_jump_results_ui_style = 'filename_first'
-
-let g:any_jump_window_width_ratio  = 1.0
-let g:any_jump_window_height_ratio = 0.6
-let g:any_jump_window_top_offset   = 0
-
-nnoremap <leader>n :AnyJump<CR>
-nnoremap <leader>m :AnyJumpLastResults<CR>
-
 " vim-doge
 let g:doge_enable_mappings = 0
 " nnoremap <leader>dd :DogeGenerate<cr>
@@ -965,14 +954,30 @@ command! -nargs=0 Doc :DevDocsAllUnderCursor
 " deprecated plugins
 " ------------------
 
+" any-jump.vim
+" let g:any_jump_list_numbers = 0
+" let g:any_jump_usages_enabled = 1
+" let g:any_jump_grouping_enabled = 0
+" let g:any_jump_preview_lines_count = 5
+" let g:any_jump_max_search_results = 7
+" let g:any_jump_search_prefered_engine = 'rg'
+" let g:any_jump_results_ui_style = 'filename_first'
+"
+" let g:any_jump_window_width_ratio  = 1.0
+" let g:any_jump_window_height_ratio = 0.6
+" let g:any_jump_window_top_offset   = 0
+
+" nnoremap <leader>n :AnyJump<CR>
+" nnoremap <leader>m :AnyJumpLastResults<CR>
+
 " vim-bookmarks
-" nnoremap <Leader>mm :BookmarkToggle<cr>
-" nnoremap <Leader>mi :BookmarkAnnotate<cr>
-" nnoremap <Leader>ma :BookmarkShowAll<cr>
-" nnoremap <Leader>j :BookmarkNext<cr>
-" nnoremap <Leader>k :BookmarkPrev<cr>
-" nnoremap <Leader>mc :BookmarkClear<cr>
-" nnoremap <Leader>mx :BookmarkClearAll<cr>
+" nnoremap <leader>mm :BookmarkToggle<cr>
+" nnoremap <leader>mi :BookmarkAnnotate<cr>
+" nnoremap <leader>ma :BookmarkShowAll<cr>
+" nnoremap <leader>j :BookmarkNext<cr>
+" nnoremap <leader>k :BookmarkPrev<cr>
+" nnoremap <leader>mc :BookmarkClear<cr>
+" nnoremap <leader>mx :BookmarkClearAll<cr>
 "
 " let g:bookmark_sign = '♥'
 " let g:bookmark_highlight_lines = 1
@@ -995,15 +1000,15 @@ command! -nargs=0 Doc :DevDocsAllUnderCursor
 " vim-go
 " autocmd FileType go
 "     \   nmap <C-]> <Plug>(go-def)
-"     \ | nmap <Leader>god  <Plug>(go-describe)
-"     \ | nmap <Leader>goc  <Plug>(go-callees)
-"     \ | nmap <Leader>goC  <Plug>(go-callers)
-"     \ | nmap <Leader>goi  <Plug>(go-info)
-"     \ | nmap <Leader>gom  <Plug>(go-implements)
-"     \ | nmap <Leader>gos  <Plug>(go-callstack)
-"     \ | nmap <Leader>goe  <Plug>(go-referrers)
-"     \ | nmap <Leader>gor  <Plug>(go-run)
-"     \ | nmap <Leader>gov  <Plug>(go-vet)
+"     \ | nmap <leader>god  <Plug>(go-describe)
+"     \ | nmap <leader>goc  <Plug>(go-callees)
+"     \ | nmap <leader>goC  <Plug>(go-callers)
+"     \ | nmap <leader>goi  <Plug>(go-info)
+"     \ | nmap <leader>gom  <Plug>(go-implements)
+"     \ | nmap <leader>gos  <Plug>(go-callstack)
+"     \ | nmap <leader>goe  <Plug>(go-referrers)
+"     \ | nmap <leader>gor  <Plug>(go-run)
+"     \ | nmap <leader>gov  <Plug>(go-vet)
 
 " autocmd FileType go highlight default link goErr WarningMsg | match goErr /\<err\>/
 
@@ -1030,8 +1035,10 @@ command! -nargs=0 Doc :DevDocsAllUnderCursor
 " key bindings
 " ------------
 
-nnoremap <Leader>ec :tabnew $MYVIMRC
-" tnoremap <Esc> <C-\><C-n>
+nnoremap <leader>ec :tabnew $MYVIMRC
+tnoremap <Esc> <C-\><C-n>
+nnoremap <leader><leader> <C-^>
+nnoremap <leader>/ :Rg<space>
 " inoremap jj <ESC>
 
 " move visual block
@@ -1071,18 +1078,19 @@ noremap k gk
 nnoremap tp :tabprev<cr>
 nnoremap tn :tabnext<cr>
 
-nnoremap <Leader>; A;<ESC>
-nnoremap <Leader>cc A,<ESC>
-nnoremap <Leader>. A.<ESC>
-nnoremap <Leader>\ A \<ESC>
-" nnoremap <Leader>e :tabnew 
-nnoremap <Leader>ee :e <C-R>=expand('%:p:h') . '/'<CR>
-nnoremap <Leader>ef :e <C-R>=expand('%')<CR>
+nnoremap <leader>; A;<ESC>
+nnoremap <leader>cc A,<ESC>
+nnoremap <leader>. A.<ESC>
+nnoremap <leader>\ A \<ESC>
+" nnoremap <leader>e :tabnew 
+nnoremap <leader>ee :e <C-R>=expand('%:p:h') . '/'<CR>
+nnoremap <leader>ef :e <C-R>=expand('%')<CR>
 
-" nnoremap <Leader><leader> <C-^>
+" nnoremap <leader><leader> <C-^>
 nnoremap qq :bd<cr>
 
 command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 -tu4 /dev/urandom'), '^\_s*\zs.\{-}\ze\_s*$') % line('$')).'G'
+command! GCompileCommands execute '!xmake project -k compile_commands'
 
 " ------------
 " nvy settings
