@@ -1,0 +1,112 @@
+// To view the default settings, hold "alt" while clicking on the "Settings" button.
+// For documentation on these settings, see: https://aka.ms/terminal-documentation
+
+{
+  "$schema": "https://aka.ms/terminal-profiles-schema",
+  "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+  "theme": "dark",
+  "copyOnSelect": true,
+  "scrollbarState": "hidden",
+  "profiles": [
+    {
+      // Make changes here to the powershell.exe profile
+      "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+      "name": "Windows PowerShell",
+      "colorScheme": "seraph",
+      "commandline": "powershell.exe",
+      "hidden": false,
+      "cursorColor": "#ff5555",
+      "fontFace": "VictorMono NF",
+      "padding": "4, 4, -12, 4"
+    },
+    {
+      // Make changes here to the cmd.exe profile
+      "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+      "name": "cmd",
+      "colorScheme": "seraph",
+      "commandline": "cmd.exe",
+      "hidden": false,
+      "cursorColor": "#ff5555",
+      "fontFace": "VictorMono NF",
+      "padding": "4, 4, -12, 4"
+    },
+    {
+      "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
+      "hidden": false,
+      "name": "Azure Cloud Shell",
+      "source": "Windows.Terminal.Azure"
+    },
+    {
+      "guid": "{07b52e3e-de2c-5db4-bd2d-ba144ed6c273}",
+      "hidden": false,
+      "name": "Ubuntu-20.04",
+      "source": "Windows.Terminal.Wsl",
+      "cursorColor": "#ff5555",
+      "cursorShape": "filledBox",
+      "fontFace": "VictorMono NF",
+      "padding": "4, 4, -12, 4"
+    }
+  ],
+
+  // Add custom color schemes to this array
+  "schemes": [
+    {
+      "name": "seraph",
+      "black": "#1b1b1b",
+      "red": "#d75f5f",
+      "green": "#b8bb26",
+      "yellow": "#cd950c",
+      "blue": "#458588",
+      "purple": "#cc80a6",
+      "cyan": "#00aabb",
+      "white": "#d5c4a1",
+      "brightBlack": "#505050",
+      "brightRed": "#cc241d",
+      "brightGreen": "#98c99b",
+      "brightYellow": "#f5bd34",
+      "brightBlue": "#83a598",
+      "brightPurple": "#cc80a6",
+      "brightCyan": "#03d0d1",
+      "brightWhite": "#dddddd",
+      "background": "#000000",
+      "foreground": "#eaeaea"
+    }
+  ],
+
+  // Add any keybinding overrides to this array.
+  // To unbind a default keybinding, set the command to "unbound"
+  "keybindings": [
+    { "command": "newTab", "keys": "ctrl+t" },
+    { "command": "copy", "keys": ["alt+c"] },
+    { "command": "paste", "keys": ["alt+v"] },
+    { "command": "closeTab", "keys": ["alt+q"] },
+    {
+      "command": { "action": "moveFocus", "direction": "down" },
+      "keys": ["alt+down"]
+    },
+    {
+      "command": { "action": "moveFocus", "direction": "left" },
+      "keys": ["alt+left"]
+    },
+    {
+      "command": { "action": "moveFocus", "direction": "right" },
+      "keys": ["alt+right"]
+    },
+    {
+      "command": { "action": "moveFocus", "direction": "up" },
+      "keys": ["alt+up"]
+    },
+    {
+      "command": { "action": "splitPane", "split": "vertical" },
+      "keys": ["alt+d"]
+    },
+    {
+      "command": { "action": "splitPane", "split": "horizontal" },
+      "keys": ["alt+shift+d"]
+    },
+    {
+      "command": { "action": "togglePaneZoom" },
+      "keys": ["alt+w"]
+    }
+  ]
+}
