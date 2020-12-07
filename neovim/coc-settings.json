@@ -19,6 +19,5 @@
   "tabnine.priority": 70,
   "tabnine.limit": 5,
   "highlight.disableLanguages": ["dirvish"],
-  "highlight.disableLanguages": ["dirvish"],
   "coc.source.omni.filetypes": ["cmake"]
 }

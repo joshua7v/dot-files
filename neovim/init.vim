@@ -7,6 +7,7 @@ Plug 'rhysd/vim-color-spring-night'
 
 " edit
 Plug 'sheerun/vim-polyglot'
+Plug 'jiangmiao/auto-pairs'
 Plug 'neoclide/jsonc.vim', { 'for': ['jsonc'] }
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-operator-user'
@@ -490,13 +491,18 @@ omap <silent> iI <Plug>(textobj-indent-same-i)
 xmap <silent> iI <Plug>(textobj-indent-same-i)
 
 " coc.nvim
+
+" fix node path under scoop/volta installation
+if isdirectory($HOME . "/scoop/apps/volta")
+  let g:coc_node_path = "~/scoop/apps/volta/current/appdata/bin/node.exe"
+endif
+
 let g:coc_global_extensions = [
             \"coc-marketplace",
             \"coc-word",
             \"coc-git",
             \"coc-tsserver",
             \"coc-project",
-            \"coc-pairs",
             \"coc-json",
             \"coc-html",
             \"coc-css",
@@ -787,10 +793,15 @@ let g:asynctasks_rtp_config = 'asynctasks/tasks.ini'
 let g:asyncrun_open = 6
 let g:asynctasks_term_pos = 'bottom'
 let g:asyncrun_rootmarks = ['.git', '.svn', '.root', '.project', '.hg', '.projectionist.json', '.editorconfig', 'compile_commands.json']
+let g:asynctasks_term_reuse = 1
+let g:asynctasks_term_focus = 1
+
 noremap <leader>r :AsyncTask project-run<cr>
 noremap <leader>b :AsyncTask project-build<cr>
 noremap <leader>x :AsyncTask project-test<cr>
 noremap <leader>c :AsyncTask project-clean<cr>
+
+" autocmd BufWritePost *.c,*.cpp AsyncTask project-build
 
 " vim-floaterm
 function! s:run_floaterm(opts)
