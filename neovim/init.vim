@@ -5,8 +5,11 @@ if exists(":PlugInstall")
 " colorscheme
 Plug 'rhysd/vim-color-spring-night'
 
-" edit
+" syntax
+Plug 'pantharshit00/vim-prisma'
 Plug 'sheerun/vim-polyglot'
+
+" edit
 Plug 'jiangmiao/auto-pairs'
 Plug 'neoclide/jsonc.vim', { 'for': ['jsonc'] }
 Plug 'kana/vim-textobj-user'
@@ -515,6 +518,7 @@ let g:coc_global_extensions = [
             \"coc-python",
             \"coc-tailwindcss",
             \"coc-svg",
+            \"coc-prisma",
             \]
 let g:coc_snippet_next = '<tab>'
 let g:coc_snippet_prev = '<s-tab>'
@@ -576,7 +580,7 @@ augroup mygroup
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   autocmd FileType typescript,typescript.tsx,typescriptreact,javascript,json,html,scss,css,graphql nmap <space><space> :Prettier<cr>
-  autocmd FileType cpp,objcpp,c,svg,python,go,rust,java nmap <space><space> :Format<cr>
+  autocmd FileType cpp,objcpp,c,svg,python,go,rust,java,prisma nmap <space><space> :Format<cr>
 augroup end
 
 " multiple cursors
