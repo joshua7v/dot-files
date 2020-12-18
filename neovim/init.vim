@@ -519,6 +519,8 @@ let g:coc_global_extensions = [
             \"coc-tailwindcss",
             \"coc-svg",
             \"coc-prisma",
+            \"coc-floaterm",
+            \"coc-tasks",
             \]
 let g:coc_snippet_next = '<tab>'
 let g:coc_snippet_prev = '<s-tab>'
@@ -642,7 +644,8 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<cr>
 nnoremap <silent> <space>m  :<C-u>CocList --normal marks<cr>
 nnoremap <silent> <space>h  :<C-u>CocList --normal searchhistory<cr>
 nnoremap <silent> <space>k  :<C-u>CocList --normal maps<cr>
-nnoremap <silent> <space>q  :<C-u>CocList --normal tasks<cr>
+nnoremap <silent> <space>q  :<C-u>CocList --normal floaterm<cr>
+nnoremap <silent> <space>a  :<C-u>CocList --normal tasks<cr>
 nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<cr>
 nnoremap <silent> <space><leader>  :<C-u>CocList --normal project<cr>
 " nnoremap <silent> <space>l  :<C-u>Denite coc-link<cr>
@@ -884,7 +887,8 @@ vmap gx <Plug>(openbrowser-smart-search)
 let g:terminal_key = '<leader>t'
 let g:terminal_cwd = 2
 let g:terminal_list = 0
-let g:terminal_height = 12
+let g:terminal_height = 20
+let g:terminal_edit = 'drop'
 
 " vim-interestingwords
 let g:interestingWordsRandomiseColors = 0
@@ -895,8 +899,8 @@ let g:interestingWordsTermColors = ['121', '211', '137', '214', '222']
 nnoremap <silent> <leader>w :call InterestingWords('n')<cr>
 vnoremap <silent> <leader>w :call InterestingWords('v')<cr>
 nnoremap <silent> <leader>W :call UncolorAllWords()<cr>
-nnoremap <silent> ]] :call WordNavigation(1)<cr>
-nnoremap <silent> [[ :call WordNavigation(0)<cr>
+nnoremap <silent> ]w :call WordNavigation(1)<cr>
+nnoremap <silent> [w :call WordNavigation(0)<cr>
 
 " splitjoin.vim
 let g:splitjoin_join_mapping = ''
