@@ -24,7 +24,7 @@ Plug 'justinmk/vim-dirvish'
 Plug 'roman/golden-ratio', { 'on': ['<Plug>(golden_ratio_resize)'] }
 Plug 'haya14busa/vim-edgemotion'
 Plug 'justinmk/vim-sneak'
-Plug 'tomtom/tcomment_vim', { 'on': ['TComment', 'TCommentAs'] }
+Plug 'tpope/vim-commentary'
 Plug 'svermeulen/vim-yoink'
 Plug 'mg979/vim-visual-multi'
 Plug 'mbbill/undotree'
@@ -66,6 +66,8 @@ Plug 'guns/xterm-color-table.vim', { 'on': ['XtermColorTable'] }
 Plug 'powerman/vim-plugin-AnsiEsc'
 Plug 'inside/vim-search-pulse'
 Plug 'vim-scripts/DrawIt', { 'on': ['DrawIt'] }
+Plug 'tpope/vim-dadbod'
+Plug 'kristijanhusak/vim-dadbod-ui'
 
 " watching
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -91,6 +93,7 @@ Plug 'vim-scripts/DrawIt', { 'on': ['DrawIt'] }
 " Plug 'tenfyzhong/vim-gencode-cpp', { 'for': ['cpp'] }
 " Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown'] }
 " Plug 'pechorin/any-jump.vim', { 'on': ['AnyJump', 'AnyJumpLastResults'] }
+" Plug 'tomtom/tcomment_vim', { 'on': ['TComment', 'TCommentAs'] }
 
 endif
 
@@ -202,9 +205,6 @@ set foldmethod=manual
 set shortmess+=c
 set tabline=
 set guitablabel=%t
-
-" let &colorcolumn="80,".join(range(120,999),",")
-let &colorcolumn="120"
 
 set nowrap " disable wrap
 set number " show line number
@@ -521,7 +521,10 @@ let g:coc_global_extensions = [
             \"coc-prisma",
             \"coc-floaterm",
             \"coc-tasks",
+            \"coc-db",
+            \"coc-explorer",
             \]
+
 let g:coc_snippet_next = '<tab>'
 let g:coc_snippet_prev = '<s-tab>'
 let g:coc_auto_copen = 0
@@ -664,8 +667,10 @@ command! -nargs=0 TODO exe "CocList --normal grep TODO:"
 if s:is_installed('editorconfig-vim')
   " respect .editorconfig
 else
+  let &colorcolumn="121"
+
   autocmd FileType python,elm,go,c,cpp,h set tabstop=4 shiftwidth=4 expandtab ai
-  autocmd FileType vim,javascript,javascript.jsx,typescript,typescript.tsx,json,css,scss,html,yaml,md       set tabstop=2 shiftwidth=2 expandtab ai
+  autocmd FileType vim,javascript,javascript.jsx,typescript,typescript.tsx,json,css,scss,html,yaml,md set tabstop=2 shiftwidth=2 expandtab ai
 endif
 
 autocmd BufNewFile,BufRead .tern-project  setfiletype json
@@ -751,13 +756,6 @@ map <c-j> <Plug>(edgemotion-j)
 map <c-k> <Plug>(edgemotion-k)
 vmap <c-j> <Plug>(edgemotion-j)
 vmap <c-k> <Plug>(edgemotion-k)
-
-" tcomment_vim
-nmap <c-_><c-_> :TComment<cr>
-nmap gcc :TComment<cr>
-vmap gc :TComment<cr>
-nmap gca :TCommentAs 
-vmap gca :TCommentAs 
 
 " git-messenger.vim
 nmap gm <Plug>(git-messenger)
@@ -1054,6 +1052,13 @@ command! -nargs=0 Doc :DevDocsAllUnderCursor
 " vim-gencode-cpp
 " noremap <leader>tdc :GenDeclaration<cr>
 " noremap <leader>tdd :GenDefinition<cr>
+
+" tcomment_vim
+" nmap <c-_><c-_> :TComment<cr>
+" nmap gcc :TComment<cr>
+" vmap gc :TComment<cr>
+" nmap gca :TCommentAs 
+" vmap gca :TCommentAs 
 
 " ------------
 " key bindings
