@@ -290,6 +290,7 @@ function! s:patch_spring_night_colors()
   hi MatchParen ctermfg=black
   hi Cursor guifg=white guibg=#ff5555
   hi Search ctermfg=0 ctermbg=6 guibg=#88C0D0 guifg=#3B4252 gui=none
+  hi QuickFixLine ctermbg=180 cterm=bold guibg=#334659 gui=bold
   hi! link SignColumn   LineNr
   hi! link ESearchMatch Search
   hi! link TermCursor Cursor
@@ -523,6 +524,7 @@ let g:coc_global_extensions = [
             \"coc-tasks",
             \"coc-db",
             \"coc-explorer",
+            \"coc-highlight",
             \]
 
 let g:coc_snippet_next = '<tab>'
@@ -648,7 +650,7 @@ nnoremap <silent> <space>m  :<C-u>CocList --normal marks<cr>
 nnoremap <silent> <space>h  :<C-u>CocList --normal searchhistory<cr>
 nnoremap <silent> <space>k  :<C-u>CocList --normal maps<cr>
 nnoremap <silent> <space>q  :<C-u>CocList --normal floaterm<cr>
-nnoremap <silent> <space>a  :<C-u>CocList --normal tasks<cr>
+nnoremap <silent> <space>z  :<C-u>CocList --normal tasks<cr>
 nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<cr>
 nnoremap <silent> <space><leader>  :<C-u>CocList --normal project<cr>
 " nnoremap <silent> <space>l  :<C-u>Denite coc-link<cr>
@@ -775,10 +777,13 @@ nmap <expr> <c-n> yoink#canSwap() ? '<plug>(YoinkPostPasteSwapBack)' : ''
 set viewoptions=cursor,folds,slash,unix
 
 " vim-visual-multi
-let g:VM_Selection_hl     = 'Cursor'
-let g:VM_Mono_Cursor_hl   = 'Cursor'
-let g:VM_Ins_Mode_hl      = 'Cursor'
-let g:VM_Normal_Cursor_hl = 'Cursor'
+let g:VM_Selection_hl       = 'Cursor'
+let g:VM_Mono_Cursor_hl     = 'Cursor'
+let g:VM_Ins_Mode_hl        = 'Cursor'
+let g:VM_Normal_Cursor_hl   = 'Cursor'
+
+let g:VM_maps               = {}
+let g:VM_maps['Find Under'] = '<C-h>'
 
 " asyncrun.vim
 let g:asyncrun_bell = 1
