@@ -19,7 +19,7 @@ Plug 'kana/vim-textobj-indent'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'ntpeters/vim-better-whitespace', { 'on': ['StripWhitespace'] }
-Plug 'Yggdroot/indentLine', { 'on': ['IndentLinesToggle'] }
+Plug 'Yggdroot/indentLine'
 Plug 'justinmk/vim-dirvish'
 Plug 'roman/golden-ratio', { 'on': ['<Plug>(golden_ratio_resize)'] }
 Plug 'haya14busa/vim-edgemotion'
@@ -55,6 +55,7 @@ Plug 'tpope/vim-rhubarb'
 Plug 'kkoomen/vim-doge', { 'on': ['DogeGenerate'] }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'rhysd/git-messenger.vim'
 
 " miscellaneous
 Plug 'vim-scripts/BufOnly.vim', { 'on': ['BufOnly'] }
@@ -68,6 +69,7 @@ Plug 'inside/vim-search-pulse'
 Plug 'vim-scripts/DrawIt', { 'on': ['DrawIt'] }
 Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
+Plug 'dstein64/vim-startuptime', { 'on': ['StartupTime'] }
 
 " watching
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -525,6 +527,7 @@ let g:coc_global_extensions = [
             \"coc-db",
             \"coc-explorer",
             \"coc-highlight",
+            \"coc-lines",
             \]
 
 let g:coc_snippet_next = '<tab>'
@@ -651,6 +654,7 @@ nnoremap <silent> <space>h  :<C-u>CocList --normal searchhistory<cr>
 nnoremap <silent> <space>k  :<C-u>CocList --normal maps<cr>
 nnoremap <silent> <space>q  :<C-u>CocList --normal floaterm<cr>
 nnoremap <silent> <space>z  :<C-u>CocList --normal tasks<cr>
+nnoremap <silent> <space>l  :<C-u>CocList -I lines<cr>
 nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<cr>
 nnoremap <silent> <space><leader>  :<C-u>CocList --normal project<cr>
 " nnoremap <silent> <space>l  :<C-u>Denite coc-link<cr>
@@ -722,6 +726,8 @@ nnoremap <silent> qo :BufOnly<cr>
 nnoremap <silent> qoo :BufOnly!<cr>"
 
 " indentline
+let g:indentLine_color_term = 145
+let g:indentLine_color_gui = '#ff5555'
 let g:indentLine_enabled = 0
 nnoremap <leader>i :IndentLinesToggle<cr>
 
