@@ -530,6 +530,36 @@ let g:coc_global_extensions = [
             \"coc-lines",
             \]
 
+let g:coc_explorer_global_presets = {
+\   'floating': {
+\     'position': 'floating',
+\     'floating-position': 'center',
+\     'floating-width': 80,
+\     'open-action-strategy': 'sourceWindow',
+\   },
+\   'erinn': {
+\     'position': 'floating',
+\     'floating-position': 'center',
+\     'floating-width': 80,
+\     'open-action-strategy': 'sourceWindow',
+\     'root-uri': '~/erinn',
+\   },
+\   'downloads': {
+\     'position': 'floating',
+\     'floating-position': 'center',
+\     'floating-width': 80,
+\     'open-action-strategy': 'sourceWindow',
+\     'root-uri': '~/Downloads',
+\   },
+\   'user': {
+\     'position': 'floating',
+\     'floating-position': 'center',
+\     'floating-width': 80,
+\     'open-action-strategy': 'sourceWindow',
+\     'root-uri': '~',
+\   },
+\ }
+
 let g:coc_snippet_next = '<tab>'
 let g:coc_snippet_prev = '<s-tab>'
 let g:coc_auto_copen = 0
@@ -619,7 +649,7 @@ nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
 
 inoremap <expr> <tab> pumvisible() ? "\<C-y>" : "\<tab>"
-nmap <space>f :CocCommand explorer<cr>
+nmap <space>f :CocCommand explorer --preset=floating<cr>
 nmap <leader>e <Plug>(coc-diagnostic-info)
 nmap <leader>cl <Plug>(coc-codelens-action)
 nmap <silent>gy <Plug>(coc-type-definition)
@@ -656,6 +686,7 @@ nnoremap <silent> <space>q  :<C-u>CocList --normal floaterm<cr>
 nnoremap <silent> <space>z  :<C-u>CocList --normal tasks<cr>
 nnoremap <silent> <space>l  :<C-u>CocList -I lines<cr>
 nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<cr>
+nnoremap <silent> <space>fl :<c-u>CocList --normal explPresets<cr>
 nnoremap <silent> <space><leader>  :<C-u>CocList --normal project<cr>
 " nnoremap <silent> <space>l  :<C-u>Denite coc-link<cr>
 
