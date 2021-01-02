@@ -1,11 +1,16 @@
 BasedOnStyle: LLVM
 IndentWidth: 4
 ColumnLimit: 120
+SortIncludes: false
 IndentCaseLabels: true
 BinPackParameters: false
 BinPackArguments: false
 AlignConsecutiveDeclarations: false
 AlignConsecutiveAssignments: false
 AllowAllArgumentsOnNextLine: false
+AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortBlocksOnASingleLine: true
 AllowShortIfStatementsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: false
+AlignOperands: Align
+BreakBeforeBinaryOperators: NonAssignment
