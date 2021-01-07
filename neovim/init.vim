@@ -56,6 +56,8 @@ Plug 'kkoomen/vim-doge', { 'on': ['DogeGenerate'] }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'rhysd/git-messenger.vim'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'Shougo/echodoc.vim'
 
 " miscellaneous
 Plug 'vim-scripts/BufOnly.vim', { 'on': ['BufOnly'] }
@@ -528,6 +530,7 @@ let g:coc_global_extensions = [
             \"coc-explorer",
             \"coc-highlight",
             \"coc-lines",
+            \"coc-rust-analyzer",
             \]
 
 let g:coc_explorer_global_presets = {
@@ -663,10 +666,11 @@ vmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>ac <Plug>(coc-codeaction)
 nmap <silent>K :call <SID>show_documentation()<cr>
-" nmap <silent>gd :call <SID>GoToDefinition()<cr>
-nmap <silent> gd <Plug>(coc-definition)
+nmap <silent>gd :call <SID>GoToDefinition()<cr>
+" nmap <silent> gd <Plug>(coc-definition)
 vnoremap <leader>g :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
 nnoremap <leader>g :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@ 
+inoremap <silent><expr> <c-space> coc#refresh()
 
 " nnoremap <silent> <c-p>     :<C-u>CocList files<cr>
 nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
@@ -698,7 +702,7 @@ command! -nargs=? Fold :call CocAction('fold', <f-args>)
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 command! -nargs=+ -complete=custom,s:GrepArgs Rgl exe 'CocList grep '.<q-args>
 command! -nargs=0 Rg exe 'CocList -I grep'
-command! -nargs=0 TODO exe "CocList --normal grep TODO:"
+command! -nargs=0 TODO exe "CocList --normal grep TODO"
 
 " editorconfig-vim
 if s:is_installed('editorconfig-vim')
@@ -731,6 +735,18 @@ autocmd BufNewFile,BufRead coc-settings.json  set ft=jsonc
 autocmd BufNewFile,BufRead settings.json      set ft=jsonc
 
 autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
+
+" vim-gutentags
+let g:gutentags_project_root = ['.git']
+let g:gutentags_ctags_tagfile = '.tags'
+let s:vim_tags = expand('~/.cache/tags')
+let g:gutentags_cache_dir = s:vim_tags
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+
+" echodoc.vim
+let g:echodoc#enable_at_startup = 1
 
 " vim-sneak
 let g:sneak#label = 1

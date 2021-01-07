@@ -5,6 +5,8 @@
   "diagnostic.hintSign": "H",
   "suggest.timeout": 2000,
   "suggest.enablePreview": true,
+  "suggest.echodocSupport": true,
+  "signature.target": "echo",
   "codeLens.enable": true,
   "diagnostic.virtualText": false,
   "list.indicator": "λ",
@@ -16,8 +18,9 @@
     "**/*.min.css",
     "**/*.js.map"
   ],
-  "tabnine.priority": 70,
+  "tabnine.priority": 0,
   "tabnine.limit": 5,
   "highlight.disableLanguages": ["dirvish"],
-  "coc.source.omni.filetypes": ["cmake"]
+  "coc.source.omni.filetypes": ["cmake"],
+  "rust-analyzer.server.path": "rust-analyzer"
 }
