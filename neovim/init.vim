@@ -11,6 +11,7 @@ Plug 'sheerun/vim-polyglot'
 
 " edit
 Plug 'jiangmiao/auto-pairs'
+Plug 'haya14busa/vim-asterisk'
 Plug 'neoclide/jsonc.vim', { 'for': ['jsonc'] }
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-operator-user'
@@ -56,7 +57,7 @@ Plug 'kkoomen/vim-doge', { 'on': ['DogeGenerate'] }
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'rhysd/git-messenger.vim'
-Plug 'ludovicchabant/vim-gutentags'
+Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp'] }
 Plug 'Shougo/echodoc.vim'
 
 " miscellaneous
@@ -736,6 +737,18 @@ autocmd BufNewFile,BufRead settings.json      set ft=jsonc
 
 autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
 
+" vim-asterisk
+let g:asterisk#keeppos = 1
+
+map *   <Plug>(asterisk-*)
+map #   <Plug>(asterisk-#)
+map g*  <Plug>(asterisk-g*)
+map g#  <Plug>(asterisk-g#)
+map z*  <Plug>(asterisk-z*)
+map gz* <Plug>(asterisk-gz*)
+map z#  <Plug>(asterisk-z#)
+map gz# <Plug>(asterisk-gz#)
+
 " vim-gutentags
 let g:gutentags_project_root = ['.git']
 let g:gutentags_ctags_tagfile = '.tags'
@@ -1121,7 +1134,6 @@ command! -nargs=0 Doc :DevDocsAllUnderCursor
 " ------------
 " key bindings
 " ------------
-
 nnoremap <leader>ec :tabnew $MYVIMRC
 tnoremap <Esc> <C-\><C-n>
 nnoremap <leader><leader> <C-^>
@@ -1143,11 +1155,11 @@ nnoremap =v <c-w>_
 nnoremap =h <c-w><bar>
 
 " keep search pattern at the center of the screen
-nnoremap <silent> n nzz
-nnoremap <silent> N Nzz
-nnoremap <silent> * *zz
-nnoremap <silent> # #zz
-nnoremap <silent> g* g*zz
+" nnoremap <silent> n nzz
+" nnoremap <silent> N Nzz
+" nnoremap <silent> * *zz
+" nnoremap <silent> # #zz
+" nnoremap <silent> g* g*zz
 
 noremap <F1> <esc>
 
