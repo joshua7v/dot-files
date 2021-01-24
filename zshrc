@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-alias px="export http_proxy=http://127.0.0.1:8118;export https_proxy=http://127.0.0.1:8118;"
+alias px="export http_proxy=http://127.0.0.1:7890;export https_proxy=http://127.0.0.1:7890;"
 alias pc="unset http_proxy;unset https_proxy;"
 alias gpo="git pull origin"
 alias gpod="git pull origin develop"
@@ -116,7 +116,7 @@ ZSH_THEME="norm"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git d wd web-search catimg encode64 urltools zsh-autosuggestions)
+plugins=(git wd web-search catimg encode64 urltools zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -149,6 +149,6 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-source ~/erinn/asdf/asdf.sh
-source ~/erinn/asdf/completions/asdf.bash
 [[ -s "$HOME/.xmake/profile" ]] && source "$HOME/.xmake/profile" # load xmake profile
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
