@@ -24,7 +24,9 @@ Plug 'Yggdroot/indentLine'
 Plug 'justinmk/vim-dirvish'
 Plug 'roman/golden-ratio', { 'on': ['<Plug>(golden_ratio_resize)'] }
 Plug 'haya14busa/vim-edgemotion'
-Plug 'justinmk/vim-sneak'
+" Plug 'justinmk/vim-sneak'
+Plug 'phaazon/hop.nvim'
+Plug 'Shougo/context_filetype.vim'
 Plug 'tpope/vim-commentary'
 Plug 'svermeulen/vim-yoink'
 Plug 'mg979/vim-visual-multi'
@@ -59,8 +61,10 @@ Plug 'honza/vim-snippets'
 Plug 'rhysd/git-messenger.vim'
 Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp'] }
 Plug 'Shougo/echodoc.vim'
+Plug 'habamax/vim-godot'
 
 " miscellaneous
+" Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 Plug 'vim-scripts/BufOnly.vim', { 'on': ['BufOnly'] }
 Plug 'kopischke/vim-stay'
 Plug 'pbrisbin/vim-mkdir'
@@ -99,6 +103,7 @@ Plug 'dstein64/vim-startuptime', { 'on': ['StartupTime'] }
 " Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown'] }
 " Plug 'pechorin/any-jump.vim', { 'on': ['AnyJump', 'AnyJumpLastResults'] }
 " Plug 'tomtom/tcomment_vim', { 'on': ['TComment', 'TCommentAs'] }
+" Plug 'tyru/caw.vim'
 
 endif
 
@@ -762,7 +767,19 @@ let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 let g:echodoc#enable_at_startup = 1
 
 " vim-sneak
-let g:sneak#label = 1
+" let g:sneak#label = 1
+
+" hop.nvim
+nnoremap ss :HopWord<cr>
+nnoremap sa :HopChar1<cr>
+nnoremap sd :HopChar2<cr>
+nnoremap sl :HopLine<cr>
+nnoremap s/ :HopPattern<cr>
+xnoremap ss <cmd>HopWord<cr>
+xnoremap sa <cmd>HopChar1<cr>
+xnoremap sd <cmd>HopChar2<cr>
+xnoremap sl <cmd>HopLine<cr>
+xnoremap s/ <cmd>HopPattern<cr>
 
 " tabular
 nmap <leader>a= :Tabularize /=<CR>
@@ -896,6 +913,7 @@ if has('macunix')
   let g:floaterm_shell = '/bin/zsh'
 else
   let g:floaterm_shell = 'powershell'
+  map <c-z> <nop>
 endif
 
 let g:floaterm_keymap_toggle = '<c-q>'
