@@ -24,8 +24,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'justinmk/vim-dirvish'
 Plug 'roman/golden-ratio', { 'on': ['<Plug>(golden_ratio_resize)'] }
 Plug 'haya14busa/vim-edgemotion'
-" Plug 'justinmk/vim-sneak'
-Plug 'phaazon/hop.nvim'
+Plug 'justinmk/vim-sneak'
 Plug 'Shougo/context_filetype.vim'
 Plug 'tpope/vim-commentary'
 Plug 'svermeulen/vim-yoink'
@@ -65,6 +64,8 @@ Plug 'habamax/vim-godot'
 
 " miscellaneous
 " Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+Plug 'romainl/vim-qf'
+Plug 'yssl/QFEnter'
 Plug 'vim-scripts/BufOnly.vim', { 'on': ['BufOnly'] }
 Plug 'kopischke/vim-stay'
 Plug 'pbrisbin/vim-mkdir'
@@ -80,6 +81,7 @@ Plug 'dstein64/vim-startuptime', { 'on': ['StartupTime'] }
 
 " watching
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" Plug 'phaazon/hop.nvim'
 
 " deprecated
 " Plug 'arcticicestudio/nord-vim'
@@ -767,19 +769,18 @@ let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
 let g:echodoc#enable_at_startup = 1
 
 " vim-sneak
-" let g:sneak#label = 1
+let g:sneak#label = 1
 
 " hop.nvim
-nnoremap ss :HopWord<cr>
-nnoremap sa :HopChar1<cr>
-nnoremap sd :HopChar2<cr>
-nnoremap sl :HopLine<cr>
-nnoremap s/ :HopPattern<cr>
-xnoremap ss <cmd>HopWord<cr>
-xnoremap sa <cmd>HopChar1<cr>
-xnoremap sd <cmd>HopChar2<cr>
-xnoremap sl <cmd>HopLine<cr>
-xnoremap s/ <cmd>HopPattern<cr>
+" nnoremap ss :HopWord<cr>
+" nnoremap sa :HopChar1<cr>
+" nnoremap sd :HopChar2<cr>
+" nnoremap sl :HopLine<cr>
+" nnoremap s/ :HopPattern<cr>
+" xnoremap sa <cmd>HopChar1<cr>
+" xnoremap sd <cmd>HopChar2<cr>
+" xnoremap sl <cmd>HopLine<cr>
+" xnoremap s/ <cmd>HopPattern<cr>
 
 " tabular
 nmap <leader>a= :Tabularize /=<CR>
@@ -871,7 +872,7 @@ let g:VM_maps['Find Under'] = '<C-h>'
 " asyncrun.vim
 let g:asyncrun_bell = 1
 
-noremap <leader>q :call asyncrun#quickfix_toggle(30)<cr>
+" noremap <leader>q :call asyncrun#quickfix_toggle(30)<cr>
 noremap <leader>ar :AsyncRun -mode=term -pos=bottom 
 " autocmd FileType c,cpp,cmake noremap <leader>m :AsyncRun -mode=term -pos=bottom cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -B build .<cr>
 " autocmd FileType c,cpp,cmake noremap <leader>c :AsyncRun -mode=term -pos=bottom -cwd=build make<cr>
@@ -965,6 +966,10 @@ let g:mta_filetypes = {
   \ 'typescript.tsx': 1,
   \ 'typescriptreact': 1
   \}
+
+" vim-qf
+let g:qf_max_height = 30
+nmap <leader>q <Plug>(qf_qf_toggle_stay)
 
 " open-browser.vim
 nmap gx <Plug>(openbrowser-smart-search)
