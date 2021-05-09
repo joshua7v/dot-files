@@ -43,6 +43,8 @@ Plug 'svermeulen/vim-subversive'
 Plug 'tpope/vim-abolish'
 Plug 'Julian/vim-textobj-variable-segment'
 Plug 'mattn/emmet-vim'
+Plug 'tenfyzhong/vim-gencode-cpp', { 'for': ['c', 'cpp'] }
+Plug 'jackguo380/vim-lsp-cxx-highlight', { 'for': ['c', 'cpp'] }
 
 " project
 Plug 'rhysd/devdocs.vim', { 'on': ['DevDocsAllUnderCursor'] }
@@ -101,7 +103,6 @@ Plug 'dstein64/vim-startuptime', { 'on': ['StartupTime'] }
 " Plug 'haya14busa/vim-operator-flashy'
 " Plug 'chrisbra/Colorizer', { 'on': ['ColorToggle'] }
 " Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
-" Plug 'tenfyzhong/vim-gencode-cpp', { 'for': ['cpp'] }
 " Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown'] }
 " Plug 'pechorin/any-jump.vim', { 'on': ['AnyJump', 'AnyJumpLastResults'] }
 " Plug 'tomtom/tcomment_vim', { 'on': ['TComment', 'TCommentAs'] }
@@ -230,6 +231,8 @@ set omnifunc=syntaxcomplete#Complete
 set signcolumn=yes
 set splitbelow
 
+set pastetoggle=<c-x>
+
 let g:terminal_color_0  = '#2e3436'
 let g:terminal_color_1  = '#cc0000'
 let g:terminal_color_2  = '#4e9a06'
@@ -269,6 +272,12 @@ inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDow
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | endif
+
+" custom keyword highlighting
+hi TodoGroup cterm=bold ctermfg=233 ctermbg=210 gui=bold guifg=#132132 guibg=#fd8489
+hi NoteGroup ctermfg=210 ctermbg=235 guifg=#fd8489 guibg=#3a4b5c
+call matchadd("TodoGroup", 'TODO')
+call matchadd("NoteGroup", 'NOTE')
 
 " -------------------
 " appearance settings
@@ -711,6 +720,7 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 command! -nargs=+ -complete=custom,s:GrepArgs Rgl exe 'CocList grep '.<q-args>
 command! -nargs=0 Rg exe 'CocList -I grep'
 command! -nargs=0 TODO exe "CocList --normal grep TODO"
+command! -nargs=0 NOTE exe "CocList --normal grep NOTE"
 
 " editorconfig-vim
 if s:is_installed('editorconfig-vim')
@@ -770,6 +780,8 @@ let g:echodoc#enable_at_startup = 1
 
 " vim-sneak
 let g:sneak#label = 1
+xmap z <Plug>Sneak_s
+xmap Z <Plug>Sneak_S
 
 " hop.nvim
 " nnoremap ss :HopWord<cr>
@@ -1146,6 +1158,7 @@ command! -nargs=0 Doc :DevDocsAllUnderCursor
 " vim-gencode-cpp
 " noremap <leader>tdc :GenDeclaration<cr>
 " noremap <leader>tdd :GenDefinition<cr>
+noremap <leader>` :GenDefinition<cr>
 
 " tcomment_vim
 " nmap <c-_><c-_> :TComment<cr>
