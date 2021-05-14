@@ -1,4 +1,13 @@
 {
+  "*.svelte": {
+    "template": [
+      "<script lang=\"ts\">",
+      "</script>",
+      "",
+      "<style>",
+      "</style>"
+    ]
+  },
   "*.tsx": {
     "template": [
       "import React from 'react';",
@@ -54,5 +63,11 @@
       "#define __{basename|uppercase}_H",
       "#endif"
     ]
+  },
+  "pages/*.tsx": {
+    "type": "page"
+  },
+  "src/components/*.svelte": {
+    "type": "component"
   }
 }

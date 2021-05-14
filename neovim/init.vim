@@ -8,6 +8,7 @@ Plug 'rhysd/vim-color-spring-night'
 " syntax
 Plug 'pantharshit00/vim-prisma'
 Plug 'sheerun/vim-polyglot'
+Plug 'evanleck/vim-svelte', { 'branch': 'main' }
 
 " edit
 Plug 'jiangmiao/auto-pairs'
@@ -276,8 +277,10 @@ autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | end
 " custom keyword highlighting
 hi TodoGroup cterm=bold ctermfg=233 ctermbg=210 gui=bold guifg=#132132 guibg=#fd8489
 hi NoteGroup ctermfg=210 ctermbg=235 guifg=#fd8489 guibg=#3a4b5c
+hi ImportantGroup ctermfg=233 ctermbg=222 guifg=#132132 guibg=#fedf81
 call matchadd("TodoGroup", 'TODO')
 call matchadd("NoteGroup", 'NOTE')
+call matchadd("ImportantGroup", 'IMPORTANT')
 
 " -------------------
 " appearance settings
@@ -526,6 +529,7 @@ let g:coc_global_extensions = [
             \"coc-marketplace",
             \"coc-word",
             \"coc-git",
+            \"coc-gitignore",
             \"coc-tsserver",
             \"coc-project",
             \"coc-json",
@@ -548,6 +552,9 @@ let g:coc_global_extensions = [
             \"coc-highlight",
             \"coc-lines",
             \"coc-rust-analyzer",
+            \"coc-jsref",
+            \"coc-lua",
+            \"coc-svelte",
             \]
 
 let g:coc_explorer_global_presets = {
@@ -639,7 +646,7 @@ augroup mygroup
   autocmd!
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-  autocmd FileType typescript,typescript.tsx,typescriptreact,javascript,json,html,scss,css,graphql nmap <space><space> :Prettier<cr>
+  autocmd FileType typescript,typescript.tsx,typescriptreact,javascript,json,html,scss,css,graphql,svelte nmap <space><space> :Prettier<cr>
   autocmd FileType cpp,objcpp,c,svg,python,go,rust,java,prisma nmap <space><space> :Format<cr>
 augroup end
 
@@ -679,9 +686,11 @@ nmap <silent>gh :CocCommand git.chunkInfo<cr>
 nmap <leader>rn <Plug>(coc-rename)
 vmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
-vmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>ac <Plug>(coc-codeaction)
+" vmap <leader>a  <Plug>(coc-codeaction-selected)
+" nmap <leader>a  <Plug>(coc-codeaction-selected)
+" nmap <leader>ac <Plug>(coc-codeaction)
+nmap <leader>ac <Plug>(coc-codeaction-cursor)
+xmap <leader>ac <Plug>(coc-codeaction-selected)
 nmap <silent>K :call <SID>show_documentation()<cr>
 nmap <silent>gd :call <SID>GoToDefinition()<cr>
 " nmap <silent> gd <Plug>(coc-definition)
