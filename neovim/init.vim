@@ -4,6 +4,7 @@ if exists(":PlugInstall")
 
 " colorscheme
 Plug 'rhysd/vim-color-spring-night'
+" Plug 'joshdick/onedark.vim'
 
 " syntax
 Plug 'pantharshit00/vim-prisma'
@@ -84,7 +85,11 @@ Plug 'dstein64/vim-startuptime', { 'on': ['StartupTime'] }
 
 " watching
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" Plug 'romgrk/nvim-treesitter-context'
 " Plug 'phaazon/hop.nvim'
+" Plug 'neovim/nvim-lspconfig'
+" Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
+" Plug 'ray-x/navigator.lua'
 
 " deprecated
 " Plug 'arcticicestudio/nord-vim'
@@ -278,9 +283,19 @@ autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | end
 hi TodoGroup cterm=bold ctermfg=233 ctermbg=210 gui=bold guifg=#132132 guibg=#fd8489
 hi NoteGroup ctermfg=210 ctermbg=235 guifg=#fd8489 guibg=#3a4b5c
 hi ImportantGroup ctermfg=233 ctermbg=222 guifg=#132132 guibg=#fedf81
-call matchadd("TodoGroup", 'TODO')
-call matchadd("NoteGroup", 'NOTE')
-call matchadd("ImportantGroup", 'IMPORTANT')
+" call matchadd("TodoGroup", 'TODO')
+" call matchadd("NoteGroup", 'NOTE')
+" call matchadd("ImportantGroup", 'IMPORTANT')
+
+augroup vimrc_todo
+    au!
+    au Syntax * syn match sTodo /TODO/ containedin=.*Comment,vimCommentTitle
+    au Syntax * syn match sNote /NOTE/ containedin=.*Comment,vimCommentTitle
+    au Syntax * syn match sImportant /IMPORTANT/ containedin=.*Comment,vimCommentTitle
+augroup END
+hi def link sTodo TodoGroup
+hi def link sNote NoteGroup
+hi def link sImportant ImportantGroup
 
 " -------------------
 " appearance settings
@@ -728,8 +743,9 @@ command! -nargs=? Fold :call CocAction('fold', <f-args>)
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 command! -nargs=+ -complete=custom,s:GrepArgs Rgl exe 'CocList grep '.<q-args>
 command! -nargs=0 Rg exe 'CocList -I grep'
-command! -nargs=0 TODO exe "CocList --normal grep TODO"
-command! -nargs=0 NOTE exe "CocList --normal grep NOTE"
+command! -nargs=0 TODO exe 'CocList --normal grep //\ TODO'
+command! -nargs=0 NOTE exe 'CocList --normal grep //\ NOTE'
+command! -nargs=0 IMPORTANT exe 'CocList --normal grep //\ IMPORTANT'
 
 " editorconfig-vim
 if s:is_installed('editorconfig-vim')
@@ -859,8 +875,8 @@ let g:golden_ratio_autocommand = 0
 nmap <silent><leader>z <Plug>(golden_ratio_resize)
 
 " vim-edgemotion
-map <c-j> <Plug>(edgemotion-j)
-map <c-k> <Plug>(edgemotion-k)
+nmap <c-j> <Plug>(edgemotion-j)
+nmap <c-k> <Plug>(edgemotion-k)
 vmap <c-j> <Plug>(edgemotion-j)
 vmap <c-k> <Plug>(edgemotion-k)
 
@@ -1216,8 +1232,10 @@ nnoremap <silent><cr> :noh<cr>
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 
-noremap j gj
-noremap k gk
+" noremap j gj
+" noremap k gk
+
+nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 nnoremap tp :tabprev<cr>
 nnoremap tn :tabnext<cr>
@@ -1245,3 +1263,4 @@ if exists('g:nvy')
   highlight Cursor guifg=white guibg=#ff5555
   set guicursor=n-v-c:block-Cursor,i-ci-ve:ver30-Cursor
 end
+
