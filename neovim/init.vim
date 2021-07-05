@@ -550,27 +550,29 @@ let g:coc_global_extensions = [
             \"coc-json",
             \"coc-html",
             \"coc-css",
-            \"coc-ultisnips",
             \"coc-prettier",
             \"coc-lists",
             \"coc-clangd",
-            \"coc-emoji",
             \"coc-yaml",
             \"coc-python",
-            \"coc-tailwindcss",
             \"coc-svg",
             \"coc-prisma",
-            \"coc-floaterm",
             \"coc-tasks",
             \"coc-db",
-            \"coc-explorer",
             \"coc-highlight",
-            \"coc-lines",
             \"coc-rust-analyzer",
-            \"coc-jsref",
             \"coc-lua",
             \"coc-svelte",
             \]
+
+" watching
+" \"coc-lines",
+" \"coc-explorer",
+" \"coc-ultisnips",
+" \"coc-emoji",
+" \"coc-tailwindcss",
+" \"coc-floaterm",
+" \"coc-jsref",
 
 let g:coc_explorer_global_presets = {
 \   'floating': {
