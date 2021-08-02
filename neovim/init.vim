@@ -28,7 +28,7 @@ Plug 'roman/golden-ratio', { 'on': ['<Plug>(golden_ratio_resize)'] }
 Plug 'haya14busa/vim-edgemotion'
 Plug 'justinmk/vim-sneak'
 Plug 'Shougo/context_filetype.vim'
-Plug 'tpope/vim-commentary'
+Plug 'tomtom/tcomment_vim'
 Plug 'svermeulen/vim-yoink'
 Plug 'mg979/vim-visual-multi'
 Plug 'mbbill/undotree'
@@ -111,8 +111,9 @@ Plug 'dstein64/vim-startuptime', { 'on': ['StartupTime'] }
 " Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
 " Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown'] }
 " Plug 'pechorin/any-jump.vim', { 'on': ['AnyJump', 'AnyJumpLastResults'] }
-" Plug 'tomtom/tcomment_vim', { 'on': ['TComment', 'TCommentAs'] }
 " Plug 'tyru/caw.vim'
+" Plug 'tpope/vim-commentary'
+" Plug 'suy/vim-context-commentstring'
 
 endif
 
@@ -1187,12 +1188,22 @@ command! -nargs=0 Doc :DevDocsAllUnderCursor
 " noremap <leader>tdd :GenDefinition<cr>
 noremap <leader>` :GenDefinition<cr>
 
+" let g:context#commentstring#table['typescriptreact'] = {
+"     \ 'tsComment' : '// %s',
+"     \ 'tsImport' : '// %s',
+"     \ 'tsxStatment' : '// %s',
+"     \ 'tsxRegion' : '{/*%s*/}',
+"     \ 'tsxTag' : '{/*%s*/}',
+"     \}
+
 " tcomment_vim
 " nmap <c-_><c-_> :TComment<cr>
 " nmap gcc :TComment<cr>
 " vmap gc :TComment<cr>
 " nmap gca :TCommentAs 
 " vmap gca :TCommentAs 
+let g:tcomment#filetype#guess = 1
+let g:tcomment#filetype#guess_typescriptreact = 1
 
 " ------------
 " key bindings
