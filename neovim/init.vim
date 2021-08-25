@@ -46,7 +46,8 @@ Plug 'tpope/vim-abolish'
 Plug 'Julian/vim-textobj-variable-segment'
 Plug 'mattn/emmet-vim'
 Plug 'tenfyzhong/vim-gencode-cpp', { 'for': ['c', 'cpp'] }
-Plug 'jackguo380/vim-lsp-cxx-highlight', { 'for': ['c', 'cpp'] }
+" Plug 'bfrg/vim-cpp-modern'
+Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " project
 Plug 'rhysd/devdocs.vim', { 'on': ['DevDocsAllUnderCursor'] }
@@ -564,6 +565,7 @@ let g:coc_global_extensions = [
             \"coc-rust-analyzer",
             \"coc-lua",
             \"coc-svelte",
+            \"coc-elixir",
             \]
 
 " watching
@@ -1268,12 +1270,10 @@ command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 -tu4 /dev/u
 command! GCompileCommands execute '!xmake project -k compile_commands'
 
 " ------------
-" nvy settings
+" gui settings
 " ------------
 
-if exists('g:nvy')
-  set guifont=Victor\ Mono:h14
-  highlight Cursor guifg=white guibg=#ff5555
-  set guicursor=n-v-c:block-Cursor,i-ci-ve:ver30-Cursor
-end
+set guifont=Victor\ Mono:h14
+highlight Cursor guifg=white guibg=#ff5555
+set guicursor=n-v-c:block-Cursor,i-ci-ve:ver30-Cursor
 
