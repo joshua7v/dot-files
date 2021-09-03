@@ -46,7 +46,6 @@ Plug 'tpope/vim-abolish'
 Plug 'Julian/vim-textobj-variable-segment'
 Plug 'mattn/emmet-vim'
 Plug 'tenfyzhong/vim-gencode-cpp', { 'for': ['c', 'cpp'] }
-" Plug 'bfrg/vim-cpp-modern'
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " project
@@ -83,6 +82,7 @@ Plug 'vim-scripts/DrawIt', { 'on': ['DrawIt'] }
 Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'dstein64/vim-startuptime', { 'on': ['StartupTime'] }
+Plug 'kyazdani42/nvim-tree.lua'
 
 " watching
 " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -295,6 +295,7 @@ augroup vimrc_todo
     au Syntax * syn match sNote /NOTE/ containedin=.*Comment,vimCommentTitle
     au Syntax * syn match sImportant /IMPORTANT/ containedin=.*Comment,vimCommentTitle
 augroup END
+
 hi def link sTodo TodoGroup
 hi def link sNote NoteGroup
 hi def link sImportant ImportantGroup
@@ -656,9 +657,9 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-augroup Smartf
-  autocmd User SmartfEnter :hi Conceal ctermfg=220 guifg=white guibg=#ff5555
-augroup end
+" augroup Smartf
+"   autocmd User SmartfEnter :hi Conceal ctermfg=220 guifg=white guibg=#ff5555
+" augroup end
 
 " autocmd User CocQuickfixChange :Denite -mode=normal quickfix
 
@@ -696,7 +697,7 @@ nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
 
 inoremap <expr> <tab> pumvisible() ? "\<C-y>" : "\<tab>"
-nmap <space>f :CocCommand explorer --preset=floating<cr>
+" nmap <space>f :CocCommand explorer --preset=floating<cr>
 nmap <leader>e <Plug>(coc-diagnostic-info)
 nmap <leader>cl <Plug>(coc-codelens-action)
 nmap <silent>gy <Plug>(coc-type-definition)
@@ -722,9 +723,9 @@ inoremap <silent><expr> <c-space> coc#refresh()
 nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
 nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 nnoremap <silent> <space>u  :<C-u>CocList --normal mru<cr>
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <space>a  :<C-u>CocList --normal diagnostics<cr>
 nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-nnoremap <silent> <space>b  :<C-u>CocList buffers<cr>
+nnoremap <silent> <space>b  :<C-u>CocList --normal buffers<cr>
 nnoremap <silent> <space>y  :<C-u>CocList --normal yank<cr>
 nnoremap <silent> <space>g  :<C-u>CocList --normal gstatus<cr>
 nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
@@ -736,7 +737,7 @@ nnoremap <silent> <space>q  :<C-u>CocList --normal floaterm<cr>
 nnoremap <silent> <space>z  :<C-u>CocList --normal tasks<cr>
 nnoremap <silent> <space>l  :<C-u>CocList -I lines<cr>
 nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<cr>
-nnoremap <silent> <space>fl :<c-u>CocList --normal explPresets<cr>
+" nnoremap <silent> <space>fl :<c-u>CocList --normal explPresets<cr>
 nnoremap <silent> <space><leader>  :<C-u>CocList --normal project<cr>
 " nnoremap <silent> <space>l  :<C-u>Denite coc-link<cr>
 
@@ -751,6 +752,8 @@ command! -nargs=0 Rg exe 'CocList -I grep'
 command! -nargs=0 TODO exe 'CocList --normal grep //\ TODO'
 command! -nargs=0 NOTE exe 'CocList --normal grep //\ NOTE'
 command! -nargs=0 IMPORTANT exe 'CocList --normal grep //\ IMPORTANT'
+
+hi def link CocFadeOut NonText
 
 " editorconfig-vim
 if s:is_installed('editorconfig-vim')
@@ -1107,6 +1110,11 @@ let g:devdocs_filetype_map = {
   \   'typescriptreact': 'react',
   \ }
 command! -nargs=0 Doc :DevDocsAllUnderCursor
+
+" nvim-tree.lua
+let g:nvim_tree_show_icons = {}
+
+nmap <space>f :NvimTreeToggle<cr>
 
 " ------------------
 " deprecated plugins
