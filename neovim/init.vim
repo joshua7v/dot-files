@@ -10,7 +10,8 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " edit
 Plug 'github/copilot.vim'
-Plug 'jiangmiao/auto-pairs'
+" Plug 'jiangmiao/auto-pairs'
+Plug 'windwp/nvim-autopairs'
 Plug 'haya14busa/vim-asterisk'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-operator-user'
@@ -176,7 +177,6 @@ set magic      " For regular expressions turn magic on
 
 set backspace=eol,start,indent               " Configure backspace so it acts as it should act
 set whichwrap+=<,>,h,l
-set pastetoggle=<F5>                         " when in insert mode, toggle between 'paste' and 'nopaste'
 
 set foldmethod=manual
 set shortmess+=c
@@ -195,7 +195,7 @@ set omnifunc=syntaxcomplete#Complete
 set signcolumn=yes
 set splitbelow
 
-set pastetoggle=<c-x>
+set textwidth=0
 
 let g:terminal_color_0  = '#2e3436'
 let g:terminal_color_1  = '#cc0000'
@@ -236,6 +236,7 @@ inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDow
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
 autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | endif
+autocmd BufWinEnter * :set textwidth=0
 
 " custom keyword highlighting
 hi TodoGroup cterm=bold ctermfg=233 ctermbg=210 gui=bold guifg=#132132 guibg=#fd8489
@@ -431,7 +432,7 @@ let g:coc_global_extensions = [
         \"coc-lists",
         \"coc-clangd",
         \"coc-yaml",
-        \"coc-python",
+        \"coc-pyright",
         \"coc-svg",
         \"coc-tasks",
         \"coc-highlight",
@@ -1015,7 +1016,7 @@ require'nvim-treesitter.configs'.setup {
     disable = {},
   },
   indent = {
-    enable = false,
+    enable = true,
     disable = {},
   },
   ensure_installed = {
@@ -1042,6 +1043,11 @@ require'nvim-treesitter.configs'.setup {
 
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 parser_config.tsx.used_by = { "javascript", "typescriptreact" }
+EOF
+
+" nvim-autopairs
+lua <<EOF
+require('nvim-autopairs').setup{}
 EOF
 
 " ------------
