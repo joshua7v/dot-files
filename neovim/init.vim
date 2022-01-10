@@ -7,6 +7,7 @@ Plug 'mhartington/oceanic-next'
 
 " syntax
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'sheerun/vim-polyglot'
 
 " edit
 Plug 'github/copilot.vim'
@@ -1016,7 +1017,7 @@ require'nvim-treesitter.configs'.setup {
     disable = {},
   },
   indent = {
-    enable = true,
+    enable = false,
     disable = {},
   },
   ensure_installed = {
