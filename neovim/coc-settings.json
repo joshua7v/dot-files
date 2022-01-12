@@ -18,9 +18,17 @@
     "**/*.min.css",
     "**/*.js.map"
   ],
-  "tabnine.priority": 0,
-  "tabnine.limit": 5,
   "highlight.disableLanguages": ["dirvish"],
   "coc.source.omni.filetypes": ["cmake"],
-  "rust-analyzer.server.path": "rust-analyzer"
+  "rust-analyzer.server.path": "rust-analyzer",
+  "rust-analyzer.lens.enable": false,
+  "Lua.diagnostics.globals": ["love"],
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
+  "languageserver": {
+    "godot": {
+      "host": "127.0.0.1",
+      "filetypes": ["gdscript", "gdscript3"],
+      "port": 6008
+    }
+  }
 }
