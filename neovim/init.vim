@@ -718,7 +718,6 @@ let g:VM_maps['Find Under'] = '<C-h>'
 let g:asyncrun_bell = 1
 
 " noremap <leader>q :call asyncrun#quickfix_toggle(30)<cr>
-noremap <leader>ar :AsyncRun -mode=term -pos=bottom 
 " autocmd FileType c,cpp,cmake noremap <leader>m :AsyncRun -mode=term -pos=bottom cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -B build .<cr>
 " autocmd FileType c,cpp,cmake noremap <leader>c :AsyncRun -mode=term -pos=bottom -cwd=build make<cr>
 " autocmd FileType c,cpp,cmake noremap <leader>cc :AsyncRun -mode=term -pos=bottom make -cwd=build make clean<cr>
@@ -726,6 +725,7 @@ noremap <leader>ar :AsyncRun -mode=term -pos=bottom
 " augroup vimrc
 " autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(50, 1)
 " augroup END
+command! -nargs=0 Rf AsyncRun -program=shebang -mode=term -pos=bottom $(VIM_FILEPATH)
 
 " asynctasks.vim
 let g:asynctasks_rtp_config = 'asynctasks/tasks.ini'
