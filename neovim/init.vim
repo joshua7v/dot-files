@@ -23,7 +23,7 @@ Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'ntpeters/vim-better-whitespace', { 'on': ['StripWhitespace'] }
 Plug 'Yggdroot/indentLine'
 Plug 'justinmk/vim-dirvish'
-Plug 'roman/golden-ratio', { 'on': ['<Plug>(golden_ratio_resize)'] }
+Plug 'szw/vim-maximizer', { 'on': ['MaximizerToggle'] }
 Plug 'haya14busa/vim-edgemotion'
 Plug 'justinmk/vim-sneak'
 Plug 'Shougo/context_filetype.vim'
@@ -47,6 +47,7 @@ Plug 'mattn/emmet-vim'
 Plug 'tenfyzhong/vim-gencode-cpp', { 'for': ['c', 'cpp'] }
 
 " project
+Plug 'puremourning/vimspector'
 Plug 'rhysd/devdocs.vim', { 'on': ['DevDocsAllUnderCursor'] }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'voldikss/vim-floaterm'
@@ -411,6 +412,26 @@ xmap <silent> aI <Plug>(textobj-indent-same-a)
 omap <silent> iI <Plug>(textobj-indent-same-i)
 xmap <silent> iI <Plug>(textobj-indent-same-i)
 
+" vimspector
+let g:vimspector_enable_mappings = 'HUMAN'
+let g:vimspector_sign_priority = {
+  \    'vimspectorBP':         30,
+  \    'vimspectorBPCond':     20,
+  \    'vimspectorBPLog':      20,
+  \    'vimspectorBPDisabled': 10,
+  \ }
+
+nnoremap <leader>cs :call vimspector#Launch()<cr>
+nnoremap <leader>cx :call vimspector#Reset()<cr>
+nmap <leader>cc <Plug>VimspectorRunToCursor
+nmap <leader>ci <Plug>VimspectorStepInto
+nmap <leader>co <Plug>VimspectorStepOut
+nmap <leader>ch <Plug>VimspectorStepOver
+nmap <leader>cr <Plug>VimspectorRestart
+nmap <leader>cb <Plug>VimspectorToggleBreakpoint
+nmap <leader>cg <Plug>VimspectorContinue
+nmap <m-j> <Plug>VimspectorStepOver
+
 " coc.nvim
 
 " fix node path under scoop/volta installation
@@ -513,6 +534,10 @@ nmap <silent> [c <Plug>(coc-diagnostic-prev)
 nmap <silent> ]c <Plug>(coc-diagnostic-next)
 nmap [g <Plug>(coc-git-prevchunk)
 nmap ]g <Plug>(coc-git-nextchunk)
+nmap [[ :CocPrev<cr>
+nmap ]] :CocNext<cr>
+nmap [r :CocFirst<cr>
+nmap ]r :CocLast<cr>
 
 nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
@@ -573,6 +598,15 @@ command! -nargs=0 TODO exe 'CocList --normal grep //\ TODO'
 command! -nargs=0 NOTE exe 'CocList --normal grep //\ NOTE'
 command! -nargs=0 IMPORTANT exe 'CocList --normal grep //\ IMPORTANT'
 
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
 hi def link CocFadeOut NonText
 
 " editorconfig-vim
@@ -600,6 +634,8 @@ autocmd BufNewFile,BufRead *.exs              set ft=elixir
 autocmd BufNewFile,BufRead *.eex              set ft=eelixir
 autocmd BufNewFile,BufRead *.vs,*.fs          set ft=glsl
 autocmd BufNewFile,BufRead *.tpl              set ft=html
+autocmd BufNewFile,BufRead *.mm               set ft=objc
+autocmd BufNewFile,BufRead *.shader           set ft=glsl
 autocmd BufNewFile,BufRead tsconfig.json      set ft=jsonc
 autocmd BufNewFile,BufRead tslint.json        set ft=jsonc
 autocmd BufNewFile,BufRead coc-settings.json  set ft=jsonc
@@ -677,10 +713,11 @@ command! -nargs=? -complete=dir Sexplore belowright split | silent Dirvish <args
 command! -nargs=? -complete=dir Vexplore leftabove vsplit | silent Dirvish <args>
 
 " golden-ratio
-let g:golden_ratio_exclude_nonmodifiable = 1
-let g:golden_ratio_autocommand = 0
+" let g:golden_ratio_exclude_nonmodifiable = 1
+" let g:golden_ratio_autocommand = 0
 
-nmap <silent><leader>z <Plug>(golden_ratio_resize)
+" vim-maximizer'
+nmap <silent><leader>z :MaximizerToggle<cr>
 
 " vim-edgemotion
 nmap <c-j> <Plug>(edgemotion-j)
@@ -995,9 +1032,6 @@ nnoremap tp :tabprev<cr>
 nnoremap tn :tabnext<cr>
 
 nnoremap <leader>; A;<ESC>
-nnoremap <leader>cc A,<ESC>
-nnoremap <leader>. A.<ESC>
-nnoremap <leader>\ A \<ESC>
 " nnoremap <leader>e :tabnew 
 " nnoremap <leader>ee :e <C-R>=expand('%:p:h') . '/'<CR>
 nnoremap <leader>ef :e <C-R>=expand('%')<CR>
@@ -1050,8 +1084,10 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
-local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-parser_config.tsx.used_by = { "javascript", "typescriptreact" }
+-- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+-- parser_config.tsx.filetype_to_parsername = { "javascript", "typescriptreact" }
+local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
+ft_to_parser.typescriptreact = "tsx"
 EOF
 
 " nvim-autopairs
