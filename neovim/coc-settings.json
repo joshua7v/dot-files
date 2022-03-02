@@ -18,10 +18,12 @@
     "**/*.min.css",
     "**/*.js.map"
   ],
+  "typescript.referencesCodeLens.enable": false,
   "highlight.disableLanguages": ["dirvish"],
   "coc.source.omni.filetypes": ["cmake"],
   "rust-analyzer.server.path": "rust-analyzer",
   "rust-analyzer.lens.enable": false,
+  "rust-analyzer.inlayHints.enable": false,
   "Lua.diagnostics.globals": ["love"],
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "languageserver": {
