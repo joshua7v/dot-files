@@ -462,6 +462,7 @@ let g:coc_global_extensions = [
         \"coc-lua",
         \"coc-elixir",
         \"coc-go",
+        \"coc-toml",
         \]
 
 let g:coc_snippet_next = '<tab>'
@@ -1058,6 +1059,7 @@ require'nvim-treesitter.configs'.setup {
   ensure_installed = {
     "bash",
     "c",
+    "comment",
     "cpp",
     "css",
     "dockerfile",
@@ -1065,6 +1067,7 @@ require'nvim-treesitter.configs'.setup {
     "heex",
     "markdown",
     "gdscript",
+    "glsl",
     "go",
     "graphql",
     "html",
@@ -1078,6 +1081,7 @@ require'nvim-treesitter.configs'.setup {
     "scss",
     "swift",
     "svelte",
+    "toml",
     "typescript",
     "tsx",
     "vue",
