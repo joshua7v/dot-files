@@ -58,6 +58,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'kkoomen/vim-doge', { 'on': ['DogeGenerate'] }
 Plug 'rhysd/git-messenger.vim'
 Plug 'Shougo/echodoc.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'folke/todo-comments.nvim'
 
 " miscellaneous
 Plug 'romainl/vim-qf'
@@ -241,9 +243,9 @@ autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | end
 autocmd BufWinEnter * :set textwidth=0
 
 " custom keyword highlighting
-hi TodoGroup cterm=bold ctermfg=233 ctermbg=210 gui=bold guifg=#132132 guibg=#fd8489
-hi NoteGroup ctermfg=210 ctermbg=235 guifg=#fd8489 guibg=#3a4b5c
-hi ImportantGroup ctermfg=233 ctermbg=222 guifg=#132132 guibg=#fedf81
+" hi TodoGroup cterm=bold ctermfg=233 ctermbg=210 gui=bold guifg=#132132 guibg=#fd8489
+" hi NoteGroup ctermfg=210 ctermbg=235 guifg=#fd8489 guibg=#3a4b5c
+" hi ImportantGroup ctermfg=233 ctermbg=222 guifg=#132132 guibg=#fedf81
 " call matchadd("TodoGroup", 'TODO')
 " call matchadd("NoteGroup", 'NOTE')
 " call matchadd("ImportantGroup", 'IMPORTANT')
@@ -473,12 +475,12 @@ function! s:show_documentation()
   if &filetype == 'vim'
     execute 'h '.expand('<cword>')
   else
-    call CocAction('doHover')
+    call CocActionAsync('doHover')
   endif
 endfunction
 
 function! s:GoToDefinition()
-  if CocAction('jumpDefinition')
+  if CocActionAsync('jumpDefinition')
   return v:true
 endif
 
@@ -516,7 +518,7 @@ endfunction
 
 augroup mygroup
   autocmd!
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  autocmd FileType typescript,json setl formatexpr=CocActionAsync('formatSelected')
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   nmap <space><space> :Format<cr>
   " autocmd FileType typescript,typescript.tsx,typescriptreact,javascript,json,html,scss,css,graphql,svelte nmap <space><space> :Prettier<cr>
@@ -588,12 +590,12 @@ nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>'
 nnoremap <silent> <space><leader>  :<C-u>CocList --normal project<cr>
 " nnoremap <silent> <space>l  :<C-u>Denite coc-link<cr>
 
-command! -nargs=0 ColorPresentation :call CocAction('colorPresentation')
-command! -nargs=0 PickColor :call CocAction('pickColor')
+command! -nargs=0 ColorPresentation :call CocActionAsync('colorPresentation')
+command! -nargs=0 PickColor :call CocActionAsync('pickColor')
 " command! -nargs=0 Prettier :CocCommand prettier.formatFile
-command! -nargs=0 Format :call CocAction('format')
-command! -nargs=? Fold :call CocAction('fold', <f-args>)
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+command! -nargs=0 Format :call CocActionAsync('format')
+command! -nargs=? Fold :call CocActionAsync('fold', <f-args>)
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
 command! -nargs=+ -complete=custom,s:GrepArgs Rgl exe 'CocList grep '.<q-args>
 command! -nargs=0 Rg exe 'CocList -I grep'
 command! -nargs=0 TODO exe 'CocList --normal grep //\ TODO'
@@ -1065,6 +1067,7 @@ require'nvim-treesitter.configs'.setup {
     "dockerfile",
     "elixir",
     "heex",
+    "java",
     "markdown",
     "gdscript",
     "glsl",
@@ -1098,6 +1101,64 @@ EOF
 " nvim-autopairs
 lua <<EOF
 require('nvim-autopairs').setup{}
+EOF
+
+" todo-comments.nvim
+lua <<EOF
+require("todo-comments").setup {
+  signs = false,
+  -- keywords recognized as todo comments
+  keywords = {
+    FIX = {
+      icon = "", -- icon used for the sign, and in search results
+      color = "error", -- can be a hex color, or a named color (see below)
+      alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+      -- signs = false, -- configure signs for some keywords individually
+    },
+    TODO = { icon = "", color = "#fd8489" },
+    HACK = { icon = "", color = "warning" },
+    WARN = { icon = "", color = "warning", alt = { "WARNING", "XXX" } },
+    PERF = { icon = "", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+    NOTE = { icon = "", color = "hint", alt = { "INFO" } },
+  },
+  merge_keywords = false, -- when true, custom keywords will be merged with the defaults
+  -- highlighting of the line containing the todo comment
+  -- * before: highlights before the keyword (typically comment characters)
+  -- * keyword: highlights of the keyword
+  -- * after: highlights after the keyword (todo text)
+  highlight = {
+    before = "", -- "fg" or "bg" or empty
+    keyword = "bg", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
+    after = "", -- "fg" or "bg" or empty
+    pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
+    comments_only = true, -- uses treesitter to match keywords in comments only
+    max_line_len = 400, -- ignore lines longer than this
+    exclude = {}, -- list of file types to exclude highlighting
+  },
+  -- list of named colors where we try to extract the guifg from the
+  -- list of hilight groups or use the hex color if hl not found as a fallback
+  colors = {
+    error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
+    warning = { "DiagnosticWarning", "WarningMsg", "#FBBF24" },
+    info = { "DiagnosticInfo", "#2563EB" },
+    hint = { "DiagnosticHint", "#10B981" },
+    default = { "Identifier", "#7C3AED" },
+  },
+  search = {
+    command = "rg",
+    args = {
+      "--color=never",
+      "--no-heading",
+      "--with-filename",
+      "--line-number",
+      "--column",
+    },
+    -- regex that will be used to match keywords.
+    -- don't replace the (KEYWORDS) placeholder
+    pattern = [[\b(KEYWORDS):]], -- ripgrep regex
+    -- pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
+  },
+}
 EOF
 
 " ------------

@@ -19,9 +19,11 @@
     "**/*.js.map"
   ],
   "typescript.referencesCodeLens.enable": false,
+  "typescript.implementationsCodeLens.enable": false,
   "highlight.disableLanguages": ["dirvish"],
   "coc.source.omni.filetypes": ["cmake"],
   "rust-analyzer.server.path": "rust-analyzer",
+  "rust-analyzer.procMacro.enable": false,
   "rust-analyzer.lens.enable": false,
   "rust-analyzer.inlayHints.enable": false,
   "Lua.diagnostics.globals": ["love"],
