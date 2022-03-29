@@ -60,6 +60,7 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'Shougo/echodoc.vim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'folke/todo-comments.nvim'
+Plug 'mtth/scratch.vim'
 
 " miscellaneous
 Plug 'romainl/vim-qf'
@@ -192,6 +193,7 @@ set number " show line number
 set relativenumber " show relative line number
 set numberwidth=3
 " set re=1
+autocmd InsertEnter * :set number " no relativenumber in insert mode
 autocmd InsertEnter * :set norelativenumber " no relativenumber in insert mode
 autocmd InsertLeave * :set relativenumber   " show relativenumber when leave insert mode
 
@@ -884,11 +886,25 @@ nnoremap <silent> <leader>W :call UncolorAllWords()<cr>
 nnoremap <silent> ]w :call WordNavigation(1)<cr>
 nnoremap <silent> [w :call WordNavigation(0)<cr>
 
+" scratch.vim
+let g:scratch_persistence_file = stdpath('data') . '/scratch'
+let g:scratch_top = 0
+let g:scratch_insert_autohide = 0
+let g:scratch_horizontal = 0
+let g:scratch_no_mappings = 1
+let g:scratch_height = 80
+
+nmap gs :Scratch<cr>
+nmap gp :ScratchPreview<cr>
+nmap gS <plug>(scratch-insert-clear)
+xmap gs <plug>(scratch-selection-reuse)
+xmap gS <plug>(scratch-selection-clear)
+
 " splitjoin.vim
 let g:splitjoin_join_mapping = ''
 let g:splitjoin_split_mapping = ''
-nmap gJ :SplitjoinJoin<CR>
-nmap gS :SplitjoinSplit<CR>
+" nmap gJ :SplitjoinJoin<CR>
+" nmap gS :SplitjoinSplit<CR>
 
 " sideways.vim
 nnoremap <leader>h :SidewaysLeft<cr>
