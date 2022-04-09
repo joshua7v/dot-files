@@ -8,6 +8,7 @@
   "suggest.echodocSupport": true,
   "signature.target": "echo",
   "codeLens.enable": true,
+  "colors.filetypes": ["*"],
   "diagnostic.virtualText": false,
   "list.indicator": "λ",
   "list.interactiveDebounceTime": 1000,
@@ -18,6 +19,13 @@
     "**/*.min.css",
     "**/*.js.map"
   ],
+  "snippets.textmateSnippetsRoots": ["~/.dot-files/neovim/snippets"],
+  "snippets.extends": {
+    "cpp": ["c"],
+    "typescript": ["javascript"],
+    "typescriptreact": ["typescript"]
+  },
+  "snippets.priority": 0,
   "typescript.referencesCodeLens.enable": false,
   "typescript.implementationsCodeLens.enable": false,
   "highlight.disableLanguages": ["dirvish"],

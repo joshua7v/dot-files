@@ -27,7 +27,9 @@ Plug 'szw/vim-maximizer', { 'on': ['MaximizerToggle'] }
 Plug 'haya14busa/vim-edgemotion'
 Plug 'justinmk/vim-sneak'
 Plug 'Shougo/context_filetype.vim'
-Plug 'tomtom/tcomment_vim'
+" Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-commentary'
+Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'svermeulen/vim-yoink'
 Plug 'mg979/vim-visual-multi'
 Plug 'mbbill/undotree'
@@ -252,12 +254,12 @@ autocmd BufWinEnter * :set textwidth=0
 " call matchadd("NoteGroup", 'NOTE')
 " call matchadd("ImportantGroup", 'IMPORTANT')
 
-augroup vimrc_todo
-  au!
-  au Syntax * syn match sTodo /TODO/ containedin=.*Comment,vimCommentTitle
-  au Syntax * syn match sNote /NOTE/ containedin=.*Comment,vimCommentTitle
-  au Syntax * syn match sImportant /IMPORTANT/ containedin=.*Comment,vimCommentTitle
-augroup END
+" augroup vimrc_todo
+"   au!
+"   au Syntax * syn match sTodo /TODO/ containedin=.*Comment,vimCommentTitle
+"   au Syntax * syn match sNote /NOTE/ containedin=.*Comment,vimCommentTitle
+"   au Syntax * syn match sImportant /IMPORTANT/ containedin=.*Comment,vimCommentTitle
+" augroup END
 
 hi def link sTodo TodoGroup
 hi def link sNote NoteGroup
@@ -482,7 +484,7 @@ function! s:show_documentation()
 endfunction
 
 function! s:GoToDefinition()
-  if CocActionAsync('jumpDefinition')
+  if CocAction('jumpDefinition')
   return v:true
 endif
 
@@ -804,7 +806,7 @@ endfunction
 if has('macunix')
   let g:floaterm_shell = '/bin/zsh'
 else
-  let g:floaterm_shell = 'powershell'
+  let g:floaterm_shell = 'nu.exe'
   map <c-z> <nop>
 endif
 
@@ -1000,8 +1002,8 @@ noremap <leader>` :GenDefinition<cr>
 " vmap gc :TComment<cr>
 " nmap gca :TCommentAs 
 " vmap gca :TCommentAs 
-let g:tcomment#filetype#guess = 1
-let g:tcomment#filetype#guess_typescriptreact = 1
+" let g:tcomment#filetype#guess = 1
+" let g:tcomment#filetype#guess_typescriptreact = 1
 
 " ------------
 " key bindings
@@ -1073,6 +1075,9 @@ require'nvim-treesitter.configs'.setup {
   indent = {
     enable = false,
     disable = {},
+  },
+  context_commentstring = {
+    enable = true
   },
   ensure_installed = {
     "bash",

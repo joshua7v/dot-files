@@ -1,0 +1,48 @@
+{
+  "ir": {
+    "scope": "javascript,typescript",
+    "prefix": "ir",
+    "body": ["import React from 'react';"],
+    "description": "import React"
+  },
+  "dp": {
+    "scope": "javascript,typescript",
+    "prefix": "dp",
+    "body": ["const { $1 } = props;"],
+    "description": "Destructure Props"
+  },
+  "rfc": {
+    "scope": "javascript,typescript",
+    "prefix": "rfc",
+    "body": [
+      "import React from 'react';",
+      "",
+      "type Props = {};",
+      "",
+      "const $TM_FILENAME_BASE: React.FunctionComponent<Props> = (props) => {",
+      "  return <div data-name=\"$TM_FILENAME_BASE\">$TM_FILENAME_BASE</div>;",
+      "}",
+      "",
+      "export default $TM_FILENAME_BASE;"
+    ],
+    "description": "React Functional Component"
+  },
+  "udm": {
+    "scope": "javascript,typescript",
+    "prefix": "udm",
+    "body": ["useEffect(() => {", "  $1", "}, []);"],
+    "description": "React Functional Component"
+  },
+  "uum": {
+    "scope": "javascript,typescript",
+    "prefix": "uum",
+    "body": [
+      "useEffect(() => {",
+      "  return () => {",
+      "    $1",
+      "  };",
+      "}, []);"
+    ],
+    "description": "React Functional Component"
+  }
+}
