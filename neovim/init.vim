@@ -64,6 +64,7 @@ Plug 'Shougo/echodoc.vim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'folke/todo-comments.nvim'
 Plug 'mtth/scratch.vim'
+Plug 'MattesGroeger/vim-bookmarks'
 
 " miscellaneous
 Plug 'romainl/vim-qf'
@@ -636,6 +637,7 @@ autocmd BufNewFile,BufRead .luacompleterc setfiletype json
 autocmd BufNewFile,BufRead .prettierrc    setfiletype json
 autocmd BufNewFile,BufRead .jscsrc        setfiletype json
 autocmd BufNewFile,BufRead *.wxml         setfiletype xml
+autocmd BufNewFile,BufRead *.pie          setfiletype markdown
 " autocmd BufNewFile,BufRead *.jsx          set ft=javascript.jsx
 " autocmd BufNewFile,BufRead *.tsx          set ft=typescript.tsx
 autocmd BufNewFile,BufRead *.ex               set ft=elixir
@@ -990,9 +992,8 @@ command! -nargs=0 Doc :DevDocsAllUnderCursor
 " let g:bookmark_sign = '♥'
 " let g:bookmark_highlight_lines = 1
 " let g:bookmark_no_default_key_mappings = 1
-" hi BookMarkLine ctermbg=black ctermfg=none
+" hi BookMarkLine ctermbg=none ctermfg=none
 " hi BookMarkSign ctermbg=none ctermfg=none
-
 
 " vim-gencode-cpp
 noremap <leader>` :GenDefinition<cr>
@@ -1119,6 +1120,14 @@ require'nvim-treesitter.configs'.setup {
 local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
 ft_to_parser.typescriptreact = "tsx"
 EOF
+
+" nvim_context_vt
+lua <<EOF
+require('nvim_context_vt').setup {
+  enabled = false,
+}
+EOF
+nnoremap <leader>u :NvimContextVtToggle<cr>
 
 " nvim-autopairs
 lua <<EOF
