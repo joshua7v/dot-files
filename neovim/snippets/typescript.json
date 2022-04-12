@@ -24,5 +24,11 @@
     "prefix": "sto",
     "body": ["setTimeout(() => {", "  $1", "}, 20);"],
     "description": "Set Timeout"
+  },
+  "im": {
+    "scope": "javascript,typescript",
+    "prefix": "im",
+    "body": ["import { $0 } from '$1';"],
+    "description": "Import"
   }
 }

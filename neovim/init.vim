@@ -608,6 +608,8 @@ command! -nargs=0 TODO exe 'CocList --normal grep //\ TODO'
 command! -nargs=0 NOTE exe 'CocList --normal grep //\ NOTE'
 command! -nargs=0 IMPORTANT exe 'CocList --normal grep //\ IMPORTANT'
 
+inoremap <C-P> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
+
 if has('nvim-0.4.0') || has('patch-8.2.0750')
   nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
   nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
@@ -901,13 +903,13 @@ let g:scratch_height = 80
 
 nmap gs :Scratch<cr>
 nmap gp :ScratchPreview<cr>
-nmap gS <plug>(scratch-insert-clear)
 xmap gs <plug>(scratch-selection-reuse)
-xmap gS <plug>(scratch-selection-clear)
+" nmap gS <plug>(scratch-insert-clear)
+" xmap gS <plug>(scratch-selection-clear)
 
 " splitjoin.vim
-let g:splitjoin_join_mapping = ''
-let g:splitjoin_split_mapping = ''
+" let g:splitjoin_join_mapping = ''
+" let g:splitjoin_split_mapping = ''
 " nmap gJ :SplitjoinJoin<CR>
 " nmap gS :SplitjoinSplit<CR>
 
