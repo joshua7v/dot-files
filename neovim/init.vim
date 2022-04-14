@@ -305,6 +305,7 @@ function! s:patch_oceanic_next_colors()
   hi! link TermCursor Cursor
   hi! link TargetWord TabLineSel
   hi Search ctermfg=0 ctermbg=6 guibg=#88C0D0 guifg=#3B4252 gui=none
+  hi QuickFixLine ctermfg=0 ctermbg=6 guibg=#343d46 guifg=none gui=none
 endfunction
 autocmd! ColorScheme OceanicNext call s:patch_oceanic_next_colors()
 
@@ -1198,6 +1199,7 @@ EOF
 " gui settings
 " ------------
 
-set guifont=Victor\ Mono:h14
+let g:neovide_fullscreen=v:true
+set guifont=Sarasa\ Mono\ SC\ Nerd:h12
 highlight Cursor guifg=white guibg=#ff5555
 set guicursor=n-v-c:block-Cursor,i-ci-ve:ver30-Cursor
