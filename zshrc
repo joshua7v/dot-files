@@ -9,16 +9,17 @@ alias gpod="git pull origin develop"
 alias gs='git status '
 alias gd='git diff'
 alias rclone='rclone --config ~/erinn/satori/rclone.conf'
+alias neovide='/Applications/Neovide.app/Contents/MacOS/neovide --frame none'
 
 eval "$(lua ~/scripts/z.lua --init zsh)"
 
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 
-export RUSTUP_DIST_SERVER=https://mirrors.ustc.edu.cn/rust-static
-export RUSTUP_UPDATE_ROOT=https://mirrors.ustc.edu.cn/rust-static/rustup
+# export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
+# export RUSTUP_UPDATE_ROOT=https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
 
-export LDFLAGS="-L/usr/local/opt/llvm/lib"
-export CPPFLAGS="-I/usr/local/opt/llvm/include"
+# export LDFLAGS="-L/usr/local/opt/llvm/lib"
+# export CPPFLAGS="-I/usr/local/opt/llvm/include"
 
 export ZSH=~/.oh-my-zsh
 export GOPATH=~/golang
@@ -72,7 +73,7 @@ precmd_functions+=(__timer_display_timer_precmd)
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="norm"
+ZSH_THEME=""
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -152,3 +153,29 @@ source $ZSH/oh-my-zsh.sh
 [[ -s "$HOME/.xmake/profile" ]] && source "$HOME/.xmake/profile" # load xmake profile
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
+
+function toon {
+  echo -n "λ"
+}
+
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' unstagedstr '%F{red}*'   # display this when there are unstaged changes
+zstyle ':vcs_info:*' stagedstr '%F{yellow}+'  # display this when there are staged changes
+zstyle ':vcs_info:*' actionformats '%F{5}[%F{2}%b%F{3}|%F{1}%a%c%u%F{5}]%f '
+zstyle ':vcs_info:*' formats '%F{5}[%F{2}%b%c%u%F{5}]%f '
+zstyle ':vcs_info:svn:*' branchformat '%b'
+zstyle ':vcs_info:svn:*' actionformats '%F{5}[%F{2}%b%F{1}:%F{3}%i%F{3}|%F{1}%a%c%u%F{5}]%f '
+zstyle ':vcs_info:svn:*' formats '%F{5}[%F{2}%b%F{1}:%F{3}%i%c%u%F{5}]%f '
+zstyle ':vcs_info:*' enable git cvs svn
+
+theme_precmd () {
+  vcs_info
+}
+
+setopt prompt_subst
+PROMPT='%{$fg[magenta]%}$(toon)%{$reset_color%} %~ %{$reset_color%}${vcs_info_msg_0_}%{$reset_color%}'
+
+autoload -U add-zsh-hook
+add-zsh-hook precmd theme_precmd
