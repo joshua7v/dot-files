@@ -797,33 +797,16 @@ command! -nargs=0 Clean exe 'AsyncTask project-clean'
 " autocmd BufWritePost *.c,*.cpp AsyncTask project-build
 
 " vim-floaterm
-function! s:run_floaterm(opts)
-  let curr_bufnr = floaterm#curr()
-  if has_key(a:opts, 'silent') && a:opts.silent == 1
-    FloatermHide!
-  endif
-  let cmd = 'cd ' . shellescape(getcwd())
-  call floaterm#terminal#send(curr_bufnr, [cmd])
-  call floaterm#terminal#send(curr_bufnr, [a:opts.cmd])
-  " Back to the normal mode
-  stopinsert
-endfunction
-
 if has('macunix')
   let g:floaterm_shell = '/bin/zsh'
 else
-  let g:floaterm_shell = 'nu.exe'
+  let g:floaterm_shell = 'powershell.exe'
   map <c-z> <nop>
 endif
 
 let g:floaterm_keymap_toggle = '<c-q>'
-let g:floaterm_wintitle = v:true
 let g:floaterm_width = 0.8
 let g:floaterm_height = 0.8
-
-let g:asyncrun_runner = get(g:, 'asyncrun_runner', {})
-let g:asyncrun_runner.floaterm = function('s:run_floaterm')
-" let g:asynctasks_term_pos = 'floaterm'
 
 nnoremap <c-r> :Ranger<cr>
 command! Ranger FloatermNew vifm
@@ -877,10 +860,13 @@ vmap gx <Plug>(openbrowser-smart-search)
 
 " vim-terminal-help
 let g:terminal_key = '<leader>t'
+let g:terminal_kill = 'term'
 let g:terminal_cwd = 2
 let g:terminal_list = 0
 let g:terminal_height = 20
+let g:terminal_pos = 'below'
 let g:terminal_edit = 'drop'
+let g:terminal_fixheight = 1
 
 " vim-interestingwords
 let g:interestingWordsRandomiseColors = 0
@@ -984,17 +970,19 @@ let g:devdocs_filetype_map = {
 command! -nargs=0 Doc :DevDocsAllUnderCursor
 
 " vim-bookmarks
-" nnoremap <leader>mm :BookmarkToggle<cr>
-" nnoremap <leader>mi :BookmarkAnnotate<cr>
-" nnoremap <leader>ma :BookmarkShowAll<cr>
-" nnoremap <leader>j :BookmarkNext<cr>
-" nnoremap <leader>k :BookmarkPrev<cr>
-" nnoremap <leader>mc :BookmarkClear<cr>
-" nnoremap <leader>mx :BookmarkClearAll<cr>
-"
+nnoremap <leader>mm :BookmarkToggle<cr>
+nnoremap <leader>mi :BookmarkAnnotate<cr>
+nnoremap <leader>ma :BookmarkShowAll<cr>
+nnoremap <leader>j :BookmarkNext<cr>
+nnoremap <leader>k :BookmarkPrev<cr>
+nnoremap <leader>mc :BookmarkClear<cr>
+nnoremap <leader>mx :BookmarkClearAll<cr>
+
 " let g:bookmark_sign = '♥'
 " let g:bookmark_highlight_lines = 1
-" let g:bookmark_no_default_key_mappings = 1
+let g:bookmark_no_default_key_mappings = 1
+let g:bookmark_save_per_working_dir = 1
+let g:bookmark_auto_save = 1
 " hi BookMarkLine ctermbg=none ctermfg=none
 " hi BookMarkSign ctermbg=none ctermfg=none
 
