@@ -1,9 +1,9 @@
 (
     selected_tab: Reset,
     command_fg: White,
-    selection_bg: Black,
+    selection_bg: Rgb(66, 66, 66),
     cmdbar_extra_lines_bg: Blue,
-    disabled_fg: DarkGray,
+    disabled_fg: Rgb(120, 120, 120),
     diff_line_add: Green,
     diff_line_delete: Red,
     diff_file_added: LightGreen,
