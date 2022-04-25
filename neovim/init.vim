@@ -48,6 +48,7 @@ Plug 'tpope/vim-abolish'
 Plug 'Julian/vim-textobj-variable-segment'
 Plug 'mattn/emmet-vim'
 Plug 'tenfyzhong/vim-gencode-cpp', { 'for': ['c', 'cpp'] }
+Plug 'anuvyklack/pretty-fold.nvim'
 
 " project
 Plug 'puremourning/vimspector'
@@ -187,7 +188,6 @@ set magic      " For regular expressions turn magic on
 set backspace=eol,start,indent               " Configure backspace so it acts as it should act
 set whichwrap+=<,>,h,l
 
-set foldmethod=manual
 set shortmess+=c
 set tabline=
 set guitablabel=%t
@@ -306,6 +306,7 @@ function! s:patch_oceanic_next_colors()
   hi! link TargetWord TabLineSel
   hi Search ctermfg=0 ctermbg=6 guibg=#88C0D0 guifg=#3B4252 gui=none
   hi QuickFixLine ctermfg=0 ctermbg=6 guibg=#343d46 guifg=none gui=none
+  hi! link Folded EndOfBuffer
 endfunction
 autocmd! ColorScheme OceanicNext call s:patch_oceanic_next_colors()
 
@@ -629,7 +630,7 @@ else
   let &colorcolumn="121"
 
   autocmd FileType python,elm,go,c,cpp,h set tabstop=4 shiftwidth=4 expandtab ai
-  autocmd FileType vim,javascript,javascript.jsx,typescript,typescript.tsx,json,css,scss,html,yaml,md set tabstop=2 shiftwidth=2 expandtab ai
+  autocmd FileType vim,javascript,javascript.jsx,typescript,typescript.tsx,json,css,scss,html,yaml,md,ex set tabstop=2 shiftwidth=2 expandtab ai
 endif
 
 autocmd BufNewFile,BufRead .tern-project  setfiletype json
@@ -1112,6 +1113,11 @@ local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
 ft_to_parser.typescriptreact = "tsx"
 EOF
 
+" vim-stay will turn foldmethod to mannual for some reason
+autocmd BufReadPre,FileReadPre * :set foldmethod=expr
+autocmd BufReadPre,FileReadPre * :set foldexpr=nvim_treesitter#foldexpr()
+autocmd BufEnter * normal zR
+
 " nvim_context_vt
 lua <<EOF
 require('nvim_context_vt').setup {
@@ -1181,6 +1187,12 @@ require("todo-comments").setup {
     -- pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
   },
 }
+EOF
+
+" pretty-fold.nvim
+lua <<EOF
+require('pretty-fold').setup {}
+require('pretty-fold.preview').setup {}
 EOF
 
 " ------------
