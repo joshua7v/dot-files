@@ -71,7 +71,7 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'romainl/vim-qf'
 Plug 'yssl/QFEnter'
 Plug 'vim-scripts/BufOnly.vim', { 'on': ['BufOnly'] }
-Plug 'kopischke/vim-stay'
+Plug 'farmergreg/vim-lastplace'
 Plug 'pbrisbin/vim-mkdir'
 Plug 'tyru/open-browser.vim', { 'on': ['<Plug>(openbrowser-smart-search)'] }
 Plug 'skywind3000/vim-terminal-help'
@@ -204,6 +204,7 @@ autocmd InsertLeave * :set relativenumber   " show relativenumber when leave ins
 set omnifunc=syntaxcomplete#Complete
 set signcolumn=yes
 set splitbelow
+set laststatus=3
 
 set textwidth=0
 
@@ -754,9 +755,6 @@ nmap P <plug>(YoinkPaste_P)
 nmap <expr> <c-p> yoink#canSwap() ? '<plug>(YoinkPostPasteSwapForward)' : ''
 nmap <expr> <c-n> yoink#canSwap() ? '<plug>(YoinkPostPasteSwapBack)' : ''
 
-" vim-stay
-set viewoptions=cursor,folds,slash,unix
-
 " vim-visual-multi
 let g:VM_Selection_hl       = 'Cursor'
 let g:VM_Mono_Cursor_hl     = 'Cursor'
@@ -1112,11 +1110,15 @@ require'nvim-treesitter.configs'.setup {
 local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
 ft_to_parser.typescriptreact = "tsx"
 EOF
+set foldmethod=manual
+set foldexpr=nvim_treesitter#foldexpr()
 
-" vim-stay will turn foldmethod to mannual for some reason
-autocmd BufReadPre,FileReadPre * :set foldmethod=expr
-autocmd BufReadPre,FileReadPre * :set foldexpr=nvim_treesitter#foldexpr()
-autocmd BufEnter * normal zR
+augroup remember_folds
+  autocmd!
+  autocmd BufWinLeave * mkview
+  autocmd BufWinEnter * silent! loadview
+augroup END
+" autocmd BufEnter * normal zR
 
 " nvim_context_vt
 lua <<EOF
