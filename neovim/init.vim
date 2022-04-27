@@ -204,7 +204,6 @@ autocmd InsertLeave * :set relativenumber   " show relativenumber when leave ins
 set omnifunc=syntaxcomplete#Complete
 set signcolumn=yes
 set splitbelow
-set laststatus=3
 
 set textwidth=0
 
@@ -384,7 +383,7 @@ endif
 
 " statusline
 if has('statusline')
-  set laststatus=2
+  set laststatus=3
   " set statusline=%{getcwd()}
   " set statusline+=\ %<%f
   " set statusline+=%F
@@ -457,6 +456,7 @@ let g:coc_global_extensions = [
         \"coc-gitignore",
         \"coc-snippets",
         \"coc-tsserver",
+        \"coc-eslint",
         \"coc-json",
         \"coc-html",
         \"coc-css",
