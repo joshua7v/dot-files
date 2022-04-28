@@ -21,7 +21,7 @@ Plug 'kana/vim-textobj-indent'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'ntpeters/vim-better-whitespace', { 'on': ['StripWhitespace'] }
-Plug 'Yggdroot/indentLine'
+Plug 'Yggdroot/indentLine', { 'on': ['IndentLinesToggle'] }
 Plug 'justinmk/vim-dirvish'
 Plug 'szw/vim-maximizer', { 'on': ['MaximizerToggle'] }
 Plug 'haya14busa/vim-edgemotion'
@@ -30,11 +30,11 @@ Plug 'Shougo/context_filetype.vim'
 Plug 'tpope/vim-commentary'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'haringsrob/nvim_context_vt'
-Plug 'svermeulen/vim-yoink'
+" Plug 'svermeulen/vim-yoink'
 Plug 'mg979/vim-visual-multi'
 Plug 'mbbill/undotree'
 Plug 'Shougo/vinarise.vim', { 'on': ['Vinarise'] }
-Plug 'Valloric/MatchTagAlways'
+Plug 'Valloric/MatchTagAlways', { 'for': ['typescriptreact', 'html'] }
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-surround'
@@ -207,6 +207,8 @@ set signcolumn=yes
 set splitbelow
 
 set textwidth=0
+
+let g:python3_host_prog = 'python3'
 
 let g:terminal_color_0  = '#2e3436'
 let g:terminal_color_1  = '#cc0000'
@@ -475,6 +477,7 @@ let g:coc_global_extensions = [
         \"coc-elixir",
         \"coc-go",
         \"coc-toml",
+        \"coc-yank",
         \]
 
 let g:coc_snippet_next = '<tab>'
@@ -585,7 +588,7 @@ nnoremap <silent> <space>u  :<C-u>CocList --normal mru<cr>
 nnoremap <silent> <space>a  :<C-u>CocList --normal diagnostics<cr>
 nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
 nnoremap <silent> <space>b  :<C-u>CocList --normal buffers<cr>
-nnoremap <silent> <space>y  :<C-u>CocList --normal yank<cr>
+nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 nnoremap <silent> <space>g  :<C-u>CocList -I grep<cr>
 " nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 nnoremap <silent> <space>p  :<C-u>CocListResume<cr>
@@ -746,15 +749,15 @@ vmap <c-k> <Plug>(edgemotion-k)
 nmap gm <Plug>(git-messenger)
 
 " vim-yoink
-let g:yoinkSavePersistently = 1
+" let g:yoinkSavePersistently = 1
 
-nmap [y <plug>(YoinkRotateBack)
-nmap ]y <plug>(YoinkRotateForward)
-nmap p <plug>(YoinkPaste_p)
-nmap P <plug>(YoinkPaste_P)
+" nmap [y <plug>(YoinkRotateBack)
+" nmap ]y <plug>(YoinkRotateForward)
+" nmap p <plug>(YoinkPaste_p)
+" nmap P <plug>(YoinkPaste_P)
 
-nmap <expr> <c-p> yoink#canSwap() ? '<plug>(YoinkPostPasteSwapForward)' : ''
-nmap <expr> <c-n> yoink#canSwap() ? '<plug>(YoinkPostPasteSwapBack)' : ''
+" nmap <expr> <c-p> yoink#canSwap() ? '<plug>(YoinkPostPasteSwapForward)' : ''
+" nmap <expr> <c-n> yoink#canSwap() ? '<plug>(YoinkPostPasteSwapBack)' : ''
 
 " vim-visual-multi
 let g:VM_Selection_hl       = 'Cursor'
