@@ -7,11 +7,11 @@ Plug 'mhartington/oceanic-next'
 
 " syntax
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'sheerun/vim-polyglot'
 
 " edit
 Plug 'github/copilot.vim'
-" Plug 'jiangmiao/auto-pairs'
 Plug 'windwp/nvim-autopairs'
 Plug 'haya14busa/vim-asterisk'
 Plug 'kana/vim-textobj-user'
@@ -27,7 +27,6 @@ Plug 'szw/vim-maximizer', { 'on': ['MaximizerToggle'] }
 Plug 'haya14busa/vim-edgemotion'
 Plug 'justinmk/vim-sneak'
 Plug 'Shougo/context_filetype.vim'
-" Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-commentary'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'haringsrob/nvim_context_vt'
@@ -49,6 +48,7 @@ Plug 'Julian/vim-textobj-variable-segment'
 Plug 'mattn/emmet-vim'
 Plug 'tenfyzhong/vim-gencode-cpp', { 'for': ['c', 'cpp'] }
 Plug 'anuvyklack/pretty-fold.nvim'
+Plug 'mizlan/iswap.nvim'
 
 " project
 Plug 'puremourning/vimspector'
@@ -66,6 +66,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'folke/todo-comments.nvim'
 Plug 'mtth/scratch.vim'
 Plug 'MattesGroeger/vim-bookmarks'
+Plug 'jremmen/vim-ripgrep'
 
 " miscellaneous
 Plug 'romainl/vim-qf'
@@ -586,7 +587,7 @@ nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
 nnoremap <silent> <space>b  :<C-u>CocList --normal buffers<cr>
 nnoremap <silent> <space>y  :<C-u>CocList --normal yank<cr>
 nnoremap <silent> <space>g  :<C-u>CocList -I grep<cr>
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 nnoremap <silent> <space>p  :<C-u>CocListResume<cr>
 nnoremap <silent> <space>m  :<C-u>CocList --normal marks<cr>
 nnoremap <silent> <space>h  :<C-u>CocList --normal searchhistory<cr>
@@ -605,8 +606,8 @@ command! -nargs=0 PickColor :call CocActionAsync('pickColor')
 command! -nargs=0 Format :call CocActionAsync('format')
 command! -nargs=? Fold :call CocActionAsync('fold', <f-args>)
 command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
-command! -nargs=+ -complete=custom,s:GrepArgs Rgl exe 'CocList grep '.<q-args>
-command! -nargs=0 Rg exe 'CocList -I grep'
+" command! -nargs=+ -complete=custom,s:GrepArgs Rgl exe 'CocList grep '.<q-args>
+" command! -nargs=0 Rg exe 'CocList -I grep'
 command! -nargs=0 TODO exe 'CocList --normal grep //\ TODO'
 command! -nargs=0 NOTE exe 'CocList --normal grep //\ NOTE'
 command! -nargs=0 IMPORTANT exe 'CocList --normal grep //\ IMPORTANT'
@@ -900,8 +901,8 @@ xmap gs <plug>(scratch-selection-reuse)
 " nmap gS :SplitjoinSplit<CR>
 
 " sideways.vim
-nnoremap <leader>h :SidewaysLeft<cr>
-nnoremap <leader>l :SidewaysRight<cr>
+nnoremap <silent><leader>h :SidewaysLeft<cr>
+nnoremap <silent><leader>l :SidewaysRight<cr>
 omap aa <Plug>SidewaysArgumentTextobjA
 xmap aa <Plug>SidewaysArgumentTextobjA
 omap ia <Plug>SidewaysArgumentTextobjI
@@ -1112,11 +1113,13 @@ ft_to_parser.typescriptreact = "tsx"
 EOF
 set foldmethod=manual
 set foldexpr=nvim_treesitter#foldexpr()
+" set viewoptions=folds,cursor
+" set sessionoptions=folds
 
 augroup remember_folds
   autocmd!
-  autocmd BufWinLeave * mkview
-  autocmd BufWinEnter * silent! loadview
+  autocmd BufWinLeave,BufLeave,BufWritePost,BufHidden,QuitPre ?* nested silent! mkview!
+  autocmd BufWinEnter ?* silent! loadview
 augroup END
 " autocmd BufEnter * normal zR
 
@@ -1127,6 +1130,29 @@ require('nvim_context_vt').setup {
 }
 EOF
 nnoremap <leader>u :NvimContextVtToggle<cr>
+
+" iswap.nvim
+lua <<EOF
+require('iswap').setup{
+  autoswap = true,
+}
+EOF
+
+" nvim-treesitter-textobjects
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+        ["ap"] = "@parameter.outer",
+        ["ip"] = "@parameter.inner",
+      },
+    },
+  },
+}
+EOF
 
 " nvim-autopairs
 lua <<EOF
