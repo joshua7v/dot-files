@@ -9,6 +9,7 @@
   "codeLens.enable": true,
   "colors.filetypes": ["*"],
   "diagnostic.virtualText": false,
+  "yank.enableCompletion": false,
   "list.indicator": "λ",
   "list.interactiveDebounceTime": 1000,
   "list.limitLines": 300,
