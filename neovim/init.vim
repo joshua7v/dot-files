@@ -34,7 +34,8 @@ Plug 'haringsrob/nvim_context_vt'
 Plug 'mg979/vim-visual-multi'
 Plug 'mbbill/undotree'
 Plug 'Shougo/vinarise.vim', { 'on': ['Vinarise'] }
-Plug 'Valloric/MatchTagAlways', { 'for': ['typescriptreact', 'html'] }
+" Plug 'Valloric/MatchTagAlways', { 'for': ['typescriptreact', 'html'] }
+Plug 'andymass/vim-matchup'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-surround'
@@ -841,16 +842,16 @@ endif
 nnoremap <leader>ud :UndotreeToggle<cr>
 
 " MatchTagAlways
-let g:mta_filetypes = {
-  \ 'html' : 1,
-  \ 'xhtml' : 1,
-  \ 'xml' : 1,
-  \ 'jinja' : 1,
-  \ 'javascript': 1,
-  \ 'javascript.jsx': 1,
-  \ 'typescript.tsx': 1,
-  \ 'typescriptreact': 1
-  \}
+" let g:mta_filetypes = {
+"   \ 'html' : 1,
+"   \ 'xhtml' : 1,
+"   \ 'xml' : 1,
+"   \ 'jinja' : 1,
+"   \ 'javascript': 1,
+"   \ 'javascript.jsx': 1,
+"   \ 'typescript.tsx': 1,
+"   \ 'typescriptreact': 1
+"   \}
 
 " vim-qf
 let g:qf_max_height = 24
@@ -1133,6 +1134,23 @@ require('nvim_context_vt').setup {
 }
 EOF
 nnoremap <leader>u :NvimContextVtToggle<cr>
+
+" vim-matchup
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  matchup = {
+    enable = true,
+  },
+}
+EOF
+let g:matchup_transmute_enabled = 1
+let g:matchup_matchparen_deferred=1
+let g:matchup_matchparen_hi_surround_always=1
+let g:matchup_matchparen_status_offscreen = 0
+let g:matchup_matchpref = {
+    \ 'tsx': { 'tagnameonly': 1, },
+    \ 'typescriptreact': { 'tagnameonly': 1, },
+    \}
 
 " iswap.nvim
 lua <<EOF
