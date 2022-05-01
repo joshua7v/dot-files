@@ -39,6 +39,10 @@
   "Lua.diagnostics.globals": ["love"],
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "languageserver": {
+    "elixirLS": {
+      "command": "~/.bin/elixir-ls/language_server.bat",
+      "filetypes": ["elixir", "eelixir"]
+    },
     "godot": {
       "host": "127.0.0.1",
       "filetypes": ["gdscript", "gdscript3"],

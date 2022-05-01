@@ -34,8 +34,8 @@ Plug 'haringsrob/nvim_context_vt'
 Plug 'mg979/vim-visual-multi'
 Plug 'mbbill/undotree'
 Plug 'Shougo/vinarise.vim', { 'on': ['Vinarise'] }
-" Plug 'Valloric/MatchTagAlways', { 'for': ['typescriptreact', 'html'] }
-Plug 'andymass/vim-matchup'
+Plug 'Valloric/MatchTagAlways', { 'for': ['typescriptreact', 'html'] }
+" Plug 'andymass/vim-matchup'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-surround'
@@ -48,11 +48,11 @@ Plug 'tpope/vim-abolish'
 Plug 'Julian/vim-textobj-variable-segment'
 Plug 'mattn/emmet-vim'
 Plug 'tenfyzhong/vim-gencode-cpp', { 'for': ['c', 'cpp'] }
+Plug 'anuvyklack/nvim-keymap-amend'
 Plug 'anuvyklack/pretty-fold.nvim'
 Plug 'mizlan/iswap.nvim'
 
 " project
-Plug 'puremourning/vimspector'
 Plug 'rhysd/devdocs.vim', { 'on': ['DevDocsAllUnderCursor'] }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'voldikss/vim-floaterm'
@@ -84,6 +84,10 @@ Plug 'vim-scripts/DrawIt', { 'on': ['DrawIt'] }
 Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'dstein64/vim-startuptime', { 'on': ['StartupTime'] }
+
+if has('macunix')
+  Plug 'puremourning/vimspector'
+endif
 
 endif
 
@@ -475,7 +479,6 @@ let g:coc_global_extensions = [
         \"coc-highlight",
         \"coc-rust-analyzer",
         \"coc-lua",
-        \"coc-elixir",
         \"coc-go",
         \"coc-toml",
         \"coc-yank",
@@ -804,7 +807,7 @@ command! -nargs=0 Clean exe 'AsyncTask project-clean'
 if has('macunix')
   let g:floaterm_shell = '/bin/zsh'
 else
-  let g:floaterm_shell = 'powershell.exe'
+  let g:floaterm_shell = 'pwsh.exe'
   map <c-z> <nop>
 endif
 
@@ -842,16 +845,16 @@ endif
 nnoremap <leader>ud :UndotreeToggle<cr>
 
 " MatchTagAlways
-" let g:mta_filetypes = {
-"   \ 'html' : 1,
-"   \ 'xhtml' : 1,
-"   \ 'xml' : 1,
-"   \ 'jinja' : 1,
-"   \ 'javascript': 1,
-"   \ 'javascript.jsx': 1,
-"   \ 'typescript.tsx': 1,
-"   \ 'typescriptreact': 1
-"   \}
+let g:mta_filetypes = {
+  \ 'html' : 1,
+  \ 'xhtml' : 1,
+  \ 'xml' : 1,
+  \ 'jinja' : 1,
+  \ 'javascript': 1,
+  \ 'javascript.jsx': 1,
+  \ 'typescript.tsx': 1,
+  \ 'typescriptreact': 1
+  \}
 
 " vim-qf
 let g:qf_max_height = 24
@@ -1136,21 +1139,21 @@ EOF
 nnoremap <leader>u :NvimContextVtToggle<cr>
 
 " vim-matchup
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  matchup = {
-    enable = true,
-  },
-}
-EOF
-let g:matchup_transmute_enabled = 1
-let g:matchup_matchparen_deferred=1
-let g:matchup_matchparen_hi_surround_always=1
-let g:matchup_matchparen_status_offscreen = 0
-let g:matchup_matchpref = {
-    \ 'tsx': { 'tagnameonly': 1, },
-    \ 'typescriptreact': { 'tagnameonly': 1, },
-    \}
+" lua <<EOF
+" require'nvim-treesitter.configs'.setup {
+"   matchup = {
+"     enable = true,
+"   },
+" }
+" EOF
+" let g:matchup_transmute_enabled = 1
+" let g:matchup_matchparen_deferred=1
+" let g:matchup_matchparen_hi_surround_always=1
+" let g:matchup_matchparen_status_offscreen = 0
+" let g:matchup_matchpref = {
+"     \ 'tsx': { 'tagnameonly': 1, },
+"     \ 'typescriptreact': { 'tagnameonly': 1, },
+"     \}
 
 " iswap.nvim
 lua <<EOF
