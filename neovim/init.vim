@@ -70,6 +70,8 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'jremmen/vim-ripgrep'
 
 " miscellaneous
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'kyazdani42/nvim-tree.lua'
 Plug 'romainl/vim-qf'
 Plug 'yssl/QFEnter'
 Plug 'vim-scripts/BufOnly.vim', { 'on': ['BufOnly'] }
@@ -819,15 +821,6 @@ nnoremap <c-r> :Ranger<cr>
 command! Ranger FloatermNew vifm
 autocmd User Startified setlocal buflisted
 
-" vista.vim
-let g:vista_default_executive = 'coc'
-let g:vista_stay_on_open = 1
-let g:vista_echo_cursor_strategy = 'floating_win'
-let g:vista_highlight_whole_line = 1
-let g:vista_sidebar_width = 50
-let g:vista_cursor_delay = 600000
-nmap <space>t :Vista!!<cr>
-
 " vim-projectionist
 augroup user_projectionist
   autocmd!
@@ -1246,6 +1239,28 @@ lua <<EOF
 require('pretty-fold').setup {}
 require('pretty-fold.preview').setup {}
 EOF
+
+" nvim-tree.lua
+lua <<EOF
+require'nvim-tree'.setup {
+  disable_netrw = false,
+  hijack_cursor = false,
+  hijack_netrw = false,
+  hijack_unnamed_buffer_when_opening = false,
+  ignore_buffer_on_setup = false,
+  view = {
+    width = 66,
+    height = 66,
+    hide_root_folder = false,
+    side = "left",
+    preserve_window_proportions = false,
+    number = true,
+    signcolumn = "yes",
+  }
+}
+EOF
+command! -nargs=0 Tree :NvimTreeToggle
+command! -nargs=0 TreeFind :NvimTreeFindFileToggle
 
 " ------------
 " gui settings
