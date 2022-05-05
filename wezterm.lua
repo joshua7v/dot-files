@@ -1,6 +1,16 @@
 local wezterm = require 'wezterm';
+local hostname = wezterm.hostname();
+local default_prog = {};
 
 local launch_menu = {}
+
+local font_size;
+if hostname == "pc" then
+  font_size = 12.0;
+  default_prog = {"pwsh.exe"};
+else
+  font_size = 16.0;
+end
 
 local ssh_config_file = wezterm.home_dir .. "/.ssh/config"
 local f = io.open(ssh_config_file)
@@ -44,14 +54,31 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
   }
 end)
 
+wezterm.on("update-right-status", function(window, pane)
+  local date = wezterm.strftime("%Y-%m-%d %H:%M:%S");
+
+  local bat = ""
+  for _, b in ipairs(wezterm.battery_info()) do
+    bat = string.format("%.0f%% %0.2f hours", b.state_of_charge * 100, b.time_to_empty / 60 / 60) .. " " .. string.lower(b.state)
+  end
+
+  if bat == " " then
+    bat = bat .. " | ";
+  end
+
+  window:set_right_status(wezterm.format({
+    {Text=wezterm.hostname() .. " | " .. bat .. date},
+  }));
+end)
+
 return {
-  default_prog = {"pwsh.exe"},
+  default_prog = default_prog,
   launch_menu = launch_menu,
   enable_scroll_bar = false,
 
   -- tab bar
   use_fancy_tab_bar = false,
-  hide_tab_bar_if_only_one_tab = true,
+  hide_tab_bar_if_only_one_tab = false,
   tab_max_width = 64,
   tab_bar_style = {},
   tab_bar_at_bottom = true,
@@ -69,6 +96,7 @@ return {
 
   -- font
   font = wezterm.font("Sarasa Mono SC Nerd"),
+  font_size = font_size,
 
   -- color
   colors = {
@@ -97,9 +125,9 @@ return {
   },
 
   -- keys
-  leader = { key="b", mods="CTRL" },
+  leader = { key="i", mods="CTRL" },
   keys = {
-    {key="b", mods = "LEADER|CTRL", action=wezterm.action{SendString="\x02"}},
+    -- {key="b", mods = "LEADER|CTRL", action=wezterm.action{SendString="\x02"}},
     {key="Enter", mods="CTRL", action="ToggleFullScreen"},
     {key="c", mods="ALT", action="Copy"},
     {key="v", mods="ALT", action="Paste"},
