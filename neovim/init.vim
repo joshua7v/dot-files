@@ -8,6 +8,7 @@ Plug 'mhartington/oceanic-next'
 " syntax
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'windwp/nvim-ts-autotag'
 Plug 'sheerun/vim-polyglot'
 
 " edit
@@ -96,10 +97,10 @@ endif
 call plug#end()
 
 function! s:is_installed(plug)
-if isdirectory(g:plugs[a:plug].dir)
-return 1
-endif
-return 0
+  if isdirectory(g:plugs[a:plug].dir)
+    return 1
+  endif
+    return 0
 endfunction
 
 " ---------------
@@ -623,13 +624,15 @@ command! -nargs=0 IMPORTANT exe 'CocList --normal grep //\ IMPORTANT'
 
 inoremap <C-P> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
 
-if has('nvim-0.4.0') || has('patch-8.2.0750')
-  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+if s:is_installed("coc.nvim")
+  if has('nvim-0.4.0') || has('patch-8.2.0750')
+    nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+    nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+    inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+    inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+    vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+    vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  endif
 endif
 
 hi def link CocFadeOut NonText
@@ -817,7 +820,7 @@ let g:floaterm_keymap_toggle = '<c-q>'
 let g:floaterm_width = 0.8
 let g:floaterm_height = 0.8
 
-nnoremap <c-r> :Ranger<cr>
+" nnoremap <c-r> :Ranger<cr>
 command! Ranger FloatermNew vifm
 autocmd User Startified setlocal buflisted
 
@@ -1049,7 +1052,7 @@ nnoremap tn :tabnext<cr>
 nnoremap <leader>; A;<ESC>
 " nnoremap <leader>e :tabnew 
 " nnoremap <leader>ee :e <C-R>=expand('%:p:h') . '/'<CR>
-nnoremap <leader>ef :e <C-R>=expand('%')<CR>
+" nnoremap <leader>ef :e <C-R>=expand('%')<CR>
 
 " nnoremap <leader><leader> <C-^>
 nnoremap qq :bd<cr>
@@ -1059,6 +1062,7 @@ command! GCompileCommands execute '!xmake project -k compile_commands'
 
 " nvim-treesitter
 " --------------------------------------------------------------------
+if s:is_installed('nvim-treesitter')
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
   highlight = {
@@ -1122,14 +1126,17 @@ augroup remember_folds
   autocmd BufWinEnter ?* silent! loadview
 augroup END
 " autocmd BufEnter * normal zR
+endif
 
 " nvim_context_vt
+if s:is_installed('nvim_context_vt')
 lua <<EOF
 require('nvim_context_vt').setup {
   enabled = false,
 }
 EOF
 nnoremap <leader>u :NvimContextVtToggle<cr>
+endif
 
 " vim-matchup
 " lua <<EOF
@@ -1149,13 +1156,16 @@ nnoremap <leader>u :NvimContextVtToggle<cr>
 "     \}
 
 " iswap.nvim
+if s:is_installed('iswap.nvim')
 lua <<EOF
 require('iswap').setup{
   autoswap = true,
 }
 EOF
+endif
 
 " nvim-treesitter-textobjects
+if s:is_installed('nvim-treesitter-textobjects')
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
   textobjects = {
@@ -1170,13 +1180,49 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 EOF
+endif
 
-" nvim-autopairs
 lua <<EOF
-require('nvim-autopairs').setup{}
+require('nvim-ts-autotag').setup({
+  filetypes = { "html" , "xml", "typescriptreact" },
+})
 EOF
 
+" nvim-autopairs
+if s:is_installed('nvim-autopairs')
+lua <<EOF
+local npairs = require("nvim-autopairs")
+local Rule = require('nvim-autopairs.rule')
+
+npairs.setup({
+    check_ts = true,
+    ts_config = {
+        lua = {'string'},
+    },
+    fast_wrap = {
+      map = '<M-e>',
+      chars = { '{', '[', '(', '"', "'", "`" },
+      end_key = '$',
+      check_comma = true,
+      highlight = 'Search',
+      highlight_grey='Comment'
+    },
+})
+
+local ts_conds = require('nvim-autopairs.ts-conds')
+
+-- press % => %% only while inside a comment or string
+npairs.add_rules({
+  Rule("%", "%", "lua")
+    :with_pair(ts_conds.is_ts_node({'string','comment'})),
+  Rule("$", "$", "lua")
+    :with_pair(ts_conds.is_not_ts_node({'function'}))
+})
+EOF
+endif
+
 " todo-comments.nvim
+if s:is_installed('todo-comments.nvim')
 lua <<EOF
 require("todo-comments").setup {
   signs = false,
@@ -1233,14 +1279,18 @@ require("todo-comments").setup {
   },
 }
 EOF
+endif
 
 " pretty-fold.nvim
+if s:is_installed('pretty-fold.nvim')
 lua <<EOF
 require('pretty-fold').setup {}
 require('pretty-fold.preview').setup {}
 EOF
+endif
 
 " nvim-tree.lua
+if s:is_installed('nvim-tree.lua')
 lua <<EOF
 require'nvim-tree'.setup {
   disable_netrw = false,
@@ -1261,6 +1311,7 @@ require'nvim-tree'.setup {
 EOF
 command! -nargs=0 Tree :NvimTreeToggle
 command! -nargs=0 TreeFind :NvimTreeFindFileToggle
+endif
 
 " ------------
 " gui settings
