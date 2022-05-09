@@ -8,6 +8,7 @@ Plug 'mhartington/oceanic-next'
 " syntax
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'nvim-treesitter/nvim-treesitter-refactor'
 Plug 'windwp/nvim-ts-autotag'
 Plug 'sheerun/vim-polyglot'
 
@@ -277,6 +278,13 @@ autocmd BufWinEnter * :set textwidth=0
 hi def link sTodo TodoGroup
 hi def link sNote NoteGroup
 hi def link sImportant ImportantGroup
+
+if system('uname -r') =~ "microsoft"
+  augroup Yank
+  autocmd!
+  autocmd TextYankPost * :call system('/mnt/c/windows/system32/clip.exe ',@")
+  augroup END
+endif
 
 " -------------------
 " appearance settings
@@ -582,7 +590,7 @@ nmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>ac <Plug>(coc-codeaction-cursor)
 xmap <leader>ac <Plug>(coc-codeaction-selected)
 nmap <silent>K :call <SID>show_documentation()<cr>
-nmap <silent>gd :call <SID>GoToDefinition()<cr>
+nmap <silent>gD :call <SID>GoToDefinition()<cr>
 " nmap <silent> gd <Plug>(coc-definition)
 vnoremap <leader>g :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
 nnoremap <leader>g :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@ 
@@ -1107,6 +1115,14 @@ require'nvim-treesitter.configs'.setup {
     "tsx",
     "vue",
     "yaml",
+  },
+  refactor = {
+    navigation = {
+      enable = true,
+      keymaps = {
+        goto_definition = "gd",
+      },
+    },
   },
 }
 
