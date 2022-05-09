@@ -62,12 +62,14 @@ wezterm.on("update-right-status", function(window, pane)
     bat = string.format("%.0f%% %0.2f hours", b.state_of_charge * 100, b.time_to_empty / 60 / 60) .. " " .. string.lower(b.state)
   end
 
-  if bat == " " then
-    bat = bat .. " | ";
+  if bat == "" then
+    bat = " | ";
+  else
+    bat = " | " .. bat .. " | ";
   end
 
   window:set_right_status(wezterm.format({
-    {Text=wezterm.hostname() .. " | " .. bat .. date},
+    {Text=wezterm.hostname() .. bat .. date},
   }));
 end)
 
@@ -125,9 +127,9 @@ return {
   },
 
   -- keys
-  leader = { key="i", mods="CTRL" },
+  leader = { key="m", mods="CTRL" },
   keys = {
-    -- {key="b", mods = "LEADER|CTRL", action=wezterm.action{SendString="\x02"}},
+    {key="b", mods = "LEADER|ALT", action=wezterm.action{SendString="\x02"}},
     {key="Enter", mods="CTRL", action="ToggleFullScreen"},
     {key="c", mods="ALT", action="Copy"},
     {key="v", mods="ALT", action="Paste"},
