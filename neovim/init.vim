@@ -1067,6 +1067,7 @@ nnoremap qq :bd<cr>
 
 command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 -tu4 /dev/urandom'), '^\_s*\zs.\{-}\ze\_s*$') % line('$')).'G'
 command! GCompileCommands execute '!xmake project -k compile_commands'
+command! -nargs=? Fd call setqflist([], ' ', {'lines' : systemlist('fd ' . <q-args>), 'efm' : '%f'})
 
 " nvim-treesitter
 " --------------------------------------------------------------------
@@ -1198,11 +1199,14 @@ require'nvim-treesitter.configs'.setup {
 EOF
 endif
 
+" nvim-ts-autotag
+if s:is_installed('nvim-ts-autotag')
 lua <<EOF
 require('nvim-ts-autotag').setup({
   filetypes = { "html" , "xml", "typescriptreact" },
 })
 EOF
+endif
 
 " nvim-autopairs
 if s:is_installed('nvim-autopairs')
