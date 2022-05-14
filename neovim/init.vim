@@ -260,6 +260,8 @@ inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | endif
 autocmd BufWinEnter * :set textwidth=0
 
+nnoremap <silent> <c-r> :r !<c-r><c-l><cr>
+
 " custom keyword highlighting
 " hi TodoGroup cterm=bold ctermfg=233 ctermbg=210 gui=bold guifg=#132132 guibg=#fd8489
 " hi NoteGroup ctermfg=210 ctermbg=235 guifg=#fd8489 guibg=#3a4b5c
