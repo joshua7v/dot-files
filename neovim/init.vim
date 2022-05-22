@@ -9,7 +9,7 @@ Plug 'mhartington/oceanic-next'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
-Plug 'windwp/nvim-ts-autotag'
+" Plug 'windwp/nvim-ts-autotag'
 Plug 'sheerun/vim-polyglot'
 
 " edit
@@ -72,7 +72,6 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'jremmen/vim-ripgrep'
 
 " miscellaneous
-Plug 'kyazdani42/nvim-web-devicons'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'romainl/vim-qf'
 Plug 'yssl/QFEnter'
@@ -1108,6 +1107,7 @@ require'nvim-treesitter.configs'.setup {
     "jsonc",
     "javascript",
     "lua",
+    "prisma",
     "python",
     "rust",
     "scss",
@@ -1116,6 +1116,7 @@ require'nvim-treesitter.configs'.setup {
     "toml",
     "typescript",
     "tsx",
+    "vim",
     "vue",
     "yaml",
   },
@@ -1202,13 +1203,13 @@ EOF
 endif
 
 " nvim-ts-autotag
-if s:is_installed('nvim-ts-autotag')
-lua <<EOF
-require('nvim-ts-autotag').setup({
-  filetypes = { "html" , "xml", "typescriptreact" },
-})
-EOF
-endif
+" if s:is_installed('nvim-ts-autotag')
+" lua <<EOF
+" require('nvim-ts-autotag').setup({
+"   filetypes = { "html" , "xml", "typescriptreact" },
+" })
+" EOF
+" endif
 
 " nvim-autopairs
 if s:is_installed('nvim-autopairs')
@@ -1328,9 +1329,46 @@ require'nvim-tree'.setup {
     preserve_window_proportions = false,
     number = true,
     signcolumn = "yes",
-  }
+  },
+  renderer = {
+    indent_markers = {
+      enable = false,
+      icons = {
+        corner = "└ ",
+        edge = "│ ",
+        none = "  ",
+      },
+    },
+    icons = {
+      webdev_colors = false,
+      git_placement = "after",
+    },
+  },
 }
 EOF
+let g:nvim_tree_icons = {
+    \ 'default': "[F]",
+    \ 'symlink': "[L]",
+    \ 'git': {
+    \   'unstaged': "(X)",
+    \   'staged': "(S)",
+    \   'unmerged': "(UM)",
+    \   'renamed': "(R)",
+    \   'untracked': "(UT)",
+    \   'deleted': "(D)",
+    \   'ignored': "(I)"
+    \   },
+    \ 'folder': {
+    \   'arrow_open': "v",
+    \   'arrow_closed': ">",
+    \   'default': "[D]",
+    \   'open': "[D]",
+    \   'empty': "[DE]",
+    \   'empty_open': "[DE]",
+    \   'symlink': "[L]",
+    \   'symlink_open': "[L]",
+    \   }
+    \ }
 command! -nargs=0 Tree :NvimTreeToggle
 command! -nargs=0 TreeFind :NvimTreeFindFileToggle
 endif
