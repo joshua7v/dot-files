@@ -97,7 +97,7 @@ return {
   initial_rows = 20,
 
   -- font
-  font = wezterm.font("Sarasa Mono SC Nerd"),
+  font = wezterm.font("Sarasa Mono SC"),
   font_size = font_size,
 
   -- color
