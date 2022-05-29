@@ -32,7 +32,6 @@ Plug 'Shougo/context_filetype.vim'
 Plug 'tpope/vim-commentary'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'haringsrob/nvim_context_vt'
-" Plug 'svermeulen/vim-yoink'
 Plug 'mg979/vim-visual-multi'
 Plug 'mbbill/undotree'
 Plug 'Shougo/vinarise.vim', { 'on': ['Vinarise'] }
@@ -48,11 +47,12 @@ Plug 'AndrewRadev/sideways.vim'
 Plug 'svermeulen/vim-subversive'
 Plug 'tpope/vim-abolish'
 Plug 'Julian/vim-textobj-variable-segment'
-Plug 'mattn/emmet-vim'
+" Plug 'mattn/emmet-vim'
 Plug 'tenfyzhong/vim-gencode-cpp', { 'for': ['c', 'cpp'] }
 Plug 'anuvyklack/nvim-keymap-amend'
 Plug 'anuvyklack/pretty-fold.nvim'
 Plug 'mizlan/iswap.nvim'
+Plug 'saifulapm/chartoggle.nvim'
 
 " project
 Plug 'rhysd/devdocs.vim', { 'on': ['DevDocsAllUnderCursor'] }
@@ -215,6 +215,7 @@ set signcolumn=yes
 set splitbelow
 
 set textwidth=0
+set synmaxcol=777
 
 let g:python3_host_prog = 'python3'
 
@@ -256,7 +257,6 @@ inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
 inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 
-autocmd BufWinEnter * if line2byte(line("$") + 1) > 1000000 | syntax clear | endif
 autocmd BufWinEnter * :set textwidth=0
 
 nnoremap <silent> <c-r> :r !<c-r><c-l><cr>
@@ -276,9 +276,9 @@ nnoremap <silent> <c-r> :r !<c-r><c-l><cr>
 "   au Syntax * syn match sImportant /IMPORTANT/ containedin=.*Comment,vimCommentTitle
 " augroup END
 
-hi def link sTodo TodoGroup
-hi def link sNote NoteGroup
-hi def link sImportant ImportantGroup
+" hi def link sTodo TodoGroup
+" hi def link sNote NoteGroup
+" hi def link sImportant ImportantGroup
 
 if system('uname -r') =~ "microsoft"
   augroup Yank
@@ -287,7 +287,8 @@ if system('uname -r') =~ "microsoft"
   augroup END
 endif
 
-nnoremap <leader>rz :Rg -e "\"[\u4e00-\u9fa5]+\"" -t ts
+nnoremap <leader>rz :Rg -e "[\u4e00-\u9fa5]+"
+nnoremap <leader>ff :AsyncRun -errorformat=\%f fd -a 
 
 " -------------------
 " appearance settings
@@ -328,6 +329,7 @@ function! s:patch_oceanic_next_colors()
   hi! link TargetWord TabLineSel
   hi Search ctermfg=0 ctermbg=6 guibg=#88C0D0 guifg=#3B4252 gui=none
   hi QuickFixLine ctermfg=none ctermbg=none guibg=none guifg=none gui=none
+  hi! link Error StatusLine
   hi! link Folded EndOfBuffer
 endfunction
 autocmd! ColorScheme OceanicNext call s:patch_oceanic_next_colors()
@@ -496,6 +498,8 @@ let g:coc_global_extensions = [
         \"coc-go",
         \"coc-toml",
         \"coc-yank",
+        \"coc-emmet",
+        \"coc-project",
         \]
 
 let g:coc_snippet_next = '<tab>'
@@ -506,7 +510,7 @@ function! s:show_documentation()
   if &filetype == 'vim'
     execute 'h '.expand('<cword>')
   else
-    call CocActionAsync('doHover')
+    call CocActionAsync('definitionHover')
   endif
 endfunction
 
@@ -599,24 +603,26 @@ vnoremap <leader>g :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
 nnoremap <leader>g :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@ 
 inoremap <silent><expr> <c-space> coc#refresh()
 
-nnoremap <silent> <space>f  :<C-u>CocList files<cr>
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-nnoremap <silent> <space>u  :<C-u>CocList --normal mru<cr>
-nnoremap <silent> <space>a  :<C-u>CocList --normal diagnostics<cr>
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-nnoremap <silent> <space>b  :<C-u>CocList --normal buffers<cr>
-nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
-nnoremap <silent> <space>g  :<C-u>CocList -I grep<cr>
-" nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-nnoremap <silent> <space>p  :<C-u>CocListResume<cr>
-nnoremap <silent> <space>m  :<C-u>CocList --normal marks<cr>
-nnoremap <silent> <space>h  :<C-u>CocList --normal searchhistory<cr>
-nnoremap <silent> <space>k  :<C-u>CocList --normal maps<cr>
-nnoremap <silent> <space>q  :<C-u>CocList --normal floaterm<cr>
-nnoremap <silent> <space>z  :<C-u>CocList --normal tasks<cr>
-nnoremap <silent> <space>l  :<C-u>CocList -I lines<cr>
-nnoremap <silent> <space>w  :exe 'CocList -I --normal --input='.expand('<cword>').' words'<cr>
+nnoremap <silent> <space>t :call CocActionAsync('showOutline')<cr>
+nnoremap <silent> <space>i :call CocActionAsync('showIncomingCalls')<cr>
+nnoremap <silent> <space>o :call CocActionAsync('showOutgoingCalls')<cr>
+nnoremap <silent> <space>f :<C-u>CocList files<cr>
+nnoremap <silent> <space>e :<C-u>CocList extensions<cr>
+nnoremap <silent> <space>u :<C-u>CocList --normal mru<cr>
+nnoremap <silent> <space>a :<C-u>CocList --normal diagnostics<cr>
+nnoremap <silent> <space>c :<C-u>CocList commands<cr>
+nnoremap <silent> <space>b :<C-u>CocList --normal buffers<cr>
+nnoremap <silent> <space>y :<C-u>CocList -A --normal yank<cr>
+nnoremap <silent> <space>g :<C-u>CocList -I grep<cr>
+" nnoremap <silent> <space>  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <space>p :<C-u>CocListResume<cr>
+nnoremap <silent> <space>m :<C-u>CocList --normal marks<cr>
+nnoremap <silent> <space>h :<C-u>CocList --normal searchhistory<cr>
+nnoremap <silent> <space>k :<C-u>CocList --normal maps<cr>
+nnoremap <silent> <space>q :<C-u>CocList --normal floaterm<cr>
+nnoremap <silent> <space>z :<C-u>CocList --normal tasks<cr>
+nnoremap <silent> <space>l :<C-u>CocList -I lines<cr>
+nnoremap <silent> <space>w :exe 'CocList -I --normal --input='.expand('<cword>').' words'<cr>
 " nnoremap <silent> <space>fl :<c-u>CocList --normal explPresets<cr>
 nnoremap <silent> <space><leader>  :<C-u>CocList --normal project<cr>
 " nnoremap <silent> <space>l  :<C-u>Denite coc-link<cr>
@@ -636,6 +642,8 @@ command! -nargs=0 TEMP exe 'Rg -e "TEMP:"'
 command! -nargs=0 TODO exe 'Rg -e "TODO:"'
 command! -nargs=0 NOTE exe 'Rg -e "NOTE:"'
 command! -nargs=0 IMPORTANT exe 'Rg -e "IMPORTANT:"'
+nnoremap <c-\> :AsyncRun -save=1 make<cr>;
+nnoremap <m-\> :AsyncRun -save=1 -raw make<cr>;
 
 inoremap <C-P> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
 
@@ -685,7 +693,16 @@ autocmd BufNewFile,BufRead tslint.json        set ft=jsonc
 autocmd BufNewFile,BufRead coc-settings.json  set ft=jsonc
 autocmd BufNewFile,BufRead settings.json      set ft=jsonc
 
-autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
+set errorformat=
+set errorformat+=
+set errorformat+=%f:%l:%c:\ %t%s:\ %m
+set errorformat+=%f\ :\ %m
+set errorformat+=%-G%.%#
+
+" %f(%l) \=: %t%*\D%n: %m,%*[^"]"%f"%*\D%l: %m,%f(%l) \=: %m,%*[^ ] %f %l: %m,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,%f|%l| %m
+" autocmd BufNewFile,BufRead *.c,*.cpp,*.rkt      set errorformat=%f(%l) \=: %t%*\D%n: %m,%*[^"]"%f"%*\D%l: %m,%f(%l) \=: %m,%*[^ ] %f %l: %m,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,%f|%l| %m
+
+autocmd BufReadPre * if getfsize(expand("%")) > 1000000 | syntax off | endif
 
 " vim-asterisk
 let g:asterisk#keeppos = 1
@@ -967,7 +984,7 @@ endfunction
 " snoremap <silent> <Tab> <Esc>:call UltiSnips#ExpandSnippetOrJump()<cr>
 
 " emmet-vim
-let g:user_emmet_leader_key = '<c-e>'
+let g:user_emmet_leader_key = '<c-leader>'
 let g:user_emmet_settings = {
 \ 'javascript.jsx' : {
 \   'extends' : 'jsx'
@@ -1012,8 +1029,8 @@ noremap <leader>` :GenDefinition<cr>
 " ------------
 nnoremap <leader>ec :tabnew $MYVIMRC
 tnoremap <Esc> <C-\><C-n>
-nnoremap <leader><leader> <C-^>
-nnoremap <leader>/ :Rg<space>
+nnoremap <leader>. <C-^>
+" nnoremap <leader>/ :Rg<space>
 " inoremap jj <ESC>
 
 " move visual block
@@ -1047,15 +1064,15 @@ nnoremap <silent><cr> :noh<cr>
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 
-" noremap j gj
-" noremap k gk
+noremap j gj
+noremap k gk
 
 nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
 
 nnoremap tp :tabprev<cr>
 nnoremap tn :tabnext<cr>
 
-nnoremap <leader>; A;<ESC>
+" nnoremap <leader>; A;<ESC>
 " nnoremap <leader>e :tabnew 
 " nnoremap <leader>ee :e <C-R>=expand('%:p:h') . '/'<CR>
 " nnoremap <leader>ef :e <C-R>=expand('%')<CR>
@@ -1065,7 +1082,7 @@ nnoremap qq :bd<cr>
 
 command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 -tu4 /dev/urandom'), '^\_s*\zs.\{-}\ze\_s*$') % line('$')).'G'
 command! GCompileCommands execute '!xmake project -k compile_commands'
-command! -nargs=? Fd call setqflist([], ' ', {'lines' : systemlist('fd ' . <q-args>), 'efm' : '%f'})
+" command! -nargs=? Fd call setqflist([], ' ', {'lines' : systemlist('fd ' . <q-args>), 'efm' : '%f'})
 
 " nvim-treesitter
 " --------------------------------------------------------------------
@@ -1079,6 +1096,9 @@ require'nvim-treesitter.configs'.setup {
   indent = {
     enable = false,
     disable = {},
+  },
+  incremental_selection = {
+    enable = true,
   },
   context_commentstring = {
     enable = true
@@ -1215,6 +1235,7 @@ local npairs = require("nvim-autopairs")
 local Rule = require('nvim-autopairs.rule')
 
 npairs.setup({
+    disable_filetype = { "wast", "racket" },
     check_ts = true,
     ts_config = {
         lua = {'string'},
@@ -1370,6 +1391,16 @@ let g:nvim_tree_icons = {
     \ }
 command! -nargs=0 Tree :NvimTreeToggle
 command! -nargs=0 TreeFind :NvimTreeFindFileToggle
+endif
+
+" chartoggle.nvim
+if s:is_installed('chartoggle.nvim')
+lua <<EOF
+require('chartoggle').setup ({
+  leader = ',',
+  keys = {',', ';'}
+})
+EOF
 endif
 
 " ------------
