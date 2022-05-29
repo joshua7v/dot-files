@@ -287,6 +287,8 @@ if system('uname -r') =~ "microsoft"
   augroup END
 endif
 
+nnoremap <leader>rz :Rg -e "\"[\u4e00-\u9fa5]+\"" -t ts
+
 " -------------------
 " appearance settings
 " -------------------
@@ -325,7 +327,7 @@ function! s:patch_oceanic_next_colors()
   hi! link TermCursor Cursor
   hi! link TargetWord TabLineSel
   hi Search ctermfg=0 ctermbg=6 guibg=#88C0D0 guifg=#3B4252 gui=none
-  hi QuickFixLine ctermfg=0 ctermbg=6 guibg=#343d46 guifg=none gui=none
+  hi QuickFixLine ctermfg=none ctermbg=none guibg=none guifg=none gui=none
   hi! link Folded EndOfBuffer
 endfunction
 autocmd! ColorScheme OceanicNext call s:patch_oceanic_next_colors()
@@ -627,9 +629,13 @@ command! -nargs=? Fold :call CocActionAsync('fold', <f-args>)
 command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
 " command! -nargs=+ -complete=custom,s:GrepArgs Rgl exe 'CocList grep '.<q-args>
 " command! -nargs=0 Rg exe 'CocList -I grep'
-command! -nargs=0 TODO exe 'CocList --normal grep //\ TODO'
-command! -nargs=0 NOTE exe 'CocList --normal grep //\ NOTE'
-command! -nargs=0 IMPORTANT exe 'CocList --normal grep //\ IMPORTANT'
+" command! -nargs=0 TODO exe 'CocList --normal grep //\ TODO'
+" command! -nargs=0 NOTE exe 'CocList --normal grep //\ NOTE'
+" command! -nargs=0 IMPORTANT exe 'CocList --normal grep //\ IMPORTANT'
+command! -nargs=0 TEMP exe 'Rg -e "TEMP:"'
+command! -nargs=0 TODO exe 'Rg -e "TODO:"'
+command! -nargs=0 NOTE exe 'Rg -e "NOTE:"'
+command! -nargs=0 IMPORTANT exe 'Rg -e "IMPORTANT:"'
 
 inoremap <C-P> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
 
@@ -1001,15 +1007,6 @@ let g:bookmark_auto_save = 1
 " vim-gencode-cpp
 noremap <leader>` :GenDefinition<cr>
 
-" tcomment_vim
-" nmap <c-_><c-_> :TComment<cr>
-" nmap gcc :TComment<cr>
-" vmap gc :TComment<cr>
-" nmap gca :TCommentAs 
-" vmap gca :TCommentAs 
-" let g:tcomment#filetype#guess = 1
-" let g:tcomment#filetype#guess_typescriptreact = 1
-
 " ------------
 " key bindings
 " ------------
@@ -1262,6 +1259,8 @@ require("todo-comments").setup {
     WARN = { icon = "", color = "warning", alt = { "WARNING", "XXX" } },
     PERF = { icon = "", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
     NOTE = { icon = "", color = "hint", alt = { "INFO" } },
+    TEMP = { icon = "", color = "error" },
+    IMPORTANT = { icon = "", color = "#FBBF24" },
   },
   merge_keywords = false, -- when true, custom keywords will be merged with the defaults
   -- highlighting of the line containing the todo comment
