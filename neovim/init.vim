@@ -55,6 +55,7 @@ Plug 'mizlan/iswap.nvim'
 Plug 'saifulapm/chartoggle.nvim'
 
 " project
+Plug 'TimUntersberger/neogit'
 Plug 'rhysd/devdocs.vim', { 'on': ['DevDocsAllUnderCursor'] }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'voldikss/vim-floaterm'
@@ -182,7 +183,12 @@ set fileencodings=utf-8,ucs-bom,cp936,gb18030,big5,euc-jp,euc-kr,latin1
 set helplang=en
 set termencoding=utf-8
 
-set ffs=unix,dos,mac         " Use Unix as the standard file type
+if system('uname -r') =~ "microsoft"
+  set ffs=dos,unix,mac
+else
+  set ffs=unix,dos,mac
+endif
+
 set formatoptions+=m
 set formatoptions+=B         " When joining lines, don't insert a space between two multi-byte characters.
 set completeopt=longest,menu,noselect " behaviour of insert mode completion
@@ -499,7 +505,6 @@ let g:coc_global_extensions = [
         \"coc-toml",
         \"coc-yank",
         \"coc-emmet",
-        \"coc-project",
         \]
 
 let g:coc_snippet_next = '<tab>'
@@ -647,6 +652,11 @@ nnoremap <m-\> :AsyncRun -save=1 -raw make<cr>;
 
 inoremap <C-P> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
 
+autocmd BufAdd * if getfsize(expand('<afile>')) > 1024*1024 |
+            \ let b:coc_enabled=0 |
+            \ endif
+
+
 if s:is_installed("coc.nvim")
   if has('nvim-0.4.0') || has('patch-8.2.0750')
     nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
@@ -701,8 +711,9 @@ set errorformat+=%-G%.%#
 
 " %f(%l) \=: %t%*\D%n: %m,%*[^"]"%f"%*\D%l: %m,%f(%l) \=: %m,%*[^ ] %f %l: %m,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,%f|%l| %m
 " autocmd BufNewFile,BufRead *.c,*.cpp,*.rkt      set errorformat=%f(%l) \=: %t%*\D%n: %m,%*[^"]"%f"%*\D%l: %m,%f(%l) \=: %m,%*[^ ] %f %l: %m,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,%f|%l| %m
+autocmd BufNewFile,BufRead *.ts,*.tsx      set errorformat=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m,%-G%.%#
 
-autocmd BufReadPre * if getfsize(expand("%")) > 1000000 | syntax off | endif
+" autocmd BufReadPre * if getfsize(expand("%")) > 1000000 | syntax off | endif
 
 " vim-asterisk
 let g:asterisk#keeppos = 1
@@ -830,7 +841,7 @@ let g:asyncrun_rootmarks = ['.git', '.svn', '.root', '.project', '.hg', '.projec
 let g:asynctasks_term_reuse = 1
 let g:asynctasks_term_focus = 1
 
-noremap <leader>q :call asyncrun#quickfix_toggle(24)<cr>
+noremap <silent><leader>q :call asyncrun#quickfix_toggle(24)<cr>
 noremap <leader>r :AsyncTask project-run<cr>
 noremap <leader>b :AsyncTask project-build<cr>
 " noremap <leader>x :AsyncTask project-test<cr>
@@ -902,6 +913,10 @@ let g:terminal_height = 20
 let g:terminal_pos = 'below'
 let g:terminal_edit = 'drop'
 let g:terminal_fixheight = 1
+if has('macunix')
+else
+  let g:terminal_shell = 'pwsh.exe'
+endif
 
 " vim-interestingwords
 let g:interestingWordsRandomiseColors = 0
@@ -1091,7 +1106,10 @@ lua <<EOF
 require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
-    disable = {},
+    disable = function(lang, bufnr)
+        offset = vim.api.nvim_buf_get_offset(bufnr, 1)
+        return offset > 777
+    end,
   },
   indent = {
     enable = false,
@@ -1407,7 +1425,7 @@ endif
 " gui settings
 " ------------
 
-let g:neovide_fullscreen=v:true
-set guifont=Sarasa\ Mono\ SC\ Nerd:h12
+let g:neovide_fullscreen=v:false
+set guifont=Sarasa\ Mono\ SC:h12
 highlight Cursor guifg=white guibg=#ff5555
 set guicursor=n-v-c:block-Cursor,i-ci-ve:ver30-Cursor
