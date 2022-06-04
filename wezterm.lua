@@ -133,6 +133,7 @@ return {
     {key="Enter", mods="CTRL", action="ToggleFullScreen"},
     {key="c", mods="ALT", action="Copy"},
     {key="v", mods="ALT", action="Paste"},
+    {key=";", mods="CTRL", action={SendKey={key="RightArrow"}}},
 
     -- tab
     {key="t", mods="CTRL", action=wezterm.action{SpawnCommandInNewTab={cwd=wezterm.home_dir}}},
