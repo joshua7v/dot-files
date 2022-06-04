@@ -10,7 +10,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/nvim-treesitter-refactor'
 " Plug 'windwp/nvim-ts-autotag'
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 
 " edit
 Plug 'github/copilot.vim'
@@ -27,7 +27,7 @@ Plug 'Yggdroot/indentLine', { 'on': ['IndentLinesToggle'] }
 Plug 'justinmk/vim-dirvish'
 Plug 'szw/vim-maximizer', { 'on': ['MaximizerToggle'] }
 Plug 'haya14busa/vim-edgemotion'
-Plug 'justinmk/vim-sneak'
+Plug 'rlane/pounce.nvim'
 Plug 'Shougo/context_filetype.vim'
 Plug 'tpope/vim-commentary'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
@@ -51,11 +51,11 @@ Plug 'Julian/vim-textobj-variable-segment'
 Plug 'tenfyzhong/vim-gencode-cpp', { 'for': ['c', 'cpp'] }
 Plug 'anuvyklack/nvim-keymap-amend'
 Plug 'anuvyklack/pretty-fold.nvim'
-Plug 'mizlan/iswap.nvim'
+" Plug 'mizlan/iswap.nvim'
 Plug 'saifulapm/chartoggle.nvim'
 
 " project
-Plug 'TimUntersberger/neogit'
+" Plug 'TimUntersberger/neogit'
 Plug 'rhysd/devdocs.vim', { 'on': ['DevDocsAllUnderCursor'] }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'voldikss/vim-floaterm'
@@ -480,31 +480,32 @@ if isdirectory($HOME . "/scoop/apps/volta")
 endif
 
 let g:coc_global_extensions = [
-        \"coc-marketplace",
-        \"coc-word",
+        \"coc-clangd",
+        \"coc-css",
+        \"coc-emmet",
+        \"coc-eslint",
         \"coc-git",
         \"coc-gitignore",
-        \"coc-snippets",
-        \"coc-tsserver",
-        \"coc-eslint",
-        \"coc-json",
+        \"coc-go",
+        \"coc-highlight",
         \"coc-html",
-        \"coc-css",
-        \"coc-prettier",
-        \"coc-webpack",
+        \"coc-json",
+        \"coc-lines",
         \"coc-lists",
-        \"coc-clangd",
-        \"coc-yaml",
+        \"coc-lua",
+        \"coc-marketplace",
+        \"coc-prettier",
         \"coc-pyright",
+        \"coc-rust-analyzer",
+        \"coc-snippets",
         \"coc-svg",
         \"coc-tasks",
-        \"coc-highlight",
-        \"coc-rust-analyzer",
-        \"coc-lua",
-        \"coc-go",
         \"coc-toml",
+        \"coc-tsserver",
+        \"coc-webpack",
+        \"coc-word",
+        \"coc-yaml",
         \"coc-yank",
-        \"coc-emmet",
         \]
 
 let g:coc_snippet_next = '<tab>'
@@ -703,17 +704,18 @@ autocmd BufNewFile,BufRead tslint.json        set ft=jsonc
 autocmd BufNewFile,BufRead coc-settings.json  set ft=jsonc
 autocmd BufNewFile,BufRead settings.json      set ft=jsonc
 
+autocmd BufNewFile,BufRead *.json setlocal conceallevel=0
+
 set errorformat=
-set errorformat+=
-set errorformat+=%f:%l:%c:\ %t%s:\ %m
+set errorformat+=%.%#-->\ %f:%l:%c
+set errorformat+=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
+set errorformat+=%f:%l:%c:\ %m
 set errorformat+=%f\ :\ %m
-set errorformat+=%-G%.%#
+" set errorformat+=%-G%.%#
 
 " %f(%l) \=: %t%*\D%n: %m,%*[^"]"%f"%*\D%l: %m,%f(%l) \=: %m,%*[^ ] %f %l: %m,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,%f|%l| %m
-" autocmd BufNewFile,BufRead *.c,*.cpp,*.rkt      set errorformat=%f(%l) \=: %t%*\D%n: %m,%*[^"]"%f"%*\D%l: %m,%f(%l) \=: %m,%*[^ ] %f %l: %m,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,%f|%l| %m
-autocmd BufNewFile,BufRead *.ts,*.tsx      set errorformat=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m,%-G%.%#
-
-" autocmd BufReadPre * if getfsize(expand("%")) > 1000000 | syntax off | endif
+" autocmd BufNewFile,BufRead *.ts,*.tsx      set errorformat=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
+autocmd BufNewFile,BufRead *.rs nnoremap <c-\> :AsyncRun -save=1 cargo check<cr>;
 
 " vim-asterisk
 let g:asterisk#keeppos = 1
@@ -730,10 +732,14 @@ map gz# <Plug>(asterisk-gz#)
 " echodoc.vim
 let g:echodoc#enable_at_startup = 1
 
-" vim-sneak
-let g:sneak#label = 1
-xmap z <Plug>Sneak_s
-xmap Z <Plug>Sneak_S
+" pounce.nvim
+nmap s <cmd>Pounce<cr>
+nmap S <cmd>PounceRepeat<cr>
+vmap s <cmd>Pounce<cr>
+
+hi! link PounceMatch Search
+hi! link PounceAcceptBest Cursor
+hi PounceGap ctermfg=none ctermbg=none guibg=#3a4b5c guifg=none gui=none
 
 " tabular
 nmap <leader>a= :Tabularize /=<CR>
@@ -1211,13 +1217,13 @@ endif
 "     \}
 
 " iswap.nvim
-if s:is_installed('iswap.nvim')
-lua <<EOF
-require('iswap').setup{
-  autoswap = true,
-}
-EOF
-endif
+" if s:is_installed('iswap.nvim')
+" lua <<EOF
+" require('iswap').setup{
+"   autoswap = true,
+" }
+" EOF
+" endif
 
 " nvim-treesitter-textobjects
 if s:is_installed('nvim-treesitter-textobjects')
