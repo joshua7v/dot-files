@@ -31,7 +31,8 @@ Plug 'rlane/pounce.nvim'
 Plug 'Shougo/context_filetype.vim'
 Plug 'tpope/vim-commentary'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
-Plug 'haringsrob/nvim_context_vt'
+" Plug 'haringsrob/nvim_context_vt'
+Plug 'SmiteshP/nvim-gps'
 Plug 'mg979/vim-visual-multi'
 Plug 'mbbill/undotree'
 Plug 'Shougo/vinarise.vim', { 'on': ['Vinarise'] }
@@ -71,6 +72,7 @@ Plug 'folke/todo-comments.nvim'
 Plug 'mtth/scratch.vim'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'jremmen/vim-ripgrep'
+Plug 'sindrets/diffview.nvim'
 
 " miscellaneous
 Plug 'kyazdani42/nvim-tree.lua'
@@ -410,6 +412,11 @@ if exists('+showtabline')
   endfunction
   set tabline=%!Tabline()
 endif
+  
+func! NvimGps() abort
+	return luaeval("require'nvim-gps'.is_available()") ?
+		\ luaeval("require'nvim-gps'.get_location()") : ''
+endf
 
 " statusline
 if has('statusline')
@@ -421,7 +428,12 @@ if has('statusline')
   set statusline+=\ %{''.(&fenc!=''?&fenc:&enc).''}
   set statusline+=%{(&bomb?\\",BOM\\":\\"\\")}
   set statusline+=\ %{&ff}\ %y
-  set statusline+=\ %m%r%w
+  set statusline+=%m%r%w\ 
+
+  if s:is_installed('nvim-gps')
+    set statusline+=%{NvimGps()}
+  endif
+
   set statusline+=%=%{StatusDiagnostic()}\ 
   " set statusline+=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}\ 
   " set statusline+=%{coc#status()}%{get(b:,'coc_current_function','')}\ 
@@ -648,8 +660,8 @@ command! -nargs=0 TEMP exe 'Rg -e "TEMP:"'
 command! -nargs=0 TODO exe 'Rg -e "TODO:"'
 command! -nargs=0 NOTE exe 'Rg -e "NOTE:"'
 command! -nargs=0 IMPORTANT exe 'Rg -e "IMPORTANT:"'
-nnoremap <c-\> :AsyncRun -save=1 make<cr>;
-nnoremap <m-\> :AsyncRun -save=1 -raw make<cr>;
+nnoremap <silent><c-\> :AsyncRun -save=1 make<cr>;
+nnoremap <silent><m-\> :AsyncRun -save=1 -raw make<cr>;
 
 inoremap <C-P> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
 
@@ -1190,14 +1202,14 @@ augroup END
 endif
 
 " nvim_context_vt
-if s:is_installed('nvim_context_vt')
-lua <<EOF
-require('nvim_context_vt').setup {
-  enabled = false,
-}
-EOF
-nnoremap <leader>u :NvimContextVtToggle<cr>
-endif
+" if s:is_installed('nvim_context_vt')
+" lua <<EOF
+" require('nvim_context_vt').setup {
+"   enabled = false,
+" }
+" EOF
+" nnoremap <leader>u :NvimContextVtToggle<cr>
+" endif
 
 " vim-matchup
 " lua <<EOF
@@ -1424,6 +1436,12 @@ require('chartoggle').setup ({
   leader = ',',
   keys = {',', ';'}
 })
+EOF
+endif
+
+if s:is_installed('nvim-gps')
+lua <<EOF
+require('nvim-gps').setup()
 EOF
 endif
 
