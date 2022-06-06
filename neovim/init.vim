@@ -621,9 +621,17 @@ vnoremap <leader>g :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
 nnoremap <leader>g :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@ 
 inoremap <silent><expr> <c-space> coc#refresh()
 
-nnoremap <silent> <space>t :call CocActionAsync('showOutline')<cr>
-nnoremap <silent> <space>i :call CocActionAsync('showIncomingCalls')<cr>
-nnoremap <silent> <space>o :call CocActionAsync('showOutgoingCalls')<cr>
+function! ToggleOutline() abort
+  let winid = coc#window#find('cocViewId', 'OUTLINE')
+  if winid == -1
+    call CocActionAsync('showOutline', 1)
+  else
+    call coc#window#close(winid)
+  endif
+endfunction
+
+nnoremap <silent> <space>t :call ToggleOutline()<cr>
+nnoremap <silent> <space>o :<C-u>CocList outline<cr>
 nnoremap <silent> <space>f :<C-u>CocList files<cr>
 nnoremap <silent> <space>e :<C-u>CocList extensions<cr>
 nnoremap <silent> <space>u :<C-u>CocList --normal mru<cr>
@@ -645,6 +653,8 @@ nnoremap <silent> <space>w :exe 'CocList -I --normal --input='.expand('<cword>')
 nnoremap <silent> <space><leader>  :<C-u>CocList --normal project<cr>
 " nnoremap <silent> <space>l  :<C-u>Denite coc-link<cr>
 
+command! -nargs=0 IncomingCalls :call CocActionAsync('showIncomingCalls')
+command! -nargs=0 OutgoingCalls :call CocActionAsync('showOutgoingCalls')
 command! -nargs=0 ColorPresentation :call CocActionAsync('colorPresentation')
 command! -nargs=0 PickColor :call CocActionAsync('pickColor')
 " command! -nargs=0 Prettier :CocCommand prettier.formatFile
@@ -909,6 +919,7 @@ let g:mta_filetypes = {
   \ 'jinja' : 1,
   \ 'javascript': 1,
   \ 'javascript.jsx': 1,
+  \ 'javascriptreact': 1,
   \ 'typescript.tsx': 1,
   \ 'typescriptreact': 1
   \}
@@ -1130,7 +1141,7 @@ require'nvim-treesitter.configs'.setup {
     end,
   },
   indent = {
-    enable = false,
+    enable = true,
     disable = {},
   },
   incremental_selection = {
@@ -1277,7 +1288,7 @@ npairs.setup({
         lua = {'string'},
     },
     fast_wrap = {
-      map = '<M-e>',
+      map = '<M-q>',
       chars = { '{', '[', '(', '"', "'", "`" },
       end_key = '$',
       check_comma = true,
