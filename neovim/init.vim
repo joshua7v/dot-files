@@ -414,8 +414,7 @@ if exists('+showtabline')
 endif
   
 func! NvimGps() abort
-	return luaeval("require'nvim-gps'.is_available()") ?
-		\ luaeval("require'nvim-gps'.get_location()") : ''
+	return (luaeval("require'nvim-gps'.is_available()") && luaeval("require'nvim-gps'.get_location()") != '') ? '| ' . luaeval("require'nvim-gps'.get_location()") : ''
 endf
 
 " statusline
@@ -1452,7 +1451,41 @@ endif
 
 if s:is_installed('nvim-gps')
 lua <<EOF
-require('nvim-gps').setup()
+require('nvim-gps').setup({
+  icons = {
+    ["class-name"] = '[C] ',
+    ["function-name"] = '[F] ',
+    ["method-name"] = '[M] ',
+    ["container-name"] = '[B] ',
+    ["tag-name"] = '[T] ',
+  },
+  languages = {
+    ["json"] = {
+      icons = {
+        ["array-name"] = '[A] ',
+        ["object-name"] = '[O] ',
+        ["null-name"] = '[U] ',
+        ["boolean-name"] = '[B] ',
+        ["number-name"] = '[N] ',
+        ["string-name"] = '[S] '
+      }
+    },
+    ["toml"] = {
+	  icons = {
+		["table-name"] = '[T] ',
+		["array-name"] = '[A] ',
+		["boolean-name"] = '[B] ',
+		["date-name"] = '[D] ',
+		["date-time-name"] = '[D] ',
+		["float-name"] = '[F] ',
+		["inline-table-name"] = '[T] ',
+		["integer-name"] = '[N] ',
+		["string-name"] = '[S] ',
+        ["time-name"] = '[T] '
+	  }
+    },
+  },
+})
 EOF
 endif
 
