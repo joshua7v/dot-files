@@ -4,6 +4,7 @@ if exists(":PlugInstall")
 
 " colorscheme
 Plug 'mhartington/oceanic-next'
+Plug 'sainnhe/everforest'
 
 " syntax
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -48,7 +49,7 @@ Plug 'AndrewRadev/sideways.vim'
 Plug 'svermeulen/vim-subversive'
 Plug 'tpope/vim-abolish'
 Plug 'Julian/vim-textobj-variable-segment'
-" Plug 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim'
 Plug 'tenfyzhong/vim-gencode-cpp', { 'for': ['c', 'cpp'] }
 Plug 'anuvyklack/nvim-keymap-amend'
 Plug 'anuvyklack/pretty-fold.nvim'
@@ -493,7 +494,6 @@ endif
 let g:coc_global_extensions = [
         \"coc-clangd",
         \"coc-css",
-        \"coc-emmet",
         \"coc-eslint",
         \"coc-git",
         \"coc-gitignore",
@@ -517,6 +517,7 @@ let g:coc_global_extensions = [
         \"coc-word",
         \"coc-yaml",
         \"coc-yank",
+        \"coc-zig",
         \]
 
 let g:coc_snippet_next = '<tab>'
@@ -726,6 +727,7 @@ autocmd BufNewFile,BufRead coc-settings.json  set ft=jsonc
 autocmd BufNewFile,BufRead settings.json      set ft=jsonc
 
 autocmd BufNewFile,BufRead *.json setlocal conceallevel=0
+autocmd BufNewFile,BufRead *.pie setlocal conceallevel=0
 
 set errorformat=
 set errorformat+=%.%#-->\ %f:%l:%c
@@ -1027,12 +1029,13 @@ endfunction
 " snoremap <silent> <Tab> <Esc>:call UltiSnips#ExpandSnippetOrJump()<cr>
 
 " emmet-vim
-let g:user_emmet_leader_key = '<c-leader>'
+let g:user_emmet_leader_key = '<c-e>'
+let g:user_emmet_mode = 'i'
 let g:user_emmet_settings = {
-\ 'javascript.jsx' : {
+\ 'javascriptreact' : {
 \   'extends' : 'jsx'
 \  },
-\ 'typescript.tsx' : {
+\ 'typescriptreact' : {
 \   'extends' : 'jsx'
 \  },
 \ 'javascript': {
@@ -1182,6 +1185,7 @@ require'nvim-treesitter.configs'.setup {
     "vim",
     "vue",
     "yaml",
+    "zig",
   },
   refactor = {
     navigation = {
@@ -1497,3 +1501,8 @@ let g:neovide_fullscreen=v:false
 set guifont=Sarasa\ Mono\ SC:h12
 highlight Cursor guifg=white guibg=#ff5555
 set guicursor=n-v-c:block-Cursor,i-ci-ve:ver30-Cursor
+
+if exists('g:nvui')
+  autocmd InsertEnter * NvuiIMEEnable
+  autocmd InsertLeave * NvuiIMEDisable
+endif
