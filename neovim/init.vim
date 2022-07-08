@@ -633,7 +633,7 @@ nnoremap <silent> <space>h :<C-u>CocList --normal searchhistory<cr>
 nnoremap <silent> <space>k :<C-u>CocList --normal maps<cr>
 nnoremap <silent> <space>q :<C-u>CocList --normal floaterm<cr>
 nnoremap <silent> <space>z :<C-u>CocList --normal tasks<cr>
-nnoremap <silent> <space>l :<C-u>CocList -I lines<cr>
+nnoremap <silent> <space>l :<C-u>CocList fuzzy_lines<cr>
 nnoremap <silent> <space>w :exe 'CocList -I --normal --input='.expand('<cword>').' words'<cr>
 " nnoremap <silent> <space>fl :<c-u>CocList --normal explPresets<cr>
 nnoremap <silent> <space><leader>  :<C-u>CocList --normal project<cr>
@@ -1441,11 +1441,14 @@ require('incline').setup({
   },
   render = function(props)
     local bufname = vim.api.nvim_buf_get_name(props.buf)
-    if bufname == "" then
-      return "[No name]"
-    else
-      return vim.fn.fnamemodify(bufname, ":.")
+    local res = bufname ~= '' and vim.fn.fnamemodify(bufname, ':t') or '[no name]'
+    if string.find(vim.fn.fnamemodify(bufname, ":t"), "index") then
+      res = vim.fn.fnamemodify(bufname, ":.")
     end
+    if vim.api.nvim_buf_get_option(props.buf, 'modified') then
+      res = res .. ' [+]'
+    end
+    return res
   end,
 })
 EOF
