@@ -26,6 +26,7 @@
     "typescriptreact": ["typescript"]
   },
   "snippets.priority": 0,
+  "typescript.suggest.includeCompletionsWithSnippetText": false,
   "typescript.referencesCodeLens.enable": false,
   "typescript.implementationsCodeLens.enable": false,
   "javascript.referencesCodeLens.enable": false,
@@ -39,6 +40,7 @@
   "clangd.inlayHints.enable": false,
   "Lua.diagnostics.globals": ["love"],
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
+  "zig.path": "zls",
   "languageserver": {
     "elixirLS": {
       "command": "~/.bin/elixir-ls/language_server.bat",

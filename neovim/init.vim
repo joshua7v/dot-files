@@ -4,17 +4,18 @@ if exists(":PlugInstall")
 
 " colorscheme
 Plug 'mhartington/oceanic-next'
-Plug 'sainnhe/everforest'
 
 " syntax
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-Plug 'nvim-treesitter/nvim-treesitter-refactor'
+Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+Plug 'Shougo/context_filetype.vim'
 " Plug 'windwp/nvim-ts-autotag'
 " Plug 'sheerun/vim-polyglot'
 
 " edit
-Plug 'github/copilot.vim'
+" Plug 'github/copilot.vim'
+Plug 'b0o/incline.nvim'
 Plug 'windwp/nvim-autopairs'
 Plug 'haya14busa/vim-asterisk'
 Plug 'kana/vim-textobj-user'
@@ -29,16 +30,11 @@ Plug 'justinmk/vim-dirvish'
 Plug 'szw/vim-maximizer', { 'on': ['MaximizerToggle'] }
 Plug 'haya14busa/vim-edgemotion'
 Plug 'rlane/pounce.nvim'
-Plug 'Shougo/context_filetype.vim'
 Plug 'tpope/vim-commentary'
-Plug 'JoosepAlviste/nvim-ts-context-commentstring'
-" Plug 'haringsrob/nvim_context_vt'
-Plug 'SmiteshP/nvim-gps'
 Plug 'mg979/vim-visual-multi'
 Plug 'mbbill/undotree'
 Plug 'Shougo/vinarise.vim', { 'on': ['Vinarise'] }
 Plug 'Valloric/MatchTagAlways', { 'for': ['typescriptreact', 'html'] }
-" Plug 'andymass/vim-matchup'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-surround'
@@ -53,11 +49,9 @@ Plug 'mattn/emmet-vim'
 Plug 'tenfyzhong/vim-gencode-cpp', { 'for': ['c', 'cpp'] }
 Plug 'anuvyklack/nvim-keymap-amend'
 Plug 'anuvyklack/pretty-fold.nvim'
-" Plug 'mizlan/iswap.nvim'
 Plug 'saifulapm/chartoggle.nvim'
 
 " project
-" Plug 'TimUntersberger/neogit'
 Plug 'rhysd/devdocs.vim', { 'on': ['DevDocsAllUnderCursor'] }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'voldikss/vim-floaterm'
@@ -414,10 +408,6 @@ if exists('+showtabline')
   set tabline=%!Tabline()
 endif
   
-func! NvimGps() abort
-	return (luaeval("require'nvim-gps'.is_available()") && luaeval("require'nvim-gps'.get_location()") != '') ? '| ' . luaeval("require'nvim-gps'.get_location()") : ''
-endf
-
 " statusline
 if has('statusline')
   set laststatus=3
@@ -429,10 +419,6 @@ if has('statusline')
   set statusline+=%{(&bomb?\\",BOM\\":\\"\\")}
   set statusline+=\ %{&ff}\ %y
   set statusline+=%m%r%w\ 
-
-  if s:is_installed('nvim-gps')
-    set statusline+=%{NvimGps()}
-  endif
 
   set statusline+=%=%{StatusDiagnostic()}\ 
   " set statusline+=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}\ 
@@ -615,7 +601,7 @@ nmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>ac <Plug>(coc-codeaction-cursor)
 xmap <leader>ac <Plug>(coc-codeaction-selected)
 nmap <silent>K :call <SID>show_documentation()<cr>
-nmap <silent>gD :call <SID>GoToDefinition()<cr>
+nmap <silent>gd :call <SID>GoToDefinition()<cr>
 " nmap <silent> gd <Plug>(coc-definition)
 vnoremap <leader>g :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
 nnoremap <leader>g :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@ 
@@ -727,7 +713,6 @@ autocmd BufNewFile,BufRead coc-settings.json  set ft=jsonc
 autocmd BufNewFile,BufRead settings.json      set ft=jsonc
 
 autocmd BufNewFile,BufRead *.json setlocal conceallevel=0
-autocmd BufNewFile,BufRead *.pie setlocal conceallevel=0
 
 set errorformat=
 set errorformat+=%.%#-->\ %f:%l:%c
@@ -1187,14 +1172,6 @@ require'nvim-treesitter.configs'.setup {
     "yaml",
     "zig",
   },
-  refactor = {
-    navigation = {
-      enable = true,
-      keymaps = {
-        goto_definition = "gd",
-      },
-    },
-  },
 }
 
 -- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
@@ -1453,42 +1430,23 @@ require('chartoggle').setup ({
 EOF
 endif
 
-if s:is_installed('nvim-gps')
+" incline.nvim
+if s:is_installed('incline.nvim')
 lua <<EOF
-require('nvim-gps').setup({
-  icons = {
-    ["class-name"] = '[C] ',
-    ["function-name"] = '[F] ',
-    ["method-name"] = '[M] ',
-    ["container-name"] = '[B] ',
-    ["tag-name"] = '[T] ',
+require('incline').setup({
+  hide = {
+    cursorline = true,
+    focused_win = false,
+    only_win = true
   },
-  languages = {
-    ["json"] = {
-      icons = {
-        ["array-name"] = '[A] ',
-        ["object-name"] = '[O] ',
-        ["null-name"] = '[U] ',
-        ["boolean-name"] = '[B] ',
-        ["number-name"] = '[N] ',
-        ["string-name"] = '[S] '
-      }
-    },
-    ["toml"] = {
-	  icons = {
-		["table-name"] = '[T] ',
-		["array-name"] = '[A] ',
-		["boolean-name"] = '[B] ',
-		["date-name"] = '[D] ',
-		["date-time-name"] = '[D] ',
-		["float-name"] = '[F] ',
-		["inline-table-name"] = '[T] ',
-		["integer-name"] = '[N] ',
-		["string-name"] = '[S] ',
-        ["time-name"] = '[T] '
-	  }
-    },
-  },
+  render = function(props)
+    local bufname = vim.api.nvim_buf_get_name(props.buf)
+    if bufname == "" then
+      return "[No name]"
+    else
+      return vim.fn.fnamemodify(bufname, ":.")
+    end
+  end,
 })
 EOF
 endif
