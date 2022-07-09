@@ -293,6 +293,9 @@ endif
 nnoremap <leader>rz :Rg -e "[\u4e00-\u9fa5]+"
 nnoremap <leader>ff :AsyncRun -errorformat=\%f fd -a 
 
+set sessionoptions-=blank
+set sessionoptions-=buffers
+
 " -------------------
 " appearance settings
 " -------------------
@@ -495,6 +498,7 @@ let g:coc_global_extensions = [
         \"coc-pyright",
         \"coc-rust-analyzer",
         \"coc-snippets",
+        \"coc-styled-components",
         \"coc-svg",
         \"coc-tasks",
         \"coc-toml",
@@ -1435,7 +1439,7 @@ if s:is_installed('incline.nvim')
 lua <<EOF
 require('incline').setup({
   hide = {
-    cursorline = true,
+    cursorline = false,
     focused_win = false,
     only_win = true
   },
