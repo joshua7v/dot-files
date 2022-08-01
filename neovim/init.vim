@@ -26,7 +26,7 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'ntpeters/vim-better-whitespace', { 'on': ['StripWhitespace'] }
 Plug 'Yggdroot/indentLine', { 'on': ['IndentLinesToggle'] }
-Plug 'justinmk/vim-dirvish'
+Plug 'justinmk/vim-dirvish', { 'commit': 'b5d8d239653fca81529fecf43cc96b27d6323e68' }
 Plug 'szw/vim-maximizer', { 'on': ['MaximizerToggle'] }
 Plug 'haya14busa/vim-edgemotion'
 Plug 'rlane/pounce.nvim'
@@ -49,6 +49,7 @@ Plug 'mattn/emmet-vim'
 Plug 'tenfyzhong/vim-gencode-cpp', { 'for': ['c', 'cpp'] }
 Plug 'anuvyklack/nvim-keymap-amend'
 Plug 'anuvyklack/pretty-fold.nvim'
+Plug 'anuvyklack/fold-preview.nvim'
 Plug 'saifulapm/chartoggle.nvim'
 
 " project
@@ -188,8 +189,8 @@ endif
 
 set formatoptions+=m
 set formatoptions+=B         " When joining lines, don't insert a space between two multi-byte characters.
-set completeopt=longest,menu,noselect " behaviour of insert mode completion
 set completeopt=noinsert,menuone,noselect
+
 set wildmenu                 " auto complete command
 set path+=**
 set wildignore=**.o,*~,.swp,*.bak,*.pyc,*.class " Ignore compiled files
@@ -490,7 +491,6 @@ let g:coc_global_extensions = [
         \"coc-highlight",
         \"coc-html",
         \"coc-json",
-        \"coc-lines",
         \"coc-lists",
         \"coc-lua",
         \"coc-marketplace",
@@ -498,7 +498,6 @@ let g:coc_global_extensions = [
         \"coc-pyright",
         \"coc-rust-analyzer",
         \"coc-snippets",
-        \"coc-styled-components",
         \"coc-svg",
         \"coc-tasks",
         \"coc-toml",
@@ -662,6 +661,12 @@ command! -nargs=0 NOTE exe 'Rg -e "NOTE:"'
 command! -nargs=0 IMPORTANT exe 'Rg -e "IMPORTANT:"'
 nnoremap <silent><c-\> :AsyncRun -save=1 make<cr>;
 nnoremap <silent><m-\> :AsyncRun -save=1 -raw make<cr>;
+
+inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <silent><expr> <C-x><C-z> coc#pum#visible() ? coc#pum#stop() : "\<C-x>\<C-z>"
+
+hi CocSearch ctermfg=12 guifg=#ff8888
+hi CocMenuSel ctermbg=109 guibg=#2E3440
 
 inoremap <C-P> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
 
@@ -1359,7 +1364,7 @@ endif
 if s:is_installed('pretty-fold.nvim')
 lua <<EOF
 require('pretty-fold').setup {}
-require('pretty-fold.preview').setup {}
+require('fold-preview').setup()
 EOF
 endif
 

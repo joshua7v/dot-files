@@ -4,7 +4,7 @@
   "diagnostic.infoSign": "I",
   "diagnostic.hintSign": "H",
   "suggest.timeout": 2000,
-  "suggest.enablePreview": true,
+  "suggest.noselect": true,
   "signature.target": "echo",
   "codeLens.enable": true,
   "colors.filetypes": ["*"],
@@ -14,11 +14,7 @@
   "list.interactiveDebounceTime": 300,
   "list.limitLines": 300,
   "list.normalMappings": {},
-  "list.source.grep.excludePatterns": [
-    "**/*.min.js",
-    "**/*.min.css",
-    "**/*.js.map"
-  ],
+  "list.source.grep.excludePatterns": ["**/*.min.js", "**/*.min.css", "**/*.js.map"],
   "snippets.textmateSnippetsRoots": ["~/.dot-files/neovim/snippets"],
   "snippets.extends": {
     "cpp": ["c"],
