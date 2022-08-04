@@ -661,14 +661,28 @@ command! -nargs=0 NOTE exe 'Rg -e "NOTE:"'
 command! -nargs=0 IMPORTANT exe 'Rg -e "IMPORTANT:"'
 nnoremap <silent><c-\> :AsyncRun -save=1 make<cr>;
 nnoremap <silent><m-\> :AsyncRun -save=1 -raw make<cr>;
+inoremap <silent><c-k> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
 
-inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 inoremap <silent><expr> <C-x><C-z> coc#pum#visible() ? coc#pum#stop() : "\<C-x>\<C-z>"
+
+inoremap <silent><expr> <TAB>
+ \ coc#pum#visible() ? coc#_select_confirm() :
+ \ coc#expandableOrJumpable() ?
+ \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+ \ <SID>check_back_space() ? "\<TAB>" :
+ \ coc#refresh()
+
+function! s:check_back_space() abort
+let col = col('.') - 1
+return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
+
 
 hi CocSearch ctermfg=12 guifg=#ff8888
 hi CocMenuSel ctermbg=109 guibg=#2E3440
-
-inoremap <C-P> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
 
 autocmd BufAdd * if getfsize(expand('<afile>')) > 1024*1024 |
             \ let b:coc_enabled=0 |
