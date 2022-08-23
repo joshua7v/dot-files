@@ -6,7 +6,6 @@
   "signature.target": "echo",
   "suggest.timeout": 7000,
   "suggest.noselect": true,
-  "suggest.maxCompleteItemCount": 12,
   "codeLens.enable": true,
   "colors.filetypes": ["*"],
   "diagnostic.virtualText": false,

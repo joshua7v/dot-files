@@ -662,6 +662,7 @@ command! -nargs=0 IMPORTANT exe 'Rg -e "IMPORTANT:"'
 nnoremap <silent><c-\> :AsyncRun -save=1 make<cr>;
 nnoremap <silent><m-\> :AsyncRun -save=1 -raw make<cr>;
 inoremap <silent><c-k> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
+inoremap <silent><expr> <c-d> coc#refresh()
 
 " inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 inoremap <silent><expr> <C-x><C-z> coc#pum#visible() ? coc#pum#stop() : "\<C-x>\<C-z>"
