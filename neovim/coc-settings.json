@@ -6,6 +6,7 @@
   "signature.target": "echo",
   "suggest.timeout": 7000,
   "suggest.noselect": true,
+  "suggest.labelMaxLength": 100,
   "codeLens.enable": true,
   "colors.filetypes": ["*"],
   "diagnostic.virtualText": false,
@@ -14,7 +15,11 @@
   "list.interactiveDebounceTime": 300,
   "list.limitLines": 300,
   "list.normalMappings": {},
-  "list.source.grep.excludePatterns": ["**/*.min.js", "**/*.min.css", "**/*.js.map"],
+  "list.source.grep.excludePatterns": [
+    "**/*.min.js",
+    "**/*.min.css",
+    "**/*.js.map"
+  ],
   "snippets.textmateSnippetsRoots": ["~/.dot-files/neovim/snippets"],
   "snippets.extends": {
     "cpp": ["c"],
@@ -28,7 +33,6 @@
   "javascript.referencesCodeLens.enable": false,
   "javascript.implementationsCodeLens.enable": false,
   "highlight.disableLanguages": ["dirvish"],
-  "coc.source.omni.filetypes": ["cmake"],
   "rust-analyzer.server.path": "rust-analyzer",
   "rust-analyzer.procMacro.enable": true,
   "rust-analyzer.lens.enable": false,
@@ -37,6 +41,10 @@
   "Lua.diagnostics.globals": ["love"],
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "zig.path": "zls",
+  "clangd.arguments": [
+    "--background-index",
+    "--completion-style=detailed"
+  ],
   "languageserver": {
     "elixirLS": {
       "command": "~/.bin/elixir-ls/language_server.bat",

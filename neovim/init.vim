@@ -46,11 +46,11 @@ Plug 'svermeulen/vim-subversive'
 Plug 'tpope/vim-abolish'
 Plug 'Julian/vim-textobj-variable-segment'
 Plug 'mattn/emmet-vim'
-Plug 'tenfyzhong/vim-gencode-cpp', { 'for': ['c', 'cpp'] }
+" Plug 'vim-scripts/a.vim', { 'for': ['c', 'cpp'] }
+" Plug 'tenfyzhong/vim-gencode-cpp', { 'for': ['c', 'cpp'] }
 Plug 'anuvyklack/nvim-keymap-amend'
 Plug 'anuvyklack/pretty-fold.nvim'
 Plug 'anuvyklack/fold-preview.nvim'
-Plug 'saifulapm/chartoggle.nvim'
 
 " project
 Plug 'rhysd/devdocs.vim', { 'on': ['DevDocsAllUnderCursor'] }
@@ -731,12 +731,13 @@ autocmd BufNewFile,BufRead *.vs,*.fs          set ft=glsl
 autocmd BufNewFile,BufRead *.tpl              set ft=html
 autocmd BufNewFile,BufRead *.mm               set ft=objc
 autocmd BufNewFile,BufRead *.shader           set ft=glsl
+autocmd BufNewFile,BufRead *.uproject         set ft=json
 autocmd BufNewFile,BufRead tsconfig.json      set ft=jsonc
 autocmd BufNewFile,BufRead tslint.json        set ft=jsonc
 autocmd BufNewFile,BufRead coc-settings.json  set ft=jsonc
 autocmd BufNewFile,BufRead settings.json      set ft=jsonc
 
-autocmd BufNewFile,BufRead *.json setlocal conceallevel=0
+autocmd FileType json setlocal conceallevel=0
 
 set errorformat=
 set errorformat+=%.%#-->\ %f:%l:%c
@@ -1127,7 +1128,7 @@ nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
 nnoremap tp :tabprev<cr>
 nnoremap tn :tabnext<cr>
 
-" nnoremap <leader>; A;<ESC>
+nnoremap <leader>; A;<ESC>
 " nnoremap <leader>e :tabnew 
 " nnoremap <leader>ee :e <C-R>=expand('%:p:h') . '/'<CR>
 " nnoremap <leader>ef :e <C-R>=expand('%')<CR>
@@ -1442,16 +1443,6 @@ let g:nvim_tree_icons = {
     \ }
 command! -nargs=0 Tree :NvimTreeToggle
 command! -nargs=0 TreeFind :NvimTreeFindFileToggle
-endif
-
-" chartoggle.nvim
-if s:is_installed('chartoggle.nvim')
-lua <<EOF
-require('chartoggle').setup ({
-  leader = ',',
-  keys = {',', ';'}
-})
-EOF
 endif
 
 " incline.nvim
