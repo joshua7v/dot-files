@@ -9,6 +9,7 @@ Plug 'mhartington/oceanic-next'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+Plug 'mizlan/iswap.nvim'
 Plug 'Shougo/context_filetype.vim'
 " Plug 'windwp/nvim-ts-autotag'
 " Plug 'sheerun/vim-polyglot'
@@ -20,8 +21,7 @@ Plug 'windwp/nvim-autopairs'
 Plug 'haya14busa/vim-asterisk'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-operator-user'
-Plug 'kana/vim-textobj-entire'
-Plug 'kana/vim-textobj-indent'
+Plug 'wellle/targets.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'ntpeters/vim-better-whitespace', { 'on': ['StripWhitespace'] }
@@ -45,12 +45,12 @@ Plug 'AndrewRadev/sideways.vim'
 Plug 'svermeulen/vim-subversive'
 Plug 'tpope/vim-abolish'
 Plug 'Julian/vim-textobj-variable-segment'
-Plug 'mattn/emmet-vim'
 " Plug 'vim-scripts/a.vim', { 'for': ['c', 'cpp'] }
 " Plug 'tenfyzhong/vim-gencode-cpp', { 'for': ['c', 'cpp'] }
 Plug 'anuvyklack/nvim-keymap-amend'
 Plug 'anuvyklack/pretty-fold.nvim'
 Plug 'anuvyklack/fold-preview.nvim'
+" Plug 'mattn/emmet-vim'
 
 " project
 Plug 'rhysd/devdocs.vim', { 'on': ['DevDocsAllUnderCursor'] }
@@ -71,6 +71,7 @@ Plug 'jremmen/vim-ripgrep'
 Plug 'sindrets/diffview.nvim'
 
 " miscellaneous
+Plug 'ThePrimeagen/harpoon'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'romainl/vim-qf'
 Plug 'yssl/QFEnter'
@@ -438,22 +439,6 @@ hi SpellBad term=underline cterm=underline
 " plugin setttings
 " ----------------
 
-" vim-textobj-entire
-omap <silent> ae <Plug>(textobj-entire-a)
-xmap <silent> ae <Plug>(textobj-entire-a)
-omap <silent> ie <Plug>(textobj-entire-i)
-xmap <silent> ie <Plug>(textobj-entire-i)
-
-" vim-textobj-indent
-omap <silent> ai <Plug>(textobj-indent-a)
-xmap <silent> ai <Plug>(textobj-indent-a)
-omap <silent> ii <Plug>(textobj-indent-i)
-xmap <silent> ii <Plug>(textobj-indent-i)
-omap <silent> aI <Plug>(textobj-indent-same-a)
-xmap <silent> aI <Plug>(textobj-indent-same-a)
-omap <silent> iI <Plug>(textobj-indent-same-i)
-xmap <silent> iI <Plug>(textobj-indent-same-i)
-
 " vimspector
 let g:vimspector_enable_mappings = 'HUMAN'
 let g:vimspector_sign_priority = {
@@ -473,6 +458,10 @@ nmap <leader>cr <Plug>VimspectorRestart
 nmap <leader>cb <Plug>VimspectorToggleBreakpoint
 nmap <leader>cg <Plug>VimspectorContinue
 nmap <m-j> <Plug>VimspectorStepOver
+
+" harpoon
+nnoremap <silent><leader>x :lua require("harpoon.ui").toggle_quick_menu()<cr>
+command! -nargs=0 PinFile :lua require("harpoon.mark").add_file()
 
 " coc.nvim
 
@@ -588,7 +577,6 @@ nmap ]r :CocLast<cr>
 nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
 
-inoremap <expr> <tab> pumvisible() ? "\<C-y>" : "\<tab>"
 nmap <leader>ee <Plug>(coc-diagnostic-info)
 nmap <leader>cl <Plug>(coc-codelens-action)
 nmap <silent>gy <Plug>(coc-type-definition)
@@ -688,7 +676,6 @@ hi CocMenuSel ctermbg=109 guibg=#2E3440
 autocmd BufAdd * if getfsize(expand('<afile>')) > 1024*1024 |
             \ let b:coc_enabled=0 |
             \ endif
-
 
 if s:is_installed("coc.nvim")
   if has('nvim-0.4.0') || has('patch-8.2.0750')
@@ -883,8 +870,6 @@ let g:asynctasks_term_focus = 1
 noremap <silent><leader>q :call asyncrun#quickfix_toggle(24)<cr>
 noremap <leader>r :AsyncTask project-run<cr>
 noremap <leader>b :AsyncTask project-build<cr>
-" noremap <leader>x :AsyncTask project-test<cr>
-" noremap <leader>c :AsyncTask project-clean<cr>
 command! -nargs=0 Test exe 'AsyncTask project-test'
 command! -nargs=0 Clean exe 'AsyncTask project-clean'
 
@@ -993,10 +978,6 @@ xmap gs <plug>(scratch-selection-reuse)
 " sideways.vim
 nnoremap <silent><leader>h :SidewaysLeft<cr>
 nnoremap <silent><leader>l :SidewaysRight<cr>
-omap aa <Plug>SidewaysArgumentTextobjA
-xmap aa <Plug>SidewaysArgumentTextobjA
-omap ia <Plug>SidewaysArgumentTextobjI
-xmap ia <Plug>SidewaysArgumentTextobjI
 
 " vim-doge
 let g:doge_enable_mappings = 0
@@ -1014,6 +995,21 @@ nmap <space>ss <plug>(SubversiveSubvertWordRange)
 
 xmap p <plug>(SubversiveSubstitute)
 xmap P <plug>(SubversiveSubstitute)
+
+" emmet-vim
+" let g:user_emmet_leader_key = '<c-e>'
+" let g:user_emmet_mode = 'i'
+" let g:user_emmet_settings = {
+" \ 'javascriptreact' : {
+" \   'extends' : 'jsx'
+" \  },
+" \ 'typescriptreact' : {
+" \   'extends' : 'jsx'
+" \  },
+" \ 'javascript': {
+" \   'extends': 'jsx'
+" \ }
+" \}
 
 " vim-search-pulse
 let g:vim_search_pulse_mode = 'pattern'
@@ -1037,21 +1033,6 @@ endfunction
 " inoremap <silent> <expr> <Tab> ncm2_ultisnips#expand_or("\<Plug>(ultisnips_try_expand)")
 " inoremap <silent> <Plug>(ultisnips_try_expand) <C-R>=UltiSnipsExpandOrJumpOrTab()<CR>
 " snoremap <silent> <Tab> <Esc>:call UltiSnips#ExpandSnippetOrJump()<cr>
-
-" emmet-vim
-let g:user_emmet_leader_key = '<c-e>'
-let g:user_emmet_mode = 'i'
-let g:user_emmet_settings = {
-\ 'javascriptreact' : {
-\   'extends' : 'jsx'
-\  },
-\ 'typescriptreact' : {
-\   'extends' : 'jsx'
-\  },
-\ 'javascript': {
-\   'extends': 'jsx'
-\ }
-\}
 
 " devdocs.vim
 let g:devdocs_filetype_map = {
@@ -1187,7 +1168,7 @@ require'nvim-treesitter.configs'.setup {
     "python",
     "rust",
     "scss",
-    "swift",
+    -- "swift",
     "svelte",
     "toml",
     "typescript",
@@ -1245,13 +1226,13 @@ endif
 "     \}
 
 " iswap.nvim
-" if s:is_installed('iswap.nvim')
-" lua <<EOF
-" require('iswap').setup{
-"   autoswap = true,
-" }
-" EOF
-" endif
+if s:is_installed('iswap.nvim')
+lua <<EOF
+require('iswap').setup{
+  autoswap = true,
+}
+EOF
+endif
 
 " nvim-treesitter-textobjects
 if s:is_installed('nvim-treesitter-textobjects')
