@@ -71,7 +71,7 @@ Plug 'jremmen/vim-ripgrep'
 Plug 'sindrets/diffview.nvim'
 
 " miscellaneous
-Plug 'ThePrimeagen/harpoon'
+Plug 'joshua7v/harpoon', { 'branch': 'windows' }
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'romainl/vim-qf'
 Plug 'yssl/QFEnter'
@@ -460,6 +460,16 @@ nmap <leader>cg <Plug>VimspectorContinue
 nmap <m-j> <Plug>VimspectorStepOver
 
 " harpoon
+lua <<EOF
+require("harpoon").setup({
+  menu = {
+    width = vim.api.nvim_win_get_width(0) - 64,
+    height = 12
+  }
+})
+EOF
+
+autocmd FileType harpoon set colorcolumn=
 nnoremap <silent><leader>x :lua require("harpoon.ui").toggle_quick_menu()<cr>
 command! -nargs=0 PinFile :lua require("harpoon.mark").add_file()
 
