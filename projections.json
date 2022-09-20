@@ -14,9 +14,9 @@
       "",
       "type Props = {open}{close};",
       "",
-      "function {basename|camelcase|capitalize}(props: Props) {",
-      "  return <div className=\"{basename|camelcase|capitalize}\" />;",
-      "}",
+      "const {basename|camelcase|capitalize}: React.FunctionComponent<Props> = (props) => {",
+      "  return <div data-name=\"{basename|camelcase|capitalize}\">{basename|camelcase|capitalize}</div>;",
+      "};",
       "",
       "export default {basename|camelcase|capitalize};"
     ]
