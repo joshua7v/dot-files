@@ -87,6 +87,8 @@ Plug 'vim-scripts/DrawIt', { 'on': ['DrawIt'] }
 Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'dstein64/vim-startuptime', { 'on': ['StartupTime'] }
+Plug 'yaocccc/nvim-hlchunk'
+Plug 'rest-nvim/rest.nvim'
 
 if has('macunix')
   Plug 'puremourning/vimspector'
@@ -265,6 +267,7 @@ inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 autocmd BufWinEnter * :set textwidth=0
 
 nnoremap <silent> <c-r> :r !<c-r><c-l><cr>
+nnoremap <leader>aa ggVG
 
 " custom keyword highlighting
 " hi TodoGroup cterm=bold ctermfg=233 ctermbg=210 gui=bold guifg=#132132 guibg=#fd8489
@@ -344,10 +347,15 @@ autocmd! ColorScheme OceanicNext call s:patch_oceanic_next_colors()
 
 function s:SetCursorLine()
 set cursorline
-hi cursorline cterm=none ctermbg=235
+hi CursorLine cterm=none ctermbg=235
 endfunction
 
 autocmd VimEnter * call s:SetCursorLine()
+
+let g:hlchunk_files = '*.ts,*.tsx,*.js,*.json,*.go,*.c,*.cpp,*.rs,*.h,*.hpp,*.lua'
+let g:hlchunk_hi_style = 'guifg=#557799 guibg=none'
+" au VimEnter * hi HLIndentLine guibg=none
+" call matchadd("TodoGroup", 'TODO')
 
 if s:is_installed('oceanic-next')
   colorscheme OceanicNext
@@ -657,8 +665,6 @@ command! -nargs=0 TEMP exe 'Rg -e "TEMP:"'
 command! -nargs=0 TODO exe 'Rg -e "TODO:"'
 command! -nargs=0 NOTE exe 'Rg -e "NOTE:"'
 command! -nargs=0 IMPORTANT exe 'Rg -e "IMPORTANT:"'
-nnoremap <silent><c-\> :AsyncRun -save=1 make<cr>;
-nnoremap <silent><m-\> :AsyncRun -save=1 -raw make<cr>;
 inoremap <silent><c-k> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
 inoremap <silent><expr> <c-d> coc#refresh()
 
@@ -778,8 +784,8 @@ nmap <leader>a: :Tabularize /:<CR>
 vmap <leader>a: :Tabularize /:<CR>
 nmap <leader>a\" :Tabularize /\"<CR>
 vmap <leader>a\" :Tabularize /\"<CR>
-nmap <leader>aa :Tabularize /
-vmap <leader>aa :Tabularize /
+nmap <leader>as :Tabularize /
+vmap <leader>as :Tabularize /
 
 " vim-better-whitespace
 let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite', 'qf', 'help', 'far_vim']
@@ -1169,6 +1175,7 @@ require'nvim-treesitter.configs'.setup {
     "go",
     "graphql",
     "html",
+    "http",
     "jsdoc",
     "json",
     "jsonc",
@@ -1441,7 +1448,7 @@ if s:is_installed('incline.nvim')
 lua <<EOF
 require('incline').setup({
   hide = {
-    cursorline = false,
+    cursorline = true,
     focused_win = false,
     only_win = true
   },
@@ -1459,6 +1466,37 @@ require('incline').setup({
 })
 EOF
 endif
+
+" rest.nvim
+lua <<EOF
+require("rest-nvim").setup({
+  result = {
+    formatters = {
+      json = function(body)
+        return vim.fn.system({"prettier", "--stdin-filepath", "a.json"}, body)
+      end,
+      html = function(body)
+        return vim.fn.system({"prettier", "--stdin-filepath", "a.html"}, body)
+      end
+    },
+  },
+})
+EOF
+
+command! -nargs=0 RestRun :lua require("rest-nvim").run()
+command! -nargs=0 RestLast :lua require("rest-nvim").last()
+command! -nargs=0 RestPreview :lua require("rest-nvim").run(true)
+
+fun s:mapMake()
+  if &ft != "http"
+    nnoremap <silent><c-\> :AsyncRun -save=1 make<cr>;
+    nnoremap <silent><m-\> :AsyncRun -save=1 -raw make<cr>;
+  else
+    nnoremap <silent><c-\> :RestRun<cr>
+  endif
+endfun
+
+autocmd WinEnter,BufEnter * call s:mapMake()
 
 " ------------
 " gui settings
