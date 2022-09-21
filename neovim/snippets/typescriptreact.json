@@ -5,6 +5,12 @@
     "body": ["import React from 'react';"],
     "description": "import React"
   },
+  "icx": {
+    "scope": "javascript,typescript",
+    "prefix": "icx",
+    "body": ["import cx from 'classnames';"],
+    "description": "import cx"
+  },
   "dp": {
     "scope": "javascript,typescript",
     "prefix": "dp",
