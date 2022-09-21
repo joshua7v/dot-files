@@ -27,6 +27,19 @@
   "*.module.scss": {
     "template": [".container {open}", "{close}"]
   },
+  "*.css.ts": {
+    "template": [
+      "import {open} style {close} from '@vanilla-extract/css';",
+      "",
+      "export const {basename} = style({open}{close});",
+      "",
+      "const styles = {open}",
+      "  {basename},",
+      "{close};",
+      "",
+      "export default styles;"
+    ]
+  },
   "*.cpp": {
     "alternate": [
       "{}.h"
@@ -65,6 +78,9 @@
     ]
   },
   "pages/*.tsx": {
+    "type": "page"
+  },
+  "pages": {
     "type": "page"
   },
   "src/components/*.svelte": {
