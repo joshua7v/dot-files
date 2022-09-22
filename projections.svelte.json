@@ -1,0 +1,14 @@
+{
+  "*.svelte": {
+    "template": [
+      "<script lang=\"ts\">",
+      "</script>",
+      "",
+      "<style>",
+      "</style>"
+    ]
+  },
+  "src/components/*.svelte": {
+    "type": "component"
+  }
+}

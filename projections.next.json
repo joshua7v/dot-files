@@ -1,0 +1,82 @@
+{
+  "*.tsx": {
+    "template": [
+      "import React from 'react';",
+      "",
+      "type Props = {open}{close};",
+      "",
+      "const {basename|camelcase|capitalize}: React.FunctionComponent<Props> = (props) => {",
+      "  return <div data-name=\"{basename|camelcase|capitalize}\">{basename|camelcase|capitalize}</div>;",
+      "};",
+      "",
+      "export default {basename|camelcase|capitalize};"
+    ]
+  },
+  "*.{css,scss}": {
+    "template": [".{basename} {open}", "{close}"]
+  },
+  "*.module.scss": {
+    "template": [".container {open}", "{close}"]
+  },
+  "*.css.ts": {
+    "template": [
+      "import {open} style {close} from '@vanilla-extract/css';",
+      "",
+      "export const {basename|snakecase} = style({open}{close});",
+      "",
+      "const styles = {open}",
+      "  {basename|snakecase},",
+      "{close};",
+      "",
+      "export default styles;"
+    ]
+  },
+  "pages/*.tsx": {
+    "type": "page"
+  },
+  "pages": {
+    "type": "page"
+  },
+  "components/*.tsx": {
+    "type": "components"
+  },
+  "components": {
+    "type": "components"
+  },
+  "layouts/*.tsx": {
+    "type": "layouts"
+  },
+  "layouts": {
+    "type": "layouts"
+  },
+  "states/*.ts": {
+    "type": "states"
+  },
+  "states": {
+    "type": "states"
+  },
+  "utils/*.ts": {
+    "type": "utils"
+  },
+  "utils": {
+    "type": "utils"
+  },
+  "machines/*.ts": {
+    "type": "machines"
+  },
+  "machines": {
+    "type": "machines"
+  },
+  "styles/*.ts": {
+    "type": "styles"
+  },
+  "styles": {
+    "type": "styles"
+  },
+  "types/*.ts": {
+    "type": "types"
+  },
+  "types": {
+    "type": "types"
+  }
+}

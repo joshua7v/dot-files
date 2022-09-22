@@ -1,0 +1,32 @@
+{
+  "*.cpp": {
+    "alternate": ["{}.h"],
+    "template": [
+      "#include <iostream>",
+      "",
+      "int main(int argc, const char **argv) {",
+      "    return 0;",
+      "}"
+    ]
+  },
+  "*.c": {
+    "alternate": ["{}.h"],
+    "template": [
+      "#include <stdio.h>",
+      "",
+      "int main(int argc, const char **argv) {",
+      "    return 0;",
+      "}"
+    ]
+  },
+  "*.h": {
+    "alternate": ["{}.c", "{}.cpp"],
+    "template": [
+      "#ifndef __{basename|uppercase}_H",
+      "",
+      "",
+      "#define __{basename|uppercase}_H",
+      "#endif"
+    ]
+  }
+}
