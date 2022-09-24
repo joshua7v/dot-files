@@ -6,8 +6,9 @@ if exists(":PlugInstall")
 Plug 'mhartington/oceanic-next'
 
 " syntax
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'mizlan/iswap.nvim'
 Plug 'Shougo/context_filetype.vim'
@@ -16,20 +17,22 @@ Plug 'Shougo/context_filetype.vim'
 
 " edit
 " Plug 'github/copilot.vim'
+" Plug 'AckslD/nvim-trevJ.lua'
+Plug 'chentoast/marks.nvim'
 Plug 'b0o/incline.nvim'
 Plug 'windwp/nvim-autopairs'
 Plug 'haya14busa/vim-asterisk'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-operator-user'
-Plug 'wellle/targets.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'ntpeters/vim-better-whitespace', { 'on': ['StripWhitespace'] }
 Plug 'Yggdroot/indentLine', { 'on': ['IndentLinesToggle'] }
-Plug 'justinmk/vim-dirvish', { 'commit': 'b5d8d239653fca81529fecf43cc96b27d6323e68' }
+Plug 'justinmk/vim-dirvish'
 Plug 'szw/vim-maximizer', { 'on': ['MaximizerToggle'] }
 Plug 'haya14busa/vim-edgemotion'
-Plug 'rlane/pounce.nvim'
+" Plug 'rlane/pounce.nvim'
+Plug 'phaazon/hop.nvim'
 Plug 'tpope/vim-commentary'
 Plug 'mg979/vim-visual-multi'
 Plug 'mbbill/undotree'
@@ -248,7 +251,7 @@ set clipboard& clipboard+=unnamedplus
 endif
 
 if has('conceal')
-set conceallevel=2 concealcursor=niv
+set conceallevel=0 concealcursor=niv
 endif
 
 if has('macunix')
@@ -355,7 +358,6 @@ autocmd VimEnter * call s:SetCursorLine()
 let g:hlchunk_files = '*.ts,*.tsx,*.js,*.json,*.go,*.c,*.cpp,*.rs,*.h,*.hpp,*.lua'
 let g:hlchunk_hi_style = 'guifg=#557799 guibg=none'
 " au VimEnter * hi HLIndentLine guibg=none
-" call matchadd("TodoGroup", 'TODO')
 
 if s:is_installed('oceanic-next')
   colorscheme OceanicNext
@@ -645,7 +647,7 @@ nnoremap <silent> <space>z :<C-u>CocList --normal tasks<cr>
 nnoremap <silent> <space>l :<C-u>CocList fuzzy_lines<cr>
 nnoremap <silent> <space>w :exe 'CocList -I --normal --input='.expand('<cword>').' words'<cr>
 " nnoremap <silent> <space>fl :<c-u>CocList --normal explPresets<cr>
-nnoremap <silent> <space><leader>  :<C-u>CocList --normal project<cr>
+" nnoremap <silent> <space><leader>  :<C-u>CocList --normal project<cr>
 " nnoremap <silent> <space>l  :<C-u>Denite coc-link<cr>
 
 command! -nargs=0 IncomingCalls :call CocActionAsync('showIncomingCalls')
@@ -740,7 +742,7 @@ autocmd BufNewFile,BufRead tslint.json        set ft=jsonc
 autocmd BufNewFile,BufRead coc-settings.json  set ft=jsonc
 autocmd BufNewFile,BufRead settings.json      set ft=jsonc
 
-autocmd FileType json setlocal conceallevel=0
+" autocmd FileType json setlocal conceallevel=0
 
 set errorformat=
 set errorformat+=%.%#-->\ %f:%l:%c
@@ -768,14 +770,21 @@ map gz# <Plug>(asterisk-gz#)
 " echodoc.vim
 let g:echodoc#enable_at_startup = 1
 
-" pounce.nvim
-nmap s <cmd>Pounce<cr>
-nmap S <cmd>PounceRepeat<cr>
-vmap s <cmd>Pounce<cr>
+" hop.nvim
+lua <<EOF
+require'hop'.setup()
+vim.api.nvim_set_keymap('', 's', "<cmd>lua require'hop'.hint_char1({})<cr>", {})
+EOF
+nnoremap <space>/ :HopPatternMW<cr>
 
-hi! link PounceMatch Search
-hi! link PounceAcceptBest Cursor
-hi PounceGap ctermfg=none ctermbg=none guibg=#3a4b5c guifg=none gui=none
+" pounce.nvim
+" nmap s <cmd>Pounce<cr>
+" xmap S <cmd>PounceRepeat<cr>
+" vmap s <cmd>Pounce<cr>
+
+" hi! link PounceMatch Search
+" hi! link PounceAcceptBest Cursor
+" hi PounceGap ctermfg=none ctermbg=none guibg=#3a4b5c guifg=none gui=none
 
 " tabular
 nmap <leader>a= :Tabularize /=<CR>
@@ -906,12 +915,6 @@ let g:floaterm_height = 0.8
 " nnoremap <c-r> :Ranger<cr>
 command! Ranger FloatermNew vifm
 autocmd User Startified setlocal buflisted
-
-" vim-projectionist
-augroup user_projectionist
-  autocmd!
-  autocmd FileType dirvish call ProjectionistDetect(resolve(expand('%:p')))
-augroup END
 
 " undotree
 if has('persistent_undo')
@@ -1215,6 +1218,13 @@ augroup END
 " autocmd BufEnter * normal zR
 endif
 
+" nvim-treesitter-context
+lua <<EOF
+require'treesitter-context'.setup{
+  enable = true
+}
+EOF
+
 " nvim_context_vt
 " if s:is_installed('nvim_context_vt')
 " lua <<EOF
@@ -1260,8 +1270,8 @@ require'nvim-treesitter.configs'.setup {
       enable = true,
       lookahead = true,
       keymaps = {
-        ["ap"] = "@parameter.outer",
-        ["ip"] = "@parameter.inner",
+        -- ["ap"] = "@parameter.outer",
+        -- ["ip"] = "@parameter.inner",
       },
     },
   },
@@ -1393,7 +1403,7 @@ require'nvim-tree'.setup {
   ignore_buffer_on_setup = false,
   view = {
     width = 66,
-    height = 66,
+    -- height = 66,
     hide_root_folder = false,
     side = "left",
     preserve_window_proportions = false,
@@ -1468,6 +1478,7 @@ EOF
 endif
 
 " rest.nvim
+if s:is_installed('rest.nvim')
 lua <<EOF
 require("rest-nvim").setup({
   result = {
@@ -1482,6 +1493,27 @@ require("rest-nvim").setup({
   },
 })
 EOF
+endif
+
+" marks.nvim
+if s:is_installed('marks.nvim')
+lua <<EOF
+require'marks'.setup {
+  default_mappings = true,
+  builtin_marks = { ".", "<", ">", "^" },
+  cyclic = true,
+  excluded_filetypes = { "list", "harpoon", "floaterm" },
+  mappings = {
+    toggle = "mm",
+    annotate = "mp",
+    prev = "`k",
+    next = "`j"
+  }
+}
+EOF
+endif
+
+hi MarkSignNumHL cterm=underline ctermfg=243 ctermbg=237 gui=bold guifg=#65737e guibg=none
 
 command! -nargs=0 RestRun :lua require("rest-nvim").run()
 command! -nargs=0 RestLast :lua require("rest-nvim").last()
