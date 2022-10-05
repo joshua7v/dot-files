@@ -53,7 +53,7 @@ Plug 'Julian/vim-textobj-variable-segment'
 Plug 'anuvyklack/nvim-keymap-amend'
 Plug 'anuvyklack/pretty-fold.nvim'
 Plug 'anuvyklack/fold-preview.nvim'
-" Plug 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim'
 
 " project
 Plug 'rhysd/devdocs.vim', { 'on': ['DevDocsAllUnderCursor'] }
@@ -1016,19 +1016,19 @@ xmap p <plug>(SubversiveSubstitute)
 xmap P <plug>(SubversiveSubstitute)
 
 " emmet-vim
-" let g:user_emmet_leader_key = '<c-e>'
-" let g:user_emmet_mode = 'i'
-" let g:user_emmet_settings = {
-" \ 'javascriptreact' : {
-" \   'extends' : 'jsx'
-" \  },
-" \ 'typescriptreact' : {
-" \   'extends' : 'jsx'
-" \  },
-" \ 'javascript': {
-" \   'extends': 'jsx'
-" \ }
-" \}
+let g:user_emmet_leader_key = '<c-e>'
+let g:user_emmet_mode = 'i'
+let g:user_emmet_settings = {
+\ 'javascriptreact' : {
+\   'extends' : 'jsx'
+\  },
+\ 'typescriptreact' : {
+\   'extends' : 'jsx'
+\  },
+\ 'javascript': {
+\   'extends': 'jsx'
+\ }
+\}
 
 " vim-search-pulse
 let g:vim_search_pulse_mode = 'pattern'
