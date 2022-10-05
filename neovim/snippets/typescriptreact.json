@@ -5,6 +5,12 @@
     "body": ["import React from 'react';"],
     "description": "import React"
   },
+  "is": {
+    "scope": "javascript,typescript",
+    "prefix": "is",
+    "body": ["import * as styles from './$TM_FILENAME_BASE.css';"],
+    "description": "import * as styles"
+  },
   "icx": {
     "scope": "javascript,typescript",
     "prefix": "icx",
