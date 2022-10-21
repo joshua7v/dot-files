@@ -4,7 +4,6 @@ if exists(":PlugInstall")
 
 " colorscheme
 Plug 'mhartington/oceanic-next'
-Plug 'davidosomething/vim-colors-meh'
 
 " syntax
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
@@ -21,6 +20,8 @@ Plug 'windwp/nvim-autopairs'
 Plug 'haya14busa/vim-asterisk'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-operator-user'
+Plug 'kana/vim-textobj-indent'
+Plug 'Julian/vim-textobj-variable-segment'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'ntpeters/vim-better-whitespace', { 'on': ['StripWhitespace'] }
@@ -42,7 +43,6 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'svermeulen/vim-subversive'
 Plug 'tpope/vim-abolish'
-Plug 'Julian/vim-textobj-variable-segment'
 " Plug 'vim-scripts/a.vim', { 'for': ['c', 'cpp'] }
 " Plug 'tenfyzhong/vim-gencode-cpp', { 'for': ['c', 'cpp'] }
 Plug 'anuvyklack/nvim-keymap-amend'
@@ -71,7 +71,6 @@ Plug 'sindrets/diffview.nvim'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'romainl/vim-qf'
 Plug 'yssl/QFEnter'
-Plug 'vim-scripts/BufOnly.vim', { 'on': ['BufOnly'] }
 Plug 'farmergreg/vim-lastplace'
 Plug 'pbrisbin/vim-mkdir'
 Plug 'tyru/open-browser.vim', { 'on': ['<Plug>(openbrowser-smart-search)'] }
