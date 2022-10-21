@@ -4,21 +4,18 @@ if exists(":PlugInstall")
 
 " colorscheme
 Plug 'mhartington/oceanic-next'
+Plug 'davidosomething/vim-colors-meh'
 
 " syntax
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
-Plug 'mizlan/iswap.nvim'
 Plug 'Shougo/context_filetype.vim'
-" Plug 'windwp/nvim-ts-autotag'
 " Plug 'sheerun/vim-polyglot'
 
 " edit
 " Plug 'github/copilot.vim'
-" Plug 'AckslD/nvim-trevJ.lua'
-Plug 'chentoast/marks.nvim'
 Plug 'b0o/incline.nvim'
 Plug 'windwp/nvim-autopairs'
 Plug 'haya14busa/vim-asterisk'
@@ -27,12 +24,10 @@ Plug 'kana/vim-operator-user'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'ntpeters/vim-better-whitespace', { 'on': ['StripWhitespace'] }
-Plug 'Yggdroot/indentLine', { 'on': ['IndentLinesToggle'] }
 Plug 'justinmk/vim-dirvish'
 Plug 'szw/vim-maximizer', { 'on': ['MaximizerToggle'] }
 Plug 'haya14busa/vim-edgemotion'
-" Plug 'rlane/pounce.nvim'
-Plug 'phaazon/hop.nvim'
+Plug 'rlane/pounce.nvim'
 Plug 'tpope/vim-commentary'
 Plug 'mg979/vim-visual-multi'
 Plug 'mbbill/undotree'
@@ -68,13 +63,11 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'Shougo/echodoc.vim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'folke/todo-comments.nvim'
-Plug 'mtth/scratch.vim'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'jremmen/vim-ripgrep'
 Plug 'sindrets/diffview.nvim'
 
 " miscellaneous
-Plug 'joshua7v/harpoon', { 'branch': 'windows' }
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'romainl/vim-qf'
 Plug 'yssl/QFEnter'
@@ -92,10 +85,7 @@ Plug 'kristijanhusak/vim-dadbod-ui'
 Plug 'dstein64/vim-startuptime', { 'on': ['StartupTime'] }
 Plug 'yaocccc/nvim-hlchunk'
 Plug 'rest-nvim/rest.nvim'
-
-if has('macunix')
-  Plug 'puremourning/vimspector'
-endif
+Plug '~/erinn/tools/whitebox/whitebox_v0.96.2/editor_plugins/whitebox-vim'
 
 endif
 
@@ -113,7 +103,7 @@ endfunction
 " ---------------
 
 if &compatible
-set nocompatible
+  set nocompatible
 endif
 
 filetype plugin indent on
@@ -134,8 +124,6 @@ set noswapfile
 set nowritebackup
 set updatetime=300
 
-" set cursorcolumn          " highlight current column
-" set cursorline            " highlight current line
 set t_ti= t_te=           " alway show the content on the screen after exist VIM
 set mouse-=a              " disable mouse
 set selection=inclusive   " set selection=exclusive
@@ -147,24 +135,17 @@ set t_vb=
 set tm=500
 set nostartofline         " keep cursor postion when switching between buffers
 
-"set list
-"set listchars=tab:›\ ,trail:•,extends:❯,precedes:❮
-
 set showmatch         " show matched brackets
 set mat=2             " How many tenths of a second to blink when matching brackets
-
 set hlsearch          " highlight the searching words
 set ignorecase        " ingnore case when do searching
-
 set incsearch         " instant search
 set smartcase         " ignore case if search pattern is all lowercase, case-sensitive otherwise
 
 set foldenable        " code folding
 set foldlevel=99
-
 set smartindent       " Do smart autoindenting when starting a new line
 set autoindent        " always set autoindenting on
-
 set tabstop=4         " Number of spaces that a <Tab> in the file counts for.
 set shiftwidth=4      " number of spaces to use for autoindenting
 set softtabstop=4     " Number of spaces that a <Tab> counts for while performing editing operations
@@ -175,7 +156,6 @@ set shiftround        " use multiple of shiftwidth when indenting with '<' and '
 set hidden            " A buffer becomes hidden when it is abandoned
 set wildmode=longest:full,full
 set ttyfast
-
 set ruler          " show the current line number and column number
 set showcmd        " show the current typing command
 set noshowmode     " Show current mode
@@ -215,7 +195,6 @@ set nowrap " disable wrap
 set number " show line number
 set relativenumber " show relative line number
 set numberwidth=3
-" set re=1
 autocmd InsertEnter * :set number " no relativenumber in insert mode
 autocmd InsertEnter * :set norelativenumber " no relativenumber in insert mode
 autocmd InsertLeave * :set relativenumber   " show relativenumber when leave insert mode
@@ -225,7 +204,7 @@ set signcolumn=yes
 set splitbelow
 
 set textwidth=0
-set synmaxcol=777
+set synmaxcol=7777
 
 let g:python3_host_prog = 'python3'
 
@@ -247,11 +226,11 @@ let g:terminal_color_14 = '#00f5e9'
 let g:terminal_color_15 = '#eeeeec'
 
 if has('clipboard')
-set clipboard& clipboard+=unnamedplus
+  set clipboard& clipboard+=unnamedplus
 endif
 
 if has('conceal')
-set conceallevel=0 concealcursor=niv
+  set conceallevel=0 concealcursor=niv
 endif
 
 if has('macunix')
@@ -271,25 +250,6 @@ autocmd BufWinEnter * :set textwidth=0
 
 nnoremap <silent> <c-r> :r !<c-r><c-l><cr>
 nnoremap <leader>aa ggVG
-
-" custom keyword highlighting
-" hi TodoGroup cterm=bold ctermfg=233 ctermbg=210 gui=bold guifg=#132132 guibg=#fd8489
-" hi NoteGroup ctermfg=210 ctermbg=235 guifg=#fd8489 guibg=#3a4b5c
-" hi ImportantGroup ctermfg=233 ctermbg=222 guifg=#132132 guibg=#fedf81
-" call matchadd("TodoGroup", 'TODO')
-" call matchadd("NoteGroup", 'NOTE')
-" call matchadd("ImportantGroup", 'IMPORTANT')
-
-" augroup vimrc_todo
-"   au!
-"   au Syntax * syn match sTodo /TODO/ containedin=.*Comment,vimCommentTitle
-"   au Syntax * syn match sNote /NOTE/ containedin=.*Comment,vimCommentTitle
-"   au Syntax * syn match sImportant /IMPORTANT/ containedin=.*Comment,vimCommentTitle
-" augroup END
-
-" hi def link sTodo TodoGroup
-" hi def link sNote NoteGroup
-" hi def link sImportant ImportantGroup
 
 if system('uname -r') =~ "microsoft"
   augroup Yank
@@ -311,15 +271,11 @@ set sessionoptions-=buffers
 set t_Co=256
 
 if has('termguicolors')
-set termguicolors
+  set termguicolors
 endif
 
-" if has('patch-7.4.1778')
-"   set guicolors
-" endif
-
 if has('nvim')
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+  let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 endif
 
 function! s:patch_oceanic_next_colors()
@@ -341,23 +297,22 @@ function! s:patch_oceanic_next_colors()
   hi! link DiffRemoved DiffDelete
   hi! link TermCursor Cursor
   hi! link TargetWord TabLineSel
-  hi Search ctermfg=0 ctermbg=6 guibg=#88C0D0 guifg=#3B4252 gui=none
-  hi QuickFixLine ctermfg=none ctermbg=none guibg=none guifg=none gui=none
+  hi Search ctermfg=0 ctermbg=6 guibg=#88C0D0 guifg=#3B4252
+  hi QuickFixLine ctermfg=none ctermbg=none guibg=none gui=none
   hi! link Error StatusLine
   hi! link Folded EndOfBuffer
 endfunction
 autocmd! ColorScheme OceanicNext call s:patch_oceanic_next_colors()
 
 function s:SetCursorLine()
-set cursorline
-hi CursorLine cterm=none ctermbg=235
+  set cursorline
+  hi CursorLine cterm=none ctermbg=235
 endfunction
 
 autocmd VimEnter * call s:SetCursorLine()
 
 let g:hlchunk_files = '*.ts,*.tsx,*.js,*.json,*.go,*.c,*.cpp,*.rs,*.h,*.hpp,*.lua'
 let g:hlchunk_hi_style = 'guifg=#557799 guibg=none'
-" au VimEnter * hi HLIndentLine guibg=none
 
 if s:is_installed('oceanic-next')
   colorscheme OceanicNext
@@ -449,40 +404,6 @@ hi SpellBad term=underline cterm=underline
 " plugin setttings
 " ----------------
 
-" vimspector
-let g:vimspector_enable_mappings = 'HUMAN'
-let g:vimspector_sign_priority = {
-  \    'vimspectorBP':         30,
-  \    'vimspectorBPCond':     20,
-  \    'vimspectorBPLog':      20,
-  \    'vimspectorBPDisabled': 10,
-  \ }
-
-nnoremap <leader>cs :call vimspector#Launch()<cr>
-nnoremap <leader>cx :call vimspector#Reset()<cr>
-nmap <leader>cc <Plug>VimspectorRunToCursor
-nmap <leader>ci <Plug>VimspectorStepInto
-nmap <leader>co <Plug>VimspectorStepOut
-nmap <leader>ch <Plug>VimspectorStepOver
-nmap <leader>cr <Plug>VimspectorRestart
-nmap <leader>cb <Plug>VimspectorToggleBreakpoint
-nmap <leader>cg <Plug>VimspectorContinue
-nmap <m-j> <Plug>VimspectorStepOver
-
-" harpoon
-lua <<EOF
-require("harpoon").setup({
-  menu = {
-    width = vim.api.nvim_win_get_width(0) - 64,
-    height = 12
-  }
-})
-EOF
-
-autocmd FileType harpoon set colorcolumn=
-nnoremap <silent><leader>x :lua require("harpoon.ui").toggle_quick_menu()<cr>
-command! -nargs=0 PinFile :lua require("harpoon.mark").add_file()
-
 " coc.nvim
 
 " fix node path under scoop/volta installation
@@ -532,13 +453,20 @@ endfunction
 
 function! s:GoToDefinition()
   if CocAction('jumpDefinition')
-  return v:true
-endif
+    return v:true
+  endif
 
-let ret = execute("silent! normal \<C-]>")
-if ret[:5] =~ "Error"
-  call searchdecl(expand('<cword>'))
-endif
+  let ret = execute("silent! normal \<C-]>")
+  if ret[:5] =~ "Error"
+    call searchdecl(expand('<cword>'))
+  endif
+endfunction
+  
+function! s:GoToReferences()
+  execute 'normal z*'
+  if CocActionAsync('jumpReferences')
+    return v:true
+  endif
 endfunction
 
 function! s:GrepArgs(...)
@@ -572,6 +500,7 @@ augroup mygroup
   autocmd FileType typescript,json setl formatexpr=CocActionAsync('formatSelected')
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   nmap <space><space> :Format<cr>
+  autocmd FileType cpp,c nmap <space><space> maHmbgg=G`bzt`a
   " autocmd FileType typescript,typescript.tsx,typescriptreact,javascript,json,html,scss,css,graphql,svelte nmap <space><space> :Prettier<cr>
   " autocmd FileType cpp,objcpp,c,svg,python,go,rust,java,prisma nmap <space><space> :Format<cr>
 augroup end
@@ -601,7 +530,7 @@ nmap <leader>ee <Plug>(coc-diagnostic-info)
 nmap <leader>cl <Plug>(coc-codelens-action)
 nmap <silent>gy <Plug>(coc-type-definition)
 nmap <silent>gi <Plug>(coc-implementation)
-nmap <silent>gr <Plug>(coc-references)
+nmap <silent>gr :call <SID>GoToReferences()<cr>
 nmap <silent>gh :CocCommand git.chunkInfo<cr>
 nmap <leader>rn <Plug>(coc-rename)
 vmap <leader>f  <Plug>(coc-format-selected)
@@ -709,14 +638,10 @@ endif
 hi def link CocFadeOut NonText
 
 " editorconfig-vim
-if s:is_installed('editorconfig-vim')
-" respect .editorconfig
-else
-  let &colorcolumn="121"
+let &colorcolumn="121"
 
-  autocmd FileType python,elm,go,c,cpp,h set tabstop=4 shiftwidth=4 expandtab ai
-  autocmd FileType vim,javascript,javascript.jsx,typescript,typescript.tsx,json,css,scss,html,yaml,md,ex set tabstop=2 shiftwidth=2 expandtab ai
-endif
+autocmd FileType python,elm,go,c,cpp,h set tabstop=4 shiftwidth=4 expandtab ai
+autocmd FileType vim,javascript,javascript.jsx,typescript,typescript.tsx,json,css,scss,html,yaml,md,ex set tabstop=2 shiftwidth=2 expandtab ai
 
 autocmd BufNewFile,BufRead .tern-project  setfiletype json
 autocmd BufNewFile,BufRead .jsbeautifyrc  setfiletype json
@@ -770,21 +695,14 @@ map gz# <Plug>(asterisk-gz#)
 " echodoc.vim
 let g:echodoc#enable_at_startup = 1
 
-" hop.nvim
-lua <<EOF
-require'hop'.setup()
-vim.api.nvim_set_keymap('', 's', "<cmd>lua require'hop'.hint_char1({})<cr>", {})
-EOF
-nnoremap <space>/ :HopPatternMW<cr>
-
 " pounce.nvim
-" nmap s <cmd>Pounce<cr>
-" xmap S <cmd>PounceRepeat<cr>
-" vmap s <cmd>Pounce<cr>
+nmap s <cmd>Pounce<cr>
+nmap S <cmd>PounceRepeat<cr>
+vmap s <cmd>Pounce<cr>
 
-" hi! link PounceMatch Search
-" hi! link PounceAcceptBest Cursor
-" hi PounceGap ctermfg=none ctermbg=none guibg=#3a4b5c guifg=none gui=none
+hi! link PounceMatch Search
+hi! link PounceAcceptBest Cursor
+hi PounceGap ctermfg=none ctermbg=none guibg=#3a4b5c guifg=none gui=none
 
 " tabular
 nmap <leader>a= :Tabularize /=<CR>
@@ -850,17 +768,6 @@ vmap <c-k> <Plug>(edgemotion-k)
 
 " git-messenger.vim
 nmap gm <Plug>(git-messenger)
-
-" vim-yoink
-" let g:yoinkSavePersistently = 1
-
-" nmap [y <plug>(YoinkRotateBack)
-" nmap ]y <plug>(YoinkRotateForward)
-" nmap p <plug>(YoinkPaste_p)
-" nmap P <plug>(YoinkPaste_P)
-
-" nmap <expr> <c-p> yoink#canSwap() ? '<plug>(YoinkPostPasteSwapForward)' : ''
-" nmap <expr> <c-n> yoink#canSwap() ? '<plug>(YoinkPostPasteSwapBack)' : ''
 
 " vim-visual-multi
 let g:VM_Selection_hl       = 'Cursor'
@@ -974,27 +881,12 @@ nnoremap <silent> <leader>W :call UncolorAllWords()<cr>
 nnoremap <silent> ]w :call WordNavigation(1)<cr>
 nnoremap <silent> [w :call WordNavigation(0)<cr>
 
-" scratch.vim
-let g:scratch_persistence_file = stdpath('data') . '/scratch'
-let g:scratch_top = 0
-let g:scratch_insert_autohide = 0
-let g:scratch_horizontal = 0
-let g:scratch_no_mappings = 1
-let g:scratch_height = 80
-
-nmap gs :Scratch<cr>
-nmap gp :ScratchPreview<cr>
-xmap gs <plug>(scratch-selection-reuse)
-" nmap gS <plug>(scratch-insert-clear)
-" xmap gS <plug>(scratch-selection-clear)
-
-" splitjoin.vim
-" let g:splitjoin_join_mapping = ''
-" let g:splitjoin_split_mapping = ''
-" nmap gJ :SplitjoinJoin<CR>
-" nmap gS :SplitjoinSplit<CR>
-
 " sideways.vim
+omap aa <Plug>SidewaysArgumentTextobjA
+xmap aa <Plug>SidewaysArgumentTextobjA
+omap ia <Plug>SidewaysArgumentTextobjI
+xmap ia <Plug>SidewaysArgumentTextobjI
+
 nnoremap <silent><leader>h :SidewaysLeft<cr>
 nnoremap <silent><leader>l :SidewaysRight<cr>
 
@@ -1041,17 +933,13 @@ let g:UltiSnipsJumpForwardTrigger  = "<Plug>(ultisnips_expand_or_jump)"
 let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
 
 function! UltiSnipsExpandOrJumpOrTab()
-call UltiSnips#ExpandSnippetOrJump()
-if g:ulti_expand_or_jump_res > 0
-    return ""
-else
-    return "\<Tab>"
-endif
+  call UltiSnips#ExpandSnippetOrJump()
+  if g:ulti_expand_or_jump_res > 0
+      return ""
+  else
+      return "\<Tab>"
+  endif
 endfunction
-
-" inoremap <silent> <expr> <Tab> ncm2_ultisnips#expand_or("\<Plug>(ultisnips_try_expand)")
-" inoremap <silent> <Plug>(ultisnips_try_expand) <C-R>=UltiSnipsExpandOrJumpOrTab()<CR>
-" snoremap <silent> <Tab> <Esc>:call UltiSnips#ExpandSnippetOrJump()<cr>
 
 " devdocs.vim
 let g:devdocs_filetype_map = {
@@ -1129,11 +1017,7 @@ nnoremap tp :tabprev<cr>
 nnoremap tn :tabnext<cr>
 
 nnoremap <leader>; A;<ESC>
-" nnoremap <leader>e :tabnew 
-" nnoremap <leader>ee :e <C-R>=expand('%:p:h') . '/'<CR>
-" nnoremap <leader>ef :e <C-R>=expand('%')<CR>
 
-" nnoremap <leader><leader> <C-^>
 nnoremap qq :bd<cr>
 
 command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 -tu4 /dev/urandom'), '^\_s*\zs.\{-}\ze\_s*$') % line('$')).'G'
@@ -1146,8 +1030,11 @@ if s:is_installed('nvim-treesitter')
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
   highlight = {
-    enable = true,
+    enable = false,
     disable = function(lang, bufnr)
+        if lang == "c" then
+          return true
+        end
         offset = vim.api.nvim_buf_get_offset(bufnr, 1)
         return offset > 777
     end,
@@ -1252,15 +1139,6 @@ EOF
 "     \ 'typescriptreact': { 'tagnameonly': 1, },
 "     \}
 
-" iswap.nvim
-if s:is_installed('iswap.nvim')
-lua <<EOF
-require('iswap').setup{
-  autoswap = true,
-}
-EOF
-endif
-
 " nvim-treesitter-textobjects
 if s:is_installed('nvim-treesitter-textobjects')
 lua <<EOF
@@ -1278,15 +1156,6 @@ require'nvim-treesitter.configs'.setup {
 }
 EOF
 endif
-
-" nvim-ts-autotag
-" if s:is_installed('nvim-ts-autotag')
-" lua <<EOF
-" require('nvim-ts-autotag').setup({
-"   filetypes = { "html" , "xml", "typescriptreact" },
-" })
-" EOF
-" endif
 
 " nvim-autopairs
 if s:is_installed('nvim-autopairs')
@@ -1495,26 +1364,6 @@ require("rest-nvim").setup({
 EOF
 endif
 
-" marks.nvim
-if s:is_installed('marks.nvim')
-lua <<EOF
-require'marks'.setup {
-  default_mappings = true,
-  builtin_marks = { ".", "<", ">", "^" },
-  cyclic = true,
-  excluded_filetypes = { "list", "harpoon", "floaterm" },
-  mappings = {
-    toggle = "mm",
-    annotate = "mp",
-    prev = "`k",
-    next = "`j"
-  }
-}
-EOF
-endif
-
-hi MarkSignNumHL cterm=underline ctermfg=243 ctermbg=237 gui=bold guifg=#65737e guibg=none
-
 command! -nargs=0 RestRun :lua require("rest-nvim").run()
 command! -nargs=0 RestLast :lua require("rest-nvim").last()
 command! -nargs=0 RestPreview :lua require("rest-nvim").run(true)
@@ -1536,10 +1385,12 @@ autocmd WinEnter,BufEnter * call s:mapMake()
 
 let g:neovide_fullscreen=v:false
 set guifont=Sarasa\ Mono\ SC:h12
-highlight Cursor guifg=white guibg=#ff5555
 set guicursor=n-v-c:block-Cursor,i-ci-ve:ver30-Cursor
+
+hi Cursor guifg=white guibg=#ff5555
 
 if exists('g:nvui')
   autocmd InsertEnter * NvuiIMEEnable
   autocmd InsertLeave * NvuiIMEDisable
 endif
+
