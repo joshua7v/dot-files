@@ -291,13 +291,16 @@ function! s:patch_oceanic_next_colors()
   hi DiffChange ctermfg=3 ctermbg=0 guifg=#EBCB8B guibg=#2E3440
   hi DiffDelete ctermfg=1 ctermbg=0 guifg=#BF616A guibg=#2E3440
   hi DiffText ctermfg=4 ctermbg=0 guifg=#81A1C1 guibg=#2E3440
+
+  hi Search ctermfg=0 ctermbg=6 guibg=#88C0D0 guifg=#3B4252
+  hi QuickFixLine ctermfg=none ctermbg=none guibg=none gui=none
+  hi WinSeparator guibg=none guifg=#777777
+
   hi! link DiffAdded DiffAdd
   hi! link DiffChanged DiffChange
   hi! link DiffRemoved DiffDelete
   hi! link TermCursor Cursor
   hi! link TargetWord TabLineSel
-  hi Search ctermfg=0 ctermbg=6 guibg=#88C0D0 guifg=#3B4252
-  hi QuickFixLine ctermfg=none ctermbg=none guibg=none gui=none
   hi! link Error StatusLine
   hi! link Folded EndOfBuffer
 endfunction
