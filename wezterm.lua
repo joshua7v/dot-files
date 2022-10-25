@@ -74,8 +74,8 @@ wezterm.on("update-right-status", function(window, pane)
 end)
 
 return {
-  default_prog = default_prog,
-  launch_menu = launch_menu,
+  -- default_prog = default_prog,
+  -- launch_menu = launch_menu,
   enable_scroll_bar = false,
 
   -- tab bar
@@ -166,6 +166,9 @@ return {
     {key="3", mods="LEADER", action=wezterm.action{ActivatePaneByIndex=2}},
     {key="4", mods="LEADER", action=wezterm.action{ActivatePaneByIndex=3}},
     {key="5", mods="LEADER", action=wezterm.action{ActivatePaneByIndex=4}},
+    {key="S", mods="LEADER|SHIFT", action=wezterm.action{PaneSelect={mode="SwapWithActive"}}},
+    {key="r", mods="LEADER", action=wezterm.action{RotatePanes="Clockwise"}},
+    {key="R", mods="LEADER|SHIFT", action=wezterm.action{RotatePanes="CounterClockwise"}},
 
     {key="l", mods="SHIFT|CTRL", action="ShowDebugOverlay"},
   }
