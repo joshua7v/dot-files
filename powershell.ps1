@@ -33,5 +33,34 @@ function prompt {
    "${osc7}PS $p$('>' * ($nestedPromptLevel + 1)) ";
 }
 
+Remove-Alias history
+
+# Usage: history      - just print the history, same as call Get-History
+# Usage: history -c   - really clears the history
+function history {
+    param (
+        # Clears history
+        [Parameter()]
+        [Alias("c")]
+        [Switch]
+        $Clear
+    )
+
+    if ($Clear){
+        Clear-History
+        [Microsoft.PowerShell.PSConsoleReadLine]::ClearHistory()
+        return
+    }
+
+    Get-History
+}
+
+$HOMEDRIVE = "C:\"
+$HOMEPATH = "Users\" + $env:username
+$env:HOME = "$HOMEDRIVE$HOMEPATH"
+
+Set-Variable HOME "$HOMEDRIVE$HOMEPATH" -Force
+(get-psprovider 'FileSystem').Home = $HOMEDRIVE + $HOMEPATH
+
 # iex ($(lua ~\scoop\apps\z.lua\current\z.lua --init powershell) -join "`n") 
 # $Env:http_proxy="http://127.0.0.1:7890";$Env:https_proxy="http://127.0.0.1:7890"
