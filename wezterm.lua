@@ -5,9 +5,9 @@ local default_prog = {};
 local launch_menu = {}
 
 local font_size;
-if hostname == "pc" then
+if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
   font_size = 12.0;
-  default_prog = {"pwsh.exe"};
+  default_prog = {"pwsh.exe", '-NoLogo'};
 else
   font_size = 16.0;
 end
@@ -74,8 +74,8 @@ wezterm.on("update-right-status", function(window, pane)
 end)
 
 return {
-  -- default_prog = default_prog,
-  -- launch_menu = launch_menu,
+  default_prog = default_prog,
+  launch_menu = launch_menu,
   enable_scroll_bar = false,
 
   -- tab bar
@@ -130,7 +130,7 @@ return {
   leader = { key="m", mods="CTRL" },
   keys = {
     {key="b", mods = "LEADER|ALT", action=wezterm.action{SendString="\x02"}},
-    {key="Enter", mods="CTRL", action="ToggleFullScreen"},
+    {key="Enter", mods="CTRL", action=wezterm.action.ToggleFullScreen},
     {key="c", mods="ALT", action="Copy"},
     {key="v", mods="ALT", action="Paste"},
     {key=";", mods="CTRL", action={SendKey={key="RightArrow"}}},
