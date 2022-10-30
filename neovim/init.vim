@@ -124,7 +124,7 @@ set nowritebackup
 set updatetime=300
 
 set t_ti= t_te=           " alway show the content on the screen after exist VIM
-set mouse-=a              " disable mouse
+set mouse=
 set selection=inclusive   " set selection=exclusive
 set selectmode=mouse,key
 set title                 " change the terminal's title
@@ -502,7 +502,7 @@ augroup mygroup
   autocmd FileType typescript,json setl formatexpr=CocActionAsync('formatSelected')
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   nmap <space><space> :Format<cr>
-  autocmd FileType cpp,c nmap <space><space> maHmbgg=G`bzt`a
+  " autocmd FileType cpp,c nmap <space><space> maHmbgg=G`bzt`a
   " autocmd FileType typescript,typescript.tsx,typescriptreact,javascript,json,html,scss,css,graphql,svelte nmap <space><space> :Prettier<cr>
   " autocmd FileType cpp,objcpp,c,svg,python,go,rust,java,prisma nmap <space><space> :Format<cr>
 augroup end
@@ -813,7 +813,7 @@ command! -nargs=0 Clean exe 'AsyncTask project-clean'
 if has('macunix')
   let g:floaterm_shell = '/bin/zsh'
 else
-  let g:floaterm_shell = 'pwsh.exe'
+  let g:floaterm_shell = 'pwsh.exe -NoLogo'
   map <c-z> <nop>
 endif
 
@@ -868,7 +868,7 @@ let g:terminal_edit = 'drop'
 let g:terminal_fixheight = 1
 if has('macunix')
 else
-  let g:terminal_shell = 'pwsh.exe'
+  let g:terminal_shell = 'pwsh.exe -NoLogo'
 endif
 
 " vim-interestingwords
