@@ -15,6 +15,7 @@ Plug 'Shougo/context_filetype.vim'
 
 " edit
 " Plug 'github/copilot.vim'
+Plug 'hrsh7th/vim-searchx'
 Plug 'b0o/incline.nvim'
 Plug 'windwp/nvim-autopairs'
 Plug 'haya14busa/vim-asterisk'
@@ -423,6 +424,7 @@ let g:coc_global_extensions = [
         \"coc-highlight",
         \"coc-html",
         \"coc-json",
+        \"coc-lines",
         \"coc-lists",
         \"coc-lua",
         \"coc-marketplace",
@@ -969,6 +971,21 @@ let g:bookmark_auto_save = 1
 
 " vim-gencode-cpp
 noremap <leader>` :GenDefinition<cr>
+
+" vim-searchx
+nnoremap ? <Cmd>call searchx#start({ 'dir': 0 })<CR>
+nnoremap / <Cmd>call searchx#start({ 'dir': 1 })<CR>
+xnoremap ? <Cmd>call searchx#start({ 'dir': 0 })<CR>
+xnoremap / <Cmd>call searchx#start({ 'dir': 1 })<CR>
+nnoremap <space>/ <Cmd>call searchx#select()<CR>
+
+nnoremap N <Cmd>call searchx#prev_dir()<CR>
+nnoremap n <Cmd>call searchx#next_dir()<CR>
+xnoremap N <Cmd>call searchx#prev_dir()<CR>
+xnoremap n <Cmd>call searchx#next_dir()<CR>
+
+let g:searchx = {}
+let g:searchx.markers = split('abcdefghijklmnopqrstuvwxyz', '.\zs')
 
 " ------------
 " key bindings

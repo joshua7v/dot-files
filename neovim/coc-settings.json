@@ -21,6 +21,7 @@
     "**/*.min.css",
     "**/*.js.map"
   ],
+  "coc.source.lines.enable": false,
   "snippets.textmateSnippetsRoots": ["~/.dot-files/neovim/snippets"],
   "snippets.extends": {
     "cpp": ["c"],
