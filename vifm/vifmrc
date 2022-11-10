@@ -65,7 +65,7 @@ set norunexec
 
 " Selected color scheme
 
-colorscheme next
+colorscheme juef-zenburn
 
 " Format for displaying time in file list. For example:
 " TIME_STAMP_FORMAT=%m/%d-%H:%M
@@ -105,7 +105,7 @@ set scrolloff=4
 
 " Don't do too many requests to slow file systems
 
-set slowfs=curlftpfs
+" set slowfs=curlftpfs
 
 " Set custom status line look
 
