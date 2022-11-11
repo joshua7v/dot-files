@@ -822,9 +822,14 @@ endif
 let g:floaterm_keymap_toggle = '<c-q>'
 let g:floaterm_width = 0.8
 let g:floaterm_height = 0.8
+let g:floaterm_title = 'Terminal $1/$2'
 
-" nnoremap <c-r> :Ranger<cr>
-command! Ranger FloatermNew vifm
+tnoremap <c-e> <c-\><c-n>:FloatermPrev<cr>
+tnoremap <c-r> <c-\><c-n>:FloatermNext<cr>
+tnoremap <m-t> <c-\><c-n>:FloatermNew<cr>
+nnoremap <m-t> :FloatermNew<cr>
+nnoremap <m-s> :FloatermNew vifm %:p:h<cr>
+
 autocmd User Startified setlocal buflisted
 
 " undotree
@@ -990,8 +995,8 @@ let g:searchx.markers = split('abcdefghijklmnopqrstuvwxyz', '.\zs')
 " ------------
 " key bindings
 " ------------
-nnoremap <leader>ec :tabnew $MYVIMRC
 tnoremap <Esc> <C-\><C-n>
+nnoremap <leader>ec :tabnew $MYVIMRC
 nnoremap <leader>. <C-^>
 " nnoremap <leader>/ :Rg<space>
 " inoremap jj <ESC>
