@@ -829,6 +829,11 @@ tnoremap <c-r> <c-\><c-n>:FloatermNext<cr>
 tnoremap <m-t> <c-\><c-n>:FloatermNew<cr>
 nnoremap <m-t> :FloatermNew<cr>
 nnoremap <m-s> :FloatermNew vifm %:p:h<cr>
+nnoremap <m-g> :FloatermNew gitui<cr>
+
+command! TermNew FloatermNew
+command! Vifm :FloatermNew vifm %:p:h
+command! Gitui :FloatermNew gitui
 
 autocmd User Startified setlocal buflisted
 
@@ -1396,6 +1401,7 @@ fun s:mapMake()
   if &ft != "http"
     nnoremap <silent><c-\> :AsyncRun -save=1 make<cr>;
     nnoremap <silent><m-\> :AsyncRun -save=1 -raw make<cr>;
+    command! MakeRaw AsyncRun -save=1 -raw make
   else
     nnoremap <silent><c-\> :RestRun<cr>
   endif
