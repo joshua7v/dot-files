@@ -41,6 +41,7 @@
   "Lua.diagnostics.globals": ["love"],
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "zig.path": "zls",
+  "pyright.disableDiagnostics": true,
   "clangd.disableDiagnostics": true,
   "clangd.arguments": ["--background-index", "--completion-style=detailed"],
   "languageserver": {
