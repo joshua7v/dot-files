@@ -29,7 +29,7 @@ Plug 'justinmk/vim-dirvish'
 Plug 'szw/vim-maximizer', { 'on': ['MaximizerToggle'] }
 Plug 'haya14busa/vim-edgemotion'
 Plug 'rlane/pounce.nvim'
-Plug 'tpope/vim-commentary'
+Plug 'numToStr/Comment.nvim'
 Plug 'mg979/vim-visual-multi'
 Plug 'mbbill/undotree'
 Plug 'Shougo/vinarise.vim', { 'on': ['Vinarise'] }
@@ -104,7 +104,7 @@ endif
 
 filetype plugin indent on
 syntax manual
-autocmd FileType dirvish setlocal syntax=on
+autocmd FileType dirvish,qf setlocal syntax=on
 
 let g:mapleader = ','
 set nocompatible
@@ -675,6 +675,7 @@ set errorformat=
 set errorformat+=%.%#-->\ %f:%l:%c
 set errorformat+=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
 set errorformat+=%f:%l:%c:\ %m
+set errorformat+=%f:%l\ %m
 set errorformat+=%f\ :\ %m
 " set errorformat+=%-G%.%#
 
@@ -1198,6 +1199,11 @@ npairs.add_rules({
 EOF
 endif
 
+" Comment.nvim
+if s:is_installed('Comment.nvim')
+lua require('Comment').setup()
+endif
+
 " todo-comments.nvim
 if s:is_installed('todo-comments.nvim')
 lua <<EOF
@@ -1401,4 +1407,3 @@ if exists('g:nvui')
   autocmd InsertEnter * NvuiIMEEnable
   autocmd InsertLeave * NvuiIMEDisable
 endif
-
