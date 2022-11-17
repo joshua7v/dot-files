@@ -58,7 +58,6 @@ Plug 'skywind3000/asyncrun.vim'
 Plug 'skywind3000/asynctasks.vim'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-fugitive'
-Plug 'kkoomen/vim-doge', { 'on': ['DogeGenerate'] }
 Plug 'rhysd/git-messenger.vim'
 Plug 'Shougo/echodoc.vim'
 Plug 'nvim-lua/plenary.nvim'
@@ -104,7 +103,8 @@ if &compatible
 endif
 
 filetype plugin indent on
-syntax on
+syntax manual
+autocmd FileType dirvish setlocal syntax=on
 
 let g:mapleader = ','
 set nocompatible
@@ -901,11 +901,6 @@ xmap ia <Plug>SidewaysArgumentTextobjI
 
 nnoremap <silent><leader>h :SidewaysLeft<cr>
 nnoremap <silent><leader>l :SidewaysRight<cr>
-
-" vim-doge
-let g:doge_enable_mappings = 0
-" nnoremap <leader>dd :DogeGenerate<cr>
-command! -nargs=0 GDoc :DogeGenerate<cr>
 
 " vim-subversive
 " nmap s <plug>(SubversiveSubstitute)
