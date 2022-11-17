@@ -1016,10 +1016,12 @@ nnoremap <silent><cr> :noh<cr>
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 
-noremap j gj
-noremap k gk
+" noremap j gj
+" noremap k gk
 
-nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
+" nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
+nnoremap <expr> k (v:count > 1 ? "m'" . v:count : '') . 'gk'
+nnoremap <expr> j (v:count > 1 ? "m'" . v:count : '') . 'gj'
 
 nnoremap tp :tabprev<cr>
 nnoremap tn :tabnext<cr>
