@@ -6,11 +6,11 @@ if exists(":PlugInstall")
 Plug 'mhartington/oceanic-next'
 
 " syntax
-Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-Plug 'nvim-treesitter/nvim-treesitter-context'
-Plug 'JoosepAlviste/nvim-ts-context-commentstring'
-Plug 'Shougo/context_filetype.vim'
+" Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+" Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+" Plug 'nvim-treesitter/nvim-treesitter-context'
+" Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+" Plug 'Shougo/context_filetype.vim'
 " Plug 'sheerun/vim-polyglot'
 
 " edit
@@ -67,7 +67,7 @@ Plug 'jremmen/vim-ripgrep'
 Plug 'sindrets/diffview.nvim'
 
 " miscellaneous
-Plug 'kyazdani42/nvim-tree.lua'
+" Plug 'kyazdani42/nvim-tree.lua'
 Plug 'romainl/vim-qf'
 Plug 'yssl/QFEnter'
 Plug 'farmergreg/vim-lastplace'
@@ -105,6 +105,9 @@ endif
 filetype plugin indent on
 syntax manual
 autocmd FileType dirvish,qf setlocal syntax=on
+
+command! SO :setlocal syntax=on
+command! SF :setlocal syntax=off
 
 let g:mapleader = ','
 set nocompatible
@@ -831,7 +834,7 @@ nnoremap <m-s> :FloatermNew vifm %:p:h<cr>
 nnoremap <m-g> :FloatermNew gitui<cr>
 
 command! TermNew FloatermNew
-command! Vifm :FloatermNew vifm %:p:h
+command! Vifm :FloatermNew vifm %:p:h .
 command! Gitui :FloatermNew gitui
 
 autocmd User Startified setlocal buflisted
@@ -916,7 +919,7 @@ xmap p <plug>(SubversiveSubstitute)
 xmap P <plug>(SubversiveSubstitute)
 
 onoremap ie :exec "normal! ggVG"<cr>
-onoremap iv :exec "normal! HVL"<cr>
+onoremap ix :exec "normal! HVL"<cr>
 
 " emmet-vim
 let g:user_emmet_leader_key = '<c-e>'
@@ -1039,101 +1042,91 @@ command! GCompileCommands execute '!xmake project -k compile_commands'
 
 " nvim-treesitter
 " --------------------------------------------------------------------
-if s:is_installed('nvim-treesitter')
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = false,
-    disable = function(lang, bufnr)
-        if lang == "c" then
-          return true
-        end
-        offset = vim.api.nvim_buf_get_offset(bufnr, 1)
-        return offset > 777
-    end,
-  },
-  indent = {
-    enable = true,
-    disable = {},
-  },
-  incremental_selection = {
-    enable = true,
-  },
-  context_commentstring = {
-    enable = true
-  },
-  ensure_installed = {
-    "bash",
-    "c",
-    "comment",
-    "cpp",
-    "css",
-    "dockerfile",
-    "elixir",
-    "heex",
-    "java",
-    "markdown",
-    "gdscript",
-    "glsl",
-    "go",
-    "graphql",
-    "html",
-    "http",
-    "jsdoc",
-    "json",
-    "jsonc",
-    "javascript",
-    "lua",
-    "prisma",
-    "python",
-    "rust",
-    "scss",
-    -- "swift",
-    "svelte",
-    "toml",
-    "typescript",
-    "tsx",
-    "vim",
-    "vue",
-    "yaml",
-    "zig",
-  },
-}
-
--- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
--- parser_config.tsx.filetype_to_parsername = { "javascript", "typescriptreact" }
-local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
-ft_to_parser.typescriptreact = "tsx"
-EOF
+" if s:is_installed('nvim-treesitter')
+" lua <<EOF
+" require'nvim-treesitter.configs'.setup {
+"   highlight = {
+"     enable = false,
+"     disable = function(lang, bufnr)
+"         if lang == "c" then
+"           return true
+"         end
+"         offset = vim.api.nvim_buf_get_offset(bufnr, 1)
+"         return offset > 777
+"     end,
+"   },
+"   indent = {
+"     enable = true,
+"     disable = {},
+"   },
+"   incremental_selection = {
+"     enable = true,
+"   },
+"   context_commentstring = {
+"     enable = true
+"   },
+"   ensure_installed = {
+"     "bash",
+"     "c",
+"     "comment",
+"     "cpp",
+"     "css",
+"     "dockerfile",
+"     "elixir",
+"     "heex",
+"     "java",
+"     "markdown",
+"     "gdscript",
+"     "glsl",
+"     "go",
+"     "graphql",
+"     "html",
+"     "http",
+"     "jsdoc",
+"     "json",
+"     "jsonc",
+"     "javascript",
+"     "lua",
+"     "prisma",
+"     "python",
+"     "rust",
+"     "scss",
+"     -- "swift",
+"     "svelte",
+"     "toml",
+"     "typescript",
+"     "tsx",
+"     "vim",
+"     "vue",
+"     "yaml",
+"     "zig",
+"   },
+" }
+"
+" -- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+" -- parser_config.tsx.filetype_to_parsername = { "javascript", "typescriptreact" }
+" local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
+" ft_to_parser.typescriptreact = "tsx"
+" EOF
 set foldmethod=manual
 set foldexpr=nvim_treesitter#foldexpr()
 " set viewoptions=folds,cursor
 " set sessionoptions=folds
 
-augroup remember_folds
-  autocmd!
-  autocmd BufWinLeave,BufLeave,BufWritePost,BufHidden,QuitPre ?* nested silent! mkview!
-  autocmd BufWinEnter ?* silent! loadview
-augroup END
-" autocmd BufEnter * normal zR
-endif
-
-" nvim-treesitter-context
-lua <<EOF
-require'treesitter-context'.setup{
-  enable = true
-}
-EOF
-
-" nvim_context_vt
-" if s:is_installed('nvim_context_vt')
+" augroup remember_folds
+"   autocmd!
+"   autocmd BufWinLeave,BufLeave,BufWritePost,BufHidden,QuitPre ?* nested silent! mkview!
+"   autocmd BufWinEnter ?* silent! loadview
+" augroup END
+" " autocmd BufEnter * normal zR
+" endif
+"
+" " nvim-treesitter-context
 " lua <<EOF
-" require('nvim_context_vt').setup {
-"   enabled = false,
+" require'treesitter-context'.setup{
+"   enable = true
 " }
 " EOF
-" nnoremap <leader>u :NvimContextVtToggle<cr>
-" endif
 
 " vim-matchup
 " lua <<EOF
@@ -1153,22 +1146,22 @@ EOF
 "     \}
 
 " nvim-treesitter-textobjects
-if s:is_installed('nvim-treesitter-textobjects')
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  textobjects = {
-    select = {
-      enable = true,
-      lookahead = true,
-      keymaps = {
-        -- ["ap"] = "@parameter.outer",
-        -- ["ip"] = "@parameter.inner",
-      },
-    },
-  },
-}
-EOF
-endif
+" if s:is_installed('nvim-treesitter-textobjects')
+" lua <<EOF
+" require'nvim-treesitter.configs'.setup {
+"   textobjects = {
+"     select = {
+"       enable = true,
+"       lookahead = true,
+"       keymaps = {
+"         -- ["ap"] = "@parameter.outer",
+"         -- ["ip"] = "@parameter.inner",
+"       },
+"     },
+"   },
+" }
+" EOF
+" endif
 
 " nvim-autopairs
 if s:is_installed('nvim-autopairs')
@@ -1192,15 +1185,15 @@ npairs.setup({
     },
 })
 
-local ts_conds = require('nvim-autopairs.ts-conds')
+-- local ts_conds = require('nvim-autopairs.ts-conds')
 
 -- press % => %% only while inside a comment or string
-npairs.add_rules({
-  Rule("%", "%", "lua")
-    :with_pair(ts_conds.is_ts_node({'string','comment'})),
-  Rule("$", "$", "lua")
-    :with_pair(ts_conds.is_not_ts_node({'function'}))
-})
+-- npairs.add_rules({
+--   Rule("%", "%", "lua")
+--     :with_pair(ts_conds.is_ts_node({'string','comment'})),
+--   Rule("$", "$", "lua")
+--     :with_pair(ts_conds.is_not_ts_node({'function'}))
+-- })
 EOF
 endif
 
@@ -1280,65 +1273,65 @@ endif
 " endif
 
 " nvim-tree.lua
-if s:is_installed('nvim-tree.lua')
-lua <<EOF
-require'nvim-tree'.setup {
-  disable_netrw = false,
-  hijack_cursor = false,
-  hijack_netrw = false,
-  hijack_unnamed_buffer_when_opening = false,
-  ignore_buffer_on_setup = false,
-  view = {
-    width = 66,
-    -- height = 66,
-    hide_root_folder = false,
-    side = "left",
-    preserve_window_proportions = false,
-    number = true,
-    signcolumn = "yes",
-  },
-  renderer = {
-    indent_markers = {
-      enable = false,
-      icons = {
-        corner = "└ ",
-        edge = "│ ",
-        none = "  ",
-      },
-    },
-    icons = {
-      webdev_colors = false,
-      git_placement = "after",
-    },
-  },
-}
-EOF
-let g:nvim_tree_icons = {
-    \ 'default': "[F]",
-    \ 'symlink': "[L]",
-    \ 'git': {
-    \   'unstaged': "(X)",
-    \   'staged': "(S)",
-    \   'unmerged': "(UM)",
-    \   'renamed': "(R)",
-    \   'untracked': "(UT)",
-    \   'deleted': "(D)",
-    \   'ignored': "(I)"
-    \   },
-    \ 'folder': {
-    \   'arrow_open': "v",
-    \   'arrow_closed': ">",
-    \   'default': "[D]",
-    \   'open': "[D]",
-    \   'empty': "[DE]",
-    \   'empty_open': "[DE]",
-    \   'symlink': "[L]",
-    \   'symlink_open': "[L]",
-    \   }
-    \ }
-command! -nargs=0 Tree :NvimTreeToggle
-command! -nargs=0 TreeFind :NvimTreeFindFileToggle
-endif
+" if s:is_installed('nvim-tree.lua')
+" lua <<EOF
+" require'nvim-tree'.setup {
+"   disable_netrw = false,
+"   hijack_cursor = false,
+"   hijack_netrw = false,
+"   hijack_unnamed_buffer_when_opening = false,
+"   ignore_buffer_on_setup = false,
+"   view = {
+"     width = 66,
+"     -- height = 66,
+"     hide_root_folder = false,
+"     side = "left",
+"     preserve_window_proportions = false,
+"     number = true,
+"     signcolumn = "yes",
+"   },
+"   renderer = {
+"     indent_markers = {
+"       enable = false,
+"       icons = {
+"         corner = "└ ",
+"         edge = "│ ",
+"         none = "  ",
+"       },
+"     },
+"     icons = {
+"       webdev_colors = false,
+"       git_placement = "after",
+"     },
+"   },
+" }
+" EOF
+" let g:nvim_tree_icons = {
+"     \ 'default': "[F]",
+"     \ 'symlink': "[L]",
+"     \ 'git': {
+"     \   'unstaged': "(X)",
+"     \   'staged': "(S)",
+"     \   'unmerged': "(UM)",
+"     \   'renamed': "(R)",
+"     \   'untracked': "(UT)",
+"     \   'deleted': "(D)",
+"     \   'ignored': "(I)"
+"     \   },
+"     \ 'folder': {
+"     \   'arrow_open': "v",
+"     \   'arrow_closed': ">",
+"     \   'default': "[D]",
+"     \   'open': "[D]",
+"     \   'empty': "[DE]",
+"     \   'empty_open': "[DE]",
+"     \   'symlink': "[L]",
+"     \   'symlink_open': "[L]",
+"     \   }
+"     \ }
+" command! -nargs=0 Tree :NvimTreeToggle
+" command! -nargs=0 TreeFind :NvimTreeFindFileToggle
+" endif
 
 " incline.nvim
 if s:is_installed('incline.nvim')
