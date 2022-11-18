@@ -1,4 +1,5 @@
 {
+  "coc.preferences.maxFileSize": "1MB",
   "diagnostic.errorSign": "E",
   "diagnostic.warningSign": "W",
   "diagnostic.infoSign": "I",

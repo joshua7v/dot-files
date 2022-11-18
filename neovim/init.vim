@@ -61,15 +61,13 @@ Plug 'tpope/vim-fugitive'
 Plug 'rhysd/git-messenger.vim'
 Plug 'Shougo/echodoc.vim'
 Plug 'nvim-lua/plenary.nvim'
-" Plug 'folke/todo-comments.nvim'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'jremmen/vim-ripgrep'
 Plug 'sindrets/diffview.nvim'
 
 " miscellaneous
-" Plug 'kyazdani42/nvim-tree.lua'
 Plug 'romainl/vim-qf'
-Plug 'yssl/QFEnter'
+Plug 'kevinhwang91/nvim-bqf'
 Plug 'farmergreg/vim-lastplace'
 Plug 'pbrisbin/vim-mkdir'
 Plug 'tyru/open-browser.vim', { 'on': ['<Plug>(openbrowser-smart-search)'] }
@@ -108,6 +106,8 @@ autocmd FileType dirvish,qf setlocal syntax=on
 
 command! SO :setlocal syntax=on
 command! SF :setlocal syntax=off
+
+" autocmd FileType,BufWinEnter,WinNew * if nvim_win_get_config(0)['relative'] != '' | setlocal syntax=off | endif
 
 let g:mapleader = ','
 set nocompatible
@@ -786,26 +786,17 @@ let g:VM_maps['Find Under'] = '<C-h>'
 
 " asyncrun.vim
 let g:asyncrun_bell = 1
-
-" noremap <leader>q :call asyncrun#quickfix_toggle(30)<cr>
-" autocmd FileType c,cpp,cmake noremap <leader>m :AsyncRun -mode=term -pos=bottom cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=YES -B build .<cr>
-" autocmd FileType c,cpp,cmake noremap <leader>c :AsyncRun -mode=term -pos=bottom -cwd=build make<cr>
-" autocmd FileType c,cpp,cmake noremap <leader>cc :AsyncRun -mode=term -pos=bottom make -cwd=build make clean<cr>
-
-" augroup vimrc
-" autocmd QuickFixCmdPost * call asyncrun#quickfix_toggle(50, 1)
-" augroup END
 command! -nargs=0 Rf AsyncRun -program=shebang -mode=term -pos=bottom $(VIM_FILEPATH)
 
 " asynctasks.vim
 let g:asynctasks_rtp_config = 'asynctasks/tasks.ini'
-let g:asyncrun_open = 24
+" let g:asyncrun_open = 24
 let g:asynctasks_term_pos = 'bottom'
 let g:asyncrun_rootmarks = ['.git', '.svn', '.root', '.project', '.hg', '.projectionist.json', '.editorconfig', 'compile_commands.json']
 let g:asynctasks_term_reuse = 1
 let g:asynctasks_term_focus = 1
 
-noremap <silent><leader>q :call asyncrun#quickfix_toggle(24)<cr>
+" noremap <silent><leader>q :call asyncrun#quickfix_toggle(24)<cr>
 noremap <leader>r :AsyncTask project-run<cr>
 noremap <leader>b :AsyncTask project-build<cr>
 command! -nargs=0 Test exe 'AsyncTask project-test'
@@ -863,9 +854,43 @@ let g:mta_filetypes = {
   \}
 
 " vim-qf
-let g:qf_max_height = 24
+let g:qf_max_height = 100
 let g:qf_auto_resize = 0
-" nmap <leader>q <Plug>(qf_qf_toggle_stay)
+let g:qf_auto_open_quickfix = 0
+
+function! ToggleQuickFix()
+    if empty(filter(getwininfo(), 'v:val.quickfix'))
+        copen
+    else
+        cclose
+    endif
+endfunction
+
+nnoremap <silent> <leader>q :call ToggleQuickFix()<cr>
+
+" vim-bqf
+lua <<EOF
+require('bqf').setup({
+    auto_resize_height = true,
+    preview = {
+      delay_syntax = -1,
+      show_title = false,
+      should_preview_cb = function(bufnr, qwinid)
+          local ret = true
+          local bufname = vim.api.nvim_buf_get_name(bufnr)
+          local fsize = vim.fn.getfsize(bufname)
+          if fsize > 100 * 1024 then
+              -- skip file size greater than 100k
+              ret = false
+          elseif bufname:match('^fugitive://') then
+              -- skip fugitive buffer
+              ret = false
+          end
+          return ret
+      end
+  }
+})
+EOF
 
 " open-browser.vim
 nmap gx <Plug>(openbrowser-smart-search)
