@@ -107,7 +107,7 @@ autocmd FileType dirvish,qf setlocal syntax=on
 command! SO :setlocal syntax=on
 command! SF :setlocal syntax=off
 
-" autocmd FileType,BufWinEnter,WinNew * if nvim_win_get_config(0)['relative'] != '' | setlocal syntax=off | endif
+" autocmd BufWinEnter,WinNew,BufEnter * if nvim_win_get_config(0)['relative'] != '' | setlocal syntax=off | endif
 
 let g:mapleader = ','
 set nocompatible
@@ -535,7 +535,7 @@ nmap <leader>ee <Plug>(coc-diagnostic-info)
 nmap <leader>cl <Plug>(coc-codelens-action)
 nmap <silent>gy <Plug>(coc-type-definition)
 nmap <silent>gi <Plug>(coc-implementation)
-nmap <silent>gr :call <SID>GoToReferences()<cr>
+" nmap <silent>gr :call <SID>GoToReferences()<cr>
 nmap <silent>gh :CocCommand git.chunkInfo<cr>
 nmap <leader>rn <Plug>(coc-rename)
 vmap <leader>f  <Plug>(coc-format-selected)
@@ -548,8 +548,8 @@ xmap <leader>ac <Plug>(coc-codeaction-selected)
 nmap <silent>K :call <SID>show_documentation()<cr>
 nmap <silent>gd :call <SID>GoToDefinition()<cr>
 " nmap <silent> gd <Plug>(coc-definition)
-vnoremap <leader>g :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
-nnoremap <leader>g :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@ 
+" vnoremap <leader>g :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
+" nnoremap <leader>g :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@ 
 inoremap <silent><expr> <c-space> coc#refresh()
 
 function! ToggleOutline() abort
@@ -890,7 +890,64 @@ require('bqf').setup({
       end
   }
 })
+
+local fn = vim.fn
+local cmd = vim.cmd
+local api = vim.api
+
+vim.g.coc_enable_locationlist = 0
+cmd([[
+    aug Coc
+        au!
+        au User CocLocationsChange lua _G.jumpToLoc()
+    aug END
+]])
+
+cmd([[
+    nmap <silent> gr <Plug>(coc-references)
+    nnoremap <silent> <leader>a <Cmd>lua _G.diagnostic()<CR>
+]])
+
+function _G.jumpToLoc(locs)
+    locs = locs or vim.g.coc_jump_locations
+    fn.setloclist(0, {}, ' ', {title = 'CocLocationList', items = locs})
+    local winid = fn.getloclist(0, {winid = 0}).winid
+    if winid == 0 then
+        cmd('abo lw')
+    else
+        api.nvim_set_current_win(winid)
+    end
+end
+
+function _G.diagnostic()
+    fn.CocActionAsync('diagnosticList', '', function(err, res)
+        if err == vim.NIL then
+            local items = {}
+            for _, d in ipairs(res) do
+                local text = ('[%s%s] %s'):format((d.source == '' and 'coc.nvim' or d.source),
+                    (d.code == vim.NIL and '' or ' ' .. d.code), d.message:match('([^\n]+)\n*'))
+                local item = {
+                    filename = d.file,
+                    lnum = d.lnum,
+                    end_lnum = d.end_lnum,
+                    col = d.col,
+                    end_col = d.end_col,
+                    text = text,
+                    type = d.severity
+                }
+                table.insert(items, item)
+            end
+            fn.setqflist({}, ' ', {title = 'CocDiagnosticList', items = items})
+
+            cmd('bo cope')
+        end
+    end)
+end
+
 EOF
+
+" vim-ripgrep
+command! R :Rg <cword> %<cr>
 
 " open-browser.vim
 nmap gx <Plug>(openbrowser-smart-search)
