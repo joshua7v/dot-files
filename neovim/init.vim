@@ -6,7 +6,7 @@ if exists(":PlugInstall")
 Plug 'mhartington/oceanic-next'
 
 " syntax
-" Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 " Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 " Plug 'nvim-treesitter/nvim-treesitter-context'
 " Plug 'JoosepAlviste/nvim-ts-context-commentstring'
@@ -74,7 +74,7 @@ Plug 'tyru/open-browser.vim', { 'on': ['<Plug>(openbrowser-smart-search)'] }
 Plug 'skywind3000/vim-terminal-help'
 Plug 'guns/xterm-color-table.vim', { 'on': ['XtermColorTable'] }
 Plug 'powerman/vim-plugin-AnsiEsc'
-Plug 'inside/vim-search-pulse'
+" Plug 'inside/vim-search-pulse'
 Plug 'vim-scripts/DrawIt', { 'on': ['DrawIt'] }
 Plug 'dstein64/vim-startuptime', { 'on': ['StartupTime'] }
 Plug 'yaocccc/nvim-hlchunk'
@@ -287,7 +287,7 @@ function! s:patch_oceanic_next_colors()
   hi TabLineFill ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#1b2b34
   hi PmenuSel ctermbg=145 guibg=#ff5555
   hi WildMenu ctermbg=145 guibg=#ff5555
-  hi Type ctermfg=221 guifg=#fac863 term=NONE gui=NONE
+  " hi Type ctermfg=221 guifg=#fac863 term=NONE gui=NONE
 
   hi DiffAdd ctermfg=2 ctermbg=0 guifg=#A3BE8C guibg=#2E3440
   hi DiffChange ctermfg=3 ctermbg=0 guifg=#EBCB8B guibg=#2E3440
@@ -790,7 +790,7 @@ command! -nargs=0 Rf AsyncRun -program=shebang -mode=term -pos=bottom $(VIM_FILE
 
 " asynctasks.vim
 let g:asynctasks_rtp_config = 'asynctasks/tasks.ini'
-" let g:asyncrun_open = 24
+let g:asyncrun_open = 24
 let g:asynctasks_term_pos = 'bottom'
 let g:asyncrun_rootmarks = ['.git', '.svn', '.root', '.project', '.hg', '.projectionist.json', '.editorconfig', 'compile_commands.json']
 let g:asynctasks_term_reuse = 1
@@ -854,7 +854,7 @@ let g:mta_filetypes = {
   \}
 
 " vim-qf
-let g:qf_max_height = 100
+let g:qf_max_height = 24
 let g:qf_auto_resize = 0
 let g:qf_auto_open_quickfix = 0
 
@@ -871,7 +871,7 @@ nnoremap <silent> <leader>q :call ToggleQuickFix()<cr>
 " vim-bqf
 lua <<EOF
 require('bqf').setup({
-    auto_resize_height = true,
+    auto_resize_height = false,
     preview = {
       delay_syntax = -1,
       show_title = false,
@@ -1124,108 +1124,71 @@ command! GCompileCommands execute '!xmake project -k compile_commands'
 
 " nvim-treesitter
 " --------------------------------------------------------------------
-" if s:is_installed('nvim-treesitter')
-" lua <<EOF
-" require'nvim-treesitter.configs'.setup {
-"   highlight = {
-"     enable = false,
-"     disable = function(lang, bufnr)
-"         if lang == "c" then
-"           return true
-"         end
-"         offset = vim.api.nvim_buf_get_offset(bufnr, 1)
-"         return offset > 777
-"     end,
-"   },
-"   indent = {
-"     enable = true,
-"     disable = {},
-"   },
-"   incremental_selection = {
-"     enable = true,
-"   },
-"   context_commentstring = {
-"     enable = true
-"   },
-"   ensure_installed = {
-"     "bash",
-"     "c",
-"     "comment",
-"     "cpp",
-"     "css",
-"     "dockerfile",
-"     "elixir",
-"     "heex",
-"     "java",
-"     "markdown",
-"     "gdscript",
-"     "glsl",
-"     "go",
-"     "graphql",
-"     "html",
-"     "http",
-"     "jsdoc",
-"     "json",
-"     "jsonc",
-"     "javascript",
-"     "lua",
-"     "prisma",
-"     "python",
-"     "rust",
-"     "scss",
-"     -- "swift",
-"     "svelte",
-"     "toml",
-"     "typescript",
-"     "tsx",
-"     "vim",
-"     "vue",
-"     "yaml",
-"     "zig",
-"   },
-" }
-"
-" -- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-" -- parser_config.tsx.filetype_to_parsername = { "javascript", "typescriptreact" }
-" local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
-" ft_to_parser.typescriptreact = "tsx"
-" EOF
-set foldmethod=manual
-set foldexpr=nvim_treesitter#foldexpr()
-" set viewoptions=folds,cursor
-" set sessionoptions=folds
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = false,
+    disable = function(lang, bufnr)
+        if lang == "c" then
+          return true
+        end
+        offset = vim.api.nvim_buf_get_offset(bufnr, 1)
+        return offset > 777
+    end,
+  },
+  indent = {
+    enable = true,
+    disable = {},
+  },
+  incremental_selection = {
+    enable = true,
+  },
+  context_commentstring = {
+    enable = true
+  },
+  ensure_installed = {
+    "bash",
+    "c",
+    "comment",
+    "cpp",
+    "css",
+    "dockerfile",
+    "elixir",
+    "heex",
+    "java",
+    "markdown",
+    "gdscript",
+    "glsl",
+    "go",
+    "graphql",
+    "html",
+    "http",
+    "jsdoc",
+    "json",
+    "jsonc",
+    "javascript",
+    "lua",
+    "prisma",
+    "python",
+    "rust",
+    "scss",
+    -- "swift",
+    "svelte",
+    "toml",
+    "typescript",
+    "tsx",
+    "vim",
+    "vue",
+    "yaml",
+    "zig",
+  },
+}
 
-" augroup remember_folds
-"   autocmd!
-"   autocmd BufWinLeave,BufLeave,BufWritePost,BufHidden,QuitPre ?* nested silent! mkview!
-"   autocmd BufWinEnter ?* silent! loadview
-" augroup END
-" " autocmd BufEnter * normal zR
-" endif
-"
-" " nvim-treesitter-context
-" lua <<EOF
-" require'treesitter-context'.setup{
-"   enable = true
-" }
-" EOF
-
-" vim-matchup
-" lua <<EOF
-" require'nvim-treesitter.configs'.setup {
-"   matchup = {
-"     enable = true,
-"   },
-" }
-" EOF
-" let g:matchup_transmute_enabled = 1
-" let g:matchup_matchparen_deferred=1
-" let g:matchup_matchparen_hi_surround_always=1
-" let g:matchup_matchparen_status_offscreen = 0
-" let g:matchup_matchpref = {
-"     \ 'tsx': { 'tagnameonly': 1, },
-"     \ 'typescriptreact': { 'tagnameonly': 1, },
-"     \}
+-- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+-- parser_config.tsx.filetype_to_parsername = { "javascript", "typescriptreact" }
+local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
+ft_to_parser.typescriptreact = "tsx"
+EOF
 
 " nvim-treesitter-textobjects
 " if s:is_installed('nvim-treesitter-textobjects')
@@ -1280,9 +1243,7 @@ EOF
 endif
 
 " Comment.nvim
-if s:is_installed('Comment.nvim')
 lua require('Comment').setup()
-endif
 
 " todo-comments.nvim
 " if s:is_installed('todo-comments.nvim')
@@ -1344,75 +1305,6 @@ endif
 "   },
 " }
 " EOF
-" endif
-
-" pretty-fold.nvim
-" if s:is_installed('pretty-fold.nvim')
-" lua <<EOF
-" require('pretty-fold').setup {}
-" require('fold-preview').setup()
-" EOF
-" endif
-
-" nvim-tree.lua
-" if s:is_installed('nvim-tree.lua')
-" lua <<EOF
-" require'nvim-tree'.setup {
-"   disable_netrw = false,
-"   hijack_cursor = false,
-"   hijack_netrw = false,
-"   hijack_unnamed_buffer_when_opening = false,
-"   ignore_buffer_on_setup = false,
-"   view = {
-"     width = 66,
-"     -- height = 66,
-"     hide_root_folder = false,
-"     side = "left",
-"     preserve_window_proportions = false,
-"     number = true,
-"     signcolumn = "yes",
-"   },
-"   renderer = {
-"     indent_markers = {
-"       enable = false,
-"       icons = {
-"         corner = "└ ",
-"         edge = "│ ",
-"         none = "  ",
-"       },
-"     },
-"     icons = {
-"       webdev_colors = false,
-"       git_placement = "after",
-"     },
-"   },
-" }
-" EOF
-" let g:nvim_tree_icons = {
-"     \ 'default': "[F]",
-"     \ 'symlink': "[L]",
-"     \ 'git': {
-"     \   'unstaged': "(X)",
-"     \   'staged': "(S)",
-"     \   'unmerged': "(UM)",
-"     \   'renamed': "(R)",
-"     \   'untracked': "(UT)",
-"     \   'deleted': "(D)",
-"     \   'ignored': "(I)"
-"     \   },
-"     \ 'folder': {
-"     \   'arrow_open': "v",
-"     \   'arrow_closed': ">",
-"     \   'default': "[D]",
-"     \   'open': "[D]",
-"     \   'empty': "[DE]",
-"     \   'empty_open': "[DE]",
-"     \   'symlink': "[L]",
-"     \   'symlink_open': "[L]",
-"     \   }
-"     \ }
-" command! -nargs=0 Tree :NvimTreeToggle
-" command! -nargs=0 TreeFind :NvimTreeFindFileToggle
 " endif
 
 " incline.nvim
