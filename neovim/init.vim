@@ -74,7 +74,7 @@ Plug 'tyru/open-browser.vim', { 'on': ['<Plug>(openbrowser-smart-search)'] }
 Plug 'skywind3000/vim-terminal-help'
 Plug 'guns/xterm-color-table.vim', { 'on': ['XtermColorTable'] }
 Plug 'powerman/vim-plugin-AnsiEsc'
-" Plug 'inside/vim-search-pulse'
+Plug 'inside/vim-search-pulse'
 Plug 'vim-scripts/DrawIt', { 'on': ['DrawIt'] }
 Plug 'dstein64/vim-startuptime', { 'on': ['StartupTime'] }
 Plug 'yaocccc/nvim-hlchunk'
@@ -427,7 +427,7 @@ let g:coc_global_extensions = [
         \"coc-json",
         \"coc-lines",
         \"coc-lists",
-        \"coc-lua",
+        \"coc-sumneko-lua",
         \"coc-marketplace",
         \"coc-prettier",
         \"coc-pyright",
@@ -684,7 +684,6 @@ set errorformat+=%f\ :\ %m
 
 " %f(%l) \=: %t%*\D%n: %m,%*[^"]"%f"%*\D%l: %m,%f(%l) \=: %m,%*[^ ] %f %l: %m,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,%f|%l| %m
 " autocmd BufNewFile,BufRead *.ts,*.tsx      set errorformat=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
-autocmd BufNewFile,BufRead *.rs nnoremap <c-\> :AsyncRun -save=1 cargo check<cr>;
 
 " vim-asterisk
 let g:asterisk#keeppos = 1
@@ -946,8 +945,10 @@ end
 
 EOF
 
+autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
+
 " vim-ripgrep
-command! R :Rg <cword> %<cr>
+command! R :Rg <cword> %
 
 " open-browser.vim
 nmap gx <Plug>(openbrowser-smart-search)
@@ -1354,12 +1355,16 @@ command! -nargs=0 RestLast :lua require("rest-nvim").last()
 command! -nargs=0 RestPreview :lua require("rest-nvim").run(true)
 
 fun s:mapMake()
-  if &ft != "http"
-    nnoremap <silent><c-\> :AsyncRun -save=1 make<cr>;
-    nnoremap <silent><m-\> :AsyncRun -save=1 -raw make<cr>;
-    command! MakeRaw AsyncRun -save=1 -raw make
-  else
+  nnoremap <silent><c-\> :AsyncRun -save=1 make<cr>;
+  nnoremap <silent><m-\> :AsyncRun -save=1 -raw make<cr>;
+  command! MakeRaw AsyncRun -save=1 -raw make
+  
+  if &ft == "http"
     nnoremap <silent><c-\> :RestRun<cr>
+  endif
+
+  if &ft == "rust"
+    nnoremap <c-\> :AsyncRun -save=1 cargo check<cr>;
   endif
 endfun
 
