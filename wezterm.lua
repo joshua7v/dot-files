@@ -10,6 +10,7 @@ if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
   default_prog = {"pwsh.exe", '-NoLogo'};
 else
   font_size = 16.0;
+  default_prog = nil
 end
 
 local ssh_config_file = wezterm.home_dir .. "/.ssh/config"
@@ -129,6 +130,9 @@ return {
   -- keys
   leader = { key="m", mods="CTRL" },
   keys = {
+    -- fix <c-q> get swallowed https://github.com/wez/wezterm/issues/2630
+    {key="q", mods = "CTRL", action=wezterm.action{SendString="\x11" }},
+
     {key="b", mods = "LEADER|ALT", action=wezterm.action{SendString="\x02"}},
     {key="Enter", mods="CTRL", action=wezterm.action.ToggleFullScreen},
     {key="c", mods="ALT", action="Copy"},
