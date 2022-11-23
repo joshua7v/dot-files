@@ -427,7 +427,6 @@ let g:coc_global_extensions = [
         \"coc-json",
         \"coc-lines",
         \"coc-lists",
-        \"coc-sumneko-lua",
         \"coc-marketplace",
         \"coc-prettier",
         \"coc-pyright",
@@ -871,6 +870,10 @@ nnoremap <silent> <leader>q :call ToggleQuickFix()<cr>
 lua <<EOF
 require('bqf').setup({
     auto_resize_height = false,
+    func_map = {
+        openc = '<cr>',
+        open = 'o',
+    },
     preview = {
       delay_syntax = -1,
       show_title = false,
@@ -945,7 +948,7 @@ end
 
 EOF
 
-autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
+" autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
 
 " vim-ripgrep
 command! R :Rg <cword> %
