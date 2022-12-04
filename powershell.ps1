@@ -33,6 +33,7 @@ function prompt {
    "${osc7}PS $p$('>' * ($nestedPromptLevel + 1)) ";
 }
 
+# it's a default alias for Get-History cmdlet
 Remove-Alias history
 
 # Usage: history      - just print the history, same as call Get-History
@@ -59,8 +60,13 @@ $HOMEDRIVE = "C:\"
 $HOMEPATH = "Users\" + $env:username
 $env:HOME = "$HOMEDRIVE$HOMEPATH"
 
+# Set and force overwrite of the $HOME variable
 Set-Variable HOME "$HOMEDRIVE$HOMEPATH" -Force
+
+# Set the "~" shortcut value for the FileSystem provider
 (get-psprovider 'FileSystem').Home = $HOMEDRIVE + $HOMEPATH
 
 # iex ($(lua ~\scoop\apps\z.lua\current\z.lua --init powershell) -join "`n") 
 # $Env:http_proxy="http://127.0.0.1:7890";$Env:https_proxy="http://127.0.0.1:7890"
+
+$PSStyle.FileInfo.Directory = "`e[34;1m"
