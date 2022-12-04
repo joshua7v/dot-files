@@ -15,13 +15,14 @@ Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 
 " edit
 " Plug 'github/copilot.vim'
+Plug 'chaoren/vim-wordmotion'
 Plug 'b0o/incline.nvim'
 Plug 'windwp/nvim-autopairs'
 Plug 'haya14busa/vim-asterisk'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-textobj-indent'
-Plug 'Julian/vim-textobj-variable-segment'
+" Plug 'Julian/vim-textobj-variable-segment'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'ntpeters/vim-better-whitespace', { 'on': ['StripWhitespace'] }
@@ -75,7 +76,6 @@ Plug 'skywind3000/vim-terminal-help'
 Plug 'guns/xterm-color-table.vim', { 'on': ['XtermColorTable'] }
 Plug 'powerman/vim-plugin-AnsiEsc'
 Plug 'inside/vim-search-pulse'
-Plug 'vim-scripts/DrawIt', { 'on': ['DrawIt'] }
 Plug 'dstein64/vim-startuptime', { 'on': ['StartupTime'] }
 Plug 'yaocccc/nvim-hlchunk'
 Plug 'rest-nvim/rest.nvim'
@@ -661,10 +661,11 @@ autocmd BufNewFile,BufRead *.pie          setfiletype markdown
 autocmd BufNewFile,BufRead *.ex               set ft=elixir
 autocmd BufNewFile,BufRead *.exs              set ft=elixir
 autocmd BufNewFile,BufRead *.eex              set ft=eelixir
-autocmd BufNewFile,BufRead *.vs,*.fs          set ft=glsl
 autocmd BufNewFile,BufRead *.tpl              set ft=html
 autocmd BufNewFile,BufRead *.mm               set ft=objc
 autocmd BufNewFile,BufRead *.shader           set ft=glsl
+autocmd BufNewFile,BufRead *.vs,*.fs          set ft=glsl
+autocmd BufNewFile,BufRead *.vert,*.frag      set ft=glsl
 autocmd BufNewFile,BufRead *.uproject         set ft=json
 autocmd BufNewFile,BufRead tsconfig.json      set ft=jsonc
 autocmd BufNewFile,BufRead tslint.json        set ft=jsonc
@@ -692,8 +693,8 @@ map #   <Plug>(asterisk-#)
 map g*  <Plug>(asterisk-g*)
 map g#  <Plug>(asterisk-g#)
 map z*  <Plug>(asterisk-z*)
-map gz* <Plug>(asterisk-gz*)
 map z#  <Plug>(asterisk-z#)
+map gz* <Plug>(asterisk-gz*)
 map gz# <Plug>(asterisk-gz#)
 
 " echodoc.vim
