@@ -9,7 +9,7 @@ Plug 'mhartington/oceanic-next'
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 " Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 " Plug 'nvim-treesitter/nvim-treesitter-context'
-" Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 " Plug 'Shougo/context_filetype.vim'
 " Plug 'sheerun/vim-polyglot'
 
@@ -21,7 +21,7 @@ Plug 'windwp/nvim-autopairs'
 Plug 'haya14busa/vim-asterisk'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-operator-user'
-Plug 'kana/vim-textobj-indent'
+" Plug 'kana/vim-textobj-indent'
 " Plug 'Julian/vim-textobj-variable-segment'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
@@ -61,7 +61,7 @@ Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-fugitive'
 Plug 'rhysd/git-messenger.vim'
 Plug 'Shougo/echodoc.vim'
-Plug 'nvim-lua/plenary.nvim'
+" Plug 'nvim-lua/plenary.nvim'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'jremmen/vim-ripgrep'
 Plug 'sindrets/diffview.nvim'
@@ -78,7 +78,7 @@ Plug 'powerman/vim-plugin-AnsiEsc'
 " Plug 'inside/vim-search-pulse'
 Plug 'dstein64/vim-startuptime', { 'on': ['StartupTime'] }
 Plug 'yaocccc/nvim-hlchunk'
-Plug 'rest-nvim/rest.nvim'
+" Plug 'rest-nvim/rest.nvim'
 Plug '~/erinn/tools/whitebox/whitebox_v0.96.2/editor_plugins/whitebox-vim'
 
 endif
@@ -1044,7 +1044,7 @@ function! UltiSnipsExpandOrJumpOrTab()
 endfunction
 
 " vim-wordmotion
-let g:wordmotion_prefix = 'v'
+let g:wordmotion_prefix = '\'
 
 " devdocs.vim
 let g:devdocs_filetype_map = {
@@ -1342,22 +1342,20 @@ EOF
 endif
 
 " rest.nvim
-if s:is_installed('rest.nvim')
-lua <<EOF
-require("rest-nvim").setup({
-  result = {
-    formatters = {
-      json = function(body)
-        return vim.fn.system({"prettier", "--stdin-filepath", "a.json"}, body)
-      end,
-      html = function(body)
-        return vim.fn.system({"prettier", "--stdin-filepath", "a.html"}, body)
-      end
-    },
-  },
-})
-EOF
-endif
+" lua <<EOF
+" require("rest-nvim").setup({
+"   result = {
+"     formatters = {
+"       json = function(body)
+"         return vim.fn.system({"prettier", "--stdin-filepath", "a.json"}, body)
+"       end,
+"       html = function(body)
+"         return vim.fn.system({"prettier", "--stdin-filepath", "a.html"}, body)
+"       end
+"     },
+"   },
+" })
+" EOF
 
 command! -nargs=0 RestRun :lua require("rest-nvim").run()
 command! -nargs=0 RestLast :lua require("rest-nvim").last()
