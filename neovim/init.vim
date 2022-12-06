@@ -75,7 +75,7 @@ Plug 'tyru/open-browser.vim', { 'on': ['<Plug>(openbrowser-smart-search)'] }
 Plug 'skywind3000/vim-terminal-help'
 Plug 'guns/xterm-color-table.vim', { 'on': ['XtermColorTable'] }
 Plug 'powerman/vim-plugin-AnsiEsc'
-Plug 'inside/vim-search-pulse'
+" Plug 'inside/vim-search-pulse'
 Plug 'dstein64/vim-startuptime', { 'on': ['StartupTime'] }
 Plug 'yaocccc/nvim-hlchunk'
 Plug 'rest-nvim/rest.nvim'
@@ -161,6 +161,7 @@ set ruler          " show the current line number and column number
 set showcmd        " show the current typing command
 set noshowmode     " Show current mode
 set scrolloff=0    " Set 7 lines to the cursor - when moving vertically using j/k
+set noscrollbind
 
 " File encode:encode for varied filetype
 set encoding=utf-8
@@ -1042,6 +1043,9 @@ function! UltiSnipsExpandOrJumpOrTab()
   endif
 endfunction
 
+" vim-wordmotion
+let g:wordmotion_prefix = 'v'
+
 " devdocs.vim
 let g:devdocs_filetype_map = {
   \   'javascriptreact': 'react',
@@ -1072,7 +1076,8 @@ noremap <leader>` :GenDefinition<cr>
 " ------------
 " key bindings
 " ------------
-tnoremap <Esc> <C-\><C-n>
+" tnoremap <Esc> <C-\><C-n>
+tnoremap <c-\> <C-\><C-n>
 nnoremap <leader>ec :tabnew $MYVIMRC
 nnoremap <leader>. <C-^>
 " nnoremap <leader>/ :Rg<space>
