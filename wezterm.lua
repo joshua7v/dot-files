@@ -87,7 +87,7 @@ return {
   tab_bar_at_bottom = true,
 
   -- window
-  window_decorations = "NONE",
+  window_decorations = "RESIZE",
   window_padding = {
     left = 0,
     right = 0,
