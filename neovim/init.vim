@@ -385,7 +385,7 @@ endif
   
 " statusline
 if has('statusline')
-  set laststatus=3
+  set laststatus=1
   " set statusline=%{getcwd()}
   " set statusline+=\ %<%f
   " set statusline+=%F
