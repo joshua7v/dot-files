@@ -178,6 +178,7 @@ endif
 set formatoptions+=m
 set formatoptions+=B         " When joining lines, don't insert a space between two multi-byte characters.
 set completeopt=noinsert,menuone,noselect
+set jumpoptions+=stack
 
 set wildmenu                 " auto complete command
 set path+=**
@@ -385,7 +386,7 @@ endif
   
 " statusline
 if has('statusline')
-  set laststatus=1
+  set laststatus=2
   " set statusline=%{getcwd()}
   " set statusline+=\ %<%f
   " set statusline+=%F
@@ -1253,7 +1254,11 @@ EOF
 endif
 
 " Comment.nvim
-lua require('Comment').setup()
+lua <<EOF
+require('Comment').setup({
+    pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+})
+EOF
 
 " todo-comments.nvim
 " if s:is_installed('todo-comments.nvim')
