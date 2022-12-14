@@ -417,6 +417,8 @@ if isdirectory($HOME . "/scoop/apps/volta")
   let g:coc_node_path = "~/scoop/apps/volta/current/appdata/bin/node.exe"
 endif
 
+autocmd VimEnter * :CocCommand ds-pinyin-lsp.turn-off-completion
+
 let g:coc_global_extensions = [
         \"coc-clangd",
         \"coc-css",
