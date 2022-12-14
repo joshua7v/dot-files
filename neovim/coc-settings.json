@@ -18,11 +18,7 @@
   "list.interactiveDebounceTime": 300,
   "list.limitLines": 300,
   "list.normalMappings": {},
-  "list.source.grep.excludePatterns": [
-    "**/*.min.js",
-    "**/*.min.css",
-    "**/*.js.map"
-  ],
+  "list.source.grep.excludePatterns": ["**/*.min.js", "**/*.min.css", "**/*.js.map"],
   "coc.source.lines.enable": false,
   "snippets.textmateSnippetsRoots": ["~/.dot-files/neovim/snippets"],
   "snippets.extends": {
@@ -31,6 +27,9 @@
     "typescriptreact": ["typescript"]
   },
   "snippets.priority": 0,
+  "css.completion.completePropertyWithSemicolon": false,
+  "scss.completion.completePropertyWithSemicolon": false,
+  "less.completion.completePropertyWithSemicolon": false,
   "typescript.suggest.includeCompletionsWithSnippetText": false,
   "typescript.referencesCodeLens.enable": false,
   "typescript.implementationsCodeLens.enable": false,
@@ -46,6 +45,7 @@
   "pyright.disableDiagnostics": true,
   "clangd.disableDiagnostics": true,
   "clangd.arguments": ["--background-index", "--completion-style=detailed"],
+  "ds-pinyin-lsp.prompt": false,
   "languageserver": {
     "elixirLS": {
       "command": "~/erinn/tools/elixir-ls/language_server.bat",
@@ -56,5 +56,6 @@
       "filetypes": ["gdscript", "gdscript3"],
       "port": 6008
     }
-  }
+  },
+  "Lua.telemetry.enable": false
 }

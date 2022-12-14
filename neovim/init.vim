@@ -420,6 +420,7 @@ endif
 let g:coc_global_extensions = [
         \"coc-clangd",
         \"coc-css",
+        \"coc-ds-pinyin-lsp",
         \"coc-eslint",
         \"coc-git",
         \"coc-gitignore",
