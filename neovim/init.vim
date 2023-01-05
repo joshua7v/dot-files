@@ -21,7 +21,6 @@ Plug 'windwp/nvim-autopairs'
 Plug 'haya14busa/vim-asterisk'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-operator-user'
-" Plug 'kana/vim-textobj-indent'
 " Plug 'Julian/vim-textobj-variable-segment'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
@@ -65,16 +64,18 @@ Plug 'Shougo/echodoc.vim'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'jremmen/vim-ripgrep'
 Plug 'sindrets/diffview.nvim'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'skywind3000/gutentags_plus'
 
 " miscellaneous
 Plug 'romainl/vim-qf'
 Plug 'kevinhwang91/nvim-bqf'
-Plug 'farmergreg/vim-lastplace'
+Plug 'zhimsel/vim-stay'
 Plug 'pbrisbin/vim-mkdir'
 Plug 'tyru/open-browser.vim', { 'on': ['<Plug>(openbrowser-smart-search)'] }
 Plug 'skywind3000/vim-terminal-help'
 Plug 'guns/xterm-color-table.vim', { 'on': ['XtermColorTable'] }
-Plug 'powerman/vim-plugin-AnsiEsc'
+" Plug 'powerman/vim-plugin-AnsiEsc'
 " Plug 'inside/vim-search-pulse'
 Plug 'dstein64/vim-startuptime', { 'on': ['StartupTime'] }
 Plug 'yaocccc/nvim-hlchunk'
@@ -112,7 +113,8 @@ command! SF :setlocal syntax=off
 let g:mapleader = ','
 set nocompatible
 
-set iskeyword+=-
+set iskeyword-=-
+autocmd FileType html,css,typescriptreact setlocal iskeyword+=-
 set inccommand=nosplit
 set confirm
 set background=dark
@@ -162,6 +164,7 @@ set showcmd        " show the current typing command
 set noshowmode     " Show current mode
 set scrolloff=0    " Set 7 lines to the cursor - when moving vertically using j/k
 set noscrollbind
+set switchbuf=useopen
 
 " File encode:encode for varied filetype
 set encoding=utf-8
@@ -643,6 +646,39 @@ endif
 
 hi def link CocFadeOut NonText
 
+" vim-gutentags
+let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
+
+let g:gutentags_ctags_tagfile = '.tags'
+
+let g:gutentags_modules = []
+if executable('ctags')
+	let g:gutentags_modules += ['ctags']
+endif
+if executable('gtags-cscope') && executable('gtags')
+	let g:gutentags_modules += ['gtags_cscope']
+endif
+
+let g:gutentags_cache_dir = expand('~/.cache/tags')
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
+let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
+let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+let g:gutentags_auto_add_gtags_cscope = 0
+let g:gutentags_plus_switch = 1
+
+let g:gutentags_plus_nomap = 1
+noremap <silent> <leader>gs :GscopeFind! s <C-R><C-W><cr>
+noremap <silent> <leader>gg :GscopeFind! g <C-R><C-W><cr>
+noremap <silent> <leader>gc :GscopeFind! c <C-R><C-W><cr>
+noremap <silent> <leader>gt :GscopeFind! t <C-R><C-W><cr>
+noremap <silent> <leader>ge :GscopeFind! e <C-R><C-W><cr>
+noremap <silent> <leader>gf :GscopeFind! f <C-R>=expand("<cfile>")<cr><cr>
+noremap <silent> <leader>gi :GscopeFind! i <C-R>=expand("<cfile>")<cr><cr>
+noremap <silent> <leader>gd :GscopeFind! d <C-R><C-W><cr>
+noremap <silent> <leader>ga :GscopeFind! a <C-R><C-W><cr>
+noremap <silent> <leader>gz :GscopeFind! z <C-R><C-W><cr>
+
 " editorconfig-vim
 let &colorcolumn="121"
 
@@ -682,6 +718,8 @@ set errorformat+=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
 set errorformat+=%f:%l:%c:\ %m
 set errorformat+=%f:%l\ %m
 set errorformat+=%f\ :\ %m
+" xmake
+set errorformat+=%f(%l):\ %m
 " set errorformat+=%-G%.%#
 
 " %f(%l) \=: %t%*\D%n: %m,%*[^"]"%f"%*\D%l: %m,%f(%l) \=: %m,%*[^ ] %f %l: %m,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,%f|%l| %m
