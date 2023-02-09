@@ -51,6 +51,7 @@ Plug 'tpope/vim-abolish'
 Plug 'mattn/emmet-vim'
 
 " project
+Plug 'nvim-lua/plenary.nvim'
 Plug 'rhysd/devdocs.vim', { 'on': ['DevDocsAllUnderCursor'] }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'voldikss/vim-floaterm'
@@ -60,7 +61,6 @@ Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-fugitive'
 Plug 'rhysd/git-messenger.vim'
 Plug 'Shougo/echodoc.vim'
-" Plug 'nvim-lua/plenary.nvim'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'jremmen/vim-ripgrep'
 Plug 'sindrets/diffview.nvim'
@@ -713,13 +713,16 @@ autocmd BufNewFile,BufRead settings.json      set ft=jsonc
 " autocmd FileType json setlocal conceallevel=0
 
 set errorformat=
+" xmake
+set errorformat+=%f(%l):\ %m
+set errorformat+=%f(%l)\ :\ %m
+
 set errorformat+=%.%#-->\ %f:%l:%c
 set errorformat+=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
 set errorformat+=%f:%l:%c:\ %m
 set errorformat+=%f:%l\ %m
 set errorformat+=%f\ :\ %m
-" xmake
-set errorformat+=%f(%l):\ %m
+
 " set errorformat+=%-G%.%#
 
 " %f(%l) \=: %t%*\D%n: %m,%*[^"]"%f"%*\D%l: %m,%f(%l) \=: %m,%*[^ ] %f %l: %m,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,%f|%l| %m
