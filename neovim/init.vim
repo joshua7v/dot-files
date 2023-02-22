@@ -3,7 +3,7 @@ call plug#begin(stdpath('data') . '/plugged')
 if exists(":PlugInstall")
 
 " colorscheme
-Plug 'mhartington/oceanic-next'
+Plug 'joshua7v/oceanic-next', { 'branch': 'silent' }
 
 " syntax
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
@@ -102,7 +102,7 @@ if &compatible
 endif
 
 filetype plugin indent on
-syntax manual
+syntax on
 autocmd FileType dirvish,qf setlocal syntax=on
 
 command! SO :setlocal syntax=on
@@ -270,6 +270,32 @@ nnoremap <leader>ff :AsyncRun -errorformat=\%f fd -a
 set sessionoptions-=blank
 set sessionoptions-=buffers
 
+
+function! SaveJump(motion)
+  if exists('#SaveJump#CursorMoved')
+    autocmd! SaveJump
+  else
+    normal! m'
+  endif
+  let m = a:motion
+  if v:count
+    let m = v:count.m
+  endif
+  execute 'normal!' m
+endfunction
+
+function! SetJump()
+  augroup SaveJump
+    autocmd!
+    autocmd CursorMoved * autocmd! SaveJump
+  augroup END
+endfunction
+
+nnoremap <silent> <C-f> :<C-u>call SaveJump("\<lt>C-f>")<CR>:call SetJump()<CR>
+nnoremap <silent> <C-b> :<C-u>call SaveJump("\<lt>C-b>")<CR>:call SetJump()<CR>
+nnoremap <silent> <C-u> :<C-u>call SaveJump("\<lt>C-u>")<CR>:call SetJump()<CR>
+nnoremap <silent> <C-d> :<C-u>call SaveJump("\<lt>C-d>")<CR>:call SetJump()<CR>
+
 " -------------------
 " appearance settings
 " -------------------
@@ -310,6 +336,16 @@ function! s:patch_oceanic_next_colors()
   hi! link TargetWord TabLineSel
   hi! link Error StatusLine
   hi! link Folded EndOfBuffer
+
+  augroup vimrc_todo
+      au!
+      au Syntax * syn match MyTodo /\v<(FIXME|NOTE|OPTIMIZE)/ containedin=.*Comment,vimCommentTitle
+      au Syntax * syn match MyImportant /\v<(IMPORTANT|TEMP)/ containedin=.*Comment,vimCommentTitle
+  augroup END
+  hi MyTodo guifg=white guibg=#da666c
+  hi MyImportant guifg=white guibg=#efad04
+  hi typescriptCommentTodo guibg=#4381c0
+
 endfunction
 autocmd! ColorScheme OceanicNext call s:patch_oceanic_next_colors()
 
@@ -328,6 +364,24 @@ if s:is_installed('oceanic-next')
 else
   colorscheme desert
 endif
+
+
+function! HighlightGroup()
+    let l:s = synID(line('.'), col('.'), 1)
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun
+
+function! HighlightStack()
+    for i1 in synstack(line("."), col("."))
+        let i2 = synIDtrans(i1)
+        let n1 = synIDattr(i1, "name")
+        let n2 = synIDattr(i2, "name")
+        echo n1 "->" n2
+    endfor
+endfunction
+
+command! HG :call HighlightGroup()
+command! HS :call HighlightStack()
 
 function! StatusDiagnostic() abort
   let info = get(b:, 'coc_diagnostic_info', {})
@@ -554,7 +608,6 @@ nmap <silent>gd :call <SID>GoToDefinition()<cr>
 " nmap <silent> gd <Plug>(coc-definition)
 " vnoremap <leader>g :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
 " nnoremap <leader>g :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@ 
-inoremap <silent><expr> <c-space> coc#refresh()
 
 function! ToggleOutline() abort
   let winid = coc#window#find('cocViewId', 'OUTLINE')
@@ -606,6 +659,7 @@ command! -nargs=0 TODO exe 'Rg -e "TODO:"'
 command! -nargs=0 NOTE exe 'Rg -e "NOTE:"'
 command! -nargs=0 IMPORTANT exe 'Rg -e "IMPORTANT:"'
 inoremap <silent><c-k> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
+inoremap <silent><expr> <c-j> coc#refresh()
 inoremap <silent><expr> <c-d> coc#refresh()
 
 " inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
@@ -809,8 +863,8 @@ command! -nargs=? -complete=dir Vexplore leftabove vsplit | silent Dirvish <args
 nmap <silent><leader>z :MaximizerToggle<cr>
 
 " vim-edgemotion
-nmap <c-j> <Plug>(edgemotion-j)
-nmap <c-k> <Plug>(edgemotion-k)
+nnoremap <expr> <c-k> "m'" . "<plug>(edgemotion-k)"
+nnoremap <expr> <c-j> "m'" . "<plug>(edgemotion-j)"
 vmap <c-j> <Plug>(edgemotion-j)
 vmap <c-k> <Plug>(edgemotion-k)
 
@@ -919,7 +973,6 @@ require('bqf').setup({
         open = 'o',
     },
     preview = {
-      delay_syntax = -1,
       show_title = false,
       should_preview_cb = function(bufnr, qwinid)
           local ret = true
