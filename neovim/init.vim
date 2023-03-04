@@ -64,8 +64,8 @@ Plug 'Shougo/echodoc.vim'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'jremmen/vim-ripgrep'
 Plug 'sindrets/diffview.nvim'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'skywind3000/gutentags_plus'
+Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp'] }
+Plug 'skywind3000/gutentags_plus', { 'for': ['c', 'cpp'] }
 
 " miscellaneous
 Plug 'romainl/vim-qf'
