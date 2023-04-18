@@ -87,7 +87,7 @@ return {
   tab_bar_at_bottom = true,
 
   -- window
-  window_decorations = "RESIZE",
+  window_decorations = "NONE",
   window_padding = {
     left = 0,
     right = 0,
@@ -135,8 +135,8 @@ return {
 
     {key="b", mods = "LEADER|ALT", action=wezterm.action{SendString="\x02"}},
     {key="Enter", mods="CTRL", action=wezterm.action.ToggleFullScreen},
-    {key="c", mods="ALT", action="Copy"},
-    {key="v", mods="ALT", action="Paste"},
+    {key="c", mods="ALT", action=wezterm.action.CopyTo 'ClipboardAndPrimarySelection'},
+    {key="v", mods="ALT", action=wezterm.action.PasteFrom 'Clipboard'},
     {key=";", mods="CTRL", action={SendKey={key="RightArrow"}}},
 
     -- tab
