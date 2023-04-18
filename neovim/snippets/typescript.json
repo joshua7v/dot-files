@@ -13,6 +13,12 @@
     ],
     "description": "React Hook"
   },
+  "ed": {
+    "scope": "javascript,typescript",
+    "prefix": "ed",
+    "body": ["export default $TM_FILENAME_BASE"],
+    "description": "export default"
+  },
   "twindow": {
     "scope": "javascript,typescript",
     "prefix": "twindow",
