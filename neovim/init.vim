@@ -33,7 +33,7 @@ Plug 'numToStr/Comment.nvim'
 Plug 'mg979/vim-visual-multi'
 Plug 'mbbill/undotree'
 Plug 'Shougo/vinarise.vim', { 'on': ['Vinarise'] }
-Plug 'Valloric/MatchTagAlways', { 'for': ['typescriptreact', 'html'] }
+" Plug 'Valloric/MatchTagAlways', { 'for': ['typescriptreact', 'html'] }
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-surround'
@@ -64,8 +64,8 @@ Plug 'Shougo/echodoc.vim'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'jremmen/vim-ripgrep'
 Plug 'sindrets/diffview.nvim'
-Plug 'ludovicchabant/vim-gutentags', { 'for': ['c', 'cpp'] }
-Plug 'skywind3000/gutentags_plus', { 'for': ['c', 'cpp'] }
+" Plug 'ludovicchabant/vim-gutentags'
+" Plug 'skywind3000/gutentags_plus'
 
 " miscellaneous
 Plug 'romainl/vim-qf'
@@ -291,10 +291,10 @@ function! SetJump()
   augroup END
 endfunction
 
-nnoremap <silent> <C-f> :<C-u>call SaveJump("\<lt>C-f>")<CR>:call SetJump()<CR>
-nnoremap <silent> <C-b> :<C-u>call SaveJump("\<lt>C-b>")<CR>:call SetJump()<CR>
-nnoremap <silent> <C-u> :<C-u>call SaveJump("\<lt>C-u>")<CR>:call SetJump()<CR>
-nnoremap <silent> <C-d> :<C-u>call SaveJump("\<lt>C-d>")<CR>:call SetJump()<CR>
+" nnoremap <silent> <C-f> :<C-u>call SaveJump("\<lt>C-f>")<CR>:call SetJump()<CR>
+" nnoremap <silent> <C-b> :<C-u>call SaveJump("\<lt>C-b>")<CR>:call SetJump()<CR>
+" nnoremap <silent> <C-u> :<C-u>call SaveJump("\<lt>C-u>")<CR>:call SetJump()<CR>
+" nnoremap <silent> <C-d> :<C-u>call SaveJump("\<lt>C-d>")<CR>:call SetJump()<CR>
 
 " -------------------
 " appearance settings
@@ -1295,8 +1295,8 @@ require'nvim-treesitter.configs'.setup {
 
 -- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 -- parser_config.tsx.filetype_to_parsername = { "javascript", "typescriptreact" }
-local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
-ft_to_parser.typescriptreact = "tsx"
+-- local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
+-- ft_to_parser.typescriptreact = "tsx"
 EOF
 
 " nvim-treesitter-textobjects
@@ -1354,71 +1354,9 @@ endif
 " Comment.nvim
 lua <<EOF
 require('Comment').setup({
-    pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+  pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
 })
 EOF
-
-" todo-comments.nvim
-" if s:is_installed('todo-comments.nvim')
-" lua <<EOF
-" require("todo-comments").setup {
-"   signs = false,
-"   -- keywords recognized as todo comments
-"   keywords = {
-"     FIX = {
-"       icon = "", -- icon used for the sign, and in search results
-"       color = "error", -- can be a hex color, or a named color (see below)
-"       alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
-"       -- signs = false, -- configure signs for some keywords individually
-"     },
-"     TODO = { icon = "", color = "#fd8489" },
-"     HACK = { icon = "", color = "warning" },
-"     WARN = { icon = "", color = "warning", alt = { "WARNING", "XXX" } },
-"     PERF = { icon = "", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-"     NOTE = { icon = "", color = "hint", alt = { "INFO" } },
-"     TEMP = { icon = "", color = "error" },
-"     IMPORTANT = { icon = "", color = "#FBBF24" },
-"   },
-"   merge_keywords = false, -- when true, custom keywords will be merged with the defaults
-"   -- highlighting of the line containing the todo comment
-"   -- * before: highlights before the keyword (typically comment characters)
-"   -- * keyword: highlights of the keyword
-"   -- * after: highlights after the keyword (todo text)
-"   highlight = {
-"     before = "", -- "fg" or "bg" or empty
-"     keyword = "bg", -- "fg", "bg", "wide" or empty. (wide is the same as bg, but will also highlight surrounding characters)
-"     after = "", -- "fg" or "bg" or empty
-"     pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
-"     comments_only = true, -- uses treesitter to match keywords in comments only
-"     max_line_len = 400, -- ignore lines longer than this
-"     exclude = {}, -- list of file types to exclude highlighting
-"   },
-"   -- list of named colors where we try to extract the guifg from the
-"   -- list of hilight groups or use the hex color if hl not found as a fallback
-"   colors = {
-"     error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
-"     warning = { "DiagnosticWarning", "WarningMsg", "#FBBF24" },
-"     info = { "DiagnosticInfo", "#2563EB" },
-"     hint = { "DiagnosticHint", "#10B981" },
-"     default = { "Identifier", "#7C3AED" },
-"   },
-"   search = {
-"     command = "rg",
-"     args = {
-"       "--color=never",
-"       "--no-heading",
-"       "--with-filename",
-"       "--line-number",
-"       "--column",
-"     },
-"     -- regex that will be used to match keywords.
-"     -- don't replace the (KEYWORDS) placeholder
-"     pattern = [[\b(KEYWORDS):]], -- ripgrep regex
-"     -- pattern = [[\b(KEYWORDS)\b]], -- match without the extra colon. You'll likely get false positives
-"   },
-" }
-" EOF
-" endif
 
 " incline.nvim
 if s:is_installed('incline.nvim')
@@ -1468,6 +1406,8 @@ fun s:mapMake()
   nnoremap <silent><c-\> :AsyncRun -save=1 make<cr>;
   nnoremap <silent><c-,> :AsyncRun -save=1 make test<cr>;
   nnoremap <silent><c-.> :AsyncRun -save=1 make clean<cr>;
+  nnoremap <silent><m-,> :AsyncRun -save=1 make test<cr>;
+  nnoremap <silent><m-.> :AsyncRun -save=1 make clean<cr>;
   command! MakeRaw AsyncRun -save=1 -raw make
   
   if &ft == "http"
