@@ -771,16 +771,20 @@ set errorformat=
 set errorformat+=%f(%l):\ %m
 set errorformat+=%f(%l)\ :\ %m
 
+" rust
 set errorformat+=%.%#-->\ %f:%l:%c
 set errorformat+=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
 set errorformat+=%f:%l:%c:\ %m
 set errorformat+=%f:%l\ %m
 set errorformat+=%f\ :\ %m
 
+" typescript
+set errorformat+=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
+
 " set errorformat+=%-G%.%#
 
 " %f(%l) \=: %t%*\D%n: %m,%*[^"]"%f"%*\D%l: %m,%f(%l) \=: %m,%*[^ ] %f %l: %m,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,%f|%l| %m
-" autocmd BufNewFile,BufRead *.ts,*.tsx      set errorformat=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
+" autocmd BufNewFile,BufRead *.ts,*.tsx      set errorformat+=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
 
 " vim-asterisk
 let g:asterisk#keeppos = 1
@@ -1139,7 +1143,7 @@ function! UltiSnipsExpandOrJumpOrTab()
 endfunction
 
 " vim-wordmotion
-let g:wordmotion_prefix = '\'
+let g:wordmotion_prefix = "v"
 
 " devdocs.vim
 let g:devdocs_filetype_map = {
@@ -1462,7 +1466,8 @@ command! -nargs=0 RestPreview :lua require("rest-nvim").run(true)
 
 fun s:mapMake()
   nnoremap <silent><c-\> :AsyncRun -save=1 make<cr>;
-  nnoremap <silent><m-\> :AsyncRun -save=1 -raw make<cr>;
+  nnoremap <silent><c-,> :AsyncRun -save=1 make test<cr>;
+  nnoremap <silent><c-.> :AsyncRun -save=1 make clean<cr>;
   command! MakeRaw AsyncRun -save=1 -raw make
   
   if &ft == "http"
