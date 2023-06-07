@@ -70,7 +70,8 @@ Plug 'sindrets/diffview.nvim'
 " miscellaneous
 Plug 'romainl/vim-qf'
 Plug 'kevinhwang91/nvim-bqf'
-Plug 'zhimsel/vim-stay'
+" Plug 'zhimsel/vim-stay'
+Plug 'farmergreg/vim-lastplace'
 Plug 'pbrisbin/vim-mkdir'
 Plug 'tyru/open-browser.vim', { 'on': ['<Plug>(openbrowser-smart-search)'] }
 Plug 'skywind3000/vim-terminal-help'
@@ -269,7 +270,6 @@ nnoremap <leader>ff :AsyncRun -errorformat=\%f fd -a
 
 set sessionoptions-=blank
 set sessionoptions-=buffers
-
 
 function! SaveJump(motion)
   if exists('#SaveJump#CursorMoved')
@@ -524,6 +524,17 @@ function! s:GoToDefinition()
     call searchdecl(expand('<cword>'))
   endif
 endfunction
+
+function! s:GoToDefinitionSplit()
+  if CocAction('jumpDefinition', 'vsplit')
+    return v:true
+  endif
+
+  let ret = execute("silent! normal \<C-]>")
+  if ret[:5] =~ "Error"
+    call searchdecl(expand('<cword>'))
+  endif
+endfunction
   
 function! s:GoToReferences()
   execute 'normal z*'
@@ -605,6 +616,7 @@ nmap <leader>ac <Plug>(coc-codeaction-cursor)
 xmap <leader>ac <Plug>(coc-codeaction-selected)
 nmap <silent>K :call <SID>show_documentation()<cr>
 nmap <silent>gd :call <SID>GoToDefinition()<cr>
+nmap <silent>gD :call <SID>GoToDefinitionSplit()<cr>
 " nmap <silent> gd <Plug>(coc-definition)
 " vnoremap <leader>g :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
 " nnoremap <leader>g :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@ 
@@ -1435,3 +1447,5 @@ if exists('g:nvui')
   autocmd InsertEnter * NvuiIMEEnable
   autocmd InsertLeave * NvuiIMEDisable
 endif
+
+au FileType typescriptreact let b:coc_root_patterns = ['.git', '.env', 'tailwind.config.js', 'tailwind.config.cjs']
