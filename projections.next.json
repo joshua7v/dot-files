@@ -22,61 +22,58 @@
     "template": [
       "import {open} style {close} from '@vanilla-extract/css';",
       "",
-      "export const {basename|snakecase} = style({open}{close});",
-      "",
-      "const styles = {open}",
-      "  {basename|snakecase},",
-      "{close};",
-      "",
-      "export default styles;"
+      "export const {basename} = style({open}{close});"
     ]
   },
-  "pages/*.tsx": {
+  "src/pages/*.tsx": {
+    "type": "page",
+    "alternate": "src/styles/{}Page.css.ts"
+  },
+  "src/pages": {
     "type": "page"
   },
-  "pages": {
-    "type": "page"
+  "src/components/*.tsx": {
+    "type": "components",
+    "alternate": "src/components/{}.css.ts"
   },
-  "components/*.tsx": {
+  "src/components": {
     "type": "components"
   },
-  "components": {
-    "type": "components"
+  "src/layouts/*.tsx": {
+    "type": "layouts",
+    "alternate": "src/layouts/{}.css.ts"
   },
-  "layouts/*.tsx": {
+  "src/layouts": {
     "type": "layouts"
   },
-  "layouts": {
-    "type": "layouts"
-  },
-  "states/*.ts": {
+  "src/states/*.ts": {
     "type": "states"
   },
-  "states": {
+  "src/states": {
     "type": "states"
   },
-  "utils/*.ts": {
+  "src/utils/*.ts": {
     "type": "utils"
   },
-  "utils": {
+  "src/utils": {
     "type": "utils"
   },
-  "machines/*.ts": {
+  "src/machines/*.ts": {
     "type": "machines"
   },
-  "machines": {
+  "src/machines": {
     "type": "machines"
   },
-  "styles/*.ts": {
+  "src/styles/*.ts": {
     "type": "styles"
   },
-  "styles": {
+  "src/styles": {
     "type": "styles"
   },
-  "types/*.ts": {
+  "src/types/*.ts": {
     "type": "types"
   },
-  "types": {
+  "src/types": {
     "type": "types"
   }
 }
