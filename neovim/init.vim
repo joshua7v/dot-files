@@ -1064,7 +1064,7 @@ EOF
 " autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
 
 " vim-ripgrep
-command! R :Rg <cword> %
+command! R :Rg -w <cword> %
 
 " open-browser.vim
 nmap gx <Plug>(openbrowser-smart-search)
