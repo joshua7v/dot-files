@@ -929,14 +929,14 @@ let g:floaterm_width = 0.8
 let g:floaterm_height = 0.8
 let g:floaterm_title = 'Terminal $1/$2'
 
-tnoremap <c-e> <c-\><c-n>:FloatermPrev<cr>
-tnoremap <c-r> <c-\><c-n>:FloatermNext<cr>
+tnoremap <c-[> <c-\><c-n>:FloatermPrev<cr>
+tnoremap <c-]> <c-\><c-n>:FloatermNext<cr>
 tnoremap <m-t> <c-\><c-n>:FloatermNew<cr>
 nnoremap <m-t> :FloatermNew<cr>
 nnoremap <m-s> :FloatermNew vifm %:p:h<cr>
 nnoremap <m-g> :FloatermNew gitui<cr>
 
-command! TermNew FloatermNew
+command! NewTerm FloatermNew
 command! Vifm :FloatermNew vifm %:p:h .
 command! Gitui :FloatermNew gitui
 
