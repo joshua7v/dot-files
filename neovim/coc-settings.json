@@ -18,7 +18,11 @@
   "list.interactiveDebounceTime": 300,
   "list.limitLines": 300,
   "list.normalMappings": {},
-  "list.source.grep.excludePatterns": ["**/*.min.js", "**/*.min.css", "**/*.js.map"],
+  "list.source.grep.excludePatterns": [
+    "**/*.min.js",
+    "**/*.min.css",
+    "**/*.js.map"
+  ],
   "coc.source.lines.enable": false,
   "snippets.textmateSnippetsRoots": ["~/.dot-files/neovim/snippets"],
   "snippets.extends": {
@@ -27,9 +31,12 @@
     "typescriptreact": ["typescript"]
   },
   "snippets.priority": 0,
+  "css.lint.unknownAtRules": "ignore",
   "css.completion.completePropertyWithSemicolon": false,
   "scss.completion.completePropertyWithSemicolon": false,
   "less.completion.completePropertyWithSemicolon": false,
+  "cssmodules.camelCase": true,
+  "cssmodules.hintName": "CM",
   "typescript.suggest.includeCompletionsWithSnippetText": false,
   "typescript.referencesCodeLens.enable": false,
   "typescript.implementationsCodeLens.enable": false,
@@ -37,15 +44,19 @@
   "javascript.implementationsCodeLens.enable": false,
   "highlight.disableLanguages": ["dirvish"],
   "rust-analyzer.server.path": "rust-analyzer",
+  "rust-analyzer.diagnostics.enable": false,
   "rust-analyzer.procMacro.enable": true,
   "rust-analyzer.lens.enable": false,
+  "Lua.telemetry.enable": false,
+  "Lua.diagnostics.enable": false,
   "Lua.diagnostics.globals": ["love"],
+  "Lua.diagnostics.disable": ["lowercase-global"],
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "zig.path": "zls",
   "pyright.disableDiagnostics": true,
+  "clangd.enabled": true,
   "clangd.disableDiagnostics": true,
   "clangd.arguments": ["--background-index", "--completion-style=detailed"],
-  "ds-pinyin-lsp.prompt": false,
   "languageserver": {
     "elixirLS": {
       "command": "~/erinn/tools/elixir-ls/language_server.bat",
@@ -54,8 +65,7 @@
     "godot": {
       "host": "127.0.0.1",
       "filetypes": ["gdscript", "gdscript3"],
-      "port": 6008
+      "port": 6005
     }
-  },
-  "Lua.telemetry.enable": false
+  }
 }
