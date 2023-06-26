@@ -64,6 +64,7 @@ Plug 'Shougo/echodoc.vim'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'jremmen/vim-ripgrep'
 Plug 'sindrets/diffview.nvim'
+Plug 'rmagatti/auto-session'
 " Plug 'ludovicchabant/vim-gutentags'
 " Plug 'skywind3000/gutentags_plus'
 
@@ -268,8 +269,8 @@ endif
 nnoremap <leader>rz :Rg -e "[\u4e00-\u9fa5]+"
 nnoremap <leader>ff :AsyncRun -errorformat=\%f fd -a 
 
-set sessionoptions-=blank
-set sessionoptions-=buffers
+" set sessionoptions-=blank
+" set sessionoptions-=buffers
 
 function! SaveJump(motion)
   if exists('#SaveJump#CursorMoved')
@@ -1364,11 +1365,19 @@ npairs.setup({
 EOF
 endif
 
+lua <<EOF
+require("auto-session").setup {
+    log_level = "error",
+    auto_session_suppress_dirs = { "~/", "~/Downloads", "/"},
+}
+EOF
+
 " Comment.nvim
 lua <<EOF
 require('Comment').setup({
   pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
 })
+vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 EOF
 
 " incline.nvim
@@ -1450,3 +1459,4 @@ if exists('g:nvui')
 endif
 
 au FileType typescriptreact let b:coc_root_patterns = ['.git', '.env', 'tailwind.config.js', 'tailwind.config.cjs']
+
