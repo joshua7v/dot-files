@@ -11,6 +11,12 @@
     "body": ["import * as styles from './$TM_FILENAME_BASE.css';"],
     "description": "import * as styles"
   },
+  "icm": {
+    "scope": "javascript,typescript",
+    "prefix": "icm",
+    "body": ["import styles from './$TM_FILENAME_BASE.module.css';"],
+    "description": "import styles"
+  },
   "icx": {
     "scope": "javascript,typescript",
     "prefix": "icx",
