@@ -269,9 +269,6 @@ endif
 nnoremap <leader>rz :Rg -e "[\u4e00-\u9fa5]+"
 nnoremap <leader>ff :AsyncRun -errorformat=\%f fd -a 
 
-" set sessionoptions-=blank
-" set sessionoptions-=buffers
-
 function! SaveJump(motion)
   if exists('#SaveJump#CursorMoved')
     autocmd! SaveJump
@@ -1365,19 +1362,23 @@ npairs.setup({
 EOF
 endif
 
+" auto-session
 lua <<EOF
 require("auto-session").setup {
     log_level = "error",
     auto_session_suppress_dirs = { "~/", "~/Downloads", "/"},
 }
+vim.o.sessionoptions="blank,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 EOF
+" set sessionoptions-=blank
+" set sessionoptions-=buffers
+
 
 " Comment.nvim
 lua <<EOF
 require('Comment').setup({
   pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
 })
-vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 EOF
 
 " incline.nvim
