@@ -36,5 +36,17 @@
     "prefix": "im",
     "body": ["import { $0 } from '$1';"],
     "description": "Import"
+  },
+  "vs": {
+    "scope": "javascript,typescript",
+    "prefix": "vs",
+    "body": ["export const $1 = style({ $0 });"],
+    "description": "Vanilla Style"
+  },
+  "vss": {
+    "scope": "javascript,typescript",
+    "prefix": "vss",
+    "body": ["export const $1 = style([$0]);"],
+    "description": "Vanilla Styles"
   }
 }
