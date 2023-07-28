@@ -1,5 +1,6 @@
 source ~/.vimrc
 
+set sneak
 set surround
 set visualbell
 set noerrorbells

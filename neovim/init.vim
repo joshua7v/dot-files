@@ -28,7 +28,8 @@ Plug 'ntpeters/vim-better-whitespace', { 'on': ['StripWhitespace'] }
 Plug 'justinmk/vim-dirvish'
 Plug 'szw/vim-maximizer', { 'on': ['MaximizerToggle'] }
 Plug 'haya14busa/vim-edgemotion'
-Plug 'rlane/pounce.nvim'
+" Plug 'rlane/pounce.nvim'
+Plug 'justinmk/vim-sneak'
 Plug 'numToStr/Comment.nvim'
 Plug 'mg979/vim-visual-multi'
 Plug 'mbbill/undotree'
@@ -812,14 +813,18 @@ map gz# <Plug>(asterisk-gz#)
 " echodoc.vim
 let g:echodoc#enable_at_startup = 1
 
-" pounce.nvim
-nmap s <cmd>Pounce<cr>
-nmap S <cmd>PounceRepeat<cr>
-vmap s <cmd>Pounce<cr>
+" vim-sneak
+hi! link Sneak Search
 
-hi! link PounceMatch Search
-hi! link PounceAcceptBest Cursor
-hi PounceGap ctermfg=none ctermbg=none guibg=#3a4b5c guifg=none gui=none
+" pounce.nvim
+" nmap s <cmd>Pounce<cr>
+" nmap S <cmd>PounceRepeat<cr>
+" vmap s <cmd>Pounce<cr>
+Sneak
+"
+" hi! link PounceMatch Search
+" hi! link PounceAcceptBest Cursor
+" hi PounceGap ctermfg=none ctermbg=none guibg=#3a4b5c guifg=none gui=none
 
 " tabular
 nmap <leader>a= :Tabularize /=<CR>
@@ -1275,12 +1280,12 @@ require'nvim-treesitter.configs'.setup {
     "dockerfile",
     "elixir",
     "heex",
-    "java",
+    -- "java",
     "markdown",
     "gdscript",
     "glsl",
     "go",
-    "graphql",
+    -- "graphql",
     "html",
     "http",
     "jsdoc",
