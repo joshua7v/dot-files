@@ -16,7 +16,7 @@ Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 " edit
 " Plug 'github/copilot.vim'
 Plug 'chaoren/vim-wordmotion'
-Plug 'b0o/incline.nvim'
+" Plug 'b0o/incline.nvim'
 Plug 'windwp/nvim-autopairs'
 Plug 'haya14busa/vim-asterisk'
 Plug 'kana/vim-textobj-user'
@@ -63,6 +63,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'rhysd/git-messenger.vim'
 Plug 'Shougo/echodoc.vim'
 Plug 'MattesGroeger/vim-bookmarks'
+" Plug 'RutaTang/quicknote.nvim'
 Plug 'jremmen/vim-ripgrep'
 Plug 'sindrets/diffview.nvim'
 Plug 'rmagatti/auto-session'
@@ -820,7 +821,6 @@ hi! link Sneak Search
 " nmap s <cmd>Pounce<cr>
 " nmap S <cmd>PounceRepeat<cr>
 " vmap s <cmd>Pounce<cr>
-Sneak
 "
 " hi! link PounceMatch Search
 " hi! link PounceAcceptBest Cursor
@@ -1188,6 +1188,12 @@ let g:bookmark_auto_save = 1
 " vim-gencode-cpp
 noremap <leader>` :GenDefinition<cr>
 
+" quicknote.nvim
+" lua <<EOF
+" require("quicknote").setup({})
+" vim.api.nvim_set_keymap("n", "<leader>p", "<cmd>:lua require('quicknote').NewNoteAtCurrentLine()<cr>",{})
+" EOF
+
 " ------------
 " key bindings
 " ------------
@@ -1195,6 +1201,7 @@ noremap <leader>` :GenDefinition<cr>
 tnoremap <c-\> <C-\><C-n>
 nnoremap <leader>ec :tabnew $MYVIMRC
 nnoremap <leader>. <C-^>
+command! TabCloseRight :.+1,$tabdo :q
 " nnoremap <leader>/ :Rg<space>
 " inoremap jj <ESC>
 
@@ -1387,28 +1394,28 @@ require('Comment').setup({
 EOF
 
 " incline.nvim
-if s:is_installed('incline.nvim')
-lua <<EOF
-require('incline').setup({
-  hide = {
-    cursorline = true,
-    focused_win = false,
-    only_win = true
-  },
-  render = function(props)
-    local bufname = vim.api.nvim_buf_get_name(props.buf)
-    local res = bufname ~= '' and vim.fn.fnamemodify(bufname, ':t') or '[no name]'
-    if string.find(vim.fn.fnamemodify(bufname, ":t"), "index") then
-      res = vim.fn.fnamemodify(bufname, ":.")
-    end
-    if vim.api.nvim_buf_get_option(props.buf, 'modified') then
-      res = res .. ' [+]'
-    end
-    return res
-  end,
-})
-EOF
-endif
+" if s:is_installed('incline.nvim')
+" lua <<EOF
+" require('incline').setup({
+"   hide = {
+"     cursorline = true,
+"     focused_win = false,
+"     only_win = true
+"   },
+"   render = function(props)
+"     local bufname = vim.api.nvim_buf_get_name(props.buf)
+"     local res = bufname ~= '' and vim.fn.fnamemodify(bufname, ':t') or '[no name]'
+"     if string.find(vim.fn.fnamemodify(bufname, ":t"), "index") then
+"       res = vim.fn.fnamemodify(bufname, ":.")
+"     end
+"     if vim.api.nvim_buf_get_option(props.buf, 'modified') then
+"       res = res .. ' [+]'
+"     end
+"     return res
+"   end,
+" })
+" EOF
+" endif
 
 " rest.nvim
 " lua <<EOF
