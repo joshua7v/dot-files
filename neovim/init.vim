@@ -11,7 +11,9 @@ Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 " Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 " Plug 'Shougo/context_filetype.vim'
-" Plug 'sheerun/vim-polyglot'
+let g:polyglot_disabled = ['javascript']
+Plug 'sheerun/vim-polyglot'
+" Plug 'maxmellon/vim-jsx-pretty'
 
 " edit
 " Plug 'github/copilot.vim'
@@ -64,7 +66,8 @@ Plug 'rhysd/git-messenger.vim'
 Plug 'Shougo/echodoc.vim'
 Plug 'MattesGroeger/vim-bookmarks'
 " Plug 'RutaTang/quicknote.nvim'
-Plug 'jremmen/vim-ripgrep'
+" Plug 'jremmen/vim-ripgrep'
+Plug 'mangelozzi/rgflow.nvim'
 Plug 'sindrets/diffview.nvim'
 Plug 'rmagatti/auto-session'
 " Plug 'ludovicchabant/vim-gutentags'
@@ -1068,7 +1071,31 @@ EOF
 " autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
 
 " vim-ripgrep
-command! R :Rg -w <cword> %
+" command! R :Rg -w <cword> %
+
+" rgflow.nvim
+lua <<EOF
+require('rgflow').setup(
+    {
+        cmd_flags = "--smart-case --fixed-strings --ignore --max-columns 200",
+        default_trigger_mappings = false,
+        default_ui_mappings = true,
+        default_quickfix_mappings = true,
+        colors = {
+            RgFlowHeadLine = {fg = "#6f7071", bg="#1b2b34", bold=false},
+            RgFlowInputBg = {fg = "fg", bg="#1b2b34", bold=false},
+            RgFlowInputFlags = {fg = "fg", bg="#1b2b34", bold=false},
+            RgFlowInputPattern = {fg = "fg", bg="#1b2b34", bold=false},
+            RgFlowInputPath = {fg = "fg", bg="#1b2b34", bold=false},
+        },
+        ui_top_line_char = "━"
+    }
+)
+EOF
+command! R :lua require('rgflow').open_cword()<cr>
+command! RR :lua require('rgflow').open_again()<cr>
+command! Rg :lua require('rgflow').open_blank()<cr>
+command! Rx :lua require('rgflow').abort()<cr>
 
 " open-browser.vim
 nmap gx <Plug>(openbrowser-smart-search)
