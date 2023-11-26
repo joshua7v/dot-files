@@ -670,10 +670,10 @@ command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.org
 " command! -nargs=0 TODO exe 'CocList --normal grep //\ TODO'
 " command! -nargs=0 NOTE exe 'CocList --normal grep //\ NOTE'
 " command! -nargs=0 IMPORTANT exe 'CocList --normal grep //\ IMPORTANT'
-command! -nargs=0 TEMP exe 'Rg -e "TEMP:"'
-command! -nargs=0 TODO exe 'Rg -e "TODO:"'
-command! -nargs=0 NOTE exe 'Rg -e "NOTE:"'
-command! -nargs=0 IMPORTANT exe 'Rg -e "IMPORTANT:"'
+" command! -nargs=0 TEMP exe 'Rg -e "TEMP:"'
+" command! -nargs=0 TODO exe 'Rg -e "TODO:"'
+" command! -nargs=0 NOTE exe 'Rg -e "NOTE:"'
+" command! -nargs=0 IMPORTANT exe 'Rg -e "IMPORTANT:"'
 inoremap <silent><c-k> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
 inoremap <silent><expr> <c-j> coc#refresh()
 inoremap <silent><expr> <c-d> coc#refresh()
@@ -1096,6 +1096,10 @@ command! R :lua require('rgflow').open_cword()<cr>
 command! RR :lua require('rgflow').open_again()<cr>
 command! Rg :lua require('rgflow').open_blank()<cr>
 command! Rx :lua require('rgflow').abort()<cr>
+command! -nargs=0 TODO exe ':lua require("rgflow").search("TODO:", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
+command! -nargs=0 TEMP exe ':lua require("rgflow").search("TEMP:", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
+command! -nargs=0 NOTE exe ':lua require("rgflow").search("NOTE:", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
+command! -nargs=0 IMPORTANT exe ':lua require("rgflow").search("IMPORTANT", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
 
 " open-browser.vim
 nmap gx <Plug>(openbrowser-smart-search)
