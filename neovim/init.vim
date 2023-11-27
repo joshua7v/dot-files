@@ -916,10 +916,10 @@ let g:asynctasks_term_reuse = 1
 let g:asynctasks_term_focus = 1
 
 " noremap <silent><leader>q :call asyncrun#quickfix_toggle(24)<cr>
-noremap <leader>r :AsyncTask project-run<cr>
-noremap <leader>b :AsyncTask project-build<cr>
-command! -nargs=0 Test exe 'AsyncTask project-test'
-command! -nargs=0 Clean exe 'AsyncTask project-clean'
+" noremap <leader>r :AsyncTask project-run<cr>
+" noremap <leader>b :AsyncTask project-build<cr>
+" command! -nargs=0 Test exe 'AsyncTask project-test'
+" command! -nargs=0 Clean exe 'AsyncTask project-clean'
 
 " autocmd BufWritePost *.c,*.cpp AsyncTask project-build
 
@@ -1411,7 +1411,7 @@ require("auto-session").setup {
     log_level = "error",
     auto_session_suppress_dirs = { "~/", "~/Downloads", "/"},
 }
-vim.o.sessionoptions="blank,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+vim.o.sessionoptions="curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 EOF
 " set sessionoptions-=blank
 " set sessionoptions-=buffers
@@ -1469,22 +1469,24 @@ command! -nargs=0 RestLast :lua require("rest-nvim").last()
 command! -nargs=0 RestPreview :lua require("rest-nvim").run(true)
 
 fun s:mapMake()
-  nnoremap <silent><c-\> :AsyncRun -save=1 make<cr>;
-  nnoremap <silent><c-,> :AsyncRun -save=1 make test<cr>;
-  nnoremap <silent><c-.> :AsyncRun -save=1 make clean<cr>;
-  nnoremap <silent><m-,> :AsyncRun -save=1 make test<cr>;
-  nnoremap <silent><m-.> :AsyncRun -save=1 make clean<cr>;
-  command! MakeRaw AsyncRun -save=1 -raw make
+    if &ft == "c"
+        let g:build="make"
+        let g:test="make test"
+        let g:clean="make clean"
+    endif
   
-  if &ft == "http"
-    nnoremap <silent><c-\> :RestRun<cr>
-  endif
+    if &ft == "http"
+        let g:build="RestRun"
+    endif
 
-  if &ft == "rust"
-    nnoremap <c-\> :AsyncRun -save=1 cargo check<cr>;
-  endif
+    if &ft == "rust"
+        let g:build="cargo check"
+    endif
 endfun
 
+nnoremap <silent><c-\> :call asyncrun#run('', {}, get(g:, 'build', 'echo "no build command"'))<cr>
+command! -nargs=0 Test :call asyncrun#run('', {}, get(g:, 'test', 'echo "no test command"'))
+command! -nargs=0 Clean :call asyncrun#run('', {}, get(g:, 'clean', 'echo "no clean command"'))
 autocmd WinEnter,BufEnter * call s:mapMake()
 
 " ------------
