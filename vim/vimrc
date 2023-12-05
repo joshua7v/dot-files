@@ -1,0 +1,659 @@
+packadd vim-jetpack
+call jetpack#begin()
+Jetpack 'tani/vim-jetpack', { 'opt': 1 } "bootstrap
+
+" theme
+Jetpack 'joshua7v/oceanic-next', { 'branch': 'silent' }
+
+" syntax
+Jetpack 'sheerun/vim-polyglot'
+
+" project
+if has('nvim')
+else
+  Jetpack 'powerman/vim-plugin-autosess'
+endif
+Jetpack 'romainl/vim-qf'
+Jetpack 'jremmen/vim-ripgrep'
+Jetpack 'voldikss/vim-floaterm'
+Jetpack 'ntpeters/vim-better-whitespace', { 'on': ['StripWhitespace'] }
+
+" git
+Jetpack 'tpope/vim-fugitive'
+Jetpack 'rhysd/git-messenger.vim'
+
+" edit
+Jetpack 'neoclide/coc.nvim', { 'branch': 'release' }
+Jetpack 'mbbill/undotree'
+Jetpack 'justinmk/vim-dirvish'
+Jetpack 'mg979/vim-visual-multi'
+Jetpack 'justinmk/vim-sneak'
+Jetpack 'haya14busa/vim-edgemotion'
+if has('nvim')
+Jetpack 'yaocccc/nvim-hlchunk'
+else
+Jetpack 'yaocccc/vim-hlchunk'
+endif
+Jetpack 'windwp/nvim-autopairs'
+Jetpack 'svermeulen/vim-subversive'
+Jetpack 'tpope/vim-unimpaired'
+Jetpack 'tpope/vim-eunuch'
+Jetpack 'tpope/vim-surround'
+Jetpack 'tpope/vim-repeat'
+Jetpack 'haya14busa/vim-edgemotion'
+Jetpack 'stefandtw/quickfix-reflector.vim'
+Jetpack 'szw/vim-maximizer', { 'on': ['MaximizerToggle'] }
+call jetpack#end()
+
+function! s:is_installed(plug)
+  if isdirectory(g:plugs[a:plug].dir)
+    return 1
+  endif
+    return 0
+endfunction
+
+" --- theme ---
+ 
+set termguicolors
+set t_Co=256
+set background=dark
+
+if jetpack#tap('oceanic-next')
+  colorscheme OceanicNext
+else
+  colorscheme desert
+endif
+
+function s:SetCursorLine()
+  set cursorline
+  hi CursorLine cterm=NONE ctermbg=235
+endfunction
+
+autocmd VimEnter * call s:SetCursorLine()
+
+function! s:patch_oceanic_next_colors()
+  hi StatusLine ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#1b2b34
+  hi StatusLineNC ctermfg=235 ctermbg=145 guibg=#65737e guifg=#1b2b34
+  hi TabLine cterm=NONE ctermfg=145 ctermbg=235 gui=NONE guibg=#1b2b34 guifg=#65737e
+  hi TabLineSel ctermfg=145 ctermbg=345 guibg=#1b2b34 guifg=#ff5555
+  hi TabLineFill ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#1b2b34
+  hi PmenuSel ctermbg=145 guibg=#ff5555
+  hi WildMenu ctermbg=145 guibg=#ff5555
+  " hi Type ctermfg=221 guifg=#fac863 term=NONE gui=NONE
+
+  hi DiffAdd ctermfg=2 ctermbg=0 guifg=#A3BE8C guibg=#2E3440
+  hi DiffChange ctermfg=3 ctermbg=0 guifg=#EBCB8B guibg=#2E3440
+  hi DiffDelete ctermfg=1 ctermbg=0 guifg=#BF616A guibg=#2E3440
+  hi DiffText ctermfg=4 ctermbg=0 guifg=#81A1C1 guibg=#2E3440
+
+  hi Search ctermfg=0 ctermbg=6 guibg=#88C0D0 guifg=#3B4252
+  hi QuickFixLine ctermfg=NONE ctermbg=NONE guibg=NONE gui=NONE
+  hi WinSeparator guibg=NONE guifg=#777777
+
+  hi CursorLineNr term=bold cterm=bold ctermfg=012 gui=bold
+
+  hi! link DiffAdded DiffAdd
+  hi! link DiffChanged DiffChange
+  hi! link DiffRemoved DiffDelete
+  hi! link TermCursor Cursor
+  hi! link TargetWord TabLineSel
+  hi! link Error StatusLine
+  hi! link Folded EndOfBuffer
+
+  augroup vimrc_todo
+      au!
+      au Syntax * syn match MyTodo /\v<(FIXME|NOTE|OPTIMIZE)/ containedin=.*Comment,vimCommentTitle
+      au Syntax * syn match MyImportant /\v<(IMPORTANT|TEMP)/ containedin=.*Comment,vimCommentTitle
+  augroup END
+  hi MyTodo guifg=white guibg=#da666c
+  hi MyImportant guifg=white guibg=#efad04
+  hi typescriptCommentTodo guibg=#4381c0
+
+endfunction
+autocmd! ColorScheme OceanicNext call s:patch_oceanic_next_colors()
+
+" --- basic key maps ---
+
+let g:mapleader = ','
+nnoremap <Leader>ec :tabnew ~/.vimrc
+nnoremap tp :tabprev<cr>
+nnoremap tn :tabnext<cr>
+noremap j gj
+noremap k gk
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+nnoremap <silent><esc> :noh<return><esc>
+nnoremap <silent><cr> :noh<cr>
+noremap <F1> <esc>
+nnoremap U <C-r>
+vnoremap < <gv
+vnoremap > >gv
+
+nnoremap <silent> <c-r> :r !<c-r><c-l><cr>
+nnoremap <leader>aa ggVG
+
+function! HighlightGroup()
+    let l:s = synID(line('.'), col('.'), 1)
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun
+
+function! HighlightStack()
+    for i1 in synstack(line("."), col("."))
+        let i2 = synIDtrans(i1)
+        let n1 = synIDattr(i1, "name")
+        let n2 = synIDattr(i2, "name")
+        echo n1 "->" n2
+    endfor
+endfunction
+
+command! HG :call HighlightGroup()
+command! HS :call HighlightStack()
+command! SO :setlocal syntax=on
+command! SF :setlocal syntax=off
+
+" --- better defaults ---
+
+filetype plugin indent on
+
+syntax on
+" autocmd FileType dirvish,qf setlocal syntax=on
+
+set iskeyword-=-
+autocmd FileType html,css,typescriptreact setlocal iskeyword+=-
+
+" let &t_SI = "\e[6 q"
+" let &t_EI = "\e[2 q"
+
+set nobackup
+set noswapfile
+set nowritebackup
+set shortmess=atIcF
+set confirm
+set signcolumn=yes
+set conceallevel=0 concealcursor=niv
+set novisualbell
+set noerrorbells
+set belloff=all
+set textwidth=0
+set synmaxcol=7777
+set splitbelow
+set nowrap
+set shortmess+=c
+set tabline=
+set guitablabel=%t
+set backspace=eol,start,indent
+set showmatch
+set mat=2
+set hlsearch
+set ignorecase
+set incsearch
+set smartcase
+set nostartofline
+set tm=500
+set updatetime=300
+set re=0
+
+" line number
+set number
+set relativenumber
+set numberwidth=3
+autocmd InsertEnter * :set number
+autocmd InsertEnter * :set norelativenumber
+autocmd InsertLeave * :set relativenumber
+
+if system('uname -s') == "Darwin\n"
+  set clipboard=unnamed "OSX
+else
+  set clipboard=unnamedplus "Linux
+endif
+
+" quickfix
+augroup qf
+    autocmd!
+    autocmd FileType qf set nobuflisted
+augroup END
+
+" tabline
+if exists('+showtabline')
+  function! Tabline()
+    let s = ''
+    for i in range(tabpagenr('$'))
+        let tab = i + 1
+        let winnr = tabpagewinnr(tab)
+        let buflist = tabpagebuflist(tab)
+        let bufnr = buflist[winnr - 1]
+        let bufname = bufname(bufnr)
+        let bufmodified = getbufvar(bufnr, "&mod")
+
+        let s .= '%' . tab . 'T'
+        let s .= (tab == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#')
+        let s .= '[' . tab .']'
+        let s .= (bufname != '' ? ' '. fnamemodify(bufname, ':t') . ' ' : ' - ')
+
+        if bufmodified
+        let s .= '[+] '
+        endif
+    endfor
+
+    let s .= '%#TabLineFill#'
+    if (exists("g:tablineclosebutton"))
+        let s .= '%=%999XX'
+    endif
+    return s
+  endfunction
+  set tabline=%!Tabline()
+endif
+
+" statusline
+function! GetBufName()
+  let bufname = expand('%:~:.')
+  if (bufname) == ''
+    let bufname = '[no name]'
+  endif
+  return bufname
+endfunction
+
+function! StatusDiagnostic() abort
+  let info = get(b:, 'coc_diagnostic_info', {})
+  if empty(info) | return '' | endif
+  let msgs = []
+  if get(info, 'hint', 0)
+    call add(msgs, 'H' . info['hint'])
+  endif
+  if get(info, 'information', 0)
+    call add(msgs, 'I' . info['information'])
+  endif
+  if get(info, 'warning', 0)
+    call add(msgs, 'W' . info['warning'])
+  endif
+  if get(info, 'error', 0)
+    call add(msgs, 'E' . info['error'])
+  endif
+  return join(msgs, ' ') . '' . get(g:, 'coc_status', '')
+endfunction
+
+if has('statusline')
+  set laststatus=2
+  " set statusline=%{getcwd()}
+  " set statusline+=\ %<%f
+  " set statusline+=%F
+  set statusline+=%{GetBufName()}
+  set statusline+=\ %{''.(&fenc!=''?&fenc:&enc).''}
+  set statusline+=%{(&bomb?\\",BOM\\":\\"\\")}
+  set statusline+=\ %{&ff}\ %y
+  set statusline+=%m%r%w
+
+  set statusline+=%=%{StatusDiagnostic()}
+  " set statusline+=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}\
+  " set statusline+=%{coc#status()}%{get(b:,'coc_current_function','')}\
+  " set statusline+=%{coc#status()}\
+  set statusline+=%-14.(%l/%L,%c%V%)\ %p%%
+endif
+
+hi clear SpellBad
+hi SpellBad term=underline cterm=underline
+
+" --- plugins ---
+
+" vim-dirvish
+let g:dirvish_relative_paths = 0
+let g:dirvish_mode = ':sort ,^.*[\/],'
+
+nmap <leader>s <Plug>(dirvish_split_up)
+nmap <leader>d <Plug>(dirvish_vsplit_up)
+
+autocmd FileType dirvish silent keeppatterns g@\v/\.[^\/]+/?$@d _
+
+augroup dirvish_config
+autocmd!
+autocmd FileType dirvish silent! unmap <buffer> <C-p>
+autocmd FileType dirvish
+\  nnoremap <silent><buffer> t :call dirvish#open('tabedit', 0)<CR>
+\ |xnoremap <silent><buffer> t :call dirvish#open('tabedit', 0)<CR>
+augroup END
+
+let g:loaded_netrwPlugin = 1
+command! -nargs=? -complete=dir Explore Dirvish <args>
+command! -nargs=? -complete=dir Sexplore belowright split | silent Dirvish <args>
+command! -nargs=? -complete=dir Vexplore leftabove vsplit | silent Dirvish <args>
+
+" hlchunk
+let g:hlchunk_files = '*.ts,*.tsx,*.js,*.json,*.go,*.c,*.cpp,*.rs,*.h,*.hpp,*.lua'
+let g:hlchunk_hi_style = 'guifg=#557799 guibg=none'
+
+" vim-ripgrep
+command! R :Rg -w <cword> %
+
+" coc.nvim
+
+" fix node path under scoop/volta installation
+if isdirectory($HOME . "/scoop/apps/volta")
+  let g:coc_node_path = "~/scoop/apps/volta/current/appdata/bin/node.exe"
+endif
+
+let g:coc_global_extensions = [
+        \"coc-clangd",
+        \"coc-css",
+        \"coc-cssmodules",
+        \"coc-eslint",
+        \"coc-git",
+        \"coc-gitignore",
+        \"coc-go",
+        \"coc-highlight",
+        \"coc-html",
+        \"coc-json",
+        \"coc-lines",
+        \"coc-lists",
+        \"coc-marketplace",
+        \"coc-prettier",
+        \"coc-pyright",
+        \"coc-rust-analyzer",
+        \"coc-snippets",
+        \"coc-svg",
+        \"coc-tasks",
+        \"coc-toml",
+        \"coc-tsserver",
+        \"coc-webpack",
+        \"coc-word",
+        \"coc-yaml",
+        \"coc-yank",
+        \"coc-zig",
+        \]
+
+let g:coc_snippet_next = '<tab>'
+let g:coc_snippet_prev = '<s-tab>'
+let g:coc_auto_copen = 0
+
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocActionAsync('definitionHover')
+  endif
+endfunction
+
+function! s:GoToDefinition()
+  if CocAction('jumpDefinition')
+    return v:true
+  endif
+
+  let ret = execute("silent! normal \<C-]>")
+  if ret[:5] =~ "Error"
+    call searchdecl(expand('<cword>'))
+  endif
+endfunction
+
+function! s:GoToDefinitionSplit()
+  if CocAction('jumpDefinition', 'vsplit')
+    return v:true
+  endif
+
+  let ret = execute("silent! normal \<C-]>")
+  if ret[:5] =~ "Error"
+    call searchdecl(expand('<cword>'))
+  endif
+endfunction
+  
+function! s:GoToReferences()
+  execute 'normal z*'
+  if CocActionAsync('jumpReferences')
+    return v:true
+  endif
+endfunction
+
+function! s:GrepArgs(...)
+  let list = ['-S', '-smartcase', '-i', '-ignorecase', '-w', '-word',
+      \ '-e', '-regex', '-u', '-skip-vcs-ignores', '-t', '-extension']
+  return join(list, "\n")
+endfunction
+
+function! s:GrepFromSelected(type)
+  let saved_unnamed_register = @@
+  if a:type ==# 'v'
+    normal! `<v`>y
+  elseif a:type ==# 'char'
+    normal! `[v`]y
+  else
+    return
+  endif
+  let word = substitute(@@, '\n$', '', 'g')
+  let word = escape(word, '| ')
+  let @@ = saved_unnamed_register
+  execute 'CocList --normal grep '.word
+endfunction
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+augroup mygroup
+  autocmd!
+  autocmd FileType typescript,json setl formatexpr=CocActionAsync('formatSelected')
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+  nmap <space><space> :Format<cr>
+  " autocmd FileType cpp,c nmap <space><space> maHmbgg=G`bzt`a
+  " autocmd FileType typescript,typescript.tsx,typescriptreact,javascript,json,html,scss,css,graphql,svelte nmap <space><space> :Prettier<cr>
+  " autocmd FileType cpp,objcpp,c,svg,python,go,rust,java,prisma nmap <space><space> :Format<cr>
+augroup end
+
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+nmap [g <Plug>(coc-git-prevchunk)
+nmap ]g <Plug>(coc-git-nextchunk)
+nmap [[ :CocPrev<cr>
+nmap ]] :CocNext<cr>
+nmap [r :CocFirst<cr>
+nmap ]r :CocLast<cr>
+
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+nmap <leader>ee <Plug>(coc-diagnostic-info)
+nmap <leader>cl <Plug>(coc-codelens-action)
+nmap <silent>gy <Plug>(coc-type-definition)
+nmap <silent>gi <Plug>(coc-implementation)
+" nmap <silent>gr :call <SID>GoToReferences()<cr>
+nmap <silent>gh :CocCommand git.chunkInfo<cr>
+nmap <leader>rn <Plug>(coc-rename)
+vmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+" vmap <leader>a  <Plug>(coc-codeaction-selected)
+" nmap <leader>a  <Plug>(coc-codeaction-selected)
+" nmap <leader>ac <Plug>(coc-codeaction)
+nmap <leader>ac <Plug>(coc-codeaction-cursor)
+xmap <leader>ac <Plug>(coc-codeaction-selected)
+nmap <silent>K :call <SID>show_documentation()<cr>
+nmap <silent>gd :call <SID>GoToDefinition()<cr>
+nmap <silent>gD :call <SID>GoToDefinitionSplit()<cr>
+" nmap <silent> gd <Plug>(coc-definition)
+" vnoremap <leader>g :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
+" nnoremap <leader>g :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@ 
+
+function! ToggleOutline() abort
+  let winid = coc#window#find('cocViewId', 'OUTLINE')
+  if winid == -1
+    call CocActionAsync('showOutline', 1)
+  else
+    call coc#window#close(winid)
+  endif
+endfunction
+
+nnoremap <silent> <space>t :call ToggleOutline()<cr>
+nnoremap <silent> <space>o :<C-u>CocList outline<cr>
+nnoremap <silent> <space>f :<C-u>CocList files<cr>
+nnoremap <silent> <space>e :<C-u>CocList extensions<cr>
+nnoremap <silent> <space>u :<C-u>CocList --normal mru<cr>
+nnoremap <silent> <space>a :<C-u>CocList --normal diagnostics<cr>
+nnoremap <silent> <space>c :<C-u>CocList commands<cr>
+nnoremap <silent> <space>b :<C-u>CocList --normal buffers<cr>
+nnoremap <silent> <space>y :<C-u>CocList -A --normal yank<cr>
+nnoremap <silent> <space>g :<C-u>CocList -I grep<cr>
+" nnoremap <silent> <space>  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <space>p :<C-u>CocListResume<cr>
+nnoremap <silent> <space>m :<C-u>CocList --normal marks<cr>
+nnoremap <silent> <space>h :<C-u>CocList --normal searchhistory<cr>
+nnoremap <silent> <space>k :<C-u>CocList --normal maps<cr>
+nnoremap <silent> <space>q :<C-u>CocList --normal floaterm<cr>
+nnoremap <silent> <space>z :<C-u>CocList --normal tasks<cr>
+nnoremap <silent> <space>l :<C-u>CocList fuzzy_lines<cr>
+nnoremap <silent> <space>w :exe 'CocList -I --normal --input='.expand('<cword>').' words'<cr>
+" nnoremap <silent> <space>fl :<c-u>CocList --normal explPresets<cr>
+" nnoremap <silent> <space><leader>  :<C-u>CocList --normal project<cr>
+" nnoremap <silent> <space>l  :<C-u>Denite coc-link<cr>
+
+command! -nargs=0 IncomingCalls :call CocActionAsync('showIncomingCalls')
+command! -nargs=0 OutgoingCalls :call CocActionAsync('showOutgoingCalls')
+command! -nargs=0 ColorPresentation :call CocActionAsync('colorPresentation')
+command! -nargs=0 PickColor :call CocActionAsync('pickColor')
+" command! -nargs=0 Prettier :CocCommand prettier.formatFile
+command! -nargs=0 Format :call CocActionAsync('format')
+command! -nargs=? Fold :call CocActionAsync('fold', <f-args>)
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+" command! -nargs=+ -complete=custom,s:GrepArgs Rgl exe 'CocList grep '.<q-args>
+" command! -nargs=0 Rg exe 'CocList -I grep'
+" command! -nargs=0 TODO exe 'CocList --normal grep //\ TODO'
+" command! -nargs=0 NOTE exe 'CocList --normal grep //\ NOTE'
+" command! -nargs=0 IMPORTANT exe 'CocList --normal grep //\ IMPORTANT'
+command! -nargs=0 TEMP exe 'Rg -e "TEMP:"'
+command! -nargs=0 TODO exe 'Rg -e "TODO:"'
+command! -nargs=0 NOTE exe 'Rg -e "NOTE:"'
+command! -nargs=0 IMPORTANT exe 'Rg -e "IMPORTANT:"'
+inoremap <silent><c-k> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
+inoremap <silent><expr> <c-j> coc#refresh()
+inoremap <silent><expr> <c-d> coc#refresh()
+
+" inoremap <silent><expr> <TAB> coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+inoremap <silent><expr> <C-x><C-z> coc#pum#visible() ? coc#pum#stop() : "\<C-x>\<C-z>"
+
+inoremap <silent><expr> <TAB>
+ \ coc#pum#visible() ? coc#_select_confirm() :
+ \ coc#expandableOrJumpable() ?
+ \ "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+ \ <SID>check_back_space() ? "\<TAB>" :
+ \ coc#refresh()
+
+function! s:check_back_space() abort
+let col = col('.') - 1
+return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
+
+
+hi CocSearch ctermfg=12 guifg=#ff8888
+hi CocMenuSel ctermbg=109 guibg=#2E3440
+
+autocmd BufAdd * if getfsize(expand('<afile>')) > 1024*1024 |
+            \ let b:coc_enabled=0 |
+            \ endif
+
+if jetpack#tap("coc.nvim")
+  if has('nvim-0.4.0') || has('patch-8.2.0750')
+    nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+    nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+    inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+    inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+    vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+    vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  endif
+endif
+
+hi def link CocFadeOut NonText
+
+" vim-qf
+let g:qf_max_height = 24
+let g:qf_auto_resize = 0
+let g:qf_auto_open_quickfix = 0
+
+function! ToggleQuickFix()
+    if empty(filter(getwininfo(), 'v:val.quickfix'))
+        copen
+    else
+        cclose
+    endif
+endfunction
+
+nnoremap <silent> <leader>q :call ToggleQuickFix()<cr>
+
+" quickfix-reflector
+let g:qf_modifiable = 0
+
+" vim-floaterm
+if has('macunix')
+  let g:floaterm_shell = '/bin/zsh'
+else
+  let g:floaterm_shell = 'pwsh.exe -NoLogo'
+  map <c-z> <nop>
+endif
+
+let g:floaterm_keymap_toggle = '<c-q>'
+let g:floaterm_width = 0.8
+let g:floaterm_height = 0.8
+let g:floaterm_title = 'Terminal $1/$2'
+
+tnoremap <c-[> <c-\><c-n>:FloatermPrev<cr>
+tnoremap <c-]> <c-\><c-n>:FloatermNext<cr>
+tnoremap <m-t> <c-\><c-n>:FloatermNew<cr>
+nnoremap <m-t> :FloatermNew<cr>
+nnoremap <m-s> :FloatermNew vifm %:p:h<cr>
+nnoremap <m-g> :FloatermNew gitui<cr>
+
+command! NewTerm FloatermNew
+command! Vifm :FloatermNew vifm %:p:h .
+command! Gitui :FloatermNew gitui
+
+autocmd User Startified setlocal buflisted
+
+" vim-better-whitespace
+let g:better_whitespace_filetypes_blacklist = ['diff', 'gitcommit', 'unite', 'qf', 'help', 'far_vim']
+let g:better_whitespace_filetypes_verbosity = 1
+let g:better_whitespace_guicolor = '#6D6D6D'
+let g:better_whitespace_ctermcolor = '244'
+nnoremap <leader><space> :StripWhitespace<cr>
+
+" vim-sneak
+hi! link Sneak Search
+
+" undotree
+if has('persistent_undo')
+  set undofile
+  set undolevels=1000
+  set undoreload=10000
+  set undodir=~/.undodir/
+  if has('nvim')
+    set undodir=~/.undodir-nvim/
+  endif
+endif
+
+nnoremap <leader>ud :UndotreeToggle<cr>
+
+" vim-visual-multi
+let g:VM_Selection_hl       = 'Cursor'
+let g:VM_Mono_Cursor_hl     = 'Cursor'
+let g:VM_Ins_Mode_hl        = 'Cursor'
+let g:VM_Normal_Cursor_hl   = 'Cursor'
+
+let g:VM_maps               = {}
+let g:VM_maps['Find Under'] = '<C-h>'
+
+" git-messenger.vim
+nmap gm <Plug>(git-messenger)
+
+" vim-edgemotion
+nnoremap <expr> <c-k> "m'" . "<plug>(edgemotion-k)"
+nnoremap <expr> <c-j> "m'" . "<plug>(edgemotion-j)"
+vmap <c-j> <Plug>(edgemotion-j)
+
+" vim-maximizer'
+nmap <silent><leader>z :MaximizerToggle<cr>
+vmap <c-k> <Plug>(edgemotion-k)

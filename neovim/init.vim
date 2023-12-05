@@ -86,7 +86,7 @@ Plug 'guns/xterm-color-table.vim', { 'on': ['XtermColorTable'] }
 " Plug 'inside/vim-search-pulse'
 Plug 'dstein64/vim-startuptime', { 'on': ['StartupTime'] }
 Plug 'yaocccc/nvim-hlchunk'
-" Plug 'rest-nvim/rest.nvim'
+Plug 'rest-nvim/rest.nvim'
 Plug '~/erinn/tools/whitebox/whitebox_v0.96.2/editor_plugins/whitebox-vim'
 
 endif
@@ -270,9 +270,6 @@ if system('uname -r') =~ "microsoft"
   autocmd TextYankPost * :call system('/mnt/c/windows/system32/clip.exe ',@")
   augroup END
 endif
-
-nnoremap <leader>rz :Rg -e "[\u4e00-\u9fa5]+"
-nnoremap <leader>ff :AsyncRun -errorformat=\%f fd -a 
 
 function! SaveJump(motion)
   if exists('#SaveJump#CursorMoved')
@@ -900,12 +897,16 @@ let g:VM_Mono_Cursor_hl     = 'Cursor'
 let g:VM_Ins_Mode_hl        = 'Cursor'
 let g:VM_Normal_Cursor_hl   = 'Cursor'
 
-let g:VM_maps               = {}
-let g:VM_maps['Find Under'] = '<C-h>'
+let g:VM_leader                  = '\'
+let g:VM_maps                    = {}
+let g:VM_maps['Find Under']      = '<C-h>'
+let g:VM_maps["Add Cursor Down"] = '<c-d>'
+let g:VM_maps["Add Cursor Up"]   = '<c-u>'
 
 " asyncrun.vim
 let g:asyncrun_bell = 1
-command! -nargs=0 Rf AsyncRun -program=shebang -mode=term -pos=bottom $(VIM_FILEPATH)
+" command! -nargs=0 Rf AsyncRun -program=shebang -pos=bottom $(VIM_FILEPATH)
+command -nargs=? Run AsyncRun <args>
 
 " asynctasks.vim
 let g:asynctasks_rtp_config = 'asynctasks/tasks.ini'
@@ -935,6 +936,7 @@ let g:floaterm_keymap_toggle = '<c-q>'
 let g:floaterm_width = 0.8
 let g:floaterm_height = 0.8
 let g:floaterm_title = 'Terminal $1/$2'
+let g:floaterm_opener = 'drop'
 
 tnoremap <c-[> <c-\><c-n>:FloatermPrev<cr>
 tnoremap <c-]> <c-\><c-n>:FloatermNext<cr>
@@ -1092,14 +1094,20 @@ require('rgflow').setup(
     }
 )
 EOF
-command! R :lua require('rgflow').open_cword()<cr>
+
 command! RR :lua require('rgflow').open_again()<cr>
 command! Rg :lua require('rgflow').open_blank()<cr>
 command! Rx :lua require('rgflow').abort()<cr>
+
+command! -nargs=? Rf :AsyncRun -errorformat=\%f fd -a <args>
+command! -nargs=0 Rz exe ':lua require("rgflow").search("[\\u4e00-\\u9fa5]+", "--smart-case --ignore --max-columns 200 -e", vim.fn.getcwd())'
+command! -nargs=0 Rw exe ':lua require("rgflow").search(vim.fn.expand("<cword>"), "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.expand("%"))'
 command! -nargs=0 TODO exe ':lua require("rgflow").search("TODO:", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
 command! -nargs=0 TEMP exe ':lua require("rgflow").search("TEMP:", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
 command! -nargs=0 NOTE exe ':lua require("rgflow").search("NOTE:", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
 command! -nargs=0 IMPORTANT exe ':lua require("rgflow").search("IMPORTANT", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
+
+" nnoremap <leader>ff :AsyncRun -errorformat=\%f fd -a 
 
 " open-browser.vim
 nmap gx <Plug>(openbrowser-smart-search)
@@ -1108,7 +1116,7 @@ vmap gx <Plug>(openbrowser-smart-search)
 " vim-terminal-help
 let g:terminal_key = '<leader>t'
 let g:terminal_kill = 'term'
-let g:terminal_cwd = 2
+let g:terminal_cwd = 1
 let g:terminal_list = 0
 let g:terminal_height = 20
 let g:terminal_pos = 'below'
@@ -1306,9 +1314,6 @@ require'nvim-treesitter.configs'.setup {
   incremental_selection = {
     enable = true,
   },
-  context_commentstring = {
-    enable = true
-  },
   ensure_installed = {
     "bash",
     "c",
@@ -1346,6 +1351,8 @@ require'nvim-treesitter.configs'.setup {
     "zig",
   },
 }
+require('ts_context_commentstring').setup {}
+vim.g.skip_ts_context_commentstring_module = true
 
 -- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 -- parser_config.tsx.filetype_to_parsername = { "javascript", "typescriptreact" }
@@ -1449,42 +1456,51 @@ EOF
 " endif
 
 " rest.nvim
-" lua <<EOF
-" require("rest-nvim").setup({
-"   result = {
-"     formatters = {
-"       json = function(body)
-"         return vim.fn.system({"prettier", "--stdin-filepath", "a.json"}, body)
-"       end,
-"       html = function(body)
-"         return vim.fn.system({"prettier", "--stdin-filepath", "a.html"}, body)
-"       end
-"     },
-"   },
-" })
-" EOF
+lua <<EOF
+require("rest-nvim").setup({
+  result = {
+    formatters = {
+      json = function(body)
+        return vim.fn.system({"prettier", "--stdin-filepath", "a.json"}, body)
+      end,
+      html = function(body)
+        return vim.fn.system({"prettier", "--stdin-filepath", "a.html"}, body)
+      end
+    },
+  },
+})
+EOF
 
 command! -nargs=0 RestRun :lua require("rest-nvim").run()
 command! -nargs=0 RestLast :lua require("rest-nvim").last()
 command! -nargs=0 RestPreview :lua require("rest-nvim").run(true)
 
 fun s:mapMake()
-    if &ft == "c"
+    if &ft == "c" || &ft == "cpp"
         let g:build="make"
         let g:test="make test"
         let g:clean="make clean"
-    endif
-  
-    if &ft == "http"
-        let g:build="RestRun"
+        let g:run="make run"
     endif
 
     if &ft == "rust"
         let g:build="cargo check"
+        let g:run="cargo run"
+    endif
+
+    if &ft == "typescript" || &ft == "typescriptreact"
+        let g:build="tsc"
+    endif
+  
+    if &ft == "http"
+        nnoremap <silent><c-\> :RestRun<cr>
+    else
+        nnoremap <silent><c-\> :call asyncrun#run('', {}, get(g:, 'build', 'echo "no build command"'))<cr>
     endif
 endfun
 
 nnoremap <silent><c-\> :call asyncrun#run('', {}, get(g:, 'build', 'echo "no build command"'))<cr>
+command! -nargs=0 R :call asyncrun#run('', {}, get(g:, 'clean', 'echo "no run command"'))
 command! -nargs=0 Test :call asyncrun#run('', {}, get(g:, 'test', 'echo "no test command"'))
 command! -nargs=0 Clean :call asyncrun#run('', {}, get(g:, 'clean', 'echo "no clean command"'))
 autocmd WinEnter,BufEnter * call s:mapMake()
@@ -1506,3 +1522,4 @@ endif
 
 au FileType typescriptreact let b:coc_root_patterns = ['.git', '.env', 'tailwind.config.js', 'tailwind.config.cjs']
 
+nnoremap <silent> <c-r> :r !<c-r><c-l><cr>
