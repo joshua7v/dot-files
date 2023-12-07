@@ -906,7 +906,7 @@ let g:VM_maps["Add Cursor Up"]   = '<c-u>'
 " asyncrun.vim
 let g:asyncrun_bell = 1
 " command! -nargs=0 Rf AsyncRun -program=shebang -pos=bottom $(VIM_FILEPATH)
-command -nargs=? Run AsyncRun <args>
+command -nargs=? -complete=shellcmd R AsyncRun <args>
 
 " asynctasks.vim
 let g:asynctasks_rtp_config = 'asynctasks/tasks.ini'
@@ -1099,7 +1099,7 @@ command! RR :lua require('rgflow').open_again()<cr>
 command! Rg :lua require('rgflow').open_blank()<cr>
 command! Rx :lua require('rgflow').abort()<cr>
 
-command! -nargs=? Rf :AsyncRun -errorformat=\%f fd -a <args>
+command! -nargs=? -complete=shellcmd Rf :AsyncRun -errorformat=\%f fd -a <args>
 command! -nargs=0 Rz exe ':lua require("rgflow").search("[\\u4e00-\\u9fa5]+", "--smart-case --ignore --max-columns 200 -e", vim.fn.getcwd())'
 command! -nargs=0 Rw exe ':lua require("rgflow").search(vim.fn.expand("<cword>"), "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.expand("%"))'
 command! -nargs=0 TODO exe ':lua require("rgflow").search("TODO:", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
@@ -1477,7 +1477,7 @@ command! -nargs=0 RestPreview :lua require("rest-nvim").run(true)
 
 fun s:mapMake()
     if &ft == "c" || &ft == "cpp"
-        let g:build="make"
+        let g:build="make -B"
         let g:test="make test"
         let g:clean="make clean"
         let g:run="make run"
@@ -1500,7 +1500,7 @@ fun s:mapMake()
 endfun
 
 nnoremap <silent><c-\> :call asyncrun#run('', {}, get(g:, 'build', 'echo "no build command"'))<cr>
-command! -nargs=0 R :call asyncrun#run('', {}, get(g:, 'clean', 'echo "no run command"'))
+command! -nargs=0 Run :call asyncrun#run('', {}, get(g:, 'run', 'echo "no run command"'))
 command! -nargs=0 Test :call asyncrun#run('', {}, get(g:, 'test', 'echo "no test command"'))
 command! -nargs=0 Clean :call asyncrun#run('', {}, get(g:, 'clean', 'echo "no clean command"'))
 autocmd WinEnter,BufEnter * call s:mapMake()
