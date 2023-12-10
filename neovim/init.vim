@@ -616,6 +616,7 @@ nmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>ac <Plug>(coc-codeaction-cursor)
 xmap <leader>ac <Plug>(coc-codeaction-selected)
 nmap <silent>K :call <SID>show_documentation()<cr>
+nmap <silent>Y :call CocActionAsync('diagnosticInfo')<cr>
 nmap <silent>gd :call <SID>GoToDefinition()<cr>
 nmap <silent>gD :call <SID>GoToDefinitionSplit()<cr>
 " nmap <silent> gd <Plug>(coc-definition)
@@ -1096,12 +1097,14 @@ require('rgflow').setup(
 EOF
 
 command! RR :lua require('rgflow').open_again()<cr>
-command! Rg :lua require('rgflow').open_blank()<cr>
+command! Ro :lua require('rgflow').open_blank()<cr>
 command! Rx :lua require('rgflow').abort()<cr>
+command! -nargs=? Rg exe ':lua require("rgflow").search("<args>", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
+command! -nargs=? Rw exe ':lua require("rgflow").search("<args>", "--smart-case --fixed-strings --ignore --max-columns 200 -w", vim.fn.getcwd())'
+command! -nargs=? Rc exe ':lua require("rgflow").search(vim.fn.expand("<cword>"), "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.expand("%"))'
 
 command! -nargs=? -complete=shellcmd Rf :AsyncRun -errorformat=\%f fd -a <args>
 command! -nargs=0 Rz exe ':lua require("rgflow").search("[\\u4e00-\\u9fa5]+", "--smart-case --ignore --max-columns 200 -e", vim.fn.getcwd())'
-command! -nargs=0 Rw exe ':lua require("rgflow").search(vim.fn.expand("<cword>"), "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.expand("%"))'
 command! -nargs=0 TODO exe ':lua require("rgflow").search("TODO:", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
 command! -nargs=0 TEMP exe ':lua require("rgflow").search("TEMP:", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
 command! -nargs=0 NOTE exe ':lua require("rgflow").search("NOTE:", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
@@ -1385,18 +1388,20 @@ local npairs = require("nvim-autopairs")
 local Rule = require('nvim-autopairs.rule')
 
 npairs.setup({
-    disable_filetype = { "wast", "racket" },
+    disable_filetype = {},
     check_ts = true,
+    map_c_w = true,
     ts_config = {
         lua = {'string'},
     },
+    enable_check_bracket_line = false,
     fast_wrap = {
-      map = '<M-q>',
+      map = '<c-s>',
       chars = { '{', '[', '(', '"', "'", "`" },
       end_key = '$',
       check_comma = true,
       highlight = 'Search',
-      highlight_grey='Comment'
+      highlight_grey='Comment',
     },
 })
 

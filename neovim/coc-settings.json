@@ -13,6 +13,7 @@
   "codeLens.enable": true,
   "colors.filetypes": ["*"],
   "diagnostic.virtualText": false,
+  "diagnostic.enableMessage": "jump",
   "yank.enableCompletion": false,
   "list.indicator": "λ",
   "list.interactiveDebounceTime": 300,
