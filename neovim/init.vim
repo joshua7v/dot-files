@@ -7,12 +7,14 @@ Plug 'joshua7v/oceanic-next', { 'branch': 'silent' }
 
 " syntax
 Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+" Plug 'nvim-treesitter/playground'
 " Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 " Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 " Plug 'Shougo/context_filetype.vim'
 let g:polyglot_disabled = ['javascript']
 Plug 'sheerun/vim-polyglot'
+let g:zig_fmt_autosave = 0
 " Plug 'maxmellon/vim-jsx-pretty'
 
 " edit
@@ -500,7 +502,6 @@ let g:coc_global_extensions = [
         \"coc-word",
         \"coc-yaml",
         \"coc-yank",
-        \"coc-zig",
         \]
 
 let g:coc_snippet_next = '<tab>'
