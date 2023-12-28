@@ -11,9 +11,9 @@ alias gd='git diff'
 alias rclone='rclone --config ~/erinn/satori/rclone.conf'
 alias neovide='/Applications/Neovide.app/Contents/MacOS/neovide --frame none'
 
-eval "$(lua ~/scripts/z.lua --init zsh)"
-
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+
+eval "$(zoxide init zsh)"
 
 # export RUSTUP_DIST_SERVER=https://mirrors.tuna.tsinghua.edu.cn/rustup
 # export RUSTUP_UPDATE_ROOT=https://mirrors.tuna.tsinghua.edu.cn/rustup/rustup
@@ -24,12 +24,13 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export ZSH=~/.oh-my-zsh
 export GOPATH=~/golang
 export PATH=$PATH:~/golang/bin
+export PATH="/opt/homebrew/bin":$PATH
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 
 export LANG=en_US.utf-8
 export LC_ALL=en_US.utf-8
 export TZ=Asia/Shanghai
-export EDITOR=vim
+export EDITOR=nvim
 
 export TIMER_FORMAT='%d'
 export TIMER_PRECISION=2
@@ -153,7 +154,9 @@ source $ZSH/oh-my-zsh.sh
 [[ -s "$HOME/.xmake/profile" ]] && source "$HOME/.xmake/profile" # load xmake profile
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
-export PATH="/usr/local/opt/openjdk/bin:$PATH"
+# export PATH="/usr/local/opt/openjdk/bin:$PATH"
+export PATH="/opt/homebrew/opt/openjdk@11/bin:$PATH"
+# export CPPFLAGS="-I/opt/homebrew/opt/openjdk@11/include"
 
 function toon {
   echo -n "λ"
@@ -179,3 +182,16 @@ PROMPT='%{$fg[magenta]%}$(toon)%{$reset_color%} %~ %{$reset_color%}${vcs_info_ms
 
 autoload -U add-zsh-hook
 add-zsh-hook precmd theme_precmd
+
+# pnpm
+export PNPM_HOME="/Users/joshua/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+PATH=$(pyenv root)/shims:$PATH
+
+unalias ls
+alias ls="eza"
