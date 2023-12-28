@@ -19,7 +19,7 @@
   },
   "icms": {
     "scope": "javascript,typescript",
-    "prefix": "icm",
+    "prefix": "icms",
     "body": ["import styles from './$TM_FILENAME_BASE.module.scss';"],
     "description": "import styles (sass)"
   },
