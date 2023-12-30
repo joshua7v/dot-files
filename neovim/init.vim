@@ -6,16 +6,16 @@ if exists(":PlugInstall")
 Plug 'joshua7v/oceanic-next', { 'branch': 'silent' }
 
 " syntax
-Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+" Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 " Plug 'nvim-treesitter/playground'
 " Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 " Plug 'nvim-treesitter/nvim-treesitter-context'
-Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+" Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 " Plug 'Shougo/context_filetype.vim'
 let g:polyglot_disabled = ['javascript']
-Plug 'sheerun/vim-polyglot'
 let g:zig_fmt_autosave = 0
-" Plug 'maxmellon/vim-jsx-pretty'
+Plug 'sheerun/vim-polyglot'
+Plug 'maxmellon/vim-jsx-pretty'
 
 " edit
 " Plug 'github/copilot.vim'
@@ -34,6 +34,7 @@ Plug 'szw/vim-maximizer', { 'on': ['MaximizerToggle'] }
 Plug 'haya14busa/vim-edgemotion'
 " Plug 'rlane/pounce.nvim'
 Plug 'justinmk/vim-sneak'
+Plug 'tpope/vim-commentary'
 Plug 'numToStr/Comment.nvim'
 Plug 'mg979/vim-visual-multi'
 Plug 'mbbill/undotree'
@@ -88,7 +89,7 @@ Plug 'guns/xterm-color-table.vim', { 'on': ['XtermColorTable'] }
 " Plug 'inside/vim-search-pulse'
 Plug 'dstein64/vim-startuptime', { 'on': ['StartupTime'] }
 Plug 'yaocccc/nvim-hlchunk'
-Plug 'rest-nvim/rest.nvim'
+" Plug 'rest-nvim/rest.nvim'
 Plug '~/erinn/tools/whitebox/whitebox_v0.96.2/editor_plugins/whitebox-vim'
 
 endif
@@ -116,6 +117,7 @@ autocmd FileType dirvish,qf setlocal syntax=on
 
 command! SO :setlocal syntax=on
 command! SF :setlocal syntax=off
+command! BO :%bd|e#
 
 " autocmd BufWinEnter,WinNew,BufEnter * if nvim_win_get_config(0)['relative'] != '' | setlocal syntax=off | endif
 
@@ -266,6 +268,10 @@ autocmd BufWinEnter * :set textwidth=0
 nnoremap <silent> <c-r> :r !<c-r><c-l><cr>
 nnoremap <leader>aa ggVG
 
+nnoremap <C-o> <C-o>zz
+nnoremap <C-i> <C-i>zz
+
+
 if system('uname -r') =~ "microsoft"
   augroup Yank
   autocmd!
@@ -292,6 +298,12 @@ function! SetJump()
     autocmd CursorMoved * autocmd! SaveJump
   augroup END
 endfunction
+
+augroup vim_todo
+    au!
+    au Syntax * syn match MyTodo /\v<(FIXME|NOTE|OPTIMIZE)/ containedin=.*Comment,vimCommentTitle
+    au Syntax * syn match MyImportant /\v<(IMPORTANT|TEMP)/ containedin=.*Comment,vimCommentTitle
+augroup END
 
 " nnoremap <silent> <C-f> :<C-u>call SaveJump("\<lt>C-f>")<CR>:call SetJump()<CR>
 " nnoremap <silent> <C-b> :<C-u>call SaveJump("\<lt>C-b>")<CR>:call SetJump()<CR>
@@ -339,14 +351,9 @@ function! s:patch_oceanic_next_colors()
   hi! link Error StatusLine
   hi! link Folded EndOfBuffer
 
-  augroup vimrc_todo
-      au!
-      au Syntax * syn match MyTodo /\v<(FIXME|NOTE|OPTIMIZE)/ containedin=.*Comment,vimCommentTitle
-      au Syntax * syn match MyImportant /\v<(IMPORTANT|TEMP)/ containedin=.*Comment,vimCommentTitle
-  augroup END
+  hi Todo guibg=#4381c0
   hi MyTodo guifg=white guibg=#da666c
   hi MyImportant guifg=white guibg=#efad04
-  hi typescriptCommentTodo guibg=#4381c0
 
 endfunction
 autocmd! ColorScheme OceanicNext call s:patch_oceanic_next_colors()
@@ -423,17 +430,17 @@ if exists('+showtabline')
         let bufnr = buflist[winnr - 1]
         let bufname = bufname(bufnr)
         let bufmodified = getbufvar(bufnr, "&mod")
-    
+  
         let s .= '%' . tab . 'T'
         let s .= (tab == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#')
         let s .= '[' . tab .']'
         let s .= (bufname != '' ? ' '. fnamemodify(bufname, ':t') . ' ' : ' - ')
-    
+  
         if bufmodified
         let s .= '[+] '
         endif
     endfor
-    
+  
     let s .= '%#TabLineFill#'
     if (exists("g:tablineclosebutton"))
         let s .= '%=%999XX'
@@ -442,7 +449,7 @@ if exists('+showtabline')
   endfunction
   set tabline=%!Tabline()
 endif
-  
+
 " statusline
 if has('statusline')
   set laststatus=2
@@ -537,7 +544,7 @@ function! s:GoToDefinitionSplit()
     call searchdecl(expand('<cword>'))
   endif
 endfunction
-  
+
 function! s:GoToReferences()
   execute 'normal z*'
   if CocActionAsync('jumpReferences')
@@ -1106,6 +1113,7 @@ command! -nargs=? Rc exe ':lua require("rgflow").search(vim.fn.expand("<cword>")
 
 command! -nargs=? -complete=shellcmd Rf :AsyncRun -errorformat=\%f fd -a <args>
 command! -nargs=0 Rz exe ':lua require("rgflow").search("[\\u4e00-\\u9fa5]+", "--smart-case --ignore --max-columns 200 -e", vim.fn.getcwd())'
+command! -nargs=0 Rzc exe ':lua require("rgflow").search("[\\u4e00-\\u9fa5]+", "--smart-case --ignore --max-columns 200 -e", vim.fn.expand("%"))'
 command! -nargs=0 TODO exe ':lua require("rgflow").search("TODO:", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
 command! -nargs=0 TEMP exe ':lua require("rgflow").search("TEMP:", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
 command! -nargs=0 NOTE exe ':lua require("rgflow").search("NOTE:", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
@@ -1299,70 +1307,70 @@ command! GCompileCommands execute '!xmake project -k compile_commands'
 
 " nvim-treesitter
 " --------------------------------------------------------------------
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = false,
-    disable = function(lang, bufnr)
-        if lang == "c" then
-          return true
-        end
-        offset = vim.api.nvim_buf_get_offset(bufnr, 1)
-        return offset > 777
-    end,
-  },
-  indent = {
-    enable = true,
-    disable = {},
-  },
-  incremental_selection = {
-    enable = true,
-  },
-  ensure_installed = {
-    "bash",
-    "c",
-    "comment",
-    "cpp",
-    "css",
-    "dockerfile",
-    "elixir",
-    "heex",
-    -- "java",
-    "markdown",
-    "gdscript",
-    "glsl",
-    "go",
-    -- "graphql",
-    "html",
-    "http",
-    "jsdoc",
-    "json",
-    "jsonc",
-    "javascript",
-    "lua",
-    "prisma",
-    "python",
-    "rust",
-    "scss",
-    -- "swift",
-    "svelte",
-    "toml",
-    "typescript",
-    "tsx",
-    "vim",
-    "vue",
-    "yaml",
-    "zig",
-  },
-}
-require('ts_context_commentstring').setup {}
-vim.g.skip_ts_context_commentstring_module = true
-
--- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
--- parser_config.tsx.filetype_to_parsername = { "javascript", "typescriptreact" }
--- local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
--- ft_to_parser.typescriptreact = "tsx"
-EOF
+" lua <<EOF
+" require'nvim-treesitter.configs'.setup {
+"   highlight = {
+"     enable = false,
+"     disable = function(lang, bufnr)
+"         if lang == "c" then
+"           return true
+"         end
+"         offset = vim.api.nvim_buf_get_offset(bufnr, 1)
+"         return offset > 777
+"     end,
+"   },
+"   indent = {
+"     enable = true,
+"     disable = {},
+"   },
+"   incremental_selection = {
+"     enable = true,
+"   },
+"   ensure_installed = {
+"     "bash",
+"     "c",
+"     "comment",
+"     "cpp",
+"     "css",
+"     "dockerfile",
+"     "elixir",
+"     "heex",
+"     -- "java",
+"     "markdown",
+"     "gdscript",
+"     "glsl",
+"     "go",
+"     -- "graphql",
+"     "html",
+"     "http",
+"     "jsdoc",
+"     "json",
+"     "jsonc",
+"     "javascript",
+"     "lua",
+"     "prisma",
+"     "python",
+"     "rust",
+"     "scss",
+"     -- "swift",
+"     "svelte",
+"     "toml",
+"     "typescript",
+"     "tsx",
+"     "vim",
+"     "vue",
+"     "yaml",
+"     "zig",
+"   },
+" }
+" require('ts_context_commentstring').setup {}
+" vim.g.skip_ts_context_commentstring_module = true
+"
+" -- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+" -- parser_config.tsx.filetype_to_parsername = { "javascript", "typescriptreact" }
+" -- local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
+" -- ft_to_parser.typescriptreact = "tsx"
+" EOF
 
 " nvim-treesitter-textobjects
 " if s:is_installed('nvim-treesitter-textobjects')
@@ -1431,11 +1439,11 @@ EOF
 
 
 " Comment.nvim
-lua <<EOF
-require('Comment').setup({
-  pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
-})
-EOF
+" lua <<EOF
+" require('Comment').setup({
+"   pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+" })
+" EOF
 
 " incline.nvim
 " if s:is_installed('incline.nvim')
@@ -1462,24 +1470,24 @@ EOF
 " endif
 
 " rest.nvim
-lua <<EOF
-require("rest-nvim").setup({
-  result = {
-    formatters = {
-      json = function(body)
-        return vim.fn.system({"prettier", "--stdin-filepath", "a.json"}, body)
-      end,
-      html = function(body)
-        return vim.fn.system({"prettier", "--stdin-filepath", "a.html"}, body)
-      end
-    },
-  },
-})
-EOF
+" lua <<EOF
+" require("rest-nvim").setup({
+"   result = {
+"     formatters = {
+"       json = function(body)
+"         return vim.fn.system({"prettier", "--stdin-filepath", "a.json"}, body)
+"       end,
+"       html = function(body)
+"         return vim.fn.system({"prettier", "--stdin-filepath", "a.html"}, body)
+"       end
+"     },
+"   },
+" })
+" EOF
 
-command! -nargs=0 RestRun :lua require("rest-nvim").run()
-command! -nargs=0 RestLast :lua require("rest-nvim").last()
-command! -nargs=0 RestPreview :lua require("rest-nvim").run(true)
+" command! -nargs=0 RestRun :lua require("rest-nvim").run()
+" command! -nargs=0 RestLast :lua require("rest-nvim").last()
+" command! -nargs=0 RestPreview :lua require("rest-nvim").run(true)
 
 fun s:mapMake()
     if &ft == "c" || &ft == "cpp"
@@ -1495,9 +1503,14 @@ fun s:mapMake()
     endif
 
     if &ft == "typescript" || &ft == "typescriptreact"
-        let g:build="tsc"
+        let g:build="npx tsc"
     endif
-  
+
+    if &ft == "zig"
+        let g:build="zig build"
+        let g:run="zig build run"
+    endif
+
     if &ft == "http"
         nnoremap <silent><c-\> :RestRun<cr>
     else
