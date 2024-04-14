@@ -3,18 +3,21 @@ call plug#begin(stdpath('data') . '/plugged')
 if exists(":PlugInstall")
 
 " colorscheme
-Plug 'joshua7v/oceanic-next', { 'branch': 'silent' }
+" Plug 'joshua7v/oceanic-next', { 'branch': 'silent' }
+Plug 'mhartington/oceanic-next'
 
 " syntax
-" Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 " Plug 'nvim-treesitter/playground'
 " Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 " Plug 'nvim-treesitter/nvim-treesitter-context'
-" Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 " Plug 'Shougo/context_filetype.vim'
-let g:polyglot_disabled = ['javascript']
+" let g:polyglot_disabled = ['javascript']
 let g:zig_fmt_autosave = 0
 Plug 'sheerun/vim-polyglot'
+Plug 'wuelnerdotexe/vim-astro'
+let g:astro_typescript = 'enable'
 Plug 'maxmellon/vim-jsx-pretty'
 
 " edit
@@ -257,7 +260,7 @@ if has('macunix')
 endif
 
 " Close popup menu when leave insert mode
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+" autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
 inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
@@ -351,10 +354,171 @@ function! s:patch_oceanic_next_colors()
   hi! link Error StatusLine
   hi! link Folded EndOfBuffer
 
-  hi Todo guibg=#4381c0
+  hi Todo guifg=white guibg=#4381c0
   hi MyTodo guifg=white guibg=#da666c
   hi MyImportant guifg=white guibg=#efad04
 
+  " custom highlights
+  hi MyText ctermfg=253 guifg=#d8dee9
+  hi MyKeyword ctermfg=221 guifg=#fac863
+
+  " typescript
+  hi link typescriptImport MyKeyword
+  hi link typescriptExport MyKeyword
+  hi link typescriptAsyncFuncKeyword MyKeyword
+  hi link typescriptFuncKeyword MyKeyword
+  hi link typescriptPredefinedType MyKeyword
+  hi link typescriptVariable MyKeyword
+  hi link typescriptAliasKeyword MyKeyword
+  hi link typescriptConditional MyKeyword
+  hi link typescriptBOMWindowMethod MyKeyword
+  hi link typescriptBOMWindowProp MyKeyword
+  hi link typescriptGlobal MyKeyword
+  hi link typescriptNodeGlobal MyKeyword
+  hi link typescriptTry MyKeyword
+  hi link typescriptExceptions MyKeyword
+  hi link typescriptCastKeyword MyKeyword
+  hi link typescriptOperator MyKeyword
+  hi link typescriptEnumKeyword MyKeyword
+  hi link typescriptInterfaceKeyword MyKeyword
+  hi link typescriptReadonlyModifier MyKeyword
+  hi link typescriptObjectAsyncKeyword MyKeyword
+  hi link typescriptConstraint MyKeyword
+  hi link typescriptBOM MyKeyword
+  hi link typescriptIdentifier MyKeyword
+  hi link typescriptClassKeyword MyKeyword
+  hi link typescriptClassExtends MyKeyword
+  hi link typescriptTypeQuery MyKeyword
+  hi link typescriptDefault MyKeyword
+  hi link typescriptCase MyKeyword
+  hi link typescriptBranch MyKeyword
+  hi link typescriptGlobalMethod MyKeyword
+  hi link typescriptAmbientDeclaration MyKeyword
+  hi link typescriptModule MyKeyword
+  hi link typescriptBOMWindowCons MyKeyword
+  hi link typescriptConditionalElse MyKeyword
+
+  hi link typescriptXHRProp MyText
+  hi link typescriptRegExpProp MyText
+  hi link typescriptRequestProp MyText
+  hi link typescriptEncodingProp MyText
+  hi link typescriptPaymentMethod MyText
+  hi link typescriptOptionalMark MyText
+  hi link typescriptParamImpl MyText
+  hi link typescriptPromiseMethod MyText
+  hi link typescriptFuncType MyText
+  hi link typescriptBOMNavigatorProp MyText
+  hi link typescriptDOMStorageMethod MyText
+  hi link typescriptDOMNodeMethod MyText
+  hi link typescriptDOMEventTargetMethod MyText
+  hi link typescriptDOMEventMethod MyText
+  hi link typescriptDOMFormProp MyText
+  hi link typescriptUnion MyText
+  hi link typescriptEndColons MyText
+  hi link typescriptFuncComma MyText
+  hi link typescriptTemplateSB MyText
+  hi link typescriptStringMethod MyText
+  hi link typescriptFileReaderProp MyText
+  hi link typescriptPaymentShippingOptionProp MyText
+  hi link typescriptBOMLocationMethod MyText
+  hi link typescriptFuncTypeArrow MyText
+  hi link typescriptHeadersMethod MyText
+  hi link typescriptFuncName MyText
+  hi link typescriptCall MyText
+  hi link typescriptBraces MyText
+  hi link typescriptMember MyText
+  hi link typescriptDestructureVariable MyText
+  hi link typescriptDestructureLabel MyText
+  hi link typescriptResponseProp MyText
+  hi link typescriptDOMDocProp MyText
+  hi link typescriptDOMDocMethod MyText
+  hi link typescriptDOMEventProp MyText
+  hi link typescriptArrowFunc MyText
+  hi link typescriptConsoleMethod MyText
+  hi link typescriptArrayMethod MyText
+  hi link typescriptArrayStaticMethod MyText
+  hi link typescriptObjectLabel MyText
+  hi link typescriptJSONStaticMethod MyText
+  hi link typescriptBOMHistoryProp MyText
+  hi link typescriptDateMethod MyText
+  hi link typescriptMathStaticMethod MyText
+  hi link typescriptURLUtilsProp MyText
+  hi link typescriptES6SetMethod MyText
+  hi link typescriptCacheMethod MyText
+  hi link typescriptRegExpMethod MyText
+  hi link typescriptDOMNodeProp MyText
+  hi link typescriptFileListMethod MyText
+  hi link typescriptFunctionMethod MyText
+  hi link typescriptInterfaceExtends MyText
+  hi link typescriptObjectStaticMethod MyText
+  hi link typescriptPaymentProp MyText
+  hi link typescriptFileReaderMethod MyText
+  hi link typescriptPromiseStaticMethod MyText
+  hi link typescriptBOMHistoryMethod MyText
+  hi link typescriptPaymentResponseMethod MyText
+  hi link typescriptDOMFormMethod MyText
+  hi link typescriptXHRMethod MyText
+  hi link typescriptServiceWorkerMethod MyText
+  hi link typescriptPaymentAddressProp MyText
+
+  " javascript
+  hi link javaScriptIdentifier MyKeyword
+  hi link javaScriptGlobal MyKeyword
+  hi link javaScriptReserved MyKeyword
+  hi link javaScriptConditional MyKeyword
+  hi link javaScriptFunction MyKeyword
+  hi link jsFunction MyKeyword
+  hi link jsConditional MyKeyword
+  hi link jsAsyncKeyword MyKeyword
+  hi link jsGlobalObjects MyKeyword
+  hi link jsGlobalNodeObjects MyKeyword
+  hi link jsClassKeyword MyKeyword
+  hi link jsOperatorKeyword MyKeyword
+  hi link jsImport MyKeyword
+  hi link jsFrom MyKeyword
+  hi link jsExport MyKeyword
+  hi link jsForAwait MyKeyword
+
+  hi link sqlKeyword MyText
+  hi link javaScriptEmbed MyText
+  hi link jsxTagName MyText
+  hi link jsxDot MyText
+  hi link jsxTag MyText
+  hi link jsxAttrib MyText
+  hi link jsxBraces MyText
+  hi link jsxOpenPunct MyText
+  hi link jsxComponentName MyText
+  hi link jsxCloseString MyText
+  hi link jsxEqual MyText
+  hi link jsFuncName MyText
+  hi link jsFuncCall MyText
+  hi link jsArrowFunction MyText
+  hi link jsOperator MyText
+  hi link jsBlockLabel MyText
+
+  " html
+  hi! link htmlTag htmlTag
+  hi! link htmlTagN htmlTag
+  hi! link htmlTagName htmlTag
+  hi! link htmlEndTag htmlTag
+  hi! link htmlSpecialTagName htmlTag
+  hi! link htmlArg MyText
+  hi! link htmlBold MyText
+
+  " c/cpp
+  hi link cTypedef MyKeyword
+  hi link cStructure MyKeyword
+  hi link cType MyKeyword
+  hi link cConditional MyKeyword
+  hi link cInclude MyKeyword
+
+  hi link cppSTLtype MyText
+  hi link cppSTLenum MyText
+  hi link cUserFunction MyText
+
+  " dirvish
+  hi link DirvishArg MyKeyword
+  
 endfunction
 autocmd! ColorScheme OceanicNext call s:patch_oceanic_next_colors()
 
@@ -484,6 +648,7 @@ if isdirectory($HOME . "/scoop/apps/volta")
 endif
 
 let g:coc_global_extensions = [
+        \"@yaegassy/coc-astro",
         \"coc-clangd",
         \"coc-css",
         \"coc-cssmodules",
@@ -776,7 +941,8 @@ autocmd BufNewFile,BufRead *.ex               set ft=elixir
 autocmd BufNewFile,BufRead *.exs              set ft=elixir
 autocmd BufNewFile,BufRead *.eex              set ft=eelixir
 autocmd BufNewFile,BufRead *.tpl              set ft=html
-autocmd BufNewFile,BufRead *.mm               set ft=objc
+autocmd BufNewFile,BufRead,BufWritePost *.m                set ft=objc
+autocmd BufNewFile,BufRead,BufWritePost *.mm               set ft=objc
 autocmd BufNewFile,BufRead *.shader           set ft=glsl
 autocmd BufNewFile,BufRead *.vs,*.fs          set ft=glsl
 autocmd BufNewFile,BufRead *.vert,*.frag      set ft=glsl
@@ -911,11 +1077,12 @@ let g:VM_maps                    = {}
 let g:VM_maps['Find Under']      = '<C-h>'
 let g:VM_maps["Add Cursor Down"] = '<c-d>'
 let g:VM_maps["Add Cursor Up"]   = '<c-u>'
+let g:VM_maps["Start Regex Search"] = '\\/'
 
 " asyncrun.vim
 let g:asyncrun_bell = 1
 " command! -nargs=0 Rf AsyncRun -program=shebang -pos=bottom $(VIM_FILEPATH)
-command -nargs=? -complete=shellcmd R AsyncRun <args>
+command -nargs=? -complete=file R AsyncRun <args>
 
 " asynctasks.vim
 let g:asynctasks_rtp_config = 'asynctasks/tasks.ini'
@@ -941,7 +1108,7 @@ else
   map <c-z> <nop>
 endif
 
-let g:floaterm_keymap_toggle = '<c-q>'
+let g:floaterm_keymap_toggle = '<c-`>'
 let g:floaterm_width = 0.8
 let g:floaterm_height = 0.8
 let g:floaterm_title = 'Terminal $1/$2'
@@ -1088,7 +1255,10 @@ EOF
 lua <<EOF
 require('rgflow').setup(
     {
-        cmd_flags = "--smart-case --fixed-strings --ignore --max-columns 200",
+        cmd_flags = ("--smart-case --fixed-strings --ignore --max-columns 200"
+            .. " -g !**/dist/"
+            .. " -g !**/build"
+            .. " -g !**/node_modules/"),
         default_trigger_mappings = false,
         default_ui_mappings = true,
         default_quickfix_mappings = true,
@@ -1109,11 +1279,12 @@ command! Ro :lua require('rgflow').open_blank()<cr>
 command! Rx :lua require('rgflow').abort()<cr>
 command! -nargs=? Rg exe ':lua require("rgflow").search("<args>", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
 command! -nargs=? Rw exe ':lua require("rgflow").search("<args>", "--smart-case --fixed-strings --ignore --max-columns 200 -w", vim.fn.getcwd())'
-command! -nargs=? Rc exe ':lua require("rgflow").search(vim.fn.expand("<cword>"), "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.expand("%"))'
+command! -nargs=? Rwf exe ':lua require("rgflow").search("<args>", "--smart-case --fixed-strings --ignore --max-columns 200 -w", vim.fn.expand("%"))'
+command! -nargs=? Rc exe ':lua require("rgflow").search("<args>", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
 
 command! -nargs=? -complete=shellcmd Rf :AsyncRun -errorformat=\%f fd -a <args>
 command! -nargs=0 Rz exe ':lua require("rgflow").search("[\\u4e00-\\u9fa5]+", "--smart-case --ignore --max-columns 200 -e", vim.fn.getcwd())'
-command! -nargs=0 Rzc exe ':lua require("rgflow").search("[\\u4e00-\\u9fa5]+", "--smart-case --ignore --max-columns 200 -e", vim.fn.expand("%"))'
+command! -nargs=0 Rzf exe ':lua require("rgflow").search("[\\u4e00-\\u9fa5]+", "--smart-case --ignore --max-columns 200 -e", vim.fn.expand("%"))'
 command! -nargs=0 TODO exe ':lua require("rgflow").search("TODO:", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
 command! -nargs=0 TEMP exe ':lua require("rgflow").search("TEMP:", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
 command! -nargs=0 NOTE exe ':lua require("rgflow").search("NOTE:", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
@@ -1307,70 +1478,71 @@ command! GCompileCommands execute '!xmake project -k compile_commands'
 
 " nvim-treesitter
 " --------------------------------------------------------------------
-" lua <<EOF
-" require'nvim-treesitter.configs'.setup {
-"   highlight = {
-"     enable = false,
-"     disable = function(lang, bufnr)
-"         if lang == "c" then
-"           return true
-"         end
-"         offset = vim.api.nvim_buf_get_offset(bufnr, 1)
-"         return offset > 777
-"     end,
-"   },
-"   indent = {
-"     enable = true,
-"     disable = {},
-"   },
-"   incremental_selection = {
-"     enable = true,
-"   },
-"   ensure_installed = {
-"     "bash",
-"     "c",
-"     "comment",
-"     "cpp",
-"     "css",
-"     "dockerfile",
-"     "elixir",
-"     "heex",
-"     -- "java",
-"     "markdown",
-"     "gdscript",
-"     "glsl",
-"     "go",
-"     -- "graphql",
-"     "html",
-"     "http",
-"     "jsdoc",
-"     "json",
-"     "jsonc",
-"     "javascript",
-"     "lua",
-"     "prisma",
-"     "python",
-"     "rust",
-"     "scss",
-"     -- "swift",
-"     "svelte",
-"     "toml",
-"     "typescript",
-"     "tsx",
-"     "vim",
-"     "vue",
-"     "yaml",
-"     "zig",
-"   },
-" }
-" require('ts_context_commentstring').setup {}
-" vim.g.skip_ts_context_commentstring_module = true
-"
-" -- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-" -- parser_config.tsx.filetype_to_parsername = { "javascript", "typescriptreact" }
-" -- local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
-" -- ft_to_parser.typescriptreact = "tsx"
-" EOF
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = false,
+    disable = function(lang, bufnr)
+        if lang == "c" then
+          return true
+        end
+        offset = vim.api.nvim_buf_get_offset(bufnr, 1)
+        return offset > 777
+    end,
+  },
+  indent = {
+    enable = true,
+    disable = {},
+  },
+  incremental_selection = {
+    enable = true,
+  },
+  ensure_installed = {
+    -- "astro",
+    -- "bash",
+    -- "c",
+    -- "comment",
+    -- "cpp",
+    -- "css",
+    -- "dockerfile",
+    -- "elixir",
+    -- "heex",
+    -- -- "java",
+    -- "markdown",
+    -- "gdscript",
+    -- "glsl",
+    -- "go",
+    -- -- "graphql",
+    -- "html",
+    -- "http",
+    -- "jsdoc",
+    -- "json",
+    -- "jsonc",
+    -- "javascript",
+    -- "lua",
+    -- "prisma",
+    -- "python",
+    -- "rust",
+    -- "scss",
+    -- -- "swift",
+    -- "svelte",
+    -- "toml",
+    -- "typescript",
+    -- "tsx",
+    -- "vim",
+    -- "vue",
+    -- "yaml",
+    -- "zig",
+  },
+}
+require('ts_context_commentstring').setup {}
+vim.g.skip_ts_context_commentstring_module = true
+
+-- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+-- parser_config.tsx.filetype_to_parsername = { "javascript", "typescriptreact" }
+-- local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
+-- ft_to_parser.typescriptreact = "tsx"
+EOF
 
 " nvim-treesitter-textobjects
 " if s:is_installed('nvim-treesitter-textobjects')
@@ -1432,7 +1604,7 @@ require("auto-session").setup {
     log_level = "error",
     auto_session_suppress_dirs = { "~/", "~/Downloads", "/"},
 }
-vim.o.sessionoptions="curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+vim.o.sessionoptions="curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions,globals"
 EOF
 " set sessionoptions-=blank
 " set sessionoptions-=buffers
@@ -1491,28 +1663,48 @@ EOF
 
 fun s:mapMake()
     if &ft == "c" || &ft == "cpp"
-        let g:build="make -B"
-        let g:test="make test"
-        let g:clean="make clean"
-        let g:run="make run"
+        if !exists('g:build')
+            let g:build="make -B"
+        endif
+        if !exists('g:test')
+            let g:test="make test"
+        endif
+        if !exists('g:clean')
+            let g:clean="make clean"
+        endif
+        if !exists('g:run')
+            let g:run="make run"
+        endif
     endif
 
     if &ft == "rust"
-        let g:build="cargo check"
-        let g:run="cargo run"
+        if !exists('g:build')
+            let g:build="cargo check"
+        endif
+        if !exists('g:run')
+            let g:run="cargo run"
+        endif
     endif
 
     if &ft == "typescript" || &ft == "typescriptreact"
-        let g:build="npx tsc"
+        if !exists('g:build')
+            let g:build="npx tsc"
+        endif
     endif
 
     if &ft == "zig"
-        let g:build="zig build"
-        let g:run="zig build run"
+        if !exists('g:build')
+            let g:build="zig build"
+        endif
+        if !exists('g:run')
+            let g:run="zig build run"
+        endif
     endif
 
     if &ft == "http"
-        nnoremap <silent><c-\> :RestRun<cr>
+        if !exists('g:build')
+            nnoremap <silent><c-\> :RestRun<cr>
+        endif
     else
         nnoremap <silent><c-\> :call asyncrun#run('', {}, get(g:, 'build', 'echo "no build command"'))<cr>
     endif
