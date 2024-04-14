@@ -68,5 +68,19 @@
       "}, []);"
     ],
     "description": "React Functional Component"
+  },
+  "prc": {
+    "scope": "javascript,typescript",
+    "prefix": "prc",
+    "body": [
+      "type Props = {};",
+      "",
+      "function $TM_FILENAME_BASE(props: Props) {",
+      "  return <div>$TM_FILENAME_BASE</div>;",
+      "}",
+      "",
+      "export default $TM_FILENAME_BASE;"
+    ],
+    "description": "preact component"
   }
 }
