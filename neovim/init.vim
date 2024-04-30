@@ -73,7 +73,7 @@ Plug 'Shougo/echodoc.vim'
 Plug 'MattesGroeger/vim-bookmarks'
 " Plug 'RutaTang/quicknote.nvim'
 " Plug 'jremmen/vim-ripgrep'
-Plug 'mangelozzi/rgflow.nvim'
+" Plug 'mangelozzi/rgflow.nvim'
 Plug 'sindrets/diffview.nvim'
 Plug 'rmagatti/auto-session'
 " Plug 'ludovicchabant/vim-gutentags'
@@ -955,6 +955,7 @@ autocmd BufNewFile,BufRead settings.json      set ft=jsonc
 " autocmd FileType json setlocal conceallevel=0
 
 set errorformat=
+
 " xmake
 set errorformat+=%f(%l):\ %m
 set errorformat+=%f(%l)\ :\ %m
@@ -969,7 +970,7 @@ set errorformat+=%f\ :\ %m
 " typescript
 set errorformat+=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
 
-" set errorformat+=%-G%.%#
+set errorformat+=%-G%.%#
 
 " %f(%l) \=: %t%*\D%n: %m,%*[^"]"%f"%*\D%l: %m,%f(%l) \=: %m,%*[^ ] %f %l: %m,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,%f|%l| %m
 " autocmd BufNewFile,BufRead *.ts,*.tsx      set errorformat+=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
@@ -977,14 +978,19 @@ set errorformat+=%+A\ %#%f\ %#(%l\\\,%c):\ %m,%C%m
 " vim-asterisk
 let g:asterisk#keeppos = 1
 
-map *   <Plug>(asterisk-*)
-map #   <Plug>(asterisk-#)
-map g*  <Plug>(asterisk-g*)
-map g#  <Plug>(asterisk-g#)
+" map *   <Plug>(asterisk-*)
+" map #   <Plug>(asterisk-#)
+" map g*  <Plug>(asterisk-g*)
+" map g#  <Plug>(asterisk-g#)
 map z*  <Plug>(asterisk-z*)
 map z#  <Plug>(asterisk-z#)
 map gz* <Plug>(asterisk-gz*)
 map gz# <Plug>(asterisk-gz#)
+
+map *  <Plug>(asterisk-z*)
+map #  <Plug>(asterisk-z#)
+map g*  <Plug>(asterisk-*)
+map g#  <Plug>(asterisk-#)
 
 " echodoc.vim
 let g:echodoc#enable_at_startup = 1
@@ -1092,7 +1098,7 @@ let g:asyncrun_rootmarks = ['.git', '.svn', '.root', '.project', '.hg', '.projec
 let g:asynctasks_term_reuse = 1
 let g:asynctasks_term_focus = 1
 
-" noremap <silent><leader>q :call asyncrun#quickfix_toggle(24)<cr>
+noremap <silent><leader>q :call asyncrun#quickfix_toggle(24)<cr>
 " noremap <leader>r :AsyncTask project-run<cr>
 " noremap <leader>b :AsyncTask project-build<cr>
 " command! -nargs=0 Test exe 'AsyncTask project-test'
@@ -1155,15 +1161,15 @@ let g:qf_max_height = 24
 let g:qf_auto_resize = 0
 let g:qf_auto_open_quickfix = 0
 
-function! ToggleQuickFix()
-    if empty(filter(getwininfo(), 'v:val.quickfix'))
-        copen
-    else
-        cclose
-    endif
-endfunction
+" function! ToggleQuickFix()
+"     if empty(filter(getwininfo(), 'v:val.quickfix'))
+"         copen
+"     else
+"         cclose
+"     endif
+" endfunction
 
-nnoremap <silent> <leader>q :call ToggleQuickFix()<cr>
+" nnoremap <silent> <leader>q :call ToggleQuickFix()<cr>
 
 " vim-bqf
 lua <<EOF
@@ -1252,43 +1258,44 @@ EOF
 " command! R :Rg -w <cword> %
 
 " rgflow.nvim
-lua <<EOF
-require('rgflow').setup(
-    {
-        cmd_flags = ("--smart-case --fixed-strings --ignore --max-columns 200"
-            .. " -g !**/dist/"
-            .. " -g !**/build"
-            .. " -g !**/node_modules/"),
-        default_trigger_mappings = false,
-        default_ui_mappings = true,
-        default_quickfix_mappings = true,
-        colors = {
-            RgFlowHeadLine = {fg = "#6f7071", bg="#1b2b34", bold=false},
-            RgFlowInputBg = {fg = "fg", bg="#1b2b34", bold=false},
-            RgFlowInputFlags = {fg = "fg", bg="#1b2b34", bold=false},
-            RgFlowInputPattern = {fg = "fg", bg="#1b2b34", bold=false},
-            RgFlowInputPath = {fg = "fg", bg="#1b2b34", bold=false},
-        },
-        ui_top_line_char = "━"
-    }
-)
-EOF
+" lua <<EOF
+" require('rgflow').setup(
+"     {
+"         cmd_flags = ("--smart-case --fixed-strings --ignore --max-columns 200"
+"             .. " -g !**/dist/"
+"             .. " -g !**/build"
+"             .. " -g !**/node_modules/"),
+"         default_trigger_mappings = false,
+"         default_ui_mappings = true,
+"         default_quickfix_mappings = true,
+"         colors = {
+"             RgFlowHeadLine = {fg = "#6f7071", bg="#1b2b34", bold=false},
+"             RgFlowInputBg = {fg = "fg", bg="#1b2b34", bold=false},
+"             RgFlowInputFlags = {fg = "fg", bg="#1b2b34", bold=false},
+"             RgFlowInputPattern = {fg = "fg", bg="#1b2b34", bold=false},
+"             RgFlowInputPath = {fg = "fg", bg="#1b2b34", bold=false},
+"         },
+"         ui_top_line_char = "━"
+"     }
+" )
+" EOF
 
-command! RR :lua require('rgflow').open_again()<cr>
-command! Ro :lua require('rgflow').open_blank()<cr>
-command! Rx :lua require('rgflow').abort()<cr>
-command! -nargs=? Rg exe ':lua require("rgflow").search("<args>", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
-command! -nargs=? Rw exe ':lua require("rgflow").search("<args>", "--smart-case --fixed-strings --ignore --max-columns 200 -w", vim.fn.getcwd())'
-command! -nargs=? Rwf exe ':lua require("rgflow").search("<args>", "--smart-case --fixed-strings --ignore --max-columns 200 -w", vim.fn.expand("%"))'
-command! -nargs=? Rc exe ':lua require("rgflow").search("<args>", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
+" command! RR :lua require('rgflow').open_again()<cr>
+" command! Ro :lua require('rgflow').open_blank()<cr>
+" command! Rx :lua require('rgflow').abort()<cr>
+" command! -nargs=? Rg exe ':lua require("rgflow").search("<args>", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
+" command! -nargs=? Rw exe ':lua require("rgflow").search("<args>", "--smart-case --fixed-strings --ignore --max-columns 200 -w", vim.fn.getcwd())'
+" command! -nargs=? Rwf exe ':lua require("rgflow").search("<args>", "--smart-case --fixed-strings --ignore --max-columns 200 -w", vim.fn.expand("%"))'
+" command! -nargs=? Rc exe ':lua require("rgflow").search("<args>", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
 
 command! -nargs=? -complete=shellcmd Rf :AsyncRun -errorformat=\%f fd -a <args>
-command! -nargs=0 Rz exe ':lua require("rgflow").search("[\\u4e00-\\u9fa5]+", "--smart-case --ignore --max-columns 200 -e", vim.fn.getcwd())'
-command! -nargs=0 Rzf exe ':lua require("rgflow").search("[\\u4e00-\\u9fa5]+", "--smart-case --ignore --max-columns 200 -e", vim.fn.expand("%"))'
-command! -nargs=0 TODO exe ':lua require("rgflow").search("TODO:", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
-command! -nargs=0 TEMP exe ':lua require("rgflow").search("TEMP:", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
-command! -nargs=0 NOTE exe ':lua require("rgflow").search("NOTE:", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
-command! -nargs=0 IMPORTANT exe ':lua require("rgflow").search("IMPORTANT", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
+command! -nargs=? -complete=file Rg :AsyncRun -errorformat=\%f:\%l:\%c:\%m,\%f:\%l:\%m,\%f:\%l\%m rg --smart-case --ignore --max-columns 200 --vimgrep <args>
+command! -nargs=? -complete=file Rz :Rg -e "[\\u4e00-\\u9fa5]+" <args>
+command! -nargs=? -complete=file Rw :Rg --fixed-strings -w <args>
+command! -nargs=? -complete=file TODO :Rg TODO: <args>
+command! -nargs=? -complete=file TEMP :Rg TEMP: <args>
+command! -nargs=? -complete=file NOTE :Rg NOTE: <args>
+command! -nargs=? -complete=file IMPORTANT :Rg IMPORTANT: <args>
 
 " nnoremap <leader>ff :AsyncRun -errorformat=\%f fd -a 
 
