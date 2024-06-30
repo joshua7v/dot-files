@@ -10,7 +10,7 @@
   "suggest.timeout": 7000,
   "suggest.noselect": true,
   "suggest.labelMaxLength": 100,
-  "codeLens.enable": true,
+  "codeLens.enable": false,
   "colors.filetypes": ["*"],
   "diagnostic.virtualText": false,
   "diagnostic.enableMessage": "jump",
@@ -21,6 +21,7 @@
   "list.normalMappings": {},
   "list.source.grep.excludePatterns": ["**/*.min.js", "**/*.min.css", "**/*.js.map"],
   "coc.source.lines.enable": false,
+  "coc.preferences.currentFunctionSymbolAutoUpdate": true,
   "snippets.textmateSnippetsRoots": ["~/.dot-files/neovim/snippets"],
   "snippets.extends": {
     "cpp": ["c"],
@@ -28,6 +29,8 @@
     "typescriptreact": ["typescript"]
   },
   "snippets.priority": 0,
+  "html.filetypes": ["html", "handlebars", "htmldjango", "blade", "eelixir"],
+  "html.autoCreateQuotes": false,
   "css.lint.unknownAtRules": "ignore",
   "css.completion.completePropertyWithSemicolon": false,
   "scss.completion.completePropertyWithSemicolon": false,
@@ -40,6 +43,7 @@
   "javascript.referencesCodeLens.enable": false,
   "javascript.implementationsCodeLens.enable": false,
   "highlight.disableLanguages": ["dirvish"],
+  "svelte.enable-ts-plugin": true,
   "rust-analyzer.server.path": "rust-analyzer",
   "rust-analyzer.diagnostics.enable": false,
   "rust-analyzer.procMacro.enable": true,
@@ -55,7 +59,14 @@
   "clangd.arguments": ["--background-index", "--completion-style=detailed"],
   "languageserver": {
     "elixirLS": {
-      "command": "~/erinn/tools/elixir-ls/language_server.bat",
+      "command": "/opt/homebrew/bin/elixir-ls",
+      "disabledFeatures": ["inlayHint"],
+      "settings": {
+        "suggestSpecs": false,
+        "dialyzerEnabled": true,
+        "signatureAfterComplete": false,
+        "fetchDeps": false
+      },
       "filetypes": ["elixir", "eelixir"]
     },
     "godot": {

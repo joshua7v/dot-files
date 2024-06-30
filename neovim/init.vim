@@ -19,7 +19,8 @@ Plug 'sheerun/vim-polyglot'
 Plug 'wuelnerdotexe/vim-astro'
 let g:astro_typescript = 'enable'
 Plug 'maxmellon/vim-jsx-pretty'
-" Plug 'leafOfTree/vim-vue-plugin'
+Plug 'leafOfTree/vim-svelte-plugin'
+let g:vim_svelte_plugin_use_typescript = 1
 
 " edit
 " Plug 'github/copilot.vim'
@@ -522,6 +523,13 @@ function! s:patch_oceanic_next_colors()
   hi link cppSTLtype MyText
   hi link cppSTLenum MyText
   hi link cUserFunction MyText
+
+  " elixir
+  hi link elixirDefine MyKeyword
+  hi link elixirBlockDefinition MyKeyword
+  hi link elixirModuleDefine MyKeyword
+  hi link elixirInclude MyKeyword
+  hi link elixirFunctionDeclaration MyText
 
   " dirvish
   hi link DirvishArg MyKeyword
@@ -1152,6 +1160,7 @@ command! NewTerm FloatermNew
 command! Vifm :FloatermNew vifm %:p:h .
 command! Gitui :FloatermNew gitui
 
+hi FloatermBorder guibg=#1b2b34
 autocmd User Startified setlocal buflisted
 
 " undotree
