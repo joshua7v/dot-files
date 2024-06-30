@@ -13,12 +13,13 @@ Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 " Plug 'nvim-treesitter/nvim-treesitter-context'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 " Plug 'Shougo/context_filetype.vim'
-" let g:polyglot_disabled = ['javascript']
+let g:polyglot_disabled = ['vue']
 let g:zig_fmt_autosave = 0
 Plug 'sheerun/vim-polyglot'
 Plug 'wuelnerdotexe/vim-astro'
 let g:astro_typescript = 'enable'
 Plug 'maxmellon/vim-jsx-pretty'
+" Plug 'leafOfTree/vim-vue-plugin'
 
 " edit
 " Plug 'github/copilot.vim'
@@ -271,8 +272,8 @@ autocmd BufWinEnter * :set textwidth=0
 nnoremap <silent> <c-r> :r !<c-r><c-l><cr>
 nnoremap <leader>aa ggVG
 
-nnoremap <C-o> <C-o>zz
-nnoremap <C-i> <C-i>zz
+" nnoremap <C-o> <C-o>zz
+" nnoremap <C-i> <C-i>zz
 
 
 if system('uname -r') =~ "microsoft"
@@ -282,25 +283,25 @@ if system('uname -r') =~ "microsoft"
   augroup END
 endif
 
-function! SaveJump(motion)
-  if exists('#SaveJump#CursorMoved')
-    autocmd! SaveJump
-  else
-    normal! m'
-  endif
-  let m = a:motion
-  if v:count
-    let m = v:count.m
-  endif
-  execute 'normal!' m
-endfunction
+" function! SaveJump(motion)
+"   if exists('#SaveJump#CursorMoved')
+"     autocmd! SaveJump
+"   else
+"     normal! m'
+"   endif
+"   let m = a:motion
+"   if v:count
+"     let m = v:count.m
+"   endif
+"   execute 'normal!' m
+" endfunction
 
-function! SetJump()
-  augroup SaveJump
-    autocmd!
-    autocmd CursorMoved * autocmd! SaveJump
-  augroup END
-endfunction
+" function! SetJump()
+"   augroup SaveJump
+"     autocmd!
+"     autocmd CursorMoved * autocmd! SaveJump
+"   augroup END
+" endfunction
 
 augroup vim_todo
     au!
@@ -328,11 +329,17 @@ if has('nvim')
 endif
 
 function! s:patch_oceanic_next_colors()
-  hi StatusLine ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#1b2b34
-  hi StatusLineNC ctermfg=235 ctermbg=145 guibg=#65737e guifg=#1b2b34
+  " for nvim before v0.10
+  " hi StatusLine ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#1b2b34
+  " hi StatusLineNC ctermfg=235 ctermbg=145 guibg=#65737e guifg=#1b2b34
+  " hi TabLineFill ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#1b2b34
+
+  hi StatusLine ctermfg=235 ctermbg=145 guifg=#ff5555 guibg=#1b2b34
+  hi StatusLineNC ctermfg=235 ctermbg=145 guifg=#65737e guibg=#1b2b34
+
   hi TabLine cterm=NONE ctermfg=145 ctermbg=235 gui=NONE guibg=#1b2b34 guifg=#65737e
   hi TabLineSel ctermfg=145 ctermbg=345 guibg=#1b2b34 guifg=#ff5555
-  hi TabLineFill ctermfg=235 ctermbg=145 guibg=#ff5555 guifg=#1b2b34
+  hi TabLineFill ctermfg=235 ctermbg=145 guibg=#1b2b34
   hi PmenuSel ctermbg=145 guibg=#ff5555
   hi WildMenu ctermbg=145 guibg=#ff5555
   " hi Type ctermfg=221 guifg=#fac863 term=NONE gui=NONE
@@ -583,6 +590,14 @@ function! GetBufName()
   return bufname
 endfunction
 
+function! GetFn()
+  let fn = get(b:,'coc_current_function','')
+  if (fn) != ''
+      let fn = '> ' . get(b:,'coc_current_function','')
+  endif
+  return fn
+endfunction
+
 " tabline
 if exists('+showtabline')
   function! Tabline()
@@ -626,7 +641,8 @@ if has('statusline')
   set statusline+=\ %{&ff}\ %y
   set statusline+=%m%r%w\ 
 
-  set statusline+=%=%{StatusDiagnostic()}\ 
+  set statusline+=%=%{GetFn()}\ 
+  set statusline+=%{StatusDiagnostic()}\ 
   " set statusline+=%{get(g:,'coc_git_status','')}%{get(b:,'coc_git_status','')}\ 
   " set statusline+=%{coc#status()}%{get(b:,'coc_current_function','')}\ 
   " set statusline+=%{coc#status()}\ 
@@ -670,6 +686,7 @@ let g:coc_global_extensions = [
         \"coc-tasks",
         \"coc-toml",
         \"coc-tsserver",
+        \"coc-vetur",
         \"coc-webpack",
         \"coc-word",
         \"coc-yaml",
@@ -792,6 +809,9 @@ nmap <silent>K :call <SID>show_documentation()<cr>
 nmap <silent>Y :call CocActionAsync('diagnosticInfo')<cr>
 nmap <silent>gd :call <SID>GoToDefinition()<cr>
 nmap <silent>gD :call <SID>GoToDefinitionSplit()<cr>
+nmap <silent> <leader>re <Plug>(coc-codeaction-refactor)
+xmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
+nmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
 " nmap <silent> gd <Plug>(coc-definition)
 " vnoremap <leader>g :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
 " nnoremap <leader>g :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@ 
@@ -869,6 +889,7 @@ let g:coc_snippet_next = '<tab>'
 
 hi CocSearch ctermfg=12 guifg=#ff8888
 hi CocMenuSel ctermbg=109 guibg=#2E3440
+hi CocFloating cterm=reverse ctermfg=145 ctermbg=237 guifg=#a7adba guibg=#343d46
 
 autocmd BufAdd * if getfsize(expand('<afile>')) > 1024*1024 |
             \ let b:coc_enabled=0 |
@@ -1114,7 +1135,7 @@ else
   map <c-z> <nop>
 endif
 
-let g:floaterm_keymap_toggle = '<c-`>'
+let g:floaterm_keymap_toggle = '<c-q>'
 let g:floaterm_width = 0.8
 let g:floaterm_height = 0.8
 let g:floaterm_title = 'Terminal $1/$2'
