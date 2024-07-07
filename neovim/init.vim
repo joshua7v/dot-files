@@ -351,7 +351,7 @@ function! s:patch_oceanic_next_colors()
   hi DiffText ctermfg=4 ctermbg=0 guifg=#81A1C1 guibg=#2E3440
 
   hi Search ctermfg=0 ctermbg=6 guibg=#88C0D0 guifg=#3B4252
-  hi QuickFixLine ctermfg=none ctermbg=none guibg=none gui=none
+  hi QuickFixLine ctermfg=none ctermbg=none guibg=none guifg=none
   hi WinSeparator guibg=none guifg=#777777
 
   hi! link DiffAdded DiffAdd
@@ -898,6 +898,7 @@ let g:coc_snippet_next = '<tab>'
 hi CocSearch ctermfg=12 guifg=#ff8888
 hi CocMenuSel ctermbg=109 guibg=#2E3440
 hi CocFloating cterm=reverse ctermfg=145 ctermbg=237 guifg=#a7adba guibg=#343d46
+hi gitmessengerPopupNormal cterm=reverse ctermfg=145 ctermbg=237 guifg=#a7adba guibg=#343d46
 
 autocmd BufAdd * if getfsize(expand('<afile>')) > 1024*1024 |
             \ let b:coc_enabled=0 |
