@@ -525,8 +525,14 @@ function! s:patch_oceanic_next_colors()
   hi link cUserFunction MyText
 
   " elixir
+  hi link elixirKeyword MyKeyword
   hi link elixirDefine MyKeyword
+  hi link elixirPrivateDefine MyKeyword
   hi link elixirBlockDefinition MyKeyword
+  hi link elixirImplDefine MyKeyword
+  hi link elixirStructDefine MyKeyword
+  hi link elixirDelegateDefine MyKeyword
+  hi link elixirMacroDefine MyKeyword
   hi link elixirModuleDefine MyKeyword
   hi link elixirInclude MyKeyword
   hi link elixirFunctionDeclaration MyText
@@ -1529,7 +1535,7 @@ require'nvim-treesitter.configs'.setup {
     end,
   },
   indent = {
-    enable = true,
+    enable = false,
     disable = {},
   },
   incremental_selection = {

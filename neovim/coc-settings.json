@@ -5,7 +5,7 @@
   "diagnostic.warningSign": "W",
   "diagnostic.infoSign": "I",
   "diagnostic.hintSign": "H",
-  "inlayHint.enable": false,
+  "inlayHint.enable": true,
   "signature.target": "echo",
   "suggest.timeout": 7000,
   "suggest.noselect": true,
@@ -60,13 +60,7 @@
   "languageserver": {
     "elixirLS": {
       "command": "/opt/homebrew/bin/elixir-ls",
-      "disabledFeatures": ["inlayHint"],
-      "settings": {
-        "suggestSpecs": false,
-        "dialyzerEnabled": true,
-        "signatureAfterComplete": false,
-        "fetchDeps": false
-      },
+      "settings": {},
       "filetypes": ["elixir", "eelixir"]
     },
     "godot": {
@@ -78,5 +72,6 @@
       "command": "zls",
       "filetypes": ["zig"]
     }
-  }
+  },
+  "snippets.ultisnips.pythonPrompt": false
 }
