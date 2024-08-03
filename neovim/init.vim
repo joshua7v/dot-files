@@ -7,13 +7,14 @@ if exists(":PlugInstall")
 Plug 'mhartington/oceanic-next'
 
 " syntax
-Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+" Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
 " Plug 'nvim-treesitter/playground'
 " Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 " Plug 'nvim-treesitter/nvim-treesitter-context'
-Plug 'JoosepAlviste/nvim-ts-context-commentstring'
+" Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 " Plug 'Shougo/context_filetype.vim'
-let g:polyglot_disabled = ['vue']
+
+let g:polyglot_disabled = ['vue', 'typescript', 'markdown']
 let g:zig_fmt_autosave = 0
 Plug 'sheerun/vim-polyglot'
 Plug 'wuelnerdotexe/vim-astro'
@@ -96,6 +97,7 @@ Plug 'dstein64/vim-startuptime', { 'on': ['StartupTime'] }
 Plug 'yaocccc/nvim-hlchunk'
 " Plug 'rest-nvim/rest.nvim'
 Plug '~/erinn/tools/whitebox/whitebox_v0.96.2/editor_plugins/whitebox-vim'
+Plug 'Robitx/gp.nvim'
 
 endif
 
@@ -343,6 +345,7 @@ function! s:patch_oceanic_next_colors()
   hi TabLineFill ctermfg=235 ctermbg=145 guibg=#1b2b34
   hi PmenuSel ctermbg=145 guibg=#ff5555
   hi WildMenu ctermbg=145 guibg=#ff5555
+  hi NormalFloat ctermbg=145 guibg=#1b2b34
   " hi Type ctermfg=221 guifg=#fac863 term=NONE gui=NONE
 
   hi DiffAdd ctermfg=2 ctermbg=0 guifg=#A3BE8C guibg=#2E3440
@@ -405,6 +408,7 @@ function! s:patch_oceanic_next_colors()
   hi link typescriptModule MyKeyword
   hi link typescriptBOMWindowCons MyKeyword
   hi link typescriptConditionalElse MyKeyword
+  hi link typescriptExportType MyKeyword
 
   hi link typescriptXHRProp MyText
   hi link typescriptRegExpProp MyText
@@ -519,6 +523,7 @@ function! s:patch_oceanic_next_colors()
   hi link cType MyKeyword
   hi link cConditional MyKeyword
   hi link cInclude MyKeyword
+  hi link cppType MyKeyword
 
   hi link cppSTLtype MyText
   hi link cppSTLenum MyText
@@ -862,6 +867,8 @@ nnoremap <silent> <space>w :exe 'CocList -I --normal --input='.expand('<cword>')
 " nnoremap <silent> <space><leader>  :<C-u>CocList --normal project<cr>
 " nnoremap <silent> <space>l  :<C-u>Denite coc-link<cr>
 
+
+command! -nargs=0 InlayHint :CocCommand document.toggleInlayHint
 command! -nargs=0 IncomingCalls :call CocActionAsync('showIncomingCalls')
 command! -nargs=0 OutgoingCalls :call CocActionAsync('showOutgoingCalls')
 command! -nargs=0 ColorPresentation :call CocActionAsync('colorPresentation')
@@ -904,6 +911,7 @@ let g:coc_snippet_next = '<tab>'
 hi CocSearch ctermfg=12 guifg=#ff8888
 hi CocMenuSel ctermbg=109 guibg=#2E3440
 hi CocFloating cterm=reverse ctermfg=145 ctermbg=237 guifg=#a7adba guibg=#343d46
+hi link CocInlayHint Comment
 hi gitmessengerPopupNormal cterm=reverse ctermfg=145 ctermbg=237 guifg=#a7adba guibg=#343d46
 
 autocmd BufAdd * if getfsize(expand('<afile>')) > 1024*1024 |
@@ -1522,71 +1530,71 @@ command! GCompileCommands execute '!xmake project -k compile_commands'
 
 " nvim-treesitter
 " --------------------------------------------------------------------
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = false,
-    disable = function(lang, bufnr)
-        if lang == "c" then
-          return true
-        end
-        offset = vim.api.nvim_buf_get_offset(bufnr, 1)
-        return offset > 777
-    end,
-  },
-  indent = {
-    enable = false,
-    disable = {},
-  },
-  incremental_selection = {
-    enable = true,
-  },
-  ensure_installed = {
-    -- "astro",
-    -- "bash",
-    -- "c",
-    -- "comment",
-    -- "cpp",
-    -- "css",
-    -- "dockerfile",
-    -- "elixir",
-    -- "heex",
-    -- -- "java",
-    -- "markdown",
-    -- "gdscript",
-    -- "glsl",
-    -- "go",
-    -- -- "graphql",
-    -- "html",
-    -- "http",
-    -- "jsdoc",
-    -- "json",
-    -- "jsonc",
-    -- "javascript",
-    -- "lua",
-    -- "prisma",
-    -- "python",
-    -- "rust",
-    -- "scss",
-    -- -- "swift",
-    -- "svelte",
-    -- "toml",
-    -- "typescript",
-    -- "tsx",
-    -- "vim",
-    -- "vue",
-    -- "yaml",
-    -- "zig",
-  },
-}
-require('ts_context_commentstring').setup {}
-vim.g.skip_ts_context_commentstring_module = true
-
--- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
--- parser_config.tsx.filetype_to_parsername = { "javascript", "typescriptreact" }
--- local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
--- ft_to_parser.typescriptreact = "tsx"
-EOF
+" lua <<EOF
+" require'nvim-treesitter.configs'.setup {
+"   highlight = {
+"     enable = false,
+"     disable = function(lang, bufnr)
+"         if lang == "c" then
+"           return true
+"         end
+"         offset = vim.api.nvim_buf_get_offset(bufnr, 1)
+"         return offset > 777
+"     end,
+"   },
+"   indent = {
+"     enable = false,
+"     disable = {},
+"   },
+"   incremental_selection = {
+"     enable = true,
+"   },
+"   ensure_installed = {
+"     -- "astro",
+"     -- "bash",
+"     -- "c",
+"     -- "comment",
+"     -- "cpp",
+"     -- "css",
+"     -- "dockerfile",
+"     -- "elixir",
+"     -- "heex",
+"     -- -- "java",
+"     -- "markdown",
+"     -- "gdscript",
+"     -- "glsl",
+"     -- "go",
+"     -- -- "graphql",
+"     -- "html",
+"     -- "http",
+"     -- "jsdoc",
+"     -- "json",
+"     -- "jsonc",
+"     -- "javascript",
+"     -- "lua",
+"     -- "prisma",
+"     -- "python",
+"     -- "rust",
+"     -- "scss",
+"     -- -- "swift",
+"     -- "svelte",
+"     -- "toml",
+"     -- "typescript",
+"     -- "tsx",
+"     -- "vim",
+"     -- "vue",
+"     -- "yaml",
+"     -- "zig",
+"   },
+" }
+" require('ts_context_commentstring').setup {}
+" vim.g.skip_ts_context_commentstring_module = true
+" 
+" -- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
+" -- parser_config.tsx.filetype_to_parsername = { "javascript", "typescriptreact" }
+" -- local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
+" -- ft_to_parser.typescriptreact = "tsx"
+" EOF
 
 " nvim-treesitter-textobjects
 " if s:is_installed('nvim-treesitter-textobjects')
@@ -1700,6 +1708,74 @@ EOF
 "   },
 " })
 " EOF
+
+" gp.nvim
+lua <<EOF
+require("gp").setup({
+    providers = {
+        openai = {},
+        datapipe = {
+            endpoint = "https://chat.datapipe.app/api/v1/chat/completions",
+            secret = { "bash", "-c", "cat ~/erinn/vault/datapipe" }
+        },
+        holdai = {
+            endpoint = "https://api.holdai.top/v1/chat/completions",
+            secret = { "bash", "-c", "cat ~/erinn/vault/holdai" }
+        },
+    },
+    -- log_file = "/Users/joshua/Downloads/gp.nvim.log",
+    -- log_sensitive = true,
+    chat_user_prefix = "USER:",
+    chat_assistant_prefix = { "AGENT:", "[{{agent}}]" },
+    chat_conceal_model_params = false,
+    command_prompt_prefix_template = "{{agent}} ~ ",
+    command_auto_select_response = false,
+    agents = {
+        {
+            name = "claude",
+            provider = "holdai",
+            chat = true,
+            command = true,
+            model = { model = "claude-3-5-sonnet-20240620" },
+            system_prompt = "",
+        },
+        {
+            name = "gpt",
+            provider = "holdai",
+            chat = true,
+            command = true,
+            model = { model = "gpt-4o" },
+            system_prompt = "",
+        },
+        {
+            name = "gpt_mini",
+            provider = "holdai",
+            chat = true,
+            command = true,
+            model = { model = "gpt-4o-mini" },
+            system_prompt = "",
+        },
+    },
+    hooks = {
+        BufferChatNew = function(gp, _)
+            vim.api.nvim_command("%" .. gp.config.cmd_prefix .. "ChatNew")
+        end,
+        Explain = function(gp, params)
+			local template = "I have the following code from {{filename}}:\n\n"
+				.. "```{{filetype}}\n{{selection}}\n```\n\n"
+				.. "Please respond by explaining the code above."
+			local agent = gp.get_chat_agent("claude")
+			gp.Prompt(params, gp.Target.popup, agent, template)
+		end,
+        Translator = function(gp, params)
+        	local chat_system_prompt = "You are a Translator, please translate between English and Chinese. Please provide english meaning of the word and with some example sentences."
+        	local agent = gp.get_chat_agent("gpt_mini")
+        	gp.cmd.ChatNew(params, chat_system_prompt, agent)
+        end,
+    },
+})
+EOF
+hi! link GpExplorerCursorLine CursorLine
 
 " command! -nargs=0 RestRun :lua require("rest-nvim").run()
 " command! -nargs=0 RestLast :lua require("rest-nvim").last()
