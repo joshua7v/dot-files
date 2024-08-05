@@ -1716,11 +1716,11 @@ require("gp").setup({
         openai = {},
         datapipe = {
             endpoint = "https://chat.datapipe.app/api/v1/chat/completions",
-            secret = { "bash", "-c", "cat ~/erinn/vault/datapipe" }
+            secret = os.getenv("DATAPIPE_KEY")
         },
         holdai = {
             endpoint = "https://api.holdai.top/v1/chat/completions",
-            secret = { "bash", "-c", "cat ~/erinn/vault/holdai" }
+            secret = os.getenv("HOLDAI_KEY")
         },
     },
     -- log_file = "/Users/joshua/Downloads/gp.nvim.log",
