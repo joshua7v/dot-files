@@ -70,3 +70,15 @@ Set-Variable HOME "$HOMEDRIVE$HOMEPATH" -Force
 # $Env:http_proxy="http://127.0.0.1:7890";$Env:https_proxy="http://127.0.0.1:7890"
 
 $PSStyle.FileInfo.Directory = "`e[34;1m"
+
+# zoxide
+Invoke-Expression (& { (zoxide init powershell | Out-String) })
+
+# ai key
+Get-Content "$HOMEDRIVE$HOMEPATH\.env" | foreach {
+  $name, $value = $_.split('=')
+  if ([string]::IsNullOrWhiteSpace($name) || $name.Contains('#')) {
+    continue
+  }
+  Set-Content env:\$name $value
+}
