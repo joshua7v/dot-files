@@ -1768,7 +1768,7 @@ require("gp").setup({
 			gp.Prompt(params, gp.Target.popup, agent, template)
 		end,
         Translator = function(gp, params)
-        	local chat_system_prompt = "You are a Translator, please translate between English and Chinese. Please provide english meaning of the word and with some example sentences."
+        	local chat_system_prompt = "You are a Translator, please translate between English and Chinese. Please provide english meaning of the word, phonetic symbol, and with some example sentences. And also provide Japanese translation for reference."
         	local agent = gp.get_chat_agent("gpt_mini")
         	gp.cmd.ChatNew(params, chat_system_prompt, agent)
         end,
