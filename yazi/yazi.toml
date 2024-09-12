@@ -1,0 +1,24 @@
+[manager]
+ratio          = [ 1, 4, 4 ]
+linemode = "size_and_mtime"
+
+[opener]
+edit = [
+	{ run = '${EDITOR:-vi} "$@"', desc = "$EDITOR", block = true, for = "unix" },
+	{ run = 'nvim %*', desc = "nvim", block = true, for = "windows" },
+	{ run = 'code %*',    orphan = true, desc = "code",           for = "windows" },
+	{ run = 'code -w %*', block = true,  desc = "code (block)",   for = "windows" },
+]
+
+[preview]
+max_width       = 1200
+max_height      = 1200
+
+[plugin]
+prepend_previewers = [
+  { mime = "video/*", run = "video-ffmpeg" },
+]
+
+prepend_preloaders = [
+  { mime = "video/*", run = "video-ffmpeg" },
+]

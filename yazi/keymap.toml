@@ -1,0 +1,5 @@
+[manager]
+append_keymap = [
+    { on = [ "g", "a" ], run = "cd ~/AppData", desc = "Go to the AppData directory" },
+    { on = [ "g", "c" ], run = "cd ~/AppData/Roaming/yazi/config", desc = "Go to the config directory" },
+]
