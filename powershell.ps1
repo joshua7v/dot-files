@@ -74,7 +74,7 @@ $PSStyle.FileInfo.Directory = "`e[34;1m"
 # zoxide
 Invoke-Expression (& { (zoxide init powershell | Out-String) })
 
-# ai key
+# user env
 Get-Content "$HOMEDRIVE$HOMEPATH\.env" | foreach {
   $name, $value = $_.split('=')
   if ([string]::IsNullOrWhiteSpace($name) || $name.Contains('#')) {
@@ -82,3 +82,7 @@ Get-Content "$HOMEDRIVE$HOMEPATH\.env" | foreach {
   }
   Set-Content env:\$name $value
 }
+
+# file.exe path for yazi
+Set-Content env:YAZI_FILE_ONE "$HOMEDRIVE$HOMEPATH\scoop\apps\git\current\usr\bin\file.exe"
+$env:PATH += ";$HOMEDRIVE$HOMEPATH\scoop\apps\git\current\usr\bin"
