@@ -2,4 +2,6 @@
 append_keymap = [
     { on = [ "g", "a" ], run = "cd ~/AppData", desc = "Go to the AppData directory" },
     { on = [ "g", "c" ], run = "cd ~/AppData/Roaming/yazi/config", desc = "Go to the config directory" },
+    { on = [ "<c-q>"], run = 'shell "powershell.exe" --block --confirm', desc = "Open PowerShell here", for = "windows" },
+    { on = [ "<c-q>"], run = 'shell "$SHELL" --block --confirm', desc = "Open PowerShell here", for = "windows" },
 ]
