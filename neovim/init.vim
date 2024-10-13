@@ -410,6 +410,7 @@ function! s:patch_oceanic_next_colors()
   hi link typescriptConditionalElse MyKeyword
   hi link typescriptExportType MyKeyword
 
+  hi link typescriptES6SetProp MyText
   hi link typescriptXHRProp MyText
   hi link typescriptRegExpProp MyText
   hi link typescriptRequestProp MyText
@@ -525,6 +526,7 @@ function! s:patch_oceanic_next_colors()
   hi link cInclude MyKeyword
   hi link cppType MyKeyword
 
+  hi link cErrInParen MyText
   hi link cppSTLtype MyText
   hi link cppSTLenum MyText
   hi link cUserFunction MyText
@@ -991,7 +993,7 @@ autocmd BufNewFile,BufRead *.shader           set ft=glsl
 autocmd BufNewFile,BufRead *.vs,*.fs          set ft=glsl
 autocmd BufNewFile,BufRead *.vert,*.frag      set ft=glsl
 autocmd BufNewFile,BufRead *.uproject         set ft=json
-autocmd BufNewFile,BufRead tsconfig.json      set ft=jsonc
+autocmd BufNewFile,BufRead tsconfig*.json      set ft=jsonc
 autocmd BufNewFile,BufRead tslint.json        set ft=jsonc
 autocmd BufNewFile,BufRead coc-settings.json  set ft=jsonc
 autocmd BufNewFile,BufRead settings.json      set ft=jsonc
@@ -1132,7 +1134,8 @@ let g:VM_maps["Start Regex Search"] = '\\/'
 " asyncrun.vim
 let g:asyncrun_bell = 1
 " command! -nargs=0 Rf AsyncRun -program=shebang -pos=bottom $(VIM_FILEPATH)
-command -nargs=? -complete=file R AsyncRun <args>
+command -nargs=? -complete=file R AsyncRun -save=2 <args>
+command -nargs=? -complete=file RR AsyncRun -raw -save=2 <args>
 
 " asynctasks.vim
 let g:asynctasks_rtp_config = 'asynctasks/tasks.ini'
@@ -1768,7 +1771,7 @@ require("gp").setup({
 			gp.Prompt(params, gp.Target.popup, agent, template)
 		end,
         Translator = function(gp, params)
-        	local chat_system_prompt = "You are a Translator, please translate between English and Chinese. Please provide english meaning of the word, phonetic symbol, and with some example sentences. And also provide Japanese translation for reference."
+        	local chat_system_prompt = "You are a Translator, please translate between English, Chinese and Japanese. Please provide two sections, the first one shows English Chinese Japanese meaning of the word, each language provide a synonym and meaning in that language, English should have phonetic symbol, Japanese should have gana and romaji. The second section shows some example sentences. Each sentence has English, Chinese and Japanese displayed. In Japanese example, please also show the gana version. The title of the sections should be Meaning and Sentences"
         	local agent = gp.get_chat_agent("gpt_mini")
         	gp.cmd.ChatNew(params, chat_system_prompt, agent)
         end,
