@@ -1717,10 +1717,6 @@ lua <<EOF
 require("gp").setup({
     providers = {
         openai = {},
-        datapipe = {
-            endpoint = "https://chat.datapipe.app/api/v1/chat/completions",
-            secret = os.getenv("DATAPIPE_KEY")
-        },
         holdai = {
             endpoint = "https://api.holdai.top/v1/chat/completions",
             secret = os.getenv("HOLDAI_KEY")
@@ -1735,27 +1731,28 @@ require("gp").setup({
     command_auto_select_response = false,
     agents = {
         {
-            name = "claude",
+            name = "o1-mini",
             provider = "holdai",
             chat = true,
             command = true,
-            model = { model = "claude-3-5-sonnet-20240620" },
+            model = { model = "o1-mini" },
             system_prompt = "",
         },
         {
-            name = "gpt",
-            provider = "holdai",
-            chat = true,
-            command = true,
-            model = { model = "gpt-4o" },
-            system_prompt = "",
-        },
-        {
-            name = "gpt_mini",
+
+            name = "gpt-4o-mini",
             provider = "holdai",
             chat = true,
             command = true,
             model = { model = "gpt-4o-mini" },
+            system_prompt = "",
+        },
+        {
+            name = "claude-3-5-sonnet-latest",
+            provider = "holdai",
+            chat = true,
+            command = true,
+            model = { model = "claude-3-5-sonnet-latest" },
             system_prompt = "",
         },
     },
@@ -1767,12 +1764,12 @@ require("gp").setup({
 			local template = "I have the following code from {{filename}}:\n\n"
 				.. "```{{filetype}}\n{{selection}}\n```\n\n"
 				.. "Please respond by explaining the code above."
-			local agent = gp.get_chat_agent("claude")
+			local agent = gp.get_chat_agent("gpt-4o-mini")
 			gp.Prompt(params, gp.Target.popup, agent, template)
 		end,
         Translator = function(gp, params)
         	local chat_system_prompt = "You are a Translator, please translate between English, Chinese and Japanese. Please provide two sections, the first one shows English Chinese Japanese meaning of the word, each language provide a synonym and meaning in that language, English should have phonetic symbol, Japanese should have gana and romaji. The second section shows some example sentences. Each sentence has English, Chinese and Japanese displayed. In Japanese example, please also show the gana version. The title of the sections should be Meaning and Sentences"
-        	local agent = gp.get_chat_agent("gpt_mini")
+        	local agent = gp.get_chat_agent("gpt-4o-mini")
         	gp.cmd.ChatNew(params, chat_system_prompt, agent)
         end,
     },
