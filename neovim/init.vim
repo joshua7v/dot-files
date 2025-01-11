@@ -681,6 +681,7 @@ endif
 
 let g:coc_global_extensions = [
         \"@yaegassy/coc-astro",
+        \"@yaegassy/coc-tailwindcss3",
         \"coc-clangd",
         \"coc-css",
         \"coc-cssmodules",
