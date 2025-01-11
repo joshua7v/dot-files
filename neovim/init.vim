@@ -7,11 +7,6 @@ if exists(":PlugInstall")
 Plug 'mhartington/oceanic-next'
 
 " syntax
-" Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
-" Plug 'nvim-treesitter/playground'
-" Plug 'nvim-treesitter/nvim-treesitter-textobjects'
-" Plug 'nvim-treesitter/nvim-treesitter-context'
-" Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 " Plug 'Shougo/context_filetype.vim'
 
 let g:polyglot_disabled = ['vue', 'typescript', 'markdown']
@@ -993,10 +988,11 @@ autocmd BufNewFile,BufRead *.shader           set ft=glsl
 autocmd BufNewFile,BufRead *.vs,*.fs          set ft=glsl
 autocmd BufNewFile,BufRead *.vert,*.frag      set ft=glsl
 autocmd BufNewFile,BufRead *.uproject         set ft=json
-autocmd BufNewFile,BufRead tsconfig*.json      set ft=jsonc
+autocmd BufNewFile,BufRead tsconfig*.json     set ft=jsonc
 autocmd BufNewFile,BufRead tslint.json        set ft=jsonc
 autocmd BufNewFile,BufRead coc-settings.json  set ft=jsonc
 autocmd BufNewFile,BufRead settings.json      set ft=jsonc
+autocmd BufNewFile,BufRead *.min**            set ft=min
 
 " autocmd FileType json setlocal conceallevel=0
 
@@ -1530,92 +1526,6 @@ nnoremap qq :bd<cr>
 command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 -tu4 /dev/urandom'), '^\_s*\zs.\{-}\ze\_s*$') % line('$')).'G'
 command! GCompileCommands execute '!xmake project -k compile_commands'
 " command! -nargs=? Fd call setqflist([], ' ', {'lines' : systemlist('fd ' . <q-args>), 'efm' : '%f'})
-
-" nvim-treesitter
-" --------------------------------------------------------------------
-" lua <<EOF
-" require'nvim-treesitter.configs'.setup {
-"   highlight = {
-"     enable = false,
-"     disable = function(lang, bufnr)
-"         if lang == "c" then
-"           return true
-"         end
-"         offset = vim.api.nvim_buf_get_offset(bufnr, 1)
-"         return offset > 777
-"     end,
-"   },
-"   indent = {
-"     enable = false,
-"     disable = {},
-"   },
-"   incremental_selection = {
-"     enable = true,
-"   },
-"   ensure_installed = {
-"     -- "astro",
-"     -- "bash",
-"     -- "c",
-"     -- "comment",
-"     -- "cpp",
-"     -- "css",
-"     -- "dockerfile",
-"     -- "elixir",
-"     -- "heex",
-"     -- -- "java",
-"     -- "markdown",
-"     -- "gdscript",
-"     -- "glsl",
-"     -- "go",
-"     -- -- "graphql",
-"     -- "html",
-"     -- "http",
-"     -- "jsdoc",
-"     -- "json",
-"     -- "jsonc",
-"     -- "javascript",
-"     -- "lua",
-"     -- "prisma",
-"     -- "python",
-"     -- "rust",
-"     -- "scss",
-"     -- -- "swift",
-"     -- "svelte",
-"     -- "toml",
-"     -- "typescript",
-"     -- "tsx",
-"     -- "vim",
-"     -- "vue",
-"     -- "yaml",
-"     -- "zig",
-"   },
-" }
-" require('ts_context_commentstring').setup {}
-" vim.g.skip_ts_context_commentstring_module = true
-" 
-" -- local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
-" -- parser_config.tsx.filetype_to_parsername = { "javascript", "typescriptreact" }
-" -- local ft_to_parser = require"nvim-treesitter.parsers".filetype_to_parsername
-" -- ft_to_parser.typescriptreact = "tsx"
-" EOF
-
-" nvim-treesitter-textobjects
-" if s:is_installed('nvim-treesitter-textobjects')
-" lua <<EOF
-" require'nvim-treesitter.configs'.setup {
-"   textobjects = {
-"     select = {
-"       enable = true,
-"       lookahead = true,
-"       keymaps = {
-"         -- ["ap"] = "@parameter.outer",
-"         -- ["ip"] = "@parameter.inner",
-"       },
-"     },
-"   },
-" }
-" EOF
-" endif
 
 " nvim-autopairs
 if s:is_installed('nvim-autopairs')
