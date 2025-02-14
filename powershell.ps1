@@ -59,6 +59,33 @@ function history {
 $HOMEDRIVE = "C:\"
 $HOMEPATH = "Users\" + $env:username
 $env:HOME = "$HOMEDRIVE$HOMEPATH"
+# $env:EDITOR = "nvim"
+# file.exe path for yazi
+$env:YAZI_FILE_ONE = $env:HOME + "\scoop\apps\git\current\usr\bin\file.exe"
+$env:PATH += ";$HOMEDRIVE$HOMEPATH\scoop\apps\git\current\usr\bin"
+
+function Set-Proxy {
+    $env:http_proxy = "http://127.0.0.1:7890"
+    $env:https_proxy = "http://127.0.0.1:7890"
+}
+
+function Unset-Proxy {
+    Remove-Item Env:http_proxy -ErrorAction SilentlyContinue
+    Remove-Item Env:https_proxy -ErrorAction SilentlyContinue
+}
+
+function Invoke-Eza {
+  param (
+      [Parameter(ValueFromRemainingArguments = $true)]
+      [string[]]$Args
+  )
+  eza -l @Args
+}
+
+Set-Alias f floaterm
+Set-Alias px Set-Proxy
+Set-Alias pc Unset-Proxy
+Set-Alias ls Invoke-Eza
 
 # Set and force overwrite of the $HOME variable
 Set-Variable HOME "$HOMEDRIVE$HOMEPATH" -Force
@@ -82,7 +109,3 @@ Get-Content "$HOMEDRIVE$HOMEPATH\.env" | foreach {
   }
   Set-Content env:\$name $value
 }
-
-# file.exe path for yazi
-Set-Content env:YAZI_FILE_ONE "$HOMEDRIVE$HOMEPATH\scoop\apps\git\current\usr\bin\file.exe"
-$env:PATH += ";$HOMEDRIVE$HOMEPATH\scoop\apps\git\current\usr\bin"
