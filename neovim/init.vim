@@ -9,9 +9,9 @@ Plug 'mhartington/oceanic-next'
 " syntax
 " Plug 'Shougo/context_filetype.vim'
 
-let g:polyglot_disabled = ['vue', 'typescript', 'markdown']
+let g:polyglot_disabled = ['vue', 'markdown']
 let g:zig_fmt_autosave = 0
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 Plug 'wuelnerdotexe/vim-astro'
 let g:astro_typescript = 'enable'
 Plug 'maxmellon/vim-jsx-pretty'
@@ -26,8 +26,10 @@ Plug 'windwp/nvim-autopairs'
 Plug 'haya14busa/vim-asterisk'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-operator-user'
+Plug 'michaeljsmith/vim-indent-object'
 " Plug 'Julian/vim-textobj-variable-segment'
-Plug 'editorconfig/editorconfig-vim'
+" Plug 'editorconfig/editorconfig-vim'
+Plug 'tpope/vim-sleuth'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'ntpeters/vim-better-whitespace', { 'on': ['StripWhitespace'] }
 Plug 'justinmk/vim-dirvish'
@@ -36,7 +38,7 @@ Plug 'haya14busa/vim-edgemotion'
 " Plug 'rlane/pounce.nvim'
 Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-commentary'
-Plug 'numToStr/Comment.nvim'
+" Plug 'numToStr/Comment.nvim'
 Plug 'mg979/vim-visual-multi'
 Plug 'mbbill/undotree'
 Plug 'Shougo/vinarise.vim', { 'on': ['Vinarise'] }
@@ -60,7 +62,7 @@ Plug 'mattn/emmet-vim'
 " project
 Plug 'nvim-lua/plenary.nvim'
 Plug 'rhysd/devdocs.vim', { 'on': ['DevDocsAllUnderCursor'] }
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'neoclide/coc.nvim', { 'branch': 'release', 'commit': 'b45563656be26e518992ffede778f918dc443012' }
 Plug 'voldikss/vim-floaterm'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'skywind3000/asynctasks.vim'
@@ -73,7 +75,7 @@ Plug 'MattesGroeger/vim-bookmarks'
 " Plug 'jremmen/vim-ripgrep'
 " Plug 'mangelozzi/rgflow.nvim'
 Plug 'sindrets/diffview.nvim'
-Plug 'rmagatti/auto-session'
+" Plug 'rmagatti/auto-session'
 " Plug 'ludovicchabant/vim-gutentags'
 " Plug 'skywind3000/gutentags_plus'
 
@@ -91,7 +93,7 @@ Plug 'guns/xterm-color-table.vim', { 'on': ['XtermColorTable'] }
 Plug 'dstein64/vim-startuptime', { 'on': ['StartupTime'] }
 Plug 'yaocccc/nvim-hlchunk'
 " Plug 'rest-nvim/rest.nvim'
-Plug '~/erinn/tools/whitebox/whitebox_v0.96.2/editor_plugins/whitebox-vim'
+" Plug '~/erinn/tools/whitebox/whitebox_v0.96.2/editor_plugins/whitebox-vim'
 Plug 'Robitx/gp.nvim'
 
 endif
@@ -541,7 +543,7 @@ function! s:patch_oceanic_next_colors()
 
   " dirvish
   hi link DirvishArg MyKeyword
-  
+
 endfunction
 autocmd! ColorScheme OceanicNext call s:patch_oceanic_next_colors()
 
@@ -625,17 +627,17 @@ if exists('+showtabline')
         let bufnr = buflist[winnr - 1]
         let bufname = bufname(bufnr)
         let bufmodified = getbufvar(bufnr, "&mod")
-  
+
         let s .= '%' . tab . 'T'
         let s .= (tab == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#')
         let s .= '[' . tab .']'
         let s .= (bufname != '' ? ' '. fnamemodify(bufname, ':t') . ' ' : ' - ')
-  
+
         if bufmodified
         let s .= '[+] '
         endif
     endfor
-  
+
     let s .= '%#TabLineFill#'
     if (exists("g:tablineclosebutton"))
         let s .= '%=%999XX'
@@ -681,7 +683,6 @@ endif
 
 let g:coc_global_extensions = [
         \"@yaegassy/coc-astro",
-        \"@yaegassy/coc-tailwindcss3",
         \"coc-clangd",
         \"coc-css",
         \"coc-cssmodules",
@@ -1536,11 +1537,11 @@ local Rule = require('nvim-autopairs.rule')
 
 npairs.setup({
     disable_filetype = {},
-    check_ts = true,
+    check_ts = false,
     map_c_w = true,
-    ts_config = {
-        lua = {'string'},
-    },
+    -- ts_config = {
+        -- lua = {'string'},
+    -- },
     enable_check_bracket_line = false,
     fast_wrap = {
       map = '<c-s>',
@@ -1565,13 +1566,14 @@ EOF
 endif
 
 " auto-session
-lua <<EOF
-require("auto-session").setup {
-    log_level = "error",
-    auto_session_suppress_dirs = { "~/", "~/Downloads", "/"},
-}
-vim.o.sessionoptions="curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions,globals"
-EOF
+" lua <<EOF
+" require("auto-session").setup {
+"     opts = {
+"         suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
+"     }
+" }
+" vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+" EOF
 " set sessionoptions-=blank
 " set sessionoptions-=buffers
 
@@ -1642,11 +1644,11 @@ require("gp").setup({
     command_auto_select_response = false,
     agents = {
         {
-            name = "o1-mini",
+            name = "chatgpt-4o-latest",
             provider = "holdai",
             chat = true,
             command = true,
-            model = { model = "o1-mini" },
+            model = { model = "chatgpt-4o-latest" },
             system_prompt = "",
         },
         {
@@ -1664,6 +1666,22 @@ require("gp").setup({
             chat = true,
             command = true,
             model = { model = "claude-3-5-sonnet-latest" },
+            system_prompt = "",
+        },
+        {
+            name = "deepseek-r1",
+            provider = "holdai",
+            chat = true,
+            command = true,
+            model = { model = "deepseek-r1" },
+            system_prompt = "",
+        },
+        {
+            name = "deepseek-v3",
+            provider = "holdai",
+            chat = true,
+            command = true,
+            model = { model = "deepseek-v3" },
             system_prompt = "",
         },
     },
