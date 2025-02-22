@@ -862,11 +862,14 @@ nnoremap <silent> <space>q :<C-u>CocList --normal floaterm<cr>
 nnoremap <silent> <space>z :<C-u>CocList --normal tasks<cr>
 nnoremap <silent> <space>l :<C-u>CocList fuzzy_lines<cr>
 nnoremap <silent> <space>w :exe 'CocList -I --normal --input='.expand('<cword>').' words'<cr>
+nnoremap <silent> <space>x :<C-u>CocList --normal sessions<cr>
 " nnoremap <silent> <space>fl :<c-u>CocList --normal explPresets<cr>
 " nnoremap <silent> <space><leader>  :<C-u>CocList --normal project<cr>
 " nnoremap <silent> <space>l  :<C-u>Denite coc-link<cr>
 
 
+command! -nargs=0 SessionSave :CocCommand session.save
+command! -nargs=0 SessionLoad :CocCommand session.load
 command! -nargs=0 InlayHint :CocCommand document.toggleInlayHint
 command! -nargs=0 IncomingCalls :call CocActionAsync('showIncomingCalls')
 command! -nargs=0 OutgoingCalls :call CocActionAsync('showOutgoingCalls')
@@ -910,6 +913,7 @@ let g:coc_snippet_next = '<tab>'
 hi CocSearch ctermfg=12 guifg=#ff8888
 hi CocMenuSel ctermbg=109 guibg=#2E3440
 hi CocFloating cterm=reverse ctermfg=145 ctermbg=237 guifg=#a7adba guibg=#343d46
+hi CocSelectedRange guibg=#88C0D0 guifg=#3B4252
 hi link CocInlayHint Comment
 hi gitmessengerPopupNormal cterm=reverse ctermfg=145 ctermbg=237 guifg=#a7adba guibg=#343d46
 
@@ -1160,8 +1164,8 @@ else
 endif
 
 let g:floaterm_keymap_toggle = '<c-q>'
-let g:floaterm_width = 0.8
-let g:floaterm_height = 0.8
+let g:floaterm_width = 0.9
+let g:floaterm_height = 0.9
 let g:floaterm_title = 'Terminal $1/$2'
 let g:floaterm_opener = 'drop'
 
@@ -1174,6 +1178,7 @@ nnoremap <m-g> :FloatermNew gitui<cr>
 
 command! NewTerm FloatermNew
 command! Vifm :FloatermNew vifm %:p:h .
+command! Yazi :FloatermNew yazi
 command! Gitui :FloatermNew gitui
 
 hi FloatermBorder guibg=#1b2b34
@@ -1475,6 +1480,7 @@ noremap <leader>` :GenDefinition<cr>
 " tnoremap <Esc> <C-\><C-n>
 tnoremap <c-\> <C-\><C-n>
 nnoremap <leader>ec :tabnew $MYVIMRC
+nnoremap <leader>es :e $HOME/scratch
 nnoremap <leader>. <C-^>
 command! TabCloseRight :.+1,$tabdo :q
 " nnoremap <leader>/ :Rg<space>
@@ -1769,11 +1775,15 @@ autocmd WinEnter,BufEnter * call s:mapMake()
 " gui settings
 " ------------
 
-let g:neovide_fullscreen=v:false
-set guifont=Sarasa\ Mono\ SC:h12
+  
+hi Cursor guifg=white guibg=#ff5555
+set guifont=Sarasa\ Term\ SC\ Nerd:h12
 set guicursor=n-v-c:block-Cursor,i-ci-ve:ver30-Cursor
 
-hi Cursor guifg=white guibg=#ff5555
+let g:neovide_fullscreen=v:false
+let g:neovide_title_background_color = "#1b2b34"
+let g:neovide_title_text_color = "white"
+let g:neovide_underline_stroke_scale = 0.5
 
 if exists('g:nvui')
   autocmd InsertEnter * NvuiIMEEnable
