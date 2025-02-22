@@ -56,6 +56,7 @@ function history {
     Get-History
 }
 
+$env:TERM='xterm-256color'
 $HOMEDRIVE = "C:\"
 $HOMEPATH = "Users\" + $env:username
 $env:HOME = "$HOMEDRIVE$HOMEPATH"
