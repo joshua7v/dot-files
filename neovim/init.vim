@@ -60,9 +60,9 @@ Plug 'tpope/vim-abolish'
 Plug 'mattn/emmet-vim'
 
 " project
-Plug 'nvim-lua/plenary.nvim'
+" Plug 'nvim-lua/plenary.nvim'
 Plug 'rhysd/devdocs.vim', { 'on': ['DevDocsAllUnderCursor'] }
-Plug 'neoclide/coc.nvim', { 'branch': 'release', 'commit': 'b45563656be26e518992ffede778f918dc443012' }
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'voldikss/vim-floaterm'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'skywind3000/asynctasks.vim'

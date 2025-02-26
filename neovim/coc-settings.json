@@ -20,6 +20,7 @@
   "list.limitLines": 300,
   "list.normalMappings": {},
   "list.source.grep.excludePatterns": ["**/*.min.js", "**/*.min.css", "**/*.js.map"],
+  "list.source.grep.args": ["--follow"],
   "list.source.symbols.excludes": ["**/node_modules/**"],
   "coc.source.lines.enable": false,
   "coc.preferences.currentFunctionSymbolAutoUpdate": true,
