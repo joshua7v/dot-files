@@ -13,6 +13,7 @@ let g:polyglot_disabled = ['vue', 'markdown']
 let g:zig_fmt_autosave = 0
 " Plug 'sheerun/vim-polyglot'
 Plug 'wuelnerdotexe/vim-astro'
+Plug 'HerringtonDarkholme/yats.vim'
 let g:astro_typescript = 'enable'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'leafOfTree/vim-svelte-plugin'
@@ -75,6 +76,7 @@ Plug 'MattesGroeger/vim-bookmarks'
 " Plug 'jremmen/vim-ripgrep'
 " Plug 'mangelozzi/rgflow.nvim'
 Plug 'sindrets/diffview.nvim'
+Plug 'folke/persistence.nvim'
 " Plug 'rmagatti/auto-session'
 " Plug 'ludovicchabant/vim-gutentags'
 " Plug 'skywind3000/gutentags_plus'
@@ -129,6 +131,8 @@ let g:mapleader = ','
 set nocompatible
 
 set iskeyword-=-
+set isfname+=(
+set isfname+=)
 autocmd FileType html,css,typescriptreact setlocal iskeyword+=-
 set inccommand=nosplit
 set confirm
@@ -1578,10 +1582,16 @@ endif
 "         suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
 "     }
 " }
-" vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+" vim.o.sessionoptions="curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 " EOF
+" vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 " set sessionoptions-=blank
 " set sessionoptions-=buffers
+
+lua <<EOF
+require("persistence").setup({})
+vim.keymap.set("n", "<c-l>", function() require("persistence").load() end)
+EOF
 
 
 " Comment.nvim
