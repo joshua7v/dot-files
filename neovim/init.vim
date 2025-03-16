@@ -13,6 +13,7 @@ let g:polyglot_disabled = ['vue', 'markdown']
 let g:zig_fmt_autosave = 0
 " Plug 'sheerun/vim-polyglot'
 Plug 'wuelnerdotexe/vim-astro'
+Plug 'leafOfTree/vim-vue-plugin'
 Plug 'HerringtonDarkholme/yats.vim'
 let g:astro_typescript = 'enable'
 Plug 'maxmellon/vim-jsx-pretty'
@@ -36,8 +37,8 @@ Plug 'ntpeters/vim-better-whitespace', { 'on': ['StripWhitespace'] }
 Plug 'justinmk/vim-dirvish'
 Plug 'szw/vim-maximizer', { 'on': ['MaximizerToggle'] }
 Plug 'haya14busa/vim-edgemotion'
-" Plug 'rlane/pounce.nvim'
-Plug 'justinmk/vim-sneak'
+Plug 'rlane/pounce.nvim'
+" Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-commentary'
 " Plug 'numToStr/Comment.nvim'
 Plug 'mg979/vim-visual-multi'
@@ -84,6 +85,7 @@ Plug 'folke/persistence.nvim'
 " miscellaneous
 Plug 'romainl/vim-qf'
 Plug 'kevinhwang91/nvim-bqf'
+Plug 'stevearc/quicker.nvim'
 " Plug 'zhimsel/vim-stay'
 Plug 'farmergreg/vim-lastplace'
 Plug 'pbrisbin/vim-mkdir'
@@ -708,7 +710,7 @@ let g:coc_global_extensions = [
         \"coc-tasks",
         \"coc-toml",
         \"coc-tsserver",
-        \"coc-vetur",
+        \"@yaegassy/coc-volar",
         \"coc-webpack",
         \"coc-word",
         \"coc-yaml",
@@ -1051,13 +1053,13 @@ let g:echodoc#enable_at_startup = 1
 hi! link Sneak Search
 
 " pounce.nvim
-" nmap s <cmd>Pounce<cr>
-" nmap S <cmd>PounceRepeat<cr>
-" vmap s <cmd>Pounce<cr>
-"
-" hi! link PounceMatch Search
-" hi! link PounceAcceptBest Cursor
-" hi PounceGap ctermfg=none ctermbg=none guibg=#3a4b5c guifg=none gui=none
+nmap s <cmd>Pounce<cr>
+nmap S <cmd>PounceRepeat<cr>
+vmap s <cmd>Pounce<cr>
+
+hi! link PounceMatch Search
+hi! link PounceAcceptBest Cursor
+hi PounceGap ctermfg=none ctermbg=none guibg=#3a4b5c guifg=none gui=none
 
 " tabular
 nmap <leader>a= :Tabularize /=<CR>
@@ -1225,6 +1227,32 @@ let g:qf_auto_open_quickfix = 0
 " endfunction
 
 " nnoremap <silent> <leader>q :call ToggleQuickFix()<cr>
+
+" quicker.nvim
+lua <<EOF
+require("quicker").setup({
+  edit = {
+    enabled = true
+  },
+  keys = {
+    {
+      ">",
+      function()
+        require("quicker").expand({ before = 2, after = 2, add_to_existing = true })
+      end,
+      desc = "Expand quickfix context",
+    },
+    {
+      "<",
+      function()
+        require("quicker").collapse()
+      end,
+      desc = "Collapse quickfix context",
+    },
+  },
+})
+EOF
+hi! link Delimiter LineNr
 
 " vim-bqf
 lua <<EOF
