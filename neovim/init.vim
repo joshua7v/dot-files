@@ -854,7 +854,7 @@ nnoremap <silent> <space>o :<C-u>CocList outline<cr>
 nnoremap <silent> <space>f :<C-u>CocList files<cr>
 nnoremap <silent> <space>e :<C-u>CocList extensions<cr>
 nnoremap <silent> <space>u :<C-u>CocList --normal mru<cr>
-nnoremap <silent> <space>a :<C-u>CocList --normal diagnostics<cr>
+" nnoremap <silent> <space>a :<C-u>CocList --normal diagnostics<cr>
 nnoremap <silent> <space>c :<C-u>CocList commands<cr>
 nnoremap <silent> <space>b :<C-u>CocList --normal buffers<cr>
 nnoremap <silent> <space>y :<C-u>CocList -A --normal yank<cr>
@@ -1147,13 +1147,13 @@ command -nargs=? -complete=file RR AsyncRun -raw -save=2 <args>
 
 " asynctasks.vim
 let g:asynctasks_rtp_config = 'asynctasks/tasks.ini'
-let g:asyncrun_open = 24
+" let g:asyncrun_open = 24
 let g:asynctasks_term_pos = 'bottom'
 let g:asyncrun_rootmarks = ['.git', '.svn', '.root', '.project', '.hg', '.projectionist.json', '.editorconfig', 'compile_commands.json']
 let g:asynctasks_term_reuse = 1
 let g:asynctasks_term_focus = 1
 
-noremap <silent><leader>q :call asyncrun#quickfix_toggle(24)<cr>
+" noremap <silent><leader>q :call asyncrun#quickfix_toggle(24)<cr>
 " noremap <leader>r :AsyncTask project-run<cr>
 " noremap <leader>b :AsyncTask project-build<cr>
 " command! -nargs=0 Test exe 'AsyncTask project-test'
@@ -1234,6 +1234,15 @@ require("quicker").setup({
   edit = {
     enabled = true
   },
+  on_qf = function(bufnr) 
+  end,
+  type_icons = {
+    E = "E",
+    W = "W ",
+    I = "I ",
+    N = "N",
+    H = "H ",
+  },
   keys = {
     {
       ">",
@@ -1250,6 +1259,23 @@ require("quicker").setup({
       desc = "Collapse quickfix context",
     },
   },
+})
+vim.keymap.set("n", "<leader>q", function()
+  require("quicker").toggle()
+end, {
+  desc = "Toggle quickfix",
+})
+vim.keymap.set("n", "<leader>l", function()
+  require("quicker").toggle({ loclist = true })
+end, {
+  desc = "Toggle loclist",
+})
+vim.api.nvim_create_autocmd("User", {
+  pattern = "AsyncRunStop",
+  callback = function()
+    require("quicker").refresh()
+    require("quicker").toggle()
+  end,
 })
 EOF
 hi! link Delimiter LineNr
@@ -1294,7 +1320,7 @@ cmd([[
 
 cmd([[
     nmap <silent> gr <Plug>(coc-references)
-    nnoremap <silent> <leader>a <Cmd>lua _G.diagnostic()<CR>
+    nnoremap <silent> <space>a <Cmd>lua _G.diagnostic()<CR>
 ]])
 
 function _G.jumpToLoc(locs)
