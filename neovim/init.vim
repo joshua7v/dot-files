@@ -62,7 +62,6 @@ Plug 'tpope/vim-abolish'
 Plug 'mattn/emmet-vim'
 
 " project
-" Plug 'nvim-lua/plenary.nvim'
 Plug 'rhysd/devdocs.vim', { 'on': ['DevDocsAllUnderCursor'] }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'voldikss/vim-floaterm'
@@ -81,6 +80,9 @@ Plug 'folke/persistence.nvim'
 " Plug 'rmagatti/auto-session'
 " Plug 'ludovicchabant/vim-gutentags'
 " Plug 'skywind3000/gutentags_plus'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'fannheyward/telescope-coc.nvim'
 
 " miscellaneous
 Plug 'romainl/vim-qf'
@@ -852,17 +854,17 @@ endfunction
 
 nnoremap <silent> <space>t :call ToggleOutline()<cr>
 nnoremap <silent> <space>o :<C-u>CocList outline<cr>
-nnoremap <silent> <space>f :<C-u>CocList files<cr>
+" nnoremap <silent> <space>f :<C-u>CocList files<cr>
 nnoremap <silent> <space>e :<C-u>CocList extensions<cr>
-nnoremap <silent> <space>u :<C-u>CocList --normal mru<cr>
+" nnoremap <silent> <space>u :<C-u>CocList --normal mru<cr>
 " nnoremap <silent> <space>a :<C-u>CocList --normal diagnostics<cr>
-nnoremap <silent> <space>c :<C-u>CocList commands<cr>
-nnoremap <silent> <space>b :<C-u>CocList --normal buffers<cr>
-nnoremap <silent> <space>y :<C-u>CocList -A --normal yank<cr>
-nnoremap <silent> <space>g :<C-u>CocList -I grep<cr>
+" nnoremap <silent> <space>c :<C-u>CocList commands<cr>
+" nnoremap <silent> <space>b :<C-u>CocList --normal buffers<cr>
+" nnoremap <silent> <space>y :<C-u>CocList -A --normal yank<cr>
+" nnoremap <silent> <space>g :<C-u>CocList -I grep<cr>
 " nnoremap <silent> <space>  :<C-u>CocList -I symbols<cr>
-nnoremap <silent> <space>p :<C-u>CocListResume<cr>
-nnoremap <silent> <space>m :<C-u>CocList --normal marks<cr>
+" nnoremap <silent> <space>p :<C-u>CocListResume<cr>
+" nnoremap <silent> <space>m :<C-u>CocList --normal marks<cr>
 nnoremap <silent> <space>h :<C-u>CocList --normal searchhistory<cr>
 nnoremap <silent> <space>k :<C-u>CocList --normal maps<cr>
 nnoremap <silent> <space>q :<C-u>CocList --normal floaterm<cr>
@@ -1835,6 +1837,46 @@ command! -nargs=0 Run :call asyncrun#run('', {}, get(g:, 'run', 'echo "no run co
 command! -nargs=0 Test :call asyncrun#run('', {}, get(g:, 'test', 'echo "no test command"'))
 command! -nargs=0 Clean :call asyncrun#run('', {}, get(g:, 'clean', 'echo "no clean command"'))
 autocmd WinEnter,BufEnter * call s:mapMake()
+
+lua << EOF
+local themes = require('telescope.themes')
+require("telescope").setup({
+  defaults = themes.get_ivy({
+    initial_mode = "normal"
+  }),
+  pickers = {
+    find_files = {
+      theme = "ivy",
+    }
+  },
+  extensions = {
+    coc = {
+      theme = 'ivy',
+      prefer_locations = true, -- always use Telescope locations to preview definitions/declarations/implementations etc
+      push_cursor_on_edit = true, -- save the cursor position to jump back in the future
+      timeout = 3000, -- timeout for coc commands
+    }
+  },
+})
+require('telescope').load_extension('coc')
+EOF
+hi link TelescopeMatching CocSearch
+hi link TelescopePromptPrefix CocSearch
+hi link TelescopeSelection CursorLine
+hi link TelescopePreviewLine CursorLine
+nnoremap <silent> <space>f :lua require('telescope.builtin').find_files({ initial_mode = 'insert' })<cr>
+nnoremap <silent> <space>u :<C-u>Telescope coc mru<cr>
+nnoremap <silent> <space>g :lua require('telescope.builtin').live_grep({ initial_mode = 'insert' })<cr>
+nnoremap <silent> <space>y :<C-u>Telescope coc workspace_diagnostics<cr>
+nnoremap <silent> <space>s :lua require('telescope').extensions.coc.workspace_symbols({ initial_mode = 'insert' })<cr>
+nnoremap <silent> <space>r :<C-u>Telescope coc references_used<cr>
+nnoremap <silent> <space>i :<C-u>Telescope coc implementations<cr>
+nnoremap <silent> <space>d :<C-u>Telescope coc definitions<cr>
+nnoremap <silent> <space>a :lua require('telescope').extensions.coc.file_code_actions()<cr>
+nnoremap <silent> <space>c :lua require('telescope').extensions.coc.commands({ initial_mode = 'insert' })<cr>
+nnoremap <silent> <space>b :<C-u>Telescope buffers<cr>
+nnoremap <silent> <space>p :<C-u>Telescope resume<cr>
+nnoremap <silent> <space>m :<C-u>Telescope marks<cr>
 
 " ------------
 " gui settings

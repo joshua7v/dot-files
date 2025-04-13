@@ -55,6 +55,8 @@
   "Lua.diagnostics.globals": ["love"],
   "Lua.diagnostics.disable": ["lowercase-global"],
   "pyright.disableDiagnostics": true,
+  "python.linting.flake8Enabled": true,
+  "python.linting.mypyEnabled": true,
   "clangd.enabled": true,
   "clangd.disableDiagnostics": true,
   "clangd.arguments": ["--background-index", "--completion-style=detailed"],
