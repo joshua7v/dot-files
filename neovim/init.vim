@@ -1840,9 +1840,22 @@ autocmd WinEnter,BufEnter * call s:mapMake()
 
 lua << EOF
 local themes = require('telescope.themes')
+local layout = require('telescope.actions.layout')
 require("telescope").setup({
   defaults = themes.get_ivy({
-    initial_mode = "normal"
+    initial_mode = "normal",
+    path_display = {
+        "truncate",
+    },
+    results_title = false,
+    preview = {
+      hide_on_startup = true
+    },
+    mappings = {
+      n = {
+        ["p"] = layout.toggle_preview,
+      },
+    }
   }),
   pickers = {
     find_files = {
@@ -1855,6 +1868,9 @@ require("telescope").setup({
       prefer_locations = true, -- always use Telescope locations to preview definitions/declarations/implementations etc
       push_cursor_on_edit = true, -- save the cursor position to jump back in the future
       timeout = 3000, -- timeout for coc commands
+      path_display = {
+        "tail",
+      },
     }
   },
 })
