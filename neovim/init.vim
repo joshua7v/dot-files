@@ -82,7 +82,9 @@ Plug 'folke/persistence.nvim'
 " Plug 'skywind3000/gutentags_plus'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'fannheyward/telescope-coc.nvim'
+" Plug 'fannheyward/telescope-coc.nvim'
+Plug 'joshua7v/telescope-coc.nvim'
+Plug 'tom-anders/telescope-vim-bookmarks.nvim'
 
 " miscellaneous
 Plug 'romainl/vim-qf'
@@ -825,8 +827,8 @@ nmap <silent>gi <Plug>(coc-implementation)
 " nmap <silent>gr :call <SID>GoToReferences()<cr>
 nmap <silent>gh :CocCommand git.chunkInfo<cr>
 nmap <leader>rn <Plug>(coc-rename)
-vmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+" vmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
 " vmap <leader>a  <Plug>(coc-codeaction-selected)
 " nmap <leader>a  <Plug>(coc-codeaction-selected)
 " nmap <leader>ac <Plug>(coc-codeaction)
@@ -1189,6 +1191,7 @@ command! NewTerm FloatermNew
 command! Vifm :FloatermNew vifm %:p:h .
 command! Yazi :FloatermNew yazi
 command! Gitui :FloatermNew gitui
+nnoremap <leader>f :Yazi<cr>
 
 hi FloatermBorder guibg=#1b2b34
 autocmd User Startified setlocal buflisted
@@ -1521,7 +1524,7 @@ nnoremap <leader>mx :BookmarkClearAll<cr>
 " let g:bookmark_sign = '♥'
 " let g:bookmark_highlight_lines = 1
 let g:bookmark_no_default_key_mappings = 1
-let g:bookmark_save_per_working_dir = 1
+" let g:bookmark_save_per_working_dir = 1
 let g:bookmark_auto_save = 1
 " hi BookMarkLine ctermbg=none ctermfg=none
 " hi BookMarkSign ctermbg=none ctermfg=none
@@ -1875,6 +1878,7 @@ require("telescope").setup({
   },
 })
 require('telescope').load_extension('coc')
+require('telescope').load_extension('vim_bookmarks')
 EOF
 hi link TelescopeMatching CocSearch
 hi link TelescopePromptPrefix CocSearch
@@ -1892,7 +1896,7 @@ nnoremap <silent> <space>a :lua require('telescope').extensions.coc.file_code_ac
 nnoremap <silent> <space>c :lua require('telescope').extensions.coc.commands({ initial_mode = 'insert' })<cr>
 nnoremap <silent> <space>b :<C-u>Telescope buffers<cr>
 nnoremap <silent> <space>p :<C-u>Telescope resume<cr>
-nnoremap <silent> <space>m :<C-u>Telescope marks<cr>
+nnoremap <silent> <space>m :lua require('telescope').extensions.vim_bookmarks.all()<cr>
 
 " ------------
 " gui settings
