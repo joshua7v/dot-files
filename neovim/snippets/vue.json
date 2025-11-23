@@ -1,0 +1,17 @@
+{
+  "vc": {
+    "scope": "vue",
+    "prefix": "vc",
+    "body": [
+      "<script setup>",
+      "</script>",
+      "",
+      "<template>",
+      "</template>",
+      "",
+      "<style lang=\"scss\" scoped>",
+      "</style>"
+    ],
+    "description": "vue component"
+  }
+}
