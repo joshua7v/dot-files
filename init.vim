@@ -3,7 +3,6 @@ call plug#begin(stdpath('data') . '/plugged')
 if exists(":PlugInstall")
 
 " colorscheme
-" Plug 'joshua7v/oceanic-next', { 'branch': 'silent' }
 Plug 'mhartington/oceanic-next'
 
 " syntax
@@ -21,21 +20,17 @@ Plug 'leafOfTree/vim-svelte-plugin'
 let g:vim_svelte_plugin_use_typescript = 1
 
 " edit
-" Plug 'github/copilot.vim'
 Plug 'chaoren/vim-wordmotion'
-" Plug 'b0o/incline.nvim'
 Plug 'windwp/nvim-autopairs'
 Plug 'haya14busa/vim-asterisk'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-operator-user'
 Plug 'michaeljsmith/vim-indent-object'
 " Plug 'Julian/vim-textobj-variable-segment'
-" Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-sleuth'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'ntpeters/vim-better-whitespace', { 'on': ['StripWhitespace'] }
 Plug 'justinmk/vim-dirvish'
-" Plug 'szw/vim-maximizer', { 'on': ['MaximizerToggle'] }
 Plug 'haya14busa/vim-edgemotion'
 Plug 'rlane/pounce.nvim'
 " Plug 'justinmk/vim-sneak'
@@ -62,6 +57,8 @@ Plug 'tpope/vim-abolish'
 Plug 'mattn/emmet-vim'
 
 " project
+Plug 'nvim-mini/mini.pick'
+Plug 'nvim-mini/mini.extra'
 Plug 'rhysd/devdocs.vim', { 'on': ['DevDocsAllUnderCursor'] }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'voldikss/vim-floaterm'
@@ -89,20 +86,14 @@ Plug 'folke/persistence.nvim'
 " miscellaneous
 Plug 'romainl/vim-qf'
 Plug 'kevinhwang91/nvim-bqf'
-" Plug 'stevearc/quicker.nvim'
+Plug 'stevearc/quicker.nvim'
 " Plug 'zhimsel/vim-stay'
 Plug 'farmergreg/vim-lastplace'
 Plug 'pbrisbin/vim-mkdir'
 Plug 'tyru/open-browser.vim', { 'on': ['<Plug>(openbrowser-smart-search)'] }
 Plug 'skywind3000/vim-terminal-help'
 Plug 'guns/xterm-color-table.vim', { 'on': ['XtermColorTable'] }
-" Plug 'powerman/vim-plugin-AnsiEsc'
-" Plug 'inside/vim-search-pulse'
 Plug 'dstein64/vim-startuptime', { 'on': ['StartupTime'] }
-" Plug 'yaocccc/nvim-hlchunk'
-" Plug 'rest-nvim/rest.nvim'
-" Plug '~/erinn/tools/whitebox/whitebox_v0.96.2/editor_plugins/whitebox-vim'
-" Plug 'Robitx/gp.nvim'
 
 endif
 
@@ -725,14 +716,13 @@ let g:coc_global_extensions = [
         \"coc-highlight",
         \"coc-html",
         \"coc-json",
-        \"coc-lines",
-        \"coc-lists",
         \"coc-marketplace",
         \"coc-prettier",
         \"coc-pyright",
         \"coc-rust-analyzer",
         \"coc-snippets",
         \"coc-svg",
+        \"coc-sumneko-lua",
         \"coc-tasks",
         \"coc-toml",
         \"coc-tsserver",
@@ -840,27 +830,27 @@ nmap ]r :CocLast<cr>
 nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
 
-nmap <leader>ee <Plug>(coc-diagnostic-info)
+" nmap <leader>ee <Plug>(coc-diagnostic-info)
 nmap <leader>cl <Plug>(coc-codelens-action)
 nmap <silent>gy <Plug>(coc-type-definition)
 nmap <silent>gi <Plug>(coc-implementation)
 " nmap <silent>gr :call <SID>GoToReferences()<cr>
 nmap <silent>gh :CocCommand git.chunkInfo<cr>
-nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>r <Plug>(coc-rename)
 " vmap <leader>f  <Plug>(coc-format-selected)
 " nmap <leader>f  <Plug>(coc-format-selected)
 " vmap <leader>a  <Plug>(coc-codeaction-selected)
 " nmap <leader>a  <Plug>(coc-codeaction-selected)
-" nmap <leader>ac <Plug>(coc-codeaction)
-nmap <leader>ac <Plug>(coc-codeaction-cursor)
-xmap <leader>ac <Plug>(coc-codeaction-selected)
+" nmap <leader>z <Plug>(coc-codeaction)
+nmap <leader>z <Plug>(coc-codeaction-cursor)
+xmap <leader>z <Plug>(coc-codeaction-selected)
 nmap <silent>K :call <SID>show_documentation()<cr>
 nmap <silent>Y :call CocActionAsync('diagnosticInfo')<cr>
 nmap <silent>gd :call <SID>GoToDefinition()<cr>
 nmap <silent>gD :call <SID>GoToDefinitionSplit()<cr>
-nmap <silent> <leader>re <Plug>(coc-codeaction-refactor)
-xmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
-nmap <silent> <leader>r  <Plug>(coc-codeaction-refactor-selected)
+nmap <silent> <leader>x <Plug>(coc-codeaction-refactor)
+xmap <silent> <leader>x  <Plug>(coc-codeaction-refactor-selected)
+nmap <silent> <leader>x  <Plug>(coc-codeaction-refactor-selected)
 " nmap <silent> gd <Plug>(coc-definition)
 " vnoremap <leader>g :<C-u>call <SID>GrepFromSelected(visualmode())<CR>
 " nnoremap <leader>g :<C-u>set operatorfunc=<SID>GrepFromSelected<CR>g@ 
@@ -878,7 +868,7 @@ nnoremap <silent> <space>t :call ToggleOutline()<cr>
 nnoremap <silent> <space>o :<C-u>CocList outline<cr>
 nnoremap <silent> <space>f :<C-u>CocList files<cr>
 nnoremap <silent> <space>e :<C-u>CocList extensions<cr>
-nnoremap <silent> <space>u :<C-u>CocList --normal mru<cr>
+" nnoremap <silent> <space>u :<C-u>CocList --normal mru<cr>
 nnoremap <silent> <space>a :<C-u>CocList --normal diagnostics<cr>
 nnoremap <silent> <space>c :<C-u>CocList commands<cr>
 nnoremap <silent> <space>b :<C-u>CocList --normal buffers<cr>
@@ -1000,6 +990,7 @@ noremap <silent> <leader>gz :GscopeFind! z <C-R><C-W><cr>
 
 " editorconfig-vim
 let &colorcolumn="121"
+autocmd FileType qf,help,dirvish setlocal colorcolumn=
 
 autocmd FileType python,elm,go,c,cpp,h set tabstop=4 shiftwidth=4 expandtab ai
 autocmd FileType vim,javascript,javascript.jsx,typescript,typescript.tsx,json,css,scss,html,yaml,md,ex set tabstop=2 shiftwidth=2 expandtab ai
@@ -1141,8 +1132,26 @@ command! -nargs=? -complete=dir Vexplore leftabove vsplit | silent Dirvish <args
 " let g:golden_ratio_exclude_nonmodifiable = 1
 " let g:golden_ratio_autocommand = 0
 
-" vim-maximizer'
-nmap <silent><leader>z :MaximizerToggle<cr>
+" mini.pick
+lua <<EOF
+local pick = require('mini.pick')
+require('mini.extra').setup()
+pick.setup({ source = { show = pick.default_show }, window = { prompt_prefix = ' ' } })
+vim.api.nvim_set_hl(0, 'MiniPickPrompt', { fg = '#d8dee9', bg = '#1b2b34' })
+vim.api.nvim_set_hl(0, 'MiniPickPromptCaret', { fg = '#ff7777', bg = '#1b2b34' })
+vim.api.nvim_set_hl(0, 'MiniPickMatchRanges', { fg = '#ff7777' })
+EOF
+nnoremap <silent> <space>u :lua MiniExtra.pickers.oldfiles({ current_dir = true })<cr>
+nnoremap <silent> <space>p :lua MiniPick.builtin.resume()<cr>
+nnoremap <silent> <space>b :lua MiniPick.builtin.buffers()<cr>
+nnoremap <silent> <space>f :lua MiniPick.builtin.files()<cr>
+nnoremap <silent> <space>v :lua MiniExtra.pickers.git_files()<cr>
+nnoremap <silent> <space>h :lua MiniPick.builtin.help()<cr>
+nnoremap <silent> <space>g :lua MiniPick.builtin.grep_live()<cr>
+nnoremap <silent> <space>/ :lua MiniExtra.pickers.buf_lines()<cr>
+nnoremap <silent> <space>m :lua MiniExtra.pickers.marks()<cr>
+nnoremap <silent> <space>: :lua MiniExtra.pickers.commands()<cr>
+nnoremap <silent> <space>k :lua MiniExtra.pickers.git_hunks()<cr>
 
 " vim-edgemotion
 nnoremap <expr> <c-k> "m'" . "<plug>(edgemotion-k)"
@@ -1181,6 +1190,7 @@ let g:asynctasks_term_reuse = 1
 let g:asynctasks_term_focus = 1
 
 lua <<EOF
+
 vim.api.nvim_create_autocmd('User', {
     pattern = 'AsyncRunStop',
     callback = function()
@@ -1262,56 +1272,56 @@ let g:qf_auto_resize = 0
 let g:qf_auto_open_quickfix = 0
 
 " quicker.nvim
-"lua <<EOF
-"require("quicker").setup({
-"  edit = {
-"    enabled = true
-"  },
-"  on_qf = function(bufnr) 
-"  end,
-"  type_icons = {
-"    E = "E",
-"    W = "W ",
-"    I = "I ",
-"    N = "N",
-"    H = "H ",
-"  },
-"  keys = {
-"    {
-"      ">",
-"      function()
-"        require("quicker").expand({ before = 2, after = 2, add_to_existing = true })
-"      end,
-"      desc = "Expand quickfix context",
-"    },
-"    {
-"      "<",
-"      function()
-"        require("quicker").collapse()
-"      end,
-"      desc = "Collapse quickfix context",
-"    },
-"  },
-"})
-"vim.keymap.set("n", "<leader>q", function()
-"  require("quicker").toggle()
-"end, {
-"  desc = "Toggle quickfix",
-"})
-"vim.keymap.set("n", "<leader>l", function()
-"  require("quicker").toggle({ loclist = true })
-"end, {
-"  desc = "Toggle loclist",
-"})
-"vim.api.nvim_create_autocmd("User", {
-"  pattern = "AsyncRunStop",
-"  callback = function()
-"    require("quicker").refresh()
-"    -- require("quicker").toggle()
-"  end,
-"})
-"EOF
-"hi! link Delimiter LineNr
+lua <<EOF
+require("quicker").setup({
+  edit = {
+    enabled = true
+  },
+  on_qf = function(bufnr) 
+  end,
+  type_icons = {
+    E = "E",
+    W = "W ",
+    I = "I ",
+    N = "N",
+    H = "H ",
+  },
+  keys = {
+    {
+      ">",
+      function()
+        require("quicker").expand({ before = 2, after = 2, add_to_existing = true })
+      end,
+      desc = "Expand quickfix context",
+    },
+    {
+      "<",
+      function()
+        require("quicker").collapse()
+      end,
+      desc = "Collapse quickfix context",
+    },
+  },
+})
+vim.keymap.set("n", "<leader>q", function()
+  require("quicker").toggle()
+end, {
+  desc = "Toggle quickfix",
+})
+vim.keymap.set("n", "<leader>l", function()
+  require("quicker").toggle({ loclist = true })
+end, {
+  desc = "Toggle loclist",
+})
+vim.api.nvim_create_autocmd("User", {
+  pattern = "AsyncRunStop",
+  callback = function()
+    require("quicker").refresh()
+    -- require("quicker").toggle()
+  end,
+})
+EOF
+hi! link Delimiter LineNr
 
 " vim-bqf
 lua <<EOF
@@ -1353,7 +1363,7 @@ cmd([[
 ]])
 
 cmd([[
-    nmap <silent> gr <Plug>(coc-references)
+    nmap <silent>gr :let @/=expand('<cword>')<CR>:set hlsearch<CR><Plug>(coc-references)
     nnoremap <silent> <space>a <Cmd>lua _G.diagnostic()<CR>
 ]])
 
@@ -1678,8 +1688,9 @@ endif
 
 lua <<EOF
 require("persistence").setup({})
-vim.keymap.set("n", "<c-i>", function() require("persistence").load() end)
 EOF
+" vim.keymap.set("n", "<c-i>", function() require("persistence").load() end)
+command! -nargs=0 Load :lua require("persistence").load()
 
 
 " Comment.nvim
@@ -1688,131 +1699,6 @@ EOF
 "   pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
 " })
 " EOF
-
-" incline.nvim
-" if s:is_installed('incline.nvim')
-" lua <<EOF
-" require('incline').setup({
-"   hide = {
-"     cursorline = true,
-"     focused_win = false,
-"     only_win = true
-"   },
-"   render = function(props)
-"     local bufname = vim.api.nvim_buf_get_name(props.buf)
-"     local res = bufname ~= '' and vim.fn.fnamemodify(bufname, ':t') or '[no name]'
-"     if string.find(vim.fn.fnamemodify(bufname, ":t"), "index") then
-"       res = vim.fn.fnamemodify(bufname, ":.")
-"     end
-"     if vim.api.nvim_buf_get_option(props.buf, 'modified') then
-"       res = res .. ' [+]'
-"     end
-"     return res
-"   end,
-" })
-" EOF
-" endif
-
-" rest.nvim
-" lua <<EOF
-" require("rest-nvim").setup({
-"   result = {
-"     formatters = {
-"       json = function(body)
-"         return vim.fn.system({"prettier", "--stdin-filepath", "a.json"}, body)
-"       end,
-"       html = function(body)
-"         return vim.fn.system({"prettier", "--stdin-filepath", "a.html"}, body)
-"       end
-"     },
-"   },
-" })
-" EOF
-
-" " gp.nvim
-" lua <<EOF
-" require("gp").setup({
-"     providers = {
-"         openai = {},
-"         holdai = {
-"             endpoint = "https://api.holdai.top/v1/chat/completions",
-"             secret = os.getenv("HOLDAI_KEY")
-"         },
-"     },
-"     -- log_file = "/Users/joshua/Downloads/gp.nvim.log",
-"     -- log_sensitive = true,
-"     chat_user_prefix = "USER:",
-"     chat_assistant_prefix = { "AGENT:", "[{{agent}}]" },
-"     chat_conceal_model_params = false,
-"     command_prompt_prefix_template = "{{agent}} ~ ",
-"     command_auto_select_response = false,
-"     agents = {
-"         {
-"             name = "chatgpt-4o-latest",
-"             provider = "holdai",
-"             chat = true,
-"             command = true,
-"             model = { model = "chatgpt-4o-latest" },
-"             system_prompt = "",
-"         },
-"         {
-
-"             name = "gpt-4o-mini",
-"             provider = "holdai",
-"             chat = true,
-"             command = true,
-"             model = { model = "gpt-4o-mini" },
-"             system_prompt = "",
-"         },
-"         {
-"             name = "claude-3-5-sonnet-latest",
-"             provider = "holdai",
-"             chat = true,
-"             command = true,
-"             model = { model = "claude-3-5-sonnet-latest" },
-"             system_prompt = "",
-"         },
-"         {
-"             name = "deepseek-r1",
-"             provider = "holdai",
-"             chat = true,
-"             command = true,
-"             model = { model = "deepseek-r1" },
-"             system_prompt = "",
-"         },
-"         {
-"             name = "deepseek-v3",
-"             provider = "holdai",
-"             chat = true,
-"             command = true,
-"             model = { model = "deepseek-v3" },
-"             system_prompt = "",
-"         },
-"     },
-"     hooks = {
-"         BufferChatNew = function(gp, _)
-"             vim.api.nvim_command("%" .. gp.config.cmd_prefix .. "ChatNew")
-"         end,
-"         Explain = function(gp, params)
-" 			local template = "I have the following code from {{filename}}:\n\n"
-" 				.. "```{{filetype}}\n{{selection}}\n```\n\n"
-" 				.. "Please respond by explaining the code above."
-" 			local agent = gp.get_chat_agent("gpt-4o-mini")
-" 			gp.Prompt(params, gp.Target.popup, agent, template)
-" 		end,
-"         Translator = function(gp, params)
-"         	local chat_system_prompt = "You are a Translator, please translate between English, Chinese and Japanese. Please provide two sections, the first one shows English Chinese Japanese meaning of the word, each language provide a synonym and meaning in that language, English should have phonetic symbol, Japanese should have gana and romaji. The second section shows some example sentences. Each sentence has English, Chinese and Japanese displayed. In Japanese example, please also show the gana version. The title of the sections should be Meaning and Sentences"
-"         	local agent = gp.get_chat_agent("gpt-4o-mini")
-"         	gp.cmd.ChatNew(params, chat_system_prompt, agent)
-"         end,
-"     },
-" })
-" EOF
-" hi! link GpExplorerCursorLine CursorLine
-
-" command! -nargs=0 RestRun :lua require("rest-nvim").run()
-" command! -nargs=0 RestLast :lua require("rest-nvim").last()
-" command! -nargs=0 RestPreview :lua require("rest-nvim").run(true)
 
 fun s:mapMake()
     if &ft == "c" || &ft == "cpp"
@@ -1841,7 +1727,7 @@ fun s:mapMake()
 
     if &ft == "typescript" || &ft == "typescriptreact"
         if !exists('g:build')
-            let g:build="npx tsc"
+            let g:build="npx tsc --noEmit"
         endif
     endif
 
