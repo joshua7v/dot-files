@@ -50,7 +50,6 @@
   "rust-analyzer.diagnostics.enable": false,
   "rust-analyzer.procMacro.enable": true,
   "rust-analyzer.lens.enable": false,
-  "Lua.telemetry.enable": false,
   "Lua.diagnostics.enable": false,
   "Lua.diagnostics.globals": ["love"],
   "Lua.diagnostics.disable": ["lowercase-global"],
@@ -58,11 +57,12 @@
   "python.linting.flake8Enabled": true,
   "python.linting.mypyEnabled": true,
   "clangd.enabled": true,
-  "clangd.disableDiagnostics": true,
+  "clangd.disableDiagnostics": false,
   "clangd.arguments": ["--background-index", "--completion-style=detailed"],
   "languageserver": {
     "elixirLS": {
-      "command": "/opt/homebrew/bin/elixir-ls",
+      "command": "pwsh",
+      "args": ["-NoLogo", "-NoProfile", "-Command", "/Users/joshua/erinn/opt/elixir-ls/language_server"],
       "settings": {},
       "filetypes": ["elixir", "eelixir"]
     },
