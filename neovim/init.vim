@@ -6,8 +6,6 @@ if exists(":PlugInstall")
 Plug 'mhartington/oceanic-next'
 
 " syntax
-" Plug 'Shougo/context_filetype.vim'
-
 let g:polyglot_disabled = ['vue', 'markdown']
 let g:zig_fmt_autosave = 0
 " Plug 'sheerun/vim-polyglot'
@@ -21,63 +19,47 @@ let g:vim_svelte_plugin_use_typescript = 1
 
 " edit
 Plug 'chaoren/vim-wordmotion'
-Plug 'windwp/nvim-autopairs'
+" Plug 'windwp/nvim-autopairs'
 Plug 'haya14busa/vim-asterisk'
-Plug 'kana/vim-textobj-user'
-Plug 'kana/vim-operator-user'
-Plug 'michaeljsmith/vim-indent-object'
-" Plug 'Julian/vim-textobj-variable-segment'
+" Plug 'kana/vim-textobj-user'
+" Plug 'kana/vim-operator-user'
+" Plug 'michaeljsmith/vim-indent-object'
 Plug 'tpope/vim-sleuth'
 Plug 'godlygeek/tabular', { 'on': ['Tabularize'] }
 Plug 'ntpeters/vim-better-whitespace', { 'on': ['StripWhitespace'] }
 Plug 'justinmk/vim-dirvish'
 Plug 'haya14busa/vim-edgemotion'
 Plug 'rlane/pounce.nvim'
-" Plug 'justinmk/vim-sneak'
-Plug 'tpope/vim-commentary'
+" Plug 'tpope/vim-commentary'
 " Plug 'numToStr/Comment.nvim'
 Plug 'mg979/vim-visual-multi'
 Plug 'mbbill/undotree'
 Plug 'Shougo/vinarise.vim', { 'on': ['Vinarise'] }
-" Plug 'Valloric/MatchTagAlways', { 'for': ['typescriptreact', 'html'] }
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'lfv89/vim-interestingwords'
-Plug 'AndrewRadev/splitjoin.vim'
+" Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'svermeulen/vim-subversive'
 Plug 'tpope/vim-abolish'
-" Plug 'vim-scripts/a.vim', { 'for': ['c', 'cpp'] }
-" Plug 'tenfyzhong/vim-gencode-cpp', { 'for': ['c', 'cpp'] }
-" Plug 'anuvyklack/nvim-keymap-amend'
-" Plug 'anuvyklack/pretty-fold.nvim'
-" Plug 'anuvyklack/fold-preview.nvim'
 Plug 'mattn/emmet-vim'
 
 " project
-Plug 'nvim-mini/mini.pick'
-Plug 'nvim-mini/mini.extra'
-Plug 'nvim-mini/mini.align'
+Plug 'nvim-mini/mini.nvim'
 Plug 'rhysd/devdocs.vim', { 'on': ['DevDocsAllUnderCursor'] }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'voldikss/vim-floaterm'
 Plug 'skywind3000/asyncrun.vim'
-Plug 'skywind3000/asynctasks.vim'
+" Plug 'skywind3000/asynctasks.vim'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-fugitive'
 Plug 'rhysd/git-messenger.vim'
 Plug 'Shougo/echodoc.vim'
 Plug 'MattesGroeger/vim-bookmarks'
-" Plug 'RutaTang/quicknote.nvim'
-" Plug 'jremmen/vim-ripgrep'
-" Plug 'mangelozzi/rgflow.nvim'
 Plug 'sindrets/diffview.nvim'
 Plug 'folke/persistence.nvim'
-" Plug 'rmagatti/auto-session'
-" Plug 'ludovicchabant/vim-gutentags'
-" Plug 'skywind3000/gutentags_plus'
 " Plug 'nvim-lua/plenary.nvim'
 " Plug 'nvim-telescope/telescope.nvim'
 " Plug 'fannheyward/telescope-coc.nvim'
@@ -306,11 +288,11 @@ endif
 "   augroup END
 " endfunction
 
-augroup vim_todo
-    au!
-    au Syntax * syn match MyTodo /\v<(FIXME|NOTE|OPTIMIZE)/ containedin=.*Comment,vimCommentTitle
-    au Syntax * syn match MyImportant /\v<(IMPORTANT|TEMP)/ containedin=.*Comment,vimCommentTitle
-augroup END
+" augroup vim_todo
+"     au!
+"     au Syntax * syn match MyTodo /\v<(FIXME|NOTE|OPTIMIZE)/ containedin=.*Comment,vimCommentTitle
+"     au Syntax * syn match MyImportant /\v<(IMPORTANT|TEMP)/ containedin=.*Comment,vimCommentTitle
+" augroup END
 
 function! ToggleQuickFix()
     if empty(filter(getwininfo(), 'v:val.quickfix'))
@@ -384,15 +366,16 @@ function! s:patch_oceanic_next_colors()
   hi! link Error StatusLine
   hi! link Folded EndOfBuffer
 
-  hi Todo guifg=white guibg=#4381c0
-  hi MyTodo guifg=white guibg=#da666c
-  hi MyImportant guifg=white guibg=#efad04
+  " hi Todo guifg=white guibg=#4381c0
+  " hi MyTodo guifg=white guibg=#da666c
+  " hi MyImportant guifg=white guibg=#efad04
 
   " custom highlights
   hi MyText ctermfg=253 guifg=#d8dee9
   hi MyKeyword ctermfg=221 guifg=#fac863
 
   " typescript
+  hi link typescriptCommentTodo Comment
   hi link typescriptImport MyKeyword
   hi link typescriptExport MyKeyword
   hi link typescriptAsyncFuncKeyword MyKeyword
@@ -1126,15 +1109,14 @@ command! -nargs=? -complete=dir Explore Dirvish <args>
 command! -nargs=? -complete=dir Sexplore belowright split | silent Dirvish <args>
 command! -nargs=? -complete=dir Vexplore leftabove vsplit | silent Dirvish <args>
 
-" golden-ratio
-" let g:golden_ratio_exclude_nonmodifiable = 1
-" let g:golden_ratio_autocommand = 0
-
-" mini.pick
+" mini.nvim
 lua <<EOF
 local pick = require('mini.pick')
 require('mini.extra').setup()
 require('mini.align').setup()
+require('mini.pairs').setup()
+require('mini.ai').setup()
+require('mini.move').setup()
 
 pick.setup({
   source = { show = pick.default_show },
@@ -1211,7 +1193,7 @@ end
 local grep_visual_selection = function()
   local selection = get_visual_selection()
   
-  -- 创建一次性的 autocommand
+  -- create temporary autocommand
   local augroup = vim.api.nvim_create_augroup('GrepVisualSelection', { clear = true })
   vim.api.nvim_create_autocmd('User', {
     group = augroup,
@@ -1259,6 +1241,150 @@ end
 vim.api.nvim_set_hl(0, 'MiniPickPrompt', { fg = '#d8dee9', bg = '#1b2b34' })
 vim.api.nvim_set_hl(0, 'MiniPickPromptCaret', { fg = '#ff7777', bg = '#1b2b34' })
 vim.api.nvim_set_hl(0, 'MiniPickMatchRanges', { fg = '#ff7777' })
+vim.api.nvim_set_hl(0, 'MiniHipatternsTodo',  { fg = '#FFFFFF', bg = '#4381c0' })
+vim.api.nvim_set_hl(0, 'MiniHipatternsImportant',  { fg = '#FFFFFF', bg = '#efad04' })
+
+local hipatterns = require('mini.hipatterns')
+hipatterns.setup({
+  highlighters = {
+    -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
+    fixme     = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
+    hack      = { pattern = '%f[%w]()HACK()%f[%W]',  group = 'MiniHipatternsHack'  },
+    todo      = { pattern = '%f[%w]()TODO()%f[%W]',  group = 'MiniHipatternsTodo'  },
+    note      = { pattern = '%f[%w]()NOTE()%f[%W]',  group = 'MiniHipatternsNote'  },
+    important = { pattern = '%f[%w]()IMPORTANT()%f[%W]',  group = 'MiniHipatternsImportant'  },
+
+    -- Highlight hex color strings (`#rrggbb`) using that color
+    hex_color = hipatterns.gen_highlighter.hex_color(),
+  },
+})
+
+require('mini.files').setup({
+    content = { prefix = function() end },
+    options = {
+        use_as_default_explorer = false
+    }
+})
+
+local minifiles_toggle = function(...)
+  if not MiniFiles.close() then MiniFiles.open(...) end
+end
+vim.keymap.set('n', '<space>i', minifiles_toggle)
+
+local show_dotfiles = true
+
+local filter_show = function(fs_entry) return true end
+
+local filter_hide = function(fs_entry)
+  return not vim.startswith(fs_entry.name, '.')
+end
+
+local toggle_dotfiles = function()
+  show_dotfiles = not show_dotfiles
+  local new_filter = show_dotfiles and filter_show or filter_hide
+  MiniFiles.refresh({ content = { filter = new_filter } })
+end
+
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'MiniFilesBufferCreate',
+  callback = function(args)
+    local buf_id = args.data.buf_id
+    -- Tweak left-hand side of mapping to your liking
+    vim.keymap.set('n', 'g.', toggle_dotfiles, { buffer = buf_id })
+  end,
+})
+
+local map_split = function(buf_id, lhs, direction)
+  local rhs = function()
+    -- Make new window and set it as target
+    local cur_target = MiniFiles.get_explorer_state().target_window
+    local new_target = vim.api.nvim_win_call(cur_target, function()
+      vim.cmd(direction .. ' split')
+      return vim.api.nvim_get_current_win()
+    end)
+
+    MiniFiles.set_target_window(new_target)
+
+    -- This intentionally doesn't act on file under cursor in favor of
+    -- explicit "go in" action (`l` / `L`). To immediately open file,
+    -- add appropriate `MiniFiles.go_in()` call instead of this comment.
+  end
+
+  -- Adding `desc` will result into `show_help` entries
+  local desc = 'Split ' .. direction
+  vim.keymap.set('n', lhs, rhs, { buffer = buf_id, desc = desc })
+end
+
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'MiniFilesBufferCreate',
+  callback = function(args)
+    local buf_id = args.data.buf_id
+    -- Tweak keys to your liking
+    map_split(buf_id, 's', 'belowright horizontal')
+    map_split(buf_id, 'd', 'belowright horizontal')
+    map_split(buf_id, 'o', 'belowright vertical')
+    map_split(buf_id, 't', 'tab')
+  end,
+})
+
+-- Set focused directory as current working directory
+local set_cwd = function()
+  local path = (MiniFiles.get_fs_entry() or {}).path
+  if path == nil then return vim.notify('Cursor is not on valid entry') end
+  vim.fn.chdir(vim.fs.dirname(path))
+end
+
+-- Yank in register full path of entry under cursor
+local yank_path = function()
+  local path = (MiniFiles.get_fs_entry() or {}).path
+  if path == nil then return vim.notify('Cursor is not on valid entry') end
+  vim.fn.setreg(vim.v.register, path)
+end
+
+-- Open path with system default handler (useful for non-text files)
+local ui_open = function()
+  local path = (MiniFiles.get_fs_entry() or {}).path
+  if path == nil then return vim.notify('Cursor is not on valid entry') end
+  
+  local is_windows = vim.fn.has('win32') == 1 or vim.fn.has('win64') == 1
+  local is_mac = vim.fn.has('mac') == 1 or vim.fn.has('macunix') == 1
+  
+  if is_windows then
+    -- Windows: use start command
+    vim.fn.jobstart(string.format('start "" "%s"', path), { detach = true })
+  elseif is_mac then
+    -- macOS: use open command
+    vim.fn.jobstart(string.format('open "%s"', path), { detach = true })
+  else
+    -- Linux/Unix: fallback to vim.ui.open or xdg-open
+    vim.fn.jobstart(string.format('xdg-open "%s"', path), { detach = true })
+  end
+end
+
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'MiniFilesBufferCreate',
+  callback = function(args)
+    local b = args.data.buf_id
+    vim.keymap.set('n', 'gW', set_cwd,   { buffer = b, desc = 'Set cwd' })
+    vim.keymap.set('n', 'gX', ui_open,   { buffer = b, desc = 'OS open' })
+    vim.keymap.set('n', 'gy', yank_path, { buffer = b, desc = 'Yank path' })
+  end,
+})
+
+local set_mark = function(id, path, desc)
+  MiniFiles.set_bookmark(id, path, { desc = desc })
+end
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'MiniFilesExplorerOpen',
+  callback = function()
+    set_mark('c', vim.fn.stdpath('config'), 'Config') -- path
+    set_mark('w', vim.fn.getcwd, 'Working directory') -- callable
+    set_mark('~', '~', 'Home directory')
+  end,
+})
+
+require('mini.splitjoin').setup()
+require('mini.comment').setup()
 EOF
 nnoremap <silent> <space>u :lua MiniExtra.pickers.oldfiles({ current_dir = true })<cr>
 nnoremap <silent> <space>p :lua MiniPick.builtin.resume()<cr>
@@ -1324,14 +1450,6 @@ vim.api.nvim_create_autocmd('User', {
     end
 })
 EOF
-
-" noremap <silent><leader>q :call asyncrun#quickfix_toggle(24)<cr>
-" noremap <leader>r :AsyncTask project-run<cr>
-" noremap <leader>b :AsyncTask project-build<cr>
-" command! -nargs=0 Test exe 'AsyncTask project-test'
-" command! -nargs=0 Clean exe 'AsyncTask project-clean'
-
-" autocmd BufWritePost *.c,*.cpp AsyncTask project-build
 
 " vim-floaterm
 if has('macunix')
@@ -1529,42 +1647,6 @@ end
 
 EOF
 
-" autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
-
-" vim-ripgrep
-" command! R :Rg -w <cword> %
-
-" rgflow.nvim
-" lua <<EOF
-" require('rgflow').setup(
-"     {
-"         cmd_flags = ("--smart-case --fixed-strings --ignore --max-columns 200"
-"             .. " -g !**/dist/"
-"             .. " -g !**/build"
-"             .. " -g !**/node_modules/"),
-"         default_trigger_mappings = false,
-"         default_ui_mappings = true,
-"         default_quickfix_mappings = true,
-"         colors = {
-"             RgFlowHeadLine = {fg = "#6f7071", bg="#1b2b34", bold=false},
-"             RgFlowInputBg = {fg = "fg", bg="#1b2b34", bold=false},
-"             RgFlowInputFlags = {fg = "fg", bg="#1b2b34", bold=false},
-"             RgFlowInputPattern = {fg = "fg", bg="#1b2b34", bold=false},
-"             RgFlowInputPath = {fg = "fg", bg="#1b2b34", bold=false},
-"         },
-"         ui_top_line_char = "━"
-"     }
-" )
-" EOF
-
-" command! RR :lua require('rgflow').open_again()<cr>
-" command! Ro :lua require('rgflow').open_blank()<cr>
-" command! Rx :lua require('rgflow').abort()<cr>
-" command! -nargs=? Rg exe ':lua require("rgflow").search("<args>", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
-" command! -nargs=? Rw exe ':lua require("rgflow").search("<args>", "--smart-case --fixed-strings --ignore --max-columns 200 -w", vim.fn.getcwd())'
-" command! -nargs=? Rwf exe ':lua require("rgflow").search("<args>", "--smart-case --fixed-strings --ignore --max-columns 200 -w", vim.fn.expand("%"))'
-" command! -nargs=? Rc exe ':lua require("rgflow").search("<args>", "--smart-case --fixed-strings --ignore --max-columns 200", vim.fn.getcwd())'
-
 command! -nargs=? -complete=shellcmd Rf :AsyncRun -errorformat=\%f fd -a <args>
 command! -nargs=? -complete=file Rg :AsyncRun -errorformat=\%f:\%l:\%c:\%m,\%f:\%l:\%m,\%f:\%l\%m rg --smart-case --ignore --max-columns 200 --vimgrep <args>
 command! -nargs=? -complete=file Rz :Rg -e "[\\u4e00-\\u9fa5]+" <args>
@@ -1607,10 +1689,10 @@ nnoremap <silent> ]w :call WordNavigation(1)<cr>
 nnoremap <silent> [w :call WordNavigation(0)<cr>
 
 " sideways.vim
-omap aa <Plug>SidewaysArgumentTextobjA
-xmap aa <Plug>SidewaysArgumentTextobjA
-omap ia <Plug>SidewaysArgumentTextobjI
-xmap ia <Plug>SidewaysArgumentTextobjI
+" omap aa <Plug>SidewaysArgumentTextobjA
+" xmap aa <Plug>SidewaysArgumentTextobjA
+" omap ia <Plug>SidewaysArgumentTextobjI
+" xmap ia <Plug>SidewaysArgumentTextobjI
 
 nnoremap <silent><leader>h :SidewaysLeft<cr>
 nnoremap <silent><leader>l :SidewaysRight<cr>
@@ -1761,68 +1843,47 @@ command! RandomLine execute 'normal! '.(matchstr(system('od -vAn -N3 -tu4 /dev/u
 command! GCompileCommands execute '!xmake project -k compile_commands'
 " command! -nargs=? Fd call setqflist([], ' ', {'lines' : systemlist('fd ' . <q-args>), 'efm' : '%f'})
 
-" nvim-autopairs
-if s:is_installed('nvim-autopairs')
-lua <<EOF
-local npairs = require("nvim-autopairs")
-local Rule = require('nvim-autopairs.rule')
-
-npairs.setup({
-    disable_filetype = {},
-    check_ts = false,
-    map_c_w = true,
-    -- ts_config = {
-        -- lua = {'string'},
-    -- },
-    enable_check_bracket_line = false,
-    fast_wrap = {
-      map = '<c-s>',
-      chars = { '{', '[', '(', '"', "'", "`" },
-      end_key = '$',
-      check_comma = true,
-      highlight = 'Search',
-      highlight_grey='Comment',
-    },
-})
-
--- local ts_conds = require('nvim-autopairs.ts-conds')
-
--- press % => %% only while inside a comment or string
--- npairs.add_rules({
---   Rule("%", "%", "lua")
---     :with_pair(ts_conds.is_ts_node({'string','comment'})),
---   Rule("$", "$", "lua")
---     :with_pair(ts_conds.is_not_ts_node({'function'}))
--- })
-EOF
-endif
-
-" auto-session
+" " nvim-autopairs
+" if s:is_installed('nvim-autopairs')
 " lua <<EOF
-" require("auto-session").setup {
-"     opts = {
-"         suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
-"     }
-" }
-" vim.o.sessionoptions="curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+" local npairs = require("nvim-autopairs")
+" local Rule = require('nvim-autopairs.rule')
+"
+" npairs.setup({
+"     disable_filetype = {},
+"     check_ts = false,
+"     map_c_w = true,
+"     -- ts_config = {
+"         -- lua = {'string'},
+"     -- },
+"     enable_check_bracket_line = false,
+"     fast_wrap = {
+"       map = '<c-s>',
+"       chars = { '{', '[', '(', '"', "'", "`" },
+"       end_key = '$',
+"       check_comma = true,
+"       highlight = 'Search',
+"       highlight_grey='Comment',
+"     },
+" })
+"
+" -- local ts_conds = require('nvim-autopairs.ts-conds')
+"
+" -- press % => %% only while inside a comment or string
+" -- npairs.add_rules({
+" --   Rule("%", "%", "lua")
+" --     :with_pair(ts_conds.is_ts_node({'string','comment'})),
+" --   Rule("$", "$", "lua")
+" --     :with_pair(ts_conds.is_not_ts_node({'function'}))
+" -- })
 " EOF
-" vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
-" set sessionoptions-=blank
-" set sessionoptions-=buffers
+" endif
 
 lua <<EOF
 require("persistence").setup({})
 EOF
 " vim.keymap.set("n", "<c-i>", function() require("persistence").load() end)
 command! -nargs=0 Load :lua require("persistence").load()
-
-
-" Comment.nvim
-" lua <<EOF
-" require('Comment').setup({
-"   pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
-" })
-" EOF
 
 fun s:mapMake()
     if &ft == "c" || &ft == "cpp"
@@ -1878,63 +1939,6 @@ command! -nargs=0 Run :call asyncrun#run('', {}, get(g:, 'run', 'echo "no run co
 command! -nargs=0 Test :call asyncrun#run('', {}, get(g:, 'test', 'echo "no test command"'))
 command! -nargs=0 Clean :call asyncrun#run('', {}, get(g:, 'clean', 'echo "no clean command"'))
 autocmd WinEnter,BufEnter * call s:mapMake()
-
-"lua << EOF
-"local themes = require('telescope.themes')
-"local layout = require('telescope.actions.layout')
-"require("telescope").setup({
-"  defaults = themes.get_ivy({
-"    initial_mode = "normal",
-"    path_display = {
-"        "truncate",
-"    },
-"    results_title = false,
-"    preview = {
-"      hide_on_startup = true
-"    },
-"    mappings = {
-"      n = {
-"        ["p"] = layout.toggle_preview,
-"      },
-"    }
-"  }),
-"  pickers = {
-"    find_files = {
-"      theme = "ivy",
-"    }
-"  },
-"  extensions = {
-"    coc = {
-"      theme = 'ivy',
-"      prefer_locations = true, -- always use Telescope locations to preview definitions/declarations/implementations etc
-"      push_cursor_on_edit = true, -- save the cursor position to jump back in the future
-"      timeout = 3000, -- timeout for coc commands
-"      path_display = {
-"        "tail",
-"      },
-"    }
-"  },
-"})
-"require('telescope').load_extension('coc')
-"require('telescope').load_extension('vim_bookmarks')
-"EOF
-"hi link TelescopeMatching CocSearch
-"hi link TelescopePromptPrefix CocSearch
-"hi link TelescopeSelection CursorLine
-"hi link TelescopePreviewLine CursorLine
-"nnoremap <silent> <space>f :lua require('telescope.builtin').find_files({ initial_mode = 'insert' })<cr>
-"nnoremap <silent> <space>u :<C-u>Telescope coc mru<cr>
-"nnoremap <silent> <space>g :lua require('telescope.builtin').live_grep({ initial_mode = 'insert' })<cr>
-"nnoremap <silent> <space>y :<C-u>Telescope coc workspace_diagnostics<cr>
-"nnoremap <silent> <space>s :lua require('telescope').extensions.coc.workspace_symbols({ initial_mode = 'insert' })<cr>
-"nnoremap <silent> <space>r :<C-u>Telescope coc references_used<cr>
-"nnoremap <silent> <space>i :<C-u>Telescope coc implementations<cr>
-"nnoremap <silent> <space>d :<C-u>Telescope coc definitions<cr>
-"nnoremap <silent> <space>a :lua require('telescope').extensions.coc.file_code_actions()<cr>
-"nnoremap <silent> <space>c :lua require('telescope').extensions.coc.commands({ initial_mode = 'insert' })<cr>
-"nnoremap <silent> <space>b :<C-u>Telescope buffers<cr>
-"nnoremap <silent> <space>p :<C-u>Telescope resume<cr>
-"nnoremap <silent> <space>m :lua require('telescope').extensions.vim_bookmarks.all()<cr>
 
 " ------------
 " gui settings
