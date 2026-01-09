@@ -865,7 +865,7 @@ nnoremap <silent> <space>h :<C-u>CocList --normal searchhistory<cr>
 nnoremap <silent> <space>k :<C-u>CocList --normal maps<cr>
 nnoremap <silent> <space>q :<C-u>CocList --normal floaterm<cr>
 nnoremap <silent> <space>z :<C-u>CocList --normal tasks<cr>
-nnoremap <silent> <space>l :<C-u>CocList fuzzy_lines<cr>
+" nnoremap <silent> <space>l :<C-u>CocList fuzzy_lines<cr>
 nnoremap <silent> <space>w :exe 'CocList -I --normal --input='.expand('<cword>').' words'<cr>
 nnoremap <silent> <space>x :<C-u>CocList --normal sessions<cr>
 " nnoremap <silent> <space>fl :<c-u>CocList --normal explPresets<cr>
@@ -1117,6 +1117,152 @@ require('mini.align').setup()
 require('mini.pairs').setup()
 require('mini.ai').setup()
 require('mini.move').setup()
+require('mini.splitjoin').setup()
+require('mini.comment').setup()
+require('mini.visits').setup({
+  silent = true,
+  filter = function(path_data)
+    return vim.fn.isdirectory(path_data.path) == 0
+  end,
+})
+
+local filter_files = function(path_data)
+  return vim.fn.isdirectory(path_data.path) == 0
+end
+
+local make_select_path = function(select_global, recency_weight)
+  local visits = require('mini.visits')
+  local sort = visits.gen_sort.default({ recency_weight = recency_weight })
+  local select_opts = { sort = sort, filter = filter_files }
+  return function()
+    local cwd = select_global and '' or vim.fn.getcwd()
+    visits.select_path(cwd, select_opts)
+  end
+end
+
+local map = function(lhs, desc, ...)
+  vim.keymap.set('n', lhs, make_select_path(...), { desc = desc })
+end
+
+map('<space>U', 'Select recent (all)',   true,  1)
+map('<space>u', 'Select recent (cwd)',   false, 1)
+map('<space>L', 'Select frecent (all)',  true,  0)
+map('<space>l', 'Select frecent (cwd)',  false, 0)
+
+local map_vis = function(keys, call, desc)
+  local rhs = '<Cmd>lua MiniVisits.' .. call .. '<CR>'
+  vim.keymap.set('n', '<Leader>' .. keys, rhs, { desc = desc })
+end
+
+local filter_core_files = function(path_data)
+  return path_data.labels 
+    and path_data.labels['core'] 
+    and vim.fn.isdirectory(path_data.path) == 0
+end
+
+map_vis('nn', 'add_label("core")',                     'Add to core')
+map_vis('nd', 'remove_label("core")',                  'Remove from core')
+vim.keymap.set('n', '<Leader>nA', function()
+  MiniVisits.select_path("", { filter = filter_core_files })
+end, { desc = 'Select core (all)' })
+vim.keymap.set('n', '<Leader>na', function()
+  MiniVisits.select_path(nil, { filter = filter_core_files })
+end, { desc = 'Select core (cwd)' })
+
+local sort_latest = MiniVisits.gen_sort.default({ recency_weight = 1 })
+vim.keymap.set('n', '[{', function()
+  MiniVisits.iterate_paths('last', vim.fn.getcwd(), {
+    filter = filter_core_files,
+    sort = sort_latest,
+    wrap = true
+  })
+end, { desc = 'Core label (earliest)' })
+vim.keymap.set('n', '[[', function()
+  MiniVisits.iterate_paths('forward', vim.fn.getcwd(), {
+    filter = filter_core_files,
+    sort = sort_latest,
+    wrap = true
+  })
+end, { desc = 'Core label (earlier)' })
+vim.keymap.set('n', ']]', function()
+  MiniVisits.iterate_paths('backward', vim.fn.getcwd(), {
+    filter = filter_core_files,
+    sort = sort_latest,
+    wrap = true
+  })
+end, { desc = 'Core label (later)' })
+vim.keymap.set('n', ']}', function()
+  MiniVisits.iterate_paths('first', vim.fn.getcwd(), {
+    filter = filter_core_files,
+    sort = sort_latest,
+    wrap = true
+  })
+end, { desc = 'Core label (latest)' })
+
+local map_vis = function(keys, call, desc)
+  local rhs = '<Cmd>lua MiniVisits.' .. call .. '<CR>'
+  vim.keymap.set('n', '<Leader>' .. keys, rhs, { desc = desc })
+end
+
+map_vis('bb', 'add_label()',          'Add label')
+map_vis('bd', 'remove_label()',       'Remove label')
+vim.keymap.set('n', '<Leader>bA', function()
+  MiniVisits.select_label("", "", { 
+    filter = filter_files 
+  })
+end, { desc = 'Select label (all)' })
+vim.keymap.set('n', '<Leader>ba', function()
+  MiniVisits.select_label(nil, nil, { 
+    filter = filter_files 
+  })
+end, { desc = 'Select label (cwd)' })
+
+vim.keymap.set('n', '<Leader>bD', function()
+  vim.ui.input({ prompt = 'Remove label: ' }, function(label)
+    if not label or label == '' then return end
+    
+    local visits = require('mini.visits')
+    local paths = visits.list_paths('', { filter = label })
+    
+    if #paths == 0 then
+      print(string.format('No files found with label "%s"', label))
+      return
+    end
+    
+    local success_count = 0
+    local error_count = 0
+    
+    for _, path in ipairs(paths) do
+      if vim.fn.filereadable(path) == 1 then
+        local ok, err = pcall(function()
+          -- Add to buffer list without displaying
+          vim.cmd('badd ' .. vim.fn.fnameescape(path))
+          local bufnr = vim.fn.bufnr(path)
+          
+          if bufnr ~= -1 then
+            -- Temporarily switch to buffer
+            local current = vim.api.nvim_get_current_buf()
+            vim.api.nvim_set_current_buf(bufnr)
+            visits.remove_label(label)
+            vim.api.nvim_set_current_buf(current)
+            success_count = success_count + 1
+          end
+        end)
+        
+        if not ok then
+          error_count = error_count + 1
+        end
+      end
+    end
+    
+    if error_count > 0 then
+      print(string.format('Removed "%s" from %d/%d files', 
+        label, success_count, success_count + error_count))
+    else
+      print(string.format('Removed label "%s" from %d files', label, success_count))
+    end
+  end)
+end, { desc = 'Remove label from all files', silent = true })
 
 pick.setup({
   source = { show = pick.default_show },
@@ -1263,7 +1409,22 @@ require('mini.files').setup({
     content = { prefix = function() end },
     options = {
         use_as_default_explorer = false
-    }
+    },
+    mappings = {
+      close       = 'q',
+      go_in       = '<c-l>',
+      go_in_plus  = '<c-L>',
+      go_out      = '<c-h>',
+      go_out_plus = '<c-H>',
+      mark_goto   = "'",
+      mark_set    = 'm',
+      reset       = '<BS>',
+      reveal_cwd  = '@',
+      show_help   = 'g?',
+      synchronize = '=',
+      trim_left   = '<',
+      trim_right  = '>',
+  },
 })
 
 local minifiles_toggle = function(...)
@@ -1320,10 +1481,10 @@ vim.api.nvim_create_autocmd('User', {
   callback = function(args)
     local buf_id = args.data.buf_id
     -- Tweak keys to your liking
-    map_split(buf_id, 's', 'belowright horizontal')
-    map_split(buf_id, 'd', 'belowright horizontal')
-    map_split(buf_id, 'o', 'belowright vertical')
-    map_split(buf_id, 't', 'tab')
+    map_split(buf_id, '<c-s>', 'belowright horizontal')
+    map_split(buf_id, '<c-d>', 'belowright horizontal')
+    map_split(buf_id, '<c-o>', 'belowright vertical')
+    map_split(buf_id, '<c-t>', 'tab')
   end,
 })
 
@@ -1382,11 +1543,8 @@ vim.api.nvim_create_autocmd('User', {
     set_mark('~', '~', 'Home directory')
   end,
 })
-
-require('mini.splitjoin').setup()
-require('mini.comment').setup()
 EOF
-nnoremap <silent> <space>u :lua MiniExtra.pickers.oldfiles({ current_dir = true })<cr>
+" nnoremap <silent> <space>u :lua MiniExtra.pickers.oldfiles({ current_dir = true })<cr>
 nnoremap <silent> <space>p :lua MiniPick.builtin.resume()<cr>
 nnoremap <silent> <space>b :lua MiniPick.builtin.buffers()<cr>
 nnoremap <silent> <space>f :lua MiniPick.builtin.files()<cr>
