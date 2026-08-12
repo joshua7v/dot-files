@@ -1,0 +1,21 @@
+onboarding = false
+
+[theme]
+name = "gruvbox"
+
+[keys]
+detach = "prefix+d"
+split_vertical = "prefix+%"
+split_horizontal = "prefix+\""
+toggle_sidebar = "prefix+s"
+
+[ui]
+sidebar_collapsed_mode = "hidden"
+host_cursor = "native"
+show_agent_labels_on_pane_borders = true
+
+[ui.toast]
+delivery = "herdr"
+
+[ui.sound]
+enabled = false
